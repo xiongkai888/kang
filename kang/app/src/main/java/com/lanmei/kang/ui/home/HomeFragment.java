@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.HomeAdapter;
-import com.lanmei.kang.api.HomeLimitApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.HomeBean;
 import com.lanmei.kang.event.LocationEvent;
 import com.lanmei.kang.ui.mine.activity.SearchUserActivity;
@@ -62,13 +62,15 @@ public class HomeFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         }
     }
-    HomeLimitApi api;
+    KangQiMeiApi api;
+
     private void initListView() {
 
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-        api = new HomeLimitApi();
-        api.limit = "6";
+        api = new KangQiMeiApi("index/home");
+        api.addParams("limit",6);
+
         mAdapter = new HomeAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<HomeListBean<HomeBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
@@ -80,8 +82,8 @@ public class HomeFragment extends BaseFragment {
                 return true;
             }
         };
-        api.lon = SharedAccount.getInstance(context).getLon();
-        api.lat = SharedAccount.getInstance(context).getLat();
+        api.addParams("lon",SharedAccount.getInstance(context).getLon());
+        api.addParams("lat",SharedAccount.getInstance(context).getLat());
         controller.loadFirstPage();
     }
 
@@ -109,8 +111,8 @@ public class HomeFragment extends BaseFragment {
     @Subscribe
     public void locationEvent(LocationEvent event){
         mCityTv.setText(event.getCity());
-        api.lon = event.getLongitude();
-        api.lat = event.getLatitude();
+        api.addParams("lon",event.getLongitude());
+        api.addParams("lat",event.getLatitude());
         controller.loadFirstPage();
     }
 

@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2017/6/14.
  * 动态详情评论
  */
 
-public class DynamicCommApi extends KangApi{
+public class DynamicCommApi extends ApiV2 {
 
     public String posts_id;//帖子id
     public String content;//评论内容

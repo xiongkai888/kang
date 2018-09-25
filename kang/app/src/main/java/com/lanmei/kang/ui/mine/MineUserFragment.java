@@ -5,9 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;

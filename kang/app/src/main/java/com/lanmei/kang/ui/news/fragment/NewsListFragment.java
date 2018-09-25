@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.NewsItemAdapter;
-import com.lanmei.kang.api.NewsCategoryListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NewsCategoryListBean;
 import com.lanmei.kang.event.NewsCommEvent;
 import com.xson.common.app.BaseFragment;
@@ -57,9 +57,8 @@ public class NewsListFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         Bundle bundle = getArguments();
-
-        NewsCategoryListApi api = new NewsCategoryListApi();
-        api.cid = bundle.getString("cid");
+        KangQiMeiApi api = new KangQiMeiApi("post/index");
+        api.addParams("cid",bundle.getString("cid"));
         mAdapter = new NewsItemAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

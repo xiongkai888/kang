@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.NewsDetailsCommentAdapter;
-import com.lanmei.kang.api.NewsCommentApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.NewsCommentListApi;
 import com.lanmei.kang.api.NewsDetailsApi;
 import com.lanmei.kang.bean.NewsCommentBean;
@@ -154,11 +154,10 @@ public class NewsDetailsActivity extends BaseActivity {
             return;
         }
         HttpClient httpClient = HttpClient.newInstance(this);
-        NewsCommentApi api = new NewsCommentApi();
-        api.content = content;
-        api.id = id;
-        api.uid = api.getUserId(this);
-//        api.uid = api.getUrl();
+        KangQiMeiApi api = new KangQiMeiApi("post/do_reviews");
+        api.addParams("content",content);
+        api.addParams("id",id);
+        api.addParams("uid",api.getUserId(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

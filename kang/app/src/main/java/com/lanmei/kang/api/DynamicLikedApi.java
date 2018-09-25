@@ -1,13 +1,14 @@
 package com.lanmei.kang.api;
 
 import com.xson.common.api.AbstractApi;
+import com.xson.common.api.ApiV2;
 
 /**
  * Created by xkai on 2018/1/10.
  * 动态 点赞
  */
 
-public class DynamicLikedApi extends KangApi {
+public class DynamicLikedApi extends ApiV2 {
 
     public String id;//动态ID
     public String uid;//用户ID

@@ -9,7 +9,7 @@ import com.lanmei.kang.api.OrderListMerchantApi;
 import com.lanmei.kang.api.ReserveOrderApi;
 import com.lanmei.kang.bean.OrderListMerchantBean;
 import com.lanmei.kang.event.ScanSucceedEvent;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;

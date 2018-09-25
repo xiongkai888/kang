@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.AddFriendsApi;
-import com.lanmei.kang.api.FollowApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.SearchUserBean;
 import com.lanmei.kang.event.AddFriendsEvent;
 import com.lanmei.kang.event.FollowInNewFriendEvent;
@@ -138,10 +138,10 @@ public class SearchUserAdapter extends SwipeRefreshAdapter<SearchUserBean> {
     }
 
     private void isFollow(final SearchUserBean bean) {
-        FollowApi api = new FollowApi();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
-        api.mid = bean.getId();
+        KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("mid",bean.getId());
+        api.addParams("token",api.getToken(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

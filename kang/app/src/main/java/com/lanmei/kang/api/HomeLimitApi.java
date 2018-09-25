@@ -1,10 +1,12 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/4/24.
  */
 
-public class HomeLimitApi extends KangApi {
+public class HomeLimitApi extends ApiV2 {
 
 
 //    public String recommend;//是否推荐 1|0

@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/15.
  * 商家列表(服务项目)
  */
 
-public class MerchantListApi extends KangApi {
+public class MerchantListApi extends ApiV2 {
 
     public String lat;//纬度
     public String lon;//经度

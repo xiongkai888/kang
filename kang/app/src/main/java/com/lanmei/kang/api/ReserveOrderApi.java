@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/23.
  * 预订下单
  */
 
-public class ReserveOrderApi extends KangApi {
+public class ReserveOrderApi extends ApiV2 {
 
     public String uid;//用户id
     public String mid;//商家的uid

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantAlbumAdapter;
-import com.lanmei.kang.api.MAUpdataApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AlbumBean;
 import com.lanmei.kang.bean.MerchantInfoBean;
 import com.lanmei.kang.event.MerchantUpdataAdEvent;
@@ -297,11 +297,11 @@ public class MerchantAlbumActivity extends BaseActivity {
             return;
         }
         HttpClient httpClient = HttpClient.newInstance(this);
-        MAUpdataApi api = new MAUpdataApi();
-        api.token = api.getToken(this);
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("place/update");
+        api.addParams("token",api.getToken(this));
+        api.addParams("uid",api.getUserId(this));
         String pics = CommonUtils.getSubString(CommonUtils.getAlbumsPics(mAlbumBeanlist) + successPath);
-        api.pics = pics;
+        api.addParams("pics",pics);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2018/2/7.
  * 商家添加/编辑产品
  */
 
-public class ItemsCompileApi extends KangApi {
+public class ItemsCompileApi extends ApiV2 {
 
     public String pid;//商品id(添加时不传)
     public String mid;//商家id(编辑时可不传)

@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/20.
  * 我的订单列表
  */
 
-public class OrderListApi extends KangApi {
+public class OrderListApi extends ApiV2 {
 
     public String token;//
     public String uid;//用户id

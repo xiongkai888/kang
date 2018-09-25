@@ -1,4 +1,4 @@
-package com.lanmei.kang.helper;
+package com.xson.common.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lanmei.kang.bean.UserBean;
+import com.xson.common.bean.UserBean;
 
 /**
  * @author Milk

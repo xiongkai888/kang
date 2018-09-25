@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2017/6/6.
  * 用户信息更新
  */
 
-public class UserUpdateApi extends KangApi {
+public class UserUpdateApi extends ApiV2 {
 
     public String token;
     public String phone;//电话

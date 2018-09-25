@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/20.
  * 点击收藏(商家)
  */
 
-public class CollectMerchantApi extends KangApi {
+public class CollectMerchantApi extends ApiV2 {
 
     public String id;//资讯id
     public String uid;//用户id

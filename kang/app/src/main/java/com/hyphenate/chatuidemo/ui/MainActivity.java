@@ -52,7 +52,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
 

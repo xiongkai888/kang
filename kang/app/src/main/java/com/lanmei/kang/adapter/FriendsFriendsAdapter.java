@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.FollowApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodFriendsBean;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
@@ -82,9 +82,9 @@ public class FriendsFriendsAdapter extends SwipeRefreshAdapter<GoodFriendsBean> 
     }
 
     private void isFollow(final GoodFriendsBean bean) {
-        FollowApi api = new FollowApi();
-        api.uid = api.getUserId(context);
-        api.mid = bean.getId();
+        KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("mid",bean.getId());
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

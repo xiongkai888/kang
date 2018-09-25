@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.PublishHonorApi;
 import com.lanmei.kang.bean.HonorBean;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;

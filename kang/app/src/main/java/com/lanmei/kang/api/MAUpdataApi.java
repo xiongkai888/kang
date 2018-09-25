@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2017/8/31.
  * 商家相册更新
  */
 
-public class MAUpdataApi extends KangApi{
+public class MAUpdataApi extends ApiV2 {
 
     public String uid;
     public String token;

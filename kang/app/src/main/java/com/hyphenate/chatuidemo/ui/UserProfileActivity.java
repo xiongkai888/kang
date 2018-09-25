@@ -26,9 +26,8 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.bean.UserInfoBean;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.CommonUtils;
 
 import java.io.ByteArrayOutputStream;

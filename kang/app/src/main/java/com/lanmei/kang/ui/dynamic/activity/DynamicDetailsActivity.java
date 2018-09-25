@@ -13,9 +13,7 @@ import android.widget.PopupWindow;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.DynamicDetailsCommAdapter;
-import com.lanmei.kang.api.DeleteDynamicApi;
-import com.lanmei.kang.api.DynamicCommApi;
-import com.lanmei.kang.api.DynamicCommListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.bean.DynamicCommBean;
 import com.lanmei.kang.event.DynamicLikedEvent;
@@ -102,9 +100,10 @@ public class DynamicDetailsActivity extends BaseActivity {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
 
-        DynamicCommListApi api = new DynamicCommListApi();
-        api.posts_id = id;
-        api.uid = api.getUserId(this);
+
+        KangQiMeiApi api = new KangQiMeiApi("PostsReviews/index");
+        api.addParams("posts_id",id);
+        api.addParams("uid",api.getUserId(this));
         mAdapter = new DynamicDetailsCommAdapter(this, mbean, isSelf);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<DynamicCommBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
@@ -177,10 +176,11 @@ public class DynamicDetailsActivity extends BaseActivity {
 
     private void loadDeleteActivity() {//删除动态
         HttpClient httpClient = HttpClient.newInstance(this);
-        DeleteDynamicApi api = new DeleteDynamicApi();
-        api.id = id;
-        api.uid = api.getUserId(this);
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("posts/del");
+        api.addParams("id",id);
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",api.getToken(this));
+
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -213,10 +213,10 @@ public class DynamicDetailsActivity extends BaseActivity {
             return;
         }
         HttpClient httpClient = HttpClient.newInstance(this);
-        DynamicCommApi api = new DynamicCommApi();
-        api.content = content;
-        api.uid = api.getUserId(this);
-        api.posts_id = id;
+        KangQiMeiApi api = new KangQiMeiApi("PostsReviews/add");
+        api.addParams("content",content);
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("posts_id",id);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

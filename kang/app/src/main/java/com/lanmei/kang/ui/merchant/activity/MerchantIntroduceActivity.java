@@ -17,8 +17,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantIntroduceAdapter;
-import com.lanmei.kang.api.CollectMerchantApi;
-import com.lanmei.kang.api.MerchantDetailsApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantDetailsBean;
 import com.lanmei.kang.event.CollectItemsEvent;
 import com.lanmei.kang.event.CollectMerchantEvent;
@@ -91,12 +90,12 @@ public class MerchantIntroduceActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.back);
 
+        KangQiMeiApi api = new KangQiMeiApi("place/details");
+        api.addParams("id", api.getUserId(this));
+        api.addParams("uid", merchantId);
+        api.addParams("lat", SharedAccount.getInstance(this).getLat());
+        api.addParams("lon", SharedAccount.getInstance(this).getLon());
 
-        MerchantDetailsApi api = new MerchantDetailsApi();
-        api.id = api.getUserId(this);
-        api.uid = merchantId;
-        api.lat = SharedAccount.getInstance(this).getLat();
-        api.lon = SharedAccount.getInstance(this).getLon();
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<MerchantDetailsBean>>() {
             @Override
             public void onResponse(DataBean<MerchantDetailsBean> response) {
@@ -144,7 +143,7 @@ public class MerchantIntroduceActivity extends BaseActivity {
         EventBus.getDefault().register(this);
     }
 
-    @OnClick({R.id.merchant_introduce_iv, R.id.collect_iv, R.id.phone_iv, R.id.ll_location,R.id.ll_merchant_album})
+    @OnClick({R.id.merchant_introduce_iv, R.id.collect_iv, R.id.phone_iv, R.id.ll_location, R.id.ll_merchant_album})
     public void showIntroduce(View view) {//商家介绍、收藏、联系电话
         if (!CommonUtils.isLogin(this)) {
             return;
@@ -181,22 +180,22 @@ public class MerchantIntroduceActivity extends BaseActivity {
                 boolean isIntentSafe = activities.size() > 0;
                 if (isIntentSafe) {
                     startActivity(mapIntent);
-                }else {
-                    UIHelper.ToastMessage(this,"你尚未安装任何的地图应用");
+                } else {
+                    UIHelper.ToastMessage(this, "你尚未安装任何的地图应用");
                 }
                 break;
             case R.id.ll_merchant_album://商家相册
-                IntentUtil.startActivity(this, AlbumOtherActivity.class,merchantId);
+                IntentUtil.startActivity(this, AlbumOtherActivity.class, merchantId);
                 break;
         }
     }
 
     private void collect() {
-        CollectMerchantApi api = new CollectMerchantApi();
-        api.id = merchantId;
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("");
+        api.addParams("id", merchantId);
+        api.addParams("uid", api.getUserId(this));
         if (StringUtils.isSame(favoured, CommonUtils.isOne)) {
-            api.del = favoured;
+            api.addParams("del", favoured);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -251,7 +250,7 @@ public class MerchantIntroduceActivity extends BaseActivity {
                 if (StringUtils.isEmpty(merchantId)) {
                     break;
                 }
-                CommonUtils.startChatActivity(this,merchantId,false);
+                CommonUtils.startChatActivity(this, merchantId, false);
                 break;
         }
         return super.onOptionsItemSelected(item);

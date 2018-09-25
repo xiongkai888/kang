@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.WithdrawApi;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;

@@ -11,8 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.DynamicLikedApi;
-import com.lanmei.kang.api.FollowApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.bean.DynamicCommBean;
 import com.lanmei.kang.event.AttentionFriendEvent;
@@ -258,9 +257,9 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
                 if (!CommonUtils.isLogin(context)) {
                     return;
                 }
-                DynamicLikedApi api = new DynamicLikedApi();
-                api.uid = api.getUserId(context);
-                api.id = mBean.getId();
+                KangQiMeiApi api = new KangQiMeiApi("posts/like");
+                api.addParams("uid",api.getUserId(context));
+                api.addParams("id",mBean.getId());
                 HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                     @Override
                     public void onResponse(BaseBean response) {
@@ -285,10 +284,10 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
     }
 
     private void isFollow() {
-        FollowApi api = new FollowApi();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
-        api.mid = mBean.getUid();
+        KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",api.getToken(context));
+        api.addParams("mid",mBean.getUid());
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -8,12 +8,12 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MyCourseListAdapter;
-import com.lanmei.kang.api.MyActivityApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MyCourseBean;
-import com.lanmei.kang.helper.UserHelper;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
@@ -61,12 +61,12 @@ public class MyActivityTabFragment extends BaseFragment {
 
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-        MyActivityApi api = new MyActivityApi();
+        KangQiMeiApi api = new KangQiMeiApi("activity_apply/index");
         Bundle bundle = getArguments();
         if (bundle != null){
-            api.status = bundle.getString("status");
+            api.addParams("status",bundle.getString("status"));
         }
-        api.token = UserHelper.getInstance(context).getToken();
+        api.addParams("token",UserHelper.getInstance(context).getToken());
         mAdapter = new MyCourseListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<MyCourseBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

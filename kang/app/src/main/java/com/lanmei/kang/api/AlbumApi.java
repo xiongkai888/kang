@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/25.
  * 相册
  */
 
-public class AlbumApi extends KangApi {
+public class AlbumApi extends ApiV2 {
 
     public String act;//当值为 1 时表示添加，-1时表示删除，默认为列表
     public String token;

@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2017/5/26.
  * 用户信息请求
  */
 
-public class UserInfoApi extends KangApi {
+public class UserInfoApi extends ApiV2 {
 
     public String token;
     public String uid;//用户id

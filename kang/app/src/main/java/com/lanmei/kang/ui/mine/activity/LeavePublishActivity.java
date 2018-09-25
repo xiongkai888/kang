@@ -9,13 +9,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.LeavePublishApi;
-import com.lanmei.kang.helper.UserHelper;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -83,11 +83,11 @@ public class LeavePublishActivity extends BaseActivity {
 
     //发起留言
     private void ajaxLeave(String content) {
+        KangQiMeiApi api = new KangQiMeiApi("TalentReviews/add");
+        api.addParams("mid",uid);
+        api.addParams("token",UserHelper.getInstance(this).getToken());
+        api.addParams("content",content);
         HttpClient httpClient = HttpClient.newInstance(this);
-        LeavePublishApi api = new LeavePublishApi();
-        api.mid = uid;
-        api.token = UserHelper.getInstance(this).getToken();
-        api.content = content;
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

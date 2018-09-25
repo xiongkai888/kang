@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.CollectNewsApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NewsCommentBean;
 import com.lanmei.kang.bean.NewsDetailsBean;
 import com.lanmei.kang.event.CollectNewsEvent;
@@ -137,12 +137,12 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
                 if (!CommonUtils.isLogin(context)){
                     return;
                 }
-                CollectNewsApi api = new CollectNewsApi();
-                api.uid = api.getUserId(context);
-                api.token = api.getToken(context);
-                api.id = detailsBean.getId();
+                KangQiMeiApi api = new KangQiMeiApi("post/do_favour");
+                api.addParams("uid",api.getUserId(context));
+                api.addParams("token",api.getToken(context));
+                api.addParams("id",detailsBean.getId());
                 if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isOne)) {
-                    api.del = detailsBean.getFavoured();
+                    api.addParams("del",detailsBean.getFavoured());
                 }
                 HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                     @Override

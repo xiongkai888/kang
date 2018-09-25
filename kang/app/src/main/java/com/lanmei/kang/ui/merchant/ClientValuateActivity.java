@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBar;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.ClientValuateAdapter;
-import com.lanmei.kang.api.ClientValuateApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.ClientValuateBean;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -55,8 +55,9 @@ public class ClientValuateActivity extends BaseActivity {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
 
-        ClientValuateApi api = new ClientValuateApi();
-        api.mid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("PlaceReviews/index");
+        api.addParams("mid",api.getUserId(this));
+
         mAdapter = new ClientValuateAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<ClientValuateBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {

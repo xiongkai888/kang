@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.FriendsFriendsAdapter;
-import com.lanmei.kang.api.GoodFriendApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodFriendsBean;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -46,9 +46,10 @@ public class FriendsFriendsFragment extends BaseFragment {
         if (bundle != null){
             uid = bundle.getString("uid");
         }
-        GoodFriendApi api = new GoodFriendApi();
-        api.uid = uid;
-        api.mid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("friend/index");
+        api.addParams("uid",uid);
+        api.addParams("mid",api.getUserId(context));
+
         mAdapter = new FriendsFriendsAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<GoodFriendsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

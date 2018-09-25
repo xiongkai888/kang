@@ -5,9 +5,8 @@ import android.support.v7.app.ActionBar;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PhysiotherapyTabAdapter;
-import com.lanmei.kang.api.MerchantListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
-import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -53,10 +52,11 @@ public class RecomMerchantListActivity extends BaseActivity {
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-        MerchantListApi api = new MerchantListApi();
-        api.lat = SharedAccount.getInstance(this).getLat();
-        api.lon = SharedAccount.getInstance(this).getLon();
-        api.more = CommonUtils.isOne;
+        KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
+        api.addParams("lat",SharedAccount.getInstance(this).getLat());
+        api.addParams("lon",SharedAccount.getInstance(this).getLon());
+        api.addParams("more",1);
+
         mAdapter = new PhysiotherapyTabAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {

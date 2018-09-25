@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2017/6/15.
  * 达人好友列表
  */
 
-public class GoodFriendApi extends KangApi {
+public class GoodFriendApi extends ApiV2 {
 
 
     public String uid;//用户id,

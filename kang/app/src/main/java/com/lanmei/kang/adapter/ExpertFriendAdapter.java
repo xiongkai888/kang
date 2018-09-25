@@ -14,7 +14,7 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.FollowApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.InterestedBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
@@ -67,9 +67,8 @@ public class ExpertFriendAdapter extends SwipeRefreshAdapter<InterestedBean> {
                 @Override
                 public void onClick(View v) {
                     HttpClient httpClient = HttpClient.newInstance(context);
-                    FollowApi api = new FollowApi();
-                    api.mid = bean.getId();
-//                    api.token = UserHelper.getInstance(context).getToken();
+                    KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
+                    api.addParams("mid",bean.getId());
                     httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                         @Override
                         public void onResponse(BaseBean response) {

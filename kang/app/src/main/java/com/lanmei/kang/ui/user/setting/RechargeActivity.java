@@ -15,7 +15,7 @@ import com.lanmei.kang.api.RechargeApi;
 import com.lanmei.kang.bean.RechargeSubBean;
 import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.event.PaySucceedEvent;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.helper.WXPayHelper;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.DataBean;

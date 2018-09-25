@@ -9,18 +9,18 @@ import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.lanmei.kang.KangApp;
-import com.lanmei.kang.api.LoginApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.SystemSettingInfoApi;
 import com.lanmei.kang.api.UserInfoApi;
 import com.lanmei.kang.bean.NewsCategoryTabBean;
 import com.lanmei.kang.bean.SystemSettingInfoBean;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.bean.UserInfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.UserHelper;
 import com.xson.common.bean.DataBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -92,9 +92,10 @@ public class DataLoader {
 
     public void loadLogin(final Context context, final String phone, final String pwd, final LoginListener listener) {
         HttpClient httpClient = HttpClient.newInstance(context);
-        LoginApi api = new LoginApi();
-        api.phone = phone;
-        api.password = pwd;
+        KangQiMeiApi api = new KangQiMeiApi("public/login");
+        api.addParams("phone",phone);
+        api.addParams("password",pwd);
+
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {

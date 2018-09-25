@@ -10,8 +10,7 @@ import android.view.View;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.CategoryAdapter;
-import com.lanmei.kang.api.AddCategoryApi;
-import com.lanmei.kang.api.ItemsCategoryApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.CategoryBean;
 import com.lanmei.kang.event.AddCategoryEvent;
 import com.lanmei.kang.event.CompileProductEvent;
@@ -88,9 +87,9 @@ public class CategoryActivity extends BaseActivity {
     boolean isFirst = true;
 
     private void loadClass() {
-        ItemsCategoryApi api = new ItemsCategoryApi();
-        api.mid = pid;
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("member/category");
+        api.addParams("mid",pid);
+        api.addParams("token",api.getToken(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<CategoryBean>>() {
             @Override
             public void onResponse(NoPageListBean<CategoryBean> response) {
@@ -140,11 +139,11 @@ public class CategoryActivity extends BaseActivity {
             return;
         }
         dialog.cancel();
-        AddCategoryApi api = new AddCategoryApi();
-        api.mid = pid;
-        api.name = code;
+        KangQiMeiApi api = new KangQiMeiApi("place/addClassify");
+        api.addParams("mid",pid);
+        api.addParams("name",code);
         if (type != 1){//编辑分类
-            api.id = id;
+            api.addParams("id",id);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

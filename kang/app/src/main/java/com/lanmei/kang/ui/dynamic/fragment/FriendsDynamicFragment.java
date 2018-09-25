@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.DynamicListAdapter;
-import com.lanmei.kang.api.DynamicListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.event.AttentionFriendEvent;
 import com.lanmei.kang.event.DynamicLikedEvent;
@@ -64,9 +64,9 @@ public class FriendsDynamicFragment extends BaseFragment {
         if (bundle != null){
             uid = bundle.getString("uid");
         }
-        DynamicListApi api = new DynamicListApi();
-        api.uid = uid;
-        api.id = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("");
+        api.addParams("uid",uid);
+        api.addParams("id",api.getUserId(context));
         mAdapter = new DynamicListAdapter(context);
         mAdapter.setType(3);
         smartSwipeRefreshLayout.setAdapter(mAdapter);

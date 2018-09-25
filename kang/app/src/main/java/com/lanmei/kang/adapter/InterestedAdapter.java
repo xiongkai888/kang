@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.AddFriendsApi;
-import com.lanmei.kang.api.FollowApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.InterestedBean;
 import com.lanmei.kang.event.AddFriendsEvent;
 import com.lanmei.kang.event.FollowInNewFriendEvent;
@@ -63,12 +62,12 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
             viewHolder.addFriendsTv.setVisibility(View.VISIBLE);
             viewHolder.attentionTv.setVisibility(View.VISIBLE);
             final String join_stauts = bean.getJoin_status();
-            if (StringUtils.isSame(join_stauts,CommonUtils.isZero)) {
+            if (StringUtils.isSame(join_stauts, CommonUtils.isZero)) {
                 viewHolder.addFriendsTv.setVisibility(View.VISIBLE);
                 viewHolder.addFriendsTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AKDialog.getAlertDialog(context, "确认添加为好友？" , new AKDialog.AlertDialogListener() {
+                        AKDialog.getAlertDialog(context, "确认添加为好友？", new AKDialog.AlertDialogListener() {
                             @Override
                             public void yes() {
                                 isAddFriends(bean);
@@ -79,12 +78,12 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
             } else {
                 viewHolder.addFriendsTv.setVisibility(View.GONE);
             }
-            CommonUtils.setTextViewType(context,bean.getFollowed(),viewHolder.attentionTv,R.string.attention,R.string.attentioned);
+            CommonUtils.setTextViewType(context, bean.getFollowed(), viewHolder.attentionTv, R.string.attention, R.string.attentioned);
             viewHolder.attentionTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String str = "";
-                    if (StringUtils.isSame(bean.getFollowed(),CommonUtils.isZero)) {//0|1  未关注|已关注
+                    if (StringUtils.isSame(bean.getFollowed(), CommonUtils.isZero)) {//0|1  未关注|已关注
                         str = context.getString(R.string.is_follow);
                     } else {
                         str = context.getString(R.string.is_no_follow);
@@ -104,13 +103,16 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
 
     private void isAddFriends(final InterestedBean bean) {
         HttpClient httpClient = HttpClient.newInstance(context);
-        AddFriendsApi api = new AddFriendsApi();
-        api.mid = bean.getId();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
+        KangQiMeiApi api = new KangQiMeiApi("friend/add");
+        api.addParams("mid", bean.getId());
+        api.addParams("uid", api.getUserId(context));
+        api.addParams("token", api.getToken(context));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
+                if (StringUtils.isEmpty(uid)) {
+                    return;
+                }
                 bean.setJoin_status(CommonUtils.isOne);
 //                            CommonUtils.loadUserInfo(context,null);
                 UIHelper.ToastMessage(context, response.getInfo());
@@ -121,21 +123,21 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
     }
 
     private void isFollow(final InterestedBean bean) {
-        FollowApi api = new FollowApi();
-        api.uid = api.getUserId(context);
-        api.mid = bean.getId();
-        api.token = api.getToken(context);
+        KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("mid",bean.getId());
+        api.addParams("token",api.getToken(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 final String followed = bean.getFollowed();
-                if (StringUtils.isSame(followed,CommonUtils.isZero)) {//0|1  未关注|已关注
+                if (StringUtils.isSame(followed, CommonUtils.isZero)) {//0|1  未关注|已关注
                     bean.setFollowed(CommonUtils.isOne);
                 } else {
                     bean.setFollowed(CommonUtils.isZero);
                 }
                 UIHelper.ToastMessage(context, response.getInfo());
-                EventBus.getDefault().post(new FollowInNewFriendEvent(bean.getId(),bean.getFollowed()));
+                EventBus.getDefault().post(new FollowInNewFriendEvent(bean.getId(), bean.getFollowed()));
 //                CommonUtils.loadUserInfo(context, null);
                 notifyDataSetChanged();
             }

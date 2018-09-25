@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.HuoDongSubAdapter;
-import com.lanmei.kang.api.NewsCategoryListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NewsCategoryListBean;
 import com.lanmei.kang.helper.ReceiverHelper;
 import com.xson.common.app.BaseFragment;
@@ -69,8 +69,8 @@ public class HuoDongFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
         Bundle bundle = getArguments();
         String cid = bundle.getString("cid");
-        NewsCategoryListApi api = new NewsCategoryListApi();
-        api.cid = cid;//
+        KangQiMeiApi api = new KangQiMeiApi("post/index");
+        api.addParams("cid",cid);
         mAdapter = new HuoDongSubAdapter(getContext());
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(getContext(), smartSwipeRefreshLayout, api, mAdapter) {

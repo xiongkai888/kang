@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.InterestedAdapter;
-import com.lanmei.kang.api.GoodFriendApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.InterestedBean;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -65,10 +65,11 @@ public class InterestedFriendActivity extends BaseActivity {
 
     private void initSwipeRefreshLayout() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        GoodFriendApi api = new GoodFriendApi();
-        api.type = "2";//1、新朋友 2、感兴趣的
-        api.uid = api.getUserId(this);
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("friend/index");
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("type",2);//1、新朋友 2、感兴趣的
+        api.addParams("token",api.getToken(this));
+
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<InterestedBean>>() {
             @Override
             public void onResponse(NoPageListBean<InterestedBean> response) {

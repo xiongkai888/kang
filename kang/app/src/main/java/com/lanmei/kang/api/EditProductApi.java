@@ -1,10 +1,12 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by xkai on 2018/2/8.
  */
 
-public class EditProductApi extends KangApi{
+public class EditProductApi extends ApiV2 {
 
     public String pid;//商品id(添加时不传)
     public String mid;//商家id(编辑时可不传)

@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.webviewpage.PhotoBrowserActivity;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.helper.ImageHelper;

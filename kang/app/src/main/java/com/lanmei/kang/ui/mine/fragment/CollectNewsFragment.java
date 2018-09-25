@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MyCollectNewsAdapter;
-import com.lanmei.kang.api.MyCollectNewsApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.CollectNewsBean;
 import com.lanmei.kang.event.CollectNewsEvent;
 import com.xson.common.app.BaseFragment;
@@ -52,10 +52,9 @@ public class CollectNewsFragment extends BaseFragment {
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-
-        MyCollectNewsApi api = new MyCollectNewsApi();
-        api.token = api.getToken(context);
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("post/favour");
+        api.addParams("token",api.getToken(context));
+        api.addParams("uid",api.getUserId(context));
         mAdapter = new MyCollectNewsAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<CollectNewsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

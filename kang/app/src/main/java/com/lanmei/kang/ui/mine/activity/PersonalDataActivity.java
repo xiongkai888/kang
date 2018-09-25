@@ -24,9 +24,8 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.UserUpdateApi;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.oss.ManageOssUpload;

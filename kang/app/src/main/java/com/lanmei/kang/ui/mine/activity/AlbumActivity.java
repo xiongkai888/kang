@@ -15,17 +15,17 @@ import android.widget.TextView;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.AlbumAdapter;
-import com.lanmei.kang.api.AlbumApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AlbumBean;
-import com.lanmei.kang.helper.UserHelper;
-import com.lanmei.kang.util.CompressPhotoUtils;
 import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.util.CompressPhotoUtils;
 import com.oss.ManageOssUpload;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
@@ -108,8 +108,8 @@ public class AlbumActivity extends BaseActivity {
      */
     private void initSwipeRefreshLayout(final boolean isUpdate) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        AlbumApi api = new AlbumApi();
-        api.uid = CommonUtils.getUid(this);
+        KangQiMeiApi api = new KangQiMeiApi("talent/album");
+        api.addParams("uid",api.getUserId(this));
         httpClient.request(api, new BeanRequest.SuccessListener<NoPageListBean<AlbumBean>>() {
             @Override
             public void onResponse(NoPageListBean<AlbumBean> response) {
@@ -240,11 +240,11 @@ public class AlbumActivity extends BaseActivity {
     //删除相片
     private void ajaxDeleteAlbum(String idStr) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        AlbumApi api = new AlbumApi();
-        api.uid = api.getUserId(this);
-        api.token = UserHelper.getInstance(this).getToken();
-        api.act = "-1";
-        api.id = idStr.substring(0, idStr.length() - 1);
+        KangQiMeiApi api = new KangQiMeiApi("talent/album");
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",UserHelper.getInstance(this).getToken());
+        api.addParams("act",-1);
+        api.addParams("id",idStr.substring(0, idStr.length() - 1));
         httpClient.request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -326,11 +326,11 @@ public class AlbumActivity extends BaseActivity {
 
     private void ajaxUploadingHttp() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        AlbumApi api = new AlbumApi();
-        api.token = api.getToken(this);
-        api.uid = api.getUserId(this);
-        api.act = "1";
-        api.pic = successPath.substring(0, successPath.length() - 1);
+        KangQiMeiApi api = new KangQiMeiApi("talent/album");
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",api.getToken(this));
+        api.addParams("act",1);
+        api.addParams("pic",successPath.substring(0, successPath.length() - 1));
         httpClient.request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

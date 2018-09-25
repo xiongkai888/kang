@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.ItemsImgAdapter;
-import com.lanmei.kang.api.CollectItemsApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantDetailsBean;
 import com.lanmei.kang.event.CollectItemsEvent;
 import com.lanmei.kang.ui.merchant.ReserveInfoActivity;
@@ -165,11 +165,11 @@ public class MerchantItemsDetailsActivity extends BaseActivity {
 
     //收藏项目（服务）
     private void collectItem() {
-        CollectItemsApi api = new CollectItemsApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("member/do_favour");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(this));
         if (StringUtils.isSame(bean.getGood_favoured(), CommonUtils.isOne)) {
-            api.del = bean.getGood_favoured();
+            api.addParams("del",bean.getGood_favoured());
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

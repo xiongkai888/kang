@@ -10,11 +10,10 @@ import android.widget.Toast;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.HelpInfoApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.HelpInfoBean;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.UserHelper;
 import com.lanmei.kang.ui.login.RegisterActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
@@ -22,6 +21,7 @@ import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.DataCleanManager;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -160,8 +160,8 @@ public class SettingActivity extends BaseActivity {
 
     private void loadHelpInfo() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        HelpInfoApi api = new HelpInfoApi();
-        api.title = "帮助信息";
+        KangQiMeiApi api = new KangQiMeiApi("Index/news");
+        api.addParams("title","帮助信息");
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<HelpInfoBean>>() {
             @Override
             public void onResponse(NoPageListBean<HelpInfoBean> response) {

@@ -13,8 +13,7 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.MAUpdataApi;
-import com.lanmei.kang.api.MerchantInfoApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantInfoBean;
 import com.lanmei.kang.event.MerchantUpdataAdEvent;
 import com.lanmei.kang.util.CommonUtils;
@@ -90,8 +89,8 @@ public class MerchantDataActivity extends BaseActivity implements Toolbar.OnMenu
     }
     MerchantInfoBean bean;
     private void loadData(){
-        MerchantInfoApi api = new MerchantInfoApi();
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("place/index");
+        api.addParams("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<MerchantInfoBean>>() {
             @Override
             public void onResponse(DataBean<MerchantInfoBean> response) {
@@ -239,15 +238,15 @@ public class MerchantDataActivity extends BaseActivity implements Toolbar.OnMenu
     //更新商家资料
     private void updateMerchantData(String name,String stime,String etime,String address,String phone,String placeIntroduction) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        MAUpdataApi api = new MAUpdataApi();
-        api.token = api.getToken(this);
-        api.uid = api.getUserId(this);
-        api.name = name;
-        api.stime = stime;
-        api.etime = etime;
-        api.place_address = address;
-        api.tel = phone;
-        api.place_introduction = placeIntroduction;
+        KangQiMeiApi api = new KangQiMeiApi("place/update");
+        api.addParams("token",api.getToken(this));
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("name",name);
+        api.addParams("stime",stime);
+        api.addParams("etime",etime);
+        api.addParams("place_address",address);
+        api.addParams("tel",phone);
+        api.addParams("place_introduction",placeIntroduction);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

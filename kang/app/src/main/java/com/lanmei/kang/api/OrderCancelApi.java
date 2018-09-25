@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/25.
  * 取消订单
  */
 
-public class OrderCancelApi extends KangApi {
+public class OrderCancelApi extends ApiV2 {
 
     public String id;//订单id
     public String uid;//用户id

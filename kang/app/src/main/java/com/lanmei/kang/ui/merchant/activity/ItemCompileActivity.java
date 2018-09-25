@@ -23,9 +23,7 @@ import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.ItemsCompileAdapter;
-import com.lanmei.kang.api.DelProductApi;
-import com.lanmei.kang.api.EditProductApi;
-import com.lanmei.kang.api.ItemsCategoryApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.CategoryBean;
 import com.lanmei.kang.bean.ItemsCompileBean;
 import com.lanmei.kang.bean.MerchantItemsListBean;
@@ -185,24 +183,25 @@ public class ItemCompileActivity extends BaseActivity {
     }
 
     private void loadCompile(int what) {
-        EditProductApi api = new EditProductApi();
+        KangQiMeiApi api = new KangQiMeiApi("member/editProduct");
         if (isAdd) {
-            api.mid = pid;//(编辑时可不传)
+            api.addParams("mid",pid);//(编辑时可不传)
         } else {
-            api.pid = bean.getId();//商品id(添加时不传)
+            api.addParams("pid",bean.getId());//商品id(添加时不传)
         }
-        api.category_id = categoryBean.getId();
-        api.name = name;
-        api.content = content;
-        api.sell_price = price;
-        api.is_del = what;
+        api.addParams("category_id",categoryBean.getId());
+        api.addParams("name",name);
+        api.addParams("content",content);
+        api.addParams("sell_price",price);
+        api.addParams("is_del",what);
         if (!StringUtils.isEmpty(successPath3)) {//
-            api.img = successPath3.get(0);
+            api.addParams("img",successPath3.get(0));
         } else {
-            api.img = getCoverStringNoCompress(list1);
+            api.addParams("file",getFileString());
         }
-        api.file = getFileString();
-        api.pic = getPicString();
+        api.addParams("file",getFileString());
+        api.addParams("pic",getPicString());
+
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -716,9 +715,9 @@ public class ItemCompileActivity extends BaseActivity {
 
     //删除产品
     private void delProduct() {
-        DelProductApi api = new DelProductApi();
-        api.goods_id = bean.getId();
-        api.mid = pid;
+        KangQiMeiApi api = new KangQiMeiApi("member/delProduct");
+        api.addParams("goods_id",bean.getId());
+        api.addParams("mid",pid);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -732,9 +731,10 @@ public class ItemCompileActivity extends BaseActivity {
     List<CategoryBean> beanList;
 
     private void loadClass() {
-        ItemsCategoryApi api = new ItemsCategoryApi();
-        api.mid = pid;
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("member/category");
+        api.addParams("token",api.getToken(this));
+        api.addParams("mid",pid);
+
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<CategoryBean>>() {
             @Override
             public void onResponse(NoPageListBean<CategoryBean> response) {

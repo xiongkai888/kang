@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PhysiotherapyTabAdapter;
 import com.lanmei.kang.adapter.SearchUserAdapter;
-import com.lanmei.kang.api.MerchantListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.SearchUserApi;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.lanmei.kang.bean.SearchUserBean;
@@ -94,10 +94,10 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
     //搜索商家
     private void ajaxMerchant(String key) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        MerchantListApi api = new MerchantListApi();
-        api.keyword = key;
-        api.lat = SharedAccount.getInstance(this).getLat();
-        api.lon = SharedAccount.getInstance(this).getLon();
+        KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
+        api.addParams("lat",SharedAccount.getInstance(this).getLat());
+        api.addParams("lon",SharedAccount.getInstance(this).getLon());
+        api.addParams("keyword",key);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantListBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantListBean> response) {

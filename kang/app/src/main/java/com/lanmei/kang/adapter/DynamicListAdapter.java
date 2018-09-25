@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.DynamicLikedApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.event.DynamicLikedEvent;
 import com.lanmei.kang.helper.ShareHelper;
@@ -172,9 +172,9 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
                     if (!CommonUtils.isLogin(context)) {
                         return;
                     }
-                    DynamicLikedApi api = new DynamicLikedApi();
-                    api.uid = api.getUserId(context);
-                    api.id = bean.getId();
+                    KangQiMeiApi api = new KangQiMeiApi("posts/like");
+                    api.addParams("uid",api.getUserId(context));
+                    api.addParams("id",bean.getId());
                     HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                         @Override
                         public void onResponse(BaseBean response) {

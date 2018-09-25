@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/24.
  * 发布动态
  */
 
-public class PublishDynamicApi extends KangApi {
+public class PublishDynamicApi extends ApiV2 {
 
     public String uid;
     public String title;//标题

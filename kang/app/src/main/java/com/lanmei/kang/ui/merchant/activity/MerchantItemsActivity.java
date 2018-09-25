@@ -7,8 +7,7 @@ import android.view.MenuItem;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantItemsListAdapter;
-import com.lanmei.kang.api.MerchantInfoApi;
-import com.lanmei.kang.api.MerchantItemListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantInfoBean;
 import com.lanmei.kang.bean.MerchantItemsListBean;
 import com.lanmei.kang.event.CompileProductEvent;
@@ -62,14 +61,13 @@ public class MerchantItemsActivity extends BaseActivity {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
 
-        final MerchantItemListApi api = new MerchantItemListApi();
+        final KangQiMeiApi api = new KangQiMeiApi("member/product");
         mAdapter = new MerchantItemsListAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantItemsListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
-
-        MerchantInfoApi infoApi = new MerchantInfoApi();
-        infoApi.uid = api.getUserId(this);
+        KangQiMeiApi infoApi = new KangQiMeiApi("place/index");
+        infoApi.addParams("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(infoApi, new BeanRequest.SuccessListener<DataBean<MerchantInfoBean>>() {
             @Override
             public void onResponse(DataBean<MerchantInfoBean> response) {
@@ -81,7 +79,7 @@ public class MerchantItemsActivity extends BaseActivity {
                     return;
                 }
                 pid = bean.getId();
-                api.pid = pid;
+                api.addParams("pid",pid);
                 mAdapter.setPid(pid);
                 controller.loadFirstPage();
 

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.MerchantOrderDetailsApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.OrderDelApi;
 import com.lanmei.kang.api.ReserveOrderApi;
 import com.lanmei.kang.bean.OrderListMerchantBean;
@@ -107,8 +107,8 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
     }
 
     private void loadOrderDetails(){
-        MerchantOrderDetailsApi api = new MerchantOrderDetailsApi();
-        api.id = id;
+        KangQiMeiApi api = new KangQiMeiApi("Reservation/sellerDetail");
+        api.addParams("id",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<OrderListMerchantBean>>() {
             @Override
             public void onResponse(DataBean<OrderListMerchantBean> response) {

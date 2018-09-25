@@ -12,7 +12,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.api.IdentifyCodeApi;
 import com.lanmei.kang.api.UserUpdateApi;
 import com.lanmei.kang.api.WithdrawApi;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.CodeCountDownTimer;
 import com.lanmei.kang.util.RandomUtil;
 import com.xson.common.bean.BaseBean;

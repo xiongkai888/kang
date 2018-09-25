@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantOrderAdapter;
-import com.lanmei.kang.api.ConsumptionMerchantApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.ScanEvent;
 import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.qrcode.Des;
@@ -79,10 +79,12 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
             if (json == null){
                 return;
             }
-            ConsumptionMerchantApi api = new ConsumptionMerchantApi();
-            api.id = json.getString("id");
-            api.code = json.getString("code");
-            api.time = json.getString("time");
+            KangQiMeiApi api = new KangQiMeiApi("Reservation/service");
+
+            api.addParams("id",json.getString("id"));
+            api.addParams("code",json.getString("code"));
+            api.addParams("time",json.getString("time"));
+
             HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                 @Override
                 public void onResponse(BaseBean response) {

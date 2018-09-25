@@ -9,10 +9,9 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.WithdrawApi;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.bean.WithdrawCardListBean;
 import com.lanmei.kang.helper.ReceiverHelper;
-import com.lanmei.kang.helper.UserHelper;
+import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.user.setting.BoundKaActivity;
 import com.lanmei.kang.ui.user.setting.ChooseKaActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;

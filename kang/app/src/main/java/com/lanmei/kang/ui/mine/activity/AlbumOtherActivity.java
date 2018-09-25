@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.AlbumOtherAdapter;
-import com.lanmei.kang.api.AlbumApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AlbumBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
@@ -79,8 +79,8 @@ public class AlbumOtherActivity extends BaseActivity {
 
     private void initSwipeRefreshLayout(String uid) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        AlbumApi api = new AlbumApi();
-        api.uid =  uid;
+        KangQiMeiApi api = new KangQiMeiApi("talent/album");
+        api.addParams("uid",api.getUserId(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<AlbumBean>>() {
             @Override
             public void onResponse(NoPageListBean<AlbumBean> response) {

@@ -12,7 +12,6 @@ import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.UserBean;
 import com.lanmei.kang.bean.UserInfoBean;
 
 import static com.hyphenate.chatuidemo.ui.ConversationListFragment.REFRESH_CONVERSATIONLIST;

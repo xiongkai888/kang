@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodFriendsSubAdapter;
-import com.lanmei.kang.api.GoodFriendApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodFriendsBean;
 import com.lanmei.kang.event.AddFriendsEvent;
 import com.lanmei.kang.event.FollowInNewFriendEvent;
@@ -63,9 +63,10 @@ public class GoodFriendsFragment extends BaseFragment {
 
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-        GoodFriendApi api = new GoodFriendApi();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
+        KangQiMeiApi api = new KangQiMeiApi("friend/index");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",api.getToken(context));
+
         mAdapter = new GoodFriendsSubAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<GoodFriendsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

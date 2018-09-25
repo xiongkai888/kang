@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.lanmei.kang.R;
 import com.lanmei.kang.alipay.AlipayHelper;
-import com.lanmei.kang.api.ConsumptionUserApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.OrderCancelApi;
 import com.lanmei.kang.api.OrderDelApi;
 import com.lanmei.kang.api.OrderDetailsApi;
@@ -23,7 +23,6 @@ import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.bean.ZhiFuBaoBean;
 import com.lanmei.kang.event.OrderOperationEvent;
 import com.lanmei.kang.event.PaySucceedEvent;
-import com.lanmei.kang.helper.UserHelper;
 import com.lanmei.kang.helper.WXPayHelper;
 import com.lanmei.kang.qrcode.NCodeActivity;
 import com.lanmei.kang.ui.home.activity.OrderEvaluationActivity;
@@ -36,6 +35,7 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -304,17 +304,20 @@ public class OrderDetailsActivity extends BaseActivity {
     private void loadDes() {
         des3Code = RandomUtil.generateMixString(11);
         L.d("des3Code",des3Code);
-        ConsumptionUserApi api = new ConsumptionUserApi();
-        api.code = des3Code;
-        api.id = id;
-        api.time = System.currentTimeMillis();
-        api.token = api.getToken(this);
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("Reservation/consume");
+        api.addParams("code",des3Code);
+        api.addParams("id",id);
+
+        long time = System.currentTimeMillis();
+        api.addParams("time",time);
+        api.addParams("token",api.getToken(this));
+        api.addParams("uid",api.getUserId(this));
+
         final JSONObject json = new JSONObject();
         json.put("code",des3Code);
         json.put("Id",id);
         json.put("mid",mid);
-        json.put("time",api.time);
+        json.put("time",time);
         L.d("JSONObject",json.toJSONString());
         L.d("JSONObject",json.toString());
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {

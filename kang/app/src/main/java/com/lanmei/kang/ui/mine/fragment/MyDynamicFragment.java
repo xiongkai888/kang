@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.DynamicListAdapter;
-import com.lanmei.kang.api.DynamicListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.event.AttentionFriendEvent;
 import com.lanmei.kang.event.DynamicLikedEvent;
@@ -65,12 +65,12 @@ public class MyDynamicFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         mAdapter = new DynamicListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        DynamicListApi api = new DynamicListApi();
-        api.id = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("");
+        api.addParams("id",api.getUserId(context));
         if (com.xson.common.utils.StringUtils.isSame(status, CommonUtils.isZero)) {
-            api.uid = api.getUserId(context);
+            api.addParams("uid",api.getUserId(context));
         } else {
-            api.type = status;
+            api.addParams("type",status);
         }
         controller = new SwipeRefreshController<NoPageListBean<DynamicBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };

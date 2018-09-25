@@ -1,11 +1,13 @@
 package com.lanmei.kang.api;
 
+import com.xson.common.api.ApiV2;
+
 /**
  * Created by Administrator on 2017/5/24.
  * 支付
  */
 
-public class PayMentApi extends KangApi {
+public class PayMentApi extends ApiV2 {
 
     public String uid;
     public String token;

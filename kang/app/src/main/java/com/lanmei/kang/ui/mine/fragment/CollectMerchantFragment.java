@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MyCollectMerchantAdapter;
-import com.lanmei.kang.api.MyCollectMerchantApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.CollectBean;
 import com.lanmei.kang.event.CollectMerchantEvent;
 import com.lanmei.kang.util.SharedAccount;
@@ -50,12 +50,12 @@ public class CollectMerchantFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
-        MyCollectMerchantApi api = new MyCollectMerchantApi();
-//        Bundle bundle = getArguments();
-//        api.order = bundle.getString("order");
-        api.uid = api.getUserId(context);
-        api.lat = SharedAccount.getInstance(context).getLat();
-        api.lon = SharedAccount.getInstance(context).getLon();
+
+        KangQiMeiApi api = new KangQiMeiApi("place/favour");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("lat",SharedAccount.getInstance(context).getLat());
+        api.addParams("lon",SharedAccount.getInstance(context).getLon());
+
         mAdapter = new MyCollectMerchantAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<CollectBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

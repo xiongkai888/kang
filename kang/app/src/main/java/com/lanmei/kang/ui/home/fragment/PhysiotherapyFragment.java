@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PhysiotherapyTabAdapter;
-import com.lanmei.kang.api.MerchantListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.lanmei.kang.util.SharedAccount;
 import com.xson.common.app.BaseFragment;
@@ -38,11 +38,12 @@ public class PhysiotherapyFragment extends BaseFragment {
         Bundle bundle = getArguments();
         refreshLayout.initWithLinearLayout();
         refreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-        MerchantListApi api = new MerchantListApi();
-        api.cid = bundle.getString("cid");
-        api.order = bundle.getString("order");
-        api.lat = SharedAccount.getInstance(context).getLat();
-        api.lon = SharedAccount.getInstance(context).getLon();
+        KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
+        api.addParams("lat",SharedAccount.getInstance(context).getLat());
+        api.addParams("lon",SharedAccount.getInstance(context).getLon());
+        api.addParams("cid",bundle.getString("cid"));
+        api.addParams("order",bundle.getString("order"));
+
         mAdapter = new PhysiotherapyTabAdapter(context);
         refreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(context, refreshLayout, api, mAdapter) {

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.IdentifyCodeApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.api.RegisterApi;
 import com.lanmei.kang.api.ResetPwdApi;
 import com.lanmei.kang.event.RegisterEvent;
@@ -230,10 +230,12 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
         codeStr = RandomUtil.generateNumberString(6);//随机生成的六位验证码
         L.d("codeStr",codeStr);
         HttpClient httpClient = HttpClient.newInstance(this);
-        IdentifyCodeApi codeApi = new IdentifyCodeApi();
-        codeApi.phone = mobile;
-        codeApi.code = codeStr;
-        httpClient.loadingRequest(codeApi, new BeanRequest.SuccessListener<BaseBean>() {
+
+        KangQiMeiApi api = new KangQiMeiApi("public/send_sms");
+        api.addParams("phone",mobile);
+        api.addParams("code",codeStr);
+
+        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (isFinishing()){

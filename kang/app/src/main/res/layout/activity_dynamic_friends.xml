@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        style="@style/v_match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="@dimen/d_20dp">
+
+
+        <LinearLayout
+            style="@style/v_match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/d_10dp">
+
+            <com.xson.common.widget.CircleImageView
+                android:id="@+id/head_iv"
+                android:layout_width="@dimen/d_55dp"
+                android:layout_height="@dimen/d_55dp"
+                android:src="@mipmap/default_pic" />
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/text"
+                    android:layout_height="wrap_content"
+                    android:text="游客"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_18sp" />
+
+                <TextView
+                    android:id="@+id/grade_tv"
+                    android:visibility="gone"
+                    style="@style/text12colorWhite"
+                    android:text="比特0级" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/signature_tv"
+            style="@style/text"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:padding="@dimen/d_10dp"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:background="@color/colorF4F4">
+
+
+        <LinearLayout
+            android:id="@+id/ll_attention"
+            style="@style/text_weight"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                style="@style/text12color999"
+                android:layout_marginRight="3dp"
+                android:drawableLeft="@mipmap/icon_friends_follow"
+                android:drawablePadding="3dp"
+                android:text="关注" />
+
+            <TextView
+                android:id="@+id/follow_num_tv"
+                style="@style/text12colorPrimaryDark"
+                android:text="0" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fans"
+            style="@style/text_weight"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                style="@style/text12color999"
+                android:layout_marginRight="3dp"
+                android:drawableLeft="@mipmap/icon_friends_fans"
+                android:drawablePadding="3dp"
+                android:text="粉丝" />
+
+
+            <TextView
+                android:id="@+id/fans_num_tv"
+                style="@style/text12colorPrimaryDark"
+                android:text="0" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_good_friends"
+            style="@style/text_weight"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                style="@style/text12color999"
+                android:layout_marginRight="3dp"
+                android:drawableLeft="@mipmap/icon_friends"
+                android:drawablePadding="3dp"
+                android:text="好友" />
+
+
+            <TextView
+                android:id="@+id/friend_num_tv"
+                style="@style/text12colorPrimaryDark"
+                android:text="0" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_45dp"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabTextAppearance="@style/friendsTabLayoutAppearance">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="动态" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="好友" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="排名" />
+
+    </android.support.design.widget.TabLayout>
+
+    <TextView
+        style="@style/line_H1dp_CD"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

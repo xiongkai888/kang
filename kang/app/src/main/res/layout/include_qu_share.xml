@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_top">
+
+    <LinearLayout
+        android:id="@+id/ll_zan"
+        style="@style/text_weight"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/d_12dp"
+        android:paddingTop="@dimen/d_12dp">
+
+        <ImageView
+            android:id="@+id/zan_iv"
+            style="@style/text"
+            android:src="@mipmap/d_zan_off" />
+
+        <TextView
+            android:id="@+id/zan_tv"
+            style="@style/text12color999"
+            android:layout_marginLeft="@dimen/d_3dp"
+            android:text="1212" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_share"
+        style="@style/text_weight"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/d_share_s" />
+
+        <TextView
+            android:id="@+id/share_tv"
+            style="@style/text12color999"
+            android:layout_marginLeft="@dimen/d_3dp"
+            android:text="@string/share" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_comm"
+        style="@style/text_weight"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/d_comment_s" />
+
+        <TextView
+            android:id="@+id/comment_tv"
+            style="@style/text12color999"
+            android:layout_marginLeft="@dimen/d_3dp"
+            android:text="@string/comment" />
+
+    </LinearLayout>
+
+</LinearLayout>

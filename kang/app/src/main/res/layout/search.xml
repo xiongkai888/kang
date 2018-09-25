@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_search"
+    android:layout_width="match_parent"
+    android:layout_height="28dp"
+    android:background="@drawable/search_bg"
+    android:paddingLeft="@dimen/d_5dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        style="@style/text"
+        android:padding="5dp"
+        android:src="@mipmap/search" />
+
+    <TextView
+        style="@style/text12colorWhite"
+        android:hint="@string/input_keyword"
+        android:padding="3dp" />
+
+
+</LinearLayout>

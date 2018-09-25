@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/search_friends" />
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_new_friends"
+        style="@style/match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <!--<ImageView-->
+        <!--style="@style/text"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:src="@mipmap/icon_new_friends" />-->
+
+
+        <LinearLayout style="@style/ll_bottom">
+
+
+            <TextView
+                style="@style/mine_text"
+                android:text="新的朋友"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_interested_friend"
+        style="@style/match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <!--<ImageView-->
+        <!--style="@style/text"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:src="@mipmap/icon_interested" />-->
+
+
+        <LinearLayout style="@style/ll_bottom">
+
+
+            <TextView
+                style="@style/mine_text"
+                android:text="可能感兴趣的人"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_address_book_friends"
+        style="@style/match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <!--<ImageView-->
+        <!--style="@style/text"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:src="@mipmap/icon_communicate" />-->
+
+
+        <LinearLayout
+            style="@style/ll_bottom"
+            android:background="@color/white">
+
+
+            <TextView
+                style="@style/mine_text"
+                android:text="通讯录好友"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <TextView
+        style="@style/text"
+        android:layout_margin="10dp"
+        android:paddingTop="10dp"
+        android:text="全部好友" />
+
+    <TextView style="@style/line_H1dp_CD" />
+
+</LinearLayout>

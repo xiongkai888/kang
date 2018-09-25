@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorF4F4"
+              android:orientation="vertical"
+              tools:context="com.lanmei.kang.ui.merchant.MerchantDataActivity">
+
+    <include layout="@layout/include_centertitletoolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/goods_details_ad" />
+
+                <TextView
+                    android:id="@+id/uploading_tv"
+                    style="@style/Text.Size18"
+                    android:layout_gravity="center"
+                    android:text="点击上传图片"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </FrameLayout>
+
+            <LinearLayout style="@style/ll_bottom">
+
+                <TextView
+                    style="@style/text14colorBlack"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="商家名称：" />
+
+                <EditText
+                    android:id="@+id/name_et"
+                    style="@style/only_EditText_style"
+                    android:hint="请输入商家名称" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/line_H1dp_CD"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout style="@style/ll_bottom">
+
+                <TextView
+                    style="@style/text14colorBlack"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="营业时间：" />
+
+                <TextView
+                    android:id="@+id/start_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/code_shape"
+                    android:gravity="center"
+                    android:hint="开始时间"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <TextView
+                    style="@style/text14color8866"
+                    android:layout_margin="7dp"
+                    android:text="--" />
+
+
+                <TextView
+                    android:id="@+id/end_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/code_shape"
+                    android:gravity="center"
+                    android:hint="结束时间"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/line_H1dp_CD"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+
+                style="@style/ll_bottom">
+
+
+                <TextView
+                    style="@style/text14colorBlack"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="地        址：" />
+
+
+                <EditText
+                    android:id="@+id/address_et"
+                    style="@style/only_EditText_style"
+                    android:hint="请输入商家地址" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/line_H1dp_CD"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+
+                style="@style/ll_bottom">
+
+                <TextView
+                    style="@style/text14colorBlack"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="电        话：" />
+
+
+                <EditText
+                    android:id="@+id/phone_et"
+                    style="@style/only_EditText_style"
+                    android:hint="请输入联系电话" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/line_H1dp_CD"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+
+                <TextView
+                    style="@style/text14colorBlack"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="12dp"
+                    android:text="商家介绍" />
+
+                <TextView style="@style/line_H1dp_CD" />
+
+                <EditText
+                    android:id="@+id/place_introduction_et"
+                    style="@style/text14color666"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:hint="请输入商家介绍"
+                    android:lineSpacingExtra="1.3dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

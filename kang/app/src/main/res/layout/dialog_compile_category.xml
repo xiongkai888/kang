@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/compile_tv"
+        style="@style/text"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="@dimen/txt_16sp"
+        android:text="编辑分类" />
+
+
+    <EditText
+        android:id="@+id/category_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/d_20dp"
+        android:layout_marginLeft="@dimen/d_20dp"
+        android:layout_marginBottom="@dimen/d_15dp"
+        android:background="@drawable/send"/>
+
+
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout style="@style/ll_no_border">
+
+
+        <TextView
+            android:id="@+id/no_tv"
+            style="@style/text14color666"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/cancel" />
+
+        <TextView style="@style/line_V1dp_CD" />
+
+
+        <TextView
+            android:id="@+id/yes_tv"
+            style="@style/text14colorPrimaryDark"
+            android:textSize="16dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="确认" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

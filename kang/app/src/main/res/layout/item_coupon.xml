@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/d_10dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        style="@style/ll_no_border"
+        android:background="@drawable/border_coupon">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/d_20dp"
+            android:paddingTop="@dimen/d_20dp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/d_10dp"
+                android:src="@mipmap/coupon_on" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text14color666"
+                    android:text="使用范围：无限制" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/d_5dp"
+                    style="@style/text10color666"
+                    android:text="适用期限：2017/12/25-2017/12/31" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.lanmei.kang.view.DashedLineView
+            android:id="@+id/line_view"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/d_10dp"
+            android:background="@drawable/button_corners_4_radius_ff7676"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥100"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/text10colorWhite"
+                android:text="满1000可用" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

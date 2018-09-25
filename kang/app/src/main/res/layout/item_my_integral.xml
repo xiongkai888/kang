@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorF4F4"
+    android:orientation="vertical">
+
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text14colorBlack"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="+500.0"
+                android:textColor="#ff0000" />
+
+            <TextView
+                style="@style/text14colorBlack"
+                android:text="天河珠江赛艇场(消费)" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/text14color666"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="2017-4-27" />
+
+    </LinearLayout>
+</LinearLayout>

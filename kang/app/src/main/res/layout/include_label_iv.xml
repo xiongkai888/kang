@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/iv_layout_width"
+    android:layout_height="@dimen/iv_layout_height">
+
+
+        <ImageView
+            android:id="@+id/pic_iv"
+            android:layout_width="@dimen/iv_layout_width"
+            android:layout_height="@dimen/iv_layout_height"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_pic" />
+
+        <FrameLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_layout_height"
+            android:background="#66000000">
+
+            <TextView
+                android:id="@+id/label_tv"
+                android:text="广州"
+                android:layout_gravity="center"
+                style="@style/text12colorWhite" />
+
+        </FrameLayout>
+
+</FrameLayout>

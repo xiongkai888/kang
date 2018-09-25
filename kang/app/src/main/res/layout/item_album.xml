@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+             android:layout_height="105dp">
+
+    <ImageView
+        android:id="@+id/pic_iv"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/default_pic"/>
+
+    <ImageView
+        android:id="@+id/cross_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:padding="5dp"
+        android:src="@mipmap/cross"/>
+
+</FrameLayout>

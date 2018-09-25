@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/ll_bottom"
+              android:paddingBottom="5dp"
+              android:paddingTop="5dp">
+
+
+    <TextView
+        android:id="@+id/item_tv"
+        style="@style/text14color666"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/price_tv"
+        style="@style/text14color666"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/people_num_tv"
+        style="@style/text14color666"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="1"/>
+
+    <TextView
+        android:id="@+id/hourNum_tv"
+        style="@style/text14color666"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/total_tv"
+        style="@style/text14color666"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="0"/>
+
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_user_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingTop="10dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:paddingBottom="10dp"
+    android:paddingRight="15dp">
+
+
+    <com.lanmei.kang.widget.CircleImageView
+        android:id="@+id/user_head_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/default_pic" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        style="@style/text14colorBlack"
+        android:text="广州珠江赛艇俱乐部" />
+
+
+
+
+</LinearLayout>

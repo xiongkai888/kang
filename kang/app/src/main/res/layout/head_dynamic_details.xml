@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="15dp">
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/user_head_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/default_pic" />
+
+
+        <LinearLayout
+            style="@style/text_weight"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                style="@style/text"
+                android:text="小不点" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                style="@style/text12color666"
+                android:layout_marginTop="5dp"
+                android:text="12分钟前" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/attention_tv"
+            style="@style/text12colorPrimaryDark"
+            android:minWidth="@dimen/attention_minWidth"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/send"
+            android:text="@string/attention" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/content_tv"
+        style="@style/text"
+        android:layout_margin="10dp"
+        android:text="帆船赛中该如何处理无法避免的" />
+
+
+    <include
+        android:id="@+id/sudokuView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        layout="@layout/view_sudoku" />
+
+
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        layout="@layout/include_qu_share" />
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        style="@style/match_parent"
+        android:background="@color/colorF4F4"
+        android:paddingTop="10dp">
+
+        <TextView
+            style="@style/text"
+            android:layout_margin="10dp"
+            android:text="所有评论" />
+    </LinearLayout>
+
+</LinearLayout>

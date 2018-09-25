@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/goods_details_ad" />
+
+
+    <View style="@style/line_H1dp_CD" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:background="@color/colorF4F4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/text"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/cirlce_colorfe1"
+            android:gravity="center"
+            android:textSize="3sp" />
+
+        <TextView
+            style="@style/text"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="推荐商家" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_marginRight="5dp"
+            android:drawableRight="@mipmap/icon_in"
+            android:text="更多" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

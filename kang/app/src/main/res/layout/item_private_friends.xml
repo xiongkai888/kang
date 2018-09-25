@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_user_data"
+    style="@style/ll_bottom"
+    android:padding="10dp">
+
+
+    <com.lanmei.kang.widget.CircleImageView
+        android:id="@+id/user_head_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/tem_head" />
+
+
+    <TextView
+        android:id="@+id/name_tv"
+        style="@style/text14color333"
+        android:layout_width="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="小不点" />
+
+
+    <TextView
+        android:id="@+id/attention_tv"
+        style="@style/text14colorPrimaryDark"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/attention"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="5dp"
+        android:text="关注" />
+    <TextView
+        android:id="@+id/send_info_tv"
+        style="@style/text14colorPrimaryDark"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/attention"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="5dp"
+        android:text="发消息" />
+
+
+</LinearLayout>

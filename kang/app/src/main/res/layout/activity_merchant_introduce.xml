@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.lanmei.kang.ui.merchant.activity.MerchantIntroduceActivity">
+
+    <include layout="@layout/include_centertitletoolbar"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:background="@color/colorF4F4"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_layout"
+            android:orientation="vertical">
+
+
+            <include layout="@layout/goods_details_ad"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorF4F4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/name_tv"
+                        style="@style/text14colorBlack"/>
+
+                    <TextView
+                        android:id="@+id/business_time_tv"
+                        style="@style/text12color666"
+                        android:layout_marginTop="3dp"
+                        android:drawableLeft="@mipmap/icon_time"
+                        android:drawablePadding="5dp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@mipmap/icon_coordinate" />
+
+                        <TextView
+                            android:id="@+id/distance_tv"
+                            style="@style/text12color666"
+                            android:layout_width="wrap_content"
+                            android:lineSpacingMultiplier="1.2" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/merchant_introduce_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_introduce"/>
+
+                <ImageView
+                    android:id="@+id/collect_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/icon_collect_off"/>
+
+                <ImageView
+                    android:id="@+id/phone_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_details_phone"/>
+
+
+            </LinearLayout>
+
+            <TextView style="@style/line_H1dp_CD"/>
+
+            <LinearLayout
+                android:id="@+id/ll_merchant_album"
+                style="@style/ll_bottom"
+                android:paddingLeft="10dp"
+                android:paddingRight="7dp">
+
+                <TextView
+                    android:id="@+id/project_tv"
+                    style="@style/all_text"
+                    android:drawableLeft="@mipmap/icon_album"
+                    android:hint="相册"
+                    android:textColor="@color/color666" />
+
+                <ImageView
+                    android:id="@+id/choose_img"
+                    style="@style/in_image"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/d_10dp"
+                style="@style/ll_bottom">
+
+                <TextView
+                    android:layout_width="@dimen/d_5dp"
+                    android:layout_height="@dimen/d_20dp"
+                    android:background="@color/colorPrimaryDark" />
+
+                <TextView
+                    style="@style/all_text"
+                    android:hint="服务项目"
+                    android:layout_marginLeft="@dimen/d_5dp"/>
+
+
+            </LinearLayout>
+
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/recyclerView"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

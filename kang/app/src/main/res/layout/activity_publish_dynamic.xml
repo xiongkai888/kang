@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF4F4"
+    android:orientation="vertical"
+    tools:context="com.lanmei.kang.ui.dynamic.activity.PublishDynamicActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:focusableInTouchMode="true"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/title_et"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/publish_4_radius"
+                android:hint="@string/input_title"
+                android:lines="1"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/publish_4_radius"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_moment_add_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="@string/qin"
+                    android:maxLength="400"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/location_tv"
+                    style="@style/text14color8866"
+                    android:drawableLeft="@mipmap/icon_coordinate"
+                    android:layout_marginLeft="10dp"
+                    android:hint="@string/no_location"
+                    android:drawablePadding="5dp" />
+
+
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_moment_add_photos"
+                    style="@style/WrapWrap"
+                    android:layout_margin="10dp"
+                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="0dp"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="4dp"
+                    app:bga_snpl_itemWidth="0dp"
+                    app:bga_snpl_maxItemCount="9"
+                    app:bga_snpl_otherWhiteSpacing="100dp"
+                    app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                    app:bga_snpl_plusEnable="true"
+                    app:bga_snpl_sortable="true" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

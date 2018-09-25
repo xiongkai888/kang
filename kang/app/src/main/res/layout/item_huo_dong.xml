@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <include layout="@layout/include_label_iv"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lines="2"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:text="帆船赛中该如何处理无法避免的赛艇帆船赛中该如何处理无法避免的赛艇处理无法避免的赛艇处理无法避免的赛艇处理无法避免的赛艇"
+                android:textColor="@color/color4D4D" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/ll_no_border">
+
+
+            <TextView
+                android:id="@+id/price_tv"
+                android:text="￥0.00"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                style="@style/text12colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="刚刚"
+                android:textColor="@color/color6161"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

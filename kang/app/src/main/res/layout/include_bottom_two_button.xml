@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/text_match"
+    android:background="@drawable/border_top_white"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/sold_out_tv"
+        style="@style/two_button_style"
+        android:layout_margin="@dimen/d_10dp"
+        android:background="@color/colorF4F4"
+        android:text="下架"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <TextView style="@style/line_V1dp_CD" />
+
+    <TextView
+        android:id="@+id/delete_tv"
+        style="@style/two_button_style"
+        android:layout_margin="@dimen/d_10dp"
+        android:text="@string/delete" />
+
+</LinearLayout>

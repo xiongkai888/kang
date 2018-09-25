@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/border_top_white"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/ll_add_new_item"
+        style="@style/view_gravity_h_center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/m_add_item" />
+
+        <TextView
+            style="@style/text"
+            android:layout_marginLeft="3dp"
+            android:text="添加新产品" />
+
+
+    </LinearLayout>
+
+    <TextView style="@style/line_V1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_batch_manage"
+        style="@style/view_gravity_h_center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/m_batch_manage" />
+
+
+        <TextView
+            android:layout_marginLeft="3dp"
+            style="@style/text14colorPrimaryDark"
+            android:text="批量管理" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

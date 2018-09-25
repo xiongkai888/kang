@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lanmei.kang">
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22"
+        tools:overrideLibrary="com.easemob.redpacket" />
+
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 读取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 拨打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- 环信 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- GCM required, remember replace "com.hyphenate.chatuidemo" to your own package -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.lanmei.kang.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.lanmei.kang.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.lanmei.kang.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signatureOrSystem" />
+
+    <uses-permission android:name="com.lanmei.kang.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 环信end -->
+    <application
+        android:name=".KangApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/MenuText">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.lanmei.kang.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <!-- 新浪微博 -->
+
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            -
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!--<service-->
+            <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
+            <!--android:exported="false" />-->
+        <service
+            android:name=".updateversion.UpdateVersionService"
+            android:exported="false" />
+
+        <!-- <activity -->
+        <!-- android:name="com.umeng.socialize.media.WBShareCallBackActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
+        <!-- android:exported="false" -->
+        <!-- android:screenOrientation="portrait" > -->
+        <!-- </activity> -->
+
+
+        <!-- <activity -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:name="com.sina.weibo.sdk.share.WbShareTransActivity"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- </intent-filter> -->
+
+
+        <!-- </activity> -->
+
+
+        <!-- <service -->
+        <!-- android:name="com.sina.weibo.sdk.net.DownloadService" -->
+        <!-- android:exported="false"></service> -->
+
+
+        <!-- 8888888888888888888888888 -->
+
+        <receiver android:name=".ui.ApkInstallBroadcast">
+            <action android:name="android.intent.action.PACKAGE_ADDED" />
+            <action android:name="android.intent.action.PACKAGE_REPLACED" />
+            <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+            <data android:scheme="package" />
+        </receiver>
+        <!-- 微信Pay -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name" />
+
+        <!-- QQ、QQ空间 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1106162164" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 启动页 -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.MerchantIntroduceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.MerchantIntroduceSubActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.ReserveInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.MyIntegralActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.ClubActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.MyCollectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.MyActivityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.MyCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.MerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.PhysiotherapyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PersonalDataActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MenuText" />
+        <activity
+            android:name=".ui.dynamic.activity.DynamicDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dynamic.activity.PublishDynamicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MenuText" />
+        <activity
+            android:name=".ui.mine.activity.AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.MerchantDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.ClientValuateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.InterestedFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MenuText" />
+        <activity
+            android:name=".ui.mine.activity.CouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PublishHonorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.news.activity.NewsDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <!-- 环信start -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 开屏页 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+
+        <!-- 登陆 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+
+        <!-- 注册 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <!-- 聊天页面 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 添加好友 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.AddContactActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
+        <!-- 群组详情 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 群组列表 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 聊天室详情 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ChatRoomDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 新建聊天室 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.NewChatRoomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 新建群组 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.NewGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 退出群组提示框 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ExitGroupDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleBottom" />
+        <!-- 群组选人 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupPickContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.PickAtUserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 地图 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+
+        <!-- 新的朋友邀请消息页面 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.NewFriendsMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 转发消息用户列表页面 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ForwardMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 自定义的contextmenu -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ContextMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" />
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 下载文件 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 黑名单 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.BlacklistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+
+        <!-- 公开的群聊列表 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.PublicGroupsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.PublicChatRoomsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 语音通话 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.VoiceCallActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/nornal_style" />
+        <!-- 视频通话 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.VideoCallActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 群聊简单信息 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupSimpleDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <!-- 群组黑名单用户列表 -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupBlacklistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.GroupSearchMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.PublicGroupsSeachActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.EditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.SharedFilesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <!-- choose video -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.ImageGridActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.RecorderVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <!-- upload error log -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.DiagnoseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!-- iOS offline push nick -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.OfflinePushNickActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <!-- robots list -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.RobotsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <!-- user profile -->
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.SetServersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.OfflinePushSettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.CallOptionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+
+        <!-- 红包相关Activity start -->
+        <!-- 发红包 -->
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPRedPacketActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
+        <!-- 红包详情 -->
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 红包记录 -->
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 群成员列表页 -->
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPGroupMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 支付宝h5支付页面 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 支付宝h5授权页面 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- 钱包版红包SDK需额外几个Activity的声明 -->
+
+
+        <!-- &lt;!&ndash; WebView相关 &ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="com.easemob.redpacketui.ui.activity.RPWebViewActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/horizontal_slide" -->
+        <!-- android:windowSoftInputMode="adjustResize|stateHidden" /> -->
+        <!-- &lt;!&ndash; 零钱 &ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="com.easemob.redpacketui.ui.activity.RPChangeActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/horizontal_slide" -->
+        <!-- android:windowSoftInputMode="adjustResize|stateHidden" /> -->
+        <!-- &lt;!&ndash; 绑定银行卡 &ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="com.easemob.redpacketui.ui.activity.RPBankCardActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/horizontal_slide" -->
+        <!-- android:windowSoftInputMode="adjustPan|stateHidden" /> -->
+        <!-- &lt;!&ndash;转账页面&ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="com.easemob.redpacketui.ui.activity.RPTransferActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="adjustPan|stateVisible"/> -->
+        <!-- &lt;!&ndash;转账详情页面&ndash;&gt; -->
+        <!-- <activity -->
+        <!-- android:name="com.easemob.redpacketui.ui.activity.RPTransferDetailActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="adjustPan|stateHidden"/> -->
+        <!--  -->
+        <!-- 红包相关Activity end -->
+        <receiver android:name="com.hyphenate.chatuidemo.receiver.StartServiceReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- gcm start -->
+        <receiver
+            android:name="com.hyphenate.chat.EMGCMBroadcastReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.lanmei.kang" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.hyphenate.chat.EMGCMListenerService"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.hyphenate.chatuidemo.receiver.GCMPushBroadCast"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.hyphenate.sdk.push" />
+
+                <category android:name="com.lanmei.kang" />
+            </intent-filter>
+        </receiver>
+        <!-- gcm end -->
+
+
+        <!-- mi push -->
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.hyphenate.chat.EMMipushReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <!-- mi push end -->
+
+
+        <!-- huawei push 第三方相关 :接收Push消息（注册、Push消息、Push连接状态、标签，LBS上报结果）广播 -->
+        <receiver
+            android:name="com.hyphenate.chat.EMHuaweiPushReceiver"
+            android:exported="true">
+            <intent-filter>
+
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+            </intent-filter>
+            />
+            <meta-data
+                android:name="CS_cloud_ablitity"
+                android:value="successRateAnalytics" />
+        </receiver>
+
+        <!-- PushSDK:PushSDK接收外部请求事件入口 -->
+        <receiver
+            android:name="com.huawei.android.pushagent.PushEventReceiver"
+            android:exported="true"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />
+                <action android:name="com.huawei.intent.action.PUSH" />
+                <action android:name="com.huawei.intent.action.PUSH_ON" />
+                <action android:name="com.huawei.android.push.PLUGIN" />
+            </intent-filter>
+        </receiver>
+
+        <!-- PushSDK:Push服务 -->
+        <service
+            android:name="com.huawei.android.pushagent.PushService"
+            android:process=":pushservice" />
+
+        <!-- huawei push end -->
+
+
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="itlanmei123#kqm" />
+        <!-- 声明sdk所需的service -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- umeng appkey，可忽略 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a41e782b27b0a525400001c" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="hyphenate" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="RZGWkoIi8ogaU1zRZZCDjmWmm7LalIhe" />
+
+        <!-- fabric start -->
+        <!--
+            <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="6b54bd4edc63eba3ef59d69f8e0a5070bea384e2" />
+        -->
+        <!-- fabric end -->
+        <!-- 环信end -->
+
+        <activity
+            android:name=".ui.home.activity.RecomMerchantListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.details.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.details.IntroductionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.details.CourseDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".webviewpage.PhotoBrowserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.MyDynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.MerchantOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.MerchantOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.GoodFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.NewFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AddressBookFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PersonalCompileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.HuoDongActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SearchUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.ChooseKaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.user.setting.BoundKaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.details.OrderParticularsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.LeavePublishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PersonalDataNCActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AlbumOtherActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.OrderEvaluationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dynamic.activity.DynamicFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.MerchantAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.MerchantAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SearchPositionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.MerchantItemsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.MerchantItemsDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant.activity.ItemCompileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.shake.ShakeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.HelpActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".qrcode.NCodeActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".qrcode.ScanActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.merchant.activity.CategoryActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/money_tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/selector_item_recharge_background"
+    android:enabled="true"
+    android:gravity="center"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:textColor="@drawable/selector_item_recharge_textcolor"
+    tools:text="5元" />

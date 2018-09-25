@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/text_match"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_bg1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text12color999"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="5dp"
+            android:hint="搜索好友" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_new_friends"
+        style="@style/text_match"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <ImageView
+            style="@style/text"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_new_friends" />
+
+
+        <LinearLayout
+            style="@style/ll_bottom"
+            android:layout_marginLeft="10dp">
+
+
+            <TextView
+                style="@style/only_Text12_style"
+                android:text="@string/new_friends"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_interested_friend"
+        style="@style/text_match"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <ImageView
+            style="@style/text"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_interested" />
+
+
+        <LinearLayout
+            style="@style/ll_bottom"
+            android:layout_marginLeft="10dp">
+
+
+            <TextView
+                style="@style/only_Text12_style"
+                android:text="@string/interested_people"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_address_book_friends"
+        style="@style/text_match"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <ImageView
+            style="@style/text"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_communicate" />
+
+
+        <LinearLayout
+            style="@style/ll_bottom"
+            android:layout_marginLeft="10dp"
+            android:background="@color/white">
+
+
+            <TextView
+                style="@style/only_Text12_style"
+                android:text="通讯录好友"
+                android:textColor="@color/color333" />
+
+            <ImageView
+                style="@style/text"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:src="@mipmap/icon_in" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <TextView
+        style="@style/text14color333"
+        android:layout_margin="10dp"
+        android:paddingTop="10dp"
+        android:text="全部好友" />
+
+    <TextView style="@style/line_H1dp_CD" />
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_scan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.xson.common.widget.CenterTitleToolbar
+        android:id="@+id/toolbar"
+        android:theme="@style/ScanQRCodeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/devider_view"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/colorB2B2"
+        android:layout_height="0.5dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/devider_view"
+        android:layout_height="match_parent">
+        <cn.bingoogolapple.qrcode.zxing.ZXingView
+            android:id="@+id/zxingview"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginBottom="180dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="扫描确认用户消费"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</RelativeLayout>

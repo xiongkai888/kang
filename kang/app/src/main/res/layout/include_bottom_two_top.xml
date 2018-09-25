@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/border_top_white"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/ll_service"
+        style="@style/view_gravity_h_center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/m_service_consult" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_marginTop="3dp"
+            android:text="客服咨询" />
+
+
+    </LinearLayout>
+
+    <TextView style="@style/line_V1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_order_now"
+        style="@style/view_gravity_h_center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            style="@style/text"
+            android:src="@mipmap/m_order_now" />
+
+
+        <TextView
+            android:layout_marginTop="3dp"
+            style="@style/text12colorPrimaryDark"
+            android:text="立即订购" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

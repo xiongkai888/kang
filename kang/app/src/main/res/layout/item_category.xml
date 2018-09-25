@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/d_10dp"
+    style="@style/ll_bottom">
+
+    <TextView
+        android:paddingTop="@dimen/d_5dp"
+        android:paddingBottom="@dimen/d_5dp"
+        android:id="@+id/name_tv"
+        android:text="中医理疗"
+        style="@style/text" />
+
+
+</LinearLayout>

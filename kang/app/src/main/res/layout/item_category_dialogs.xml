@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_bottom"
+    android:padding="@dimen/d_10dp">
+
+
+    <ImageView
+        android:id="@+id/choose_img"
+        style="@style/text"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:src="@mipmap/pay_on" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        style="@style/mine_text"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:text="中医理疗" />
+
+    <TextView
+        android:id="@+id/num_tv"
+        style="@style/text14color666"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:text="共1件商品" />
+
+
+</LinearLayout>

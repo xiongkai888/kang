@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xson.common.widget.DrawClickableEditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keywordEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/search_bg"
+    android:drawableLeft="@mipmap/search"
+    android:drawablePadding="8dp"
+    android:hint="@string/input_keyword"
+    android:imeOptions="actionSearch"
+    android:maxLines="1"
+    android:padding="7dp"
+    android:singleLine="true"
+    android:textSize="12sp"
+    >
+
+</com.xson.common.widget.DrawClickableEditText>

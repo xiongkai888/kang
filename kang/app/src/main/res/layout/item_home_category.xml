@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/d_10dp"
+    android:orientation="vertical">
+
+    <com.xson.common.widget.CircleImageView
+        android:id="@+id/pic_iv"
+        android:layout_width="@dimen/d_50dp"
+        android:layout_height="@dimen/d_50dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/home_li1" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_marginTop="@dimen/d_5dp"
+        android:text="中医理疗"
+        style="@style/text" />
+</LinearLayout>

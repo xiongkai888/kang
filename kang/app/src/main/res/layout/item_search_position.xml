@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_user_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/address_name_tv"
+        style="@style/text16color4D4D"
+        android:text="广州市" />
+
+    <TextView
+        android:id="@+id/address_details_tv"
+        style="@style/text14color666"
+        android:layout_marginTop="3dp"
+        android:text="广州市" />
+
+</LinearLayout>

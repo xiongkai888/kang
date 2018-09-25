@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.login.LoginActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            style="@style/text_match"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_account" />
+
+
+            <LinearLayout
+                style="@style/text_match"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border_bottom_white"
+                android:orientation="horizontal">
+
+                <com.xson.common.widget.DrawClickableEditText
+                    android:id="@+id/mobile_et"
+                    style="@style/only_EditText_style"
+                    android:hint="@string/input_phone_number"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:paddingRight="15dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/text_match"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/text_lg_v"
+                android:src="@mipmap/icon_pwd" />
+
+
+            <LinearLayout
+                style="@style/text_match"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border_bottom_white"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/pwd_et"
+                    style="@style/only_EditText_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/input_pwd"
+                    android:inputType="textPassword"
+                    android:maxLength="18" />
+
+                <ImageView
+                    android:id="@+id/iv_showPwd"
+                    style="@style/text_lg_v"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/pwd_off" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/forgotPwd_tv"
+            style="@style/text12color666"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp"
+            android:text="忘记密码？" />
+
+        <Button
+            android:id="@+id/bt_login"
+            style="@style/button_style"
+            android:layout_marginTop="50dp"
+            android:text="@string/login" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            style="@style/text_match"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="1"
+                android:background="@color/color999" />
+
+            <TextView
+                style="@style/text"
+                android:text="第三方登录"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:textColor="@color/color999" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="1"
+                android:background="@color/color999" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/text_match"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_weixinlogin"
+                style="@style/text"
+                android:layout_margin="12dp"
+                android:src="@mipmap/dl_weixin"
+                android:visibility="visible" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_qqlogin"
+                style="@style/text"
+                android:layout_margin="12dp"
+                android:src="@mipmap/dl_qq" />
+
+            <ImageView
+                android:id="@+id/iv_weibologin"
+                style="@style/text"
+                android:layout_margin="12dp"
+                android:src="@mipmap/dl_weibo"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

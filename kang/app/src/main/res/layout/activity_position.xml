@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/ll_bottom"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="55dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="10dp"
+            android:src="@mipmap/back" />
+
+        <com.xson.common.widget.DrawClickableEditText
+            android:id="@+id/keywordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/search_bg"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="8dp"
+            android:hint="请输入关键字"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:padding="7dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12sp">
+
+        </com.xson.common.widget.DrawClickableEditText>
+
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_no_location"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone"
+        style="@style/ll_bottom">
+
+        <TextView
+            android:text="@string/no_location"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/Text.Size18"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

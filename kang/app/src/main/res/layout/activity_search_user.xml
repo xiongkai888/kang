@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/ll_no_border"
+        android:layout_height="@dimen/d_50dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingRight="@dimen/d_15dp">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/text"
+            android:padding="@dimen/d_10dp"
+            android:src="@mipmap/back" />
+
+        <include layout="@layout/search_edittext" />
+
+    </LinearLayout>
+
+    <include layout="@layout/single_recyclerview"/>
+</LinearLayout>

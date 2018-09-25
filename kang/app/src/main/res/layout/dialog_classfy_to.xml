@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/text_match"
+            android:background="@color/colorF4F4">
+
+            <TextView
+                style="@style/mine_text"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:text="分类至"
+                android:textColor="@color/color666" />
+
+            <TextView
+                android:id="@+id/compile_tv"
+                style="@style/text14colorPrimaryDark"
+                android:layout_marginRight="@dimen/d_10dp"
+                android:text="编辑" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_add_classify"
+            style="@style/text_match"
+            android:layout_margin="@dimen/d_20dp"
+            android:background="@drawable/button_corners_4_radius_f4"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/m_add_classfy" />
+
+            <TextView
+                style="@style/text14colorPrimaryDark"
+                android:layout_marginLeft="@dimen/d_5dp"
+                android:paddingBottom="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_10dp"
+                android:text="新建分类" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/include_bottom_two_button" />
+
+</LinearLayout>

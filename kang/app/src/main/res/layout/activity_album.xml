@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_height="55dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_centerInParent="true"
+            android:text="商家轮播图"
+            android:textStyle="normal"
+            style="@style/text18colorWhite"/>
+
+        <TextView
+            android:id="@+id/done_tv"
+            android:text="@string/done"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            style="@style/text14color999"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/ll_bottom"
+        android:background="@color/colorF4F4">
+
+        <Button
+            android:id="@+id/uploading_bt"
+            style="@style/button_style"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/album_4_radius"
+            android:text="+上传相片"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"/>
+
+</LinearLayout>

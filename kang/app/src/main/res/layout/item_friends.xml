@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_no_border"
+    android:padding="10dp">
+
+
+        <com.xson.common.widget.CircleImageView
+            android:id="@+id/head_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/default_pic" />
+
+
+        <TextView
+            android:id="@+id/name_tv"
+            style="@style/text"
+            android:layout_width="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="小不点" />
+
+
+
+        <TextView
+            android:id="@+id/attention_tv"
+            style="@style/text14colorPrimaryDark"
+            android:minWidth="@dimen/attention_minWidth"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/send"
+            android:text="关注" />
+
+
+</LinearLayout>

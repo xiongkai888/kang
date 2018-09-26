@@ -12,9 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.UserInfoApi;
-import com.lanmei.kang.api.UserUpdateApi;
-import com.xson.common.helper.UserHelper;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.ui.BaseHxActivity;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.ui.merchant.activity.MerchantItemsActivity;
@@ -22,10 +20,13 @@ import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.oss.ManageOssUpload;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.ImageUtils;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
@@ -257,15 +258,13 @@ public class MerchantActivity extends BaseHxActivity {
     }
 
     private void ajaxUploadingHead(String headUrl) {
-
-        HttpClient httpClient = HttpClient.newInstance(getContext());
-        UserUpdateApi api = new UserUpdateApi();
-        api.token = UserHelper.getInstance(getContext()).getToken();
-        api.pic = headUrl;
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("member/update");
+        api.addParams("token",api.getToken(this));
+        api.addParams("pic",headUrl);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (MerchantActivity.this.isFinishing()) {
+                if (isFinishing()) {
                     return;
                 }
                 UIHelper.ToastMessage(getContext(), "上传头像成功");
@@ -277,8 +276,9 @@ public class MerchantActivity extends BaseHxActivity {
 
     private void ajaxUserInfo() {
         HttpClient httpClient = HttpClient.newInstance(getContext());
-        UserInfoApi api = new UserInfoApi();
-        api.token = UserHelper.getInstance(getContext()).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("member/member");
+        api.addParams("token",api.getToken(this));
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {

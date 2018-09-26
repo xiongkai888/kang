@@ -9,12 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.IdentifyCodeApi;
-import com.lanmei.kang.api.UserUpdateApi;
-import com.lanmei.kang.api.WithdrawApi;
-import com.xson.common.helper.UserHelper;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.util.CodeCountDownTimer;
 import com.lanmei.kang.util.RandomUtil;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
@@ -104,10 +102,11 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
 
     private void loadUnBoundCar() {
         HttpClient httpClient = HttpClient.newInstance(context);
-        WithdrawApi api = new WithdrawApi();
-        api.del = "1";//表示删除
-        api.id = type;
-        api.token = UserHelper.getInstance(context).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
+        api.addParams("token",api.getToken(getContext()));
+        api.addParams("del",1);//表示删除
+        api.addParams("id",type);
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -124,9 +123,9 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
 
     private void ajaxChangePhone() {
         HttpClient httpClient = HttpClient.newInstance(context);
-        UserUpdateApi api = new UserUpdateApi();
-        api.token = UserHelper.getInstance(context).getToken();
-        api.phone = mPhone;
+        KangQiMeiApi api = new KangQiMeiApi("member/update");
+        api.addParams("token",api.getToken(context));
+        api.addParams("phone",mPhone);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -143,12 +142,15 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
     private void ajaxObtainCode() {
         codeStr = RandomUtil.generateNumberString(6);//随机生成的六位验证码
         HttpClient httpClient = HttpClient.newInstance(context);
-        IdentifyCodeApi codeApi = new IdentifyCodeApi();
-        codeApi.phone = mPhone;
-        codeApi.code = codeStr;
-        httpClient.loadingRequest(codeApi, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("public/send_sms");
+        api.addParams("phone",mPhone);
+        api.addParams("code",codeStr);
+        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
+                if (mCountDownTimer == null){
+                    return;
+                }
                 mCountDownTimer.start();
                 UIHelper.ToastMessage(context, response.getInfo());
             }
@@ -185,7 +187,7 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
     @Override
     public void onTick(long l) {
         if (mObtainCodeTv != null){
-            mObtainCodeTv.setText(l / 1000 + "s后重新获取");
+            mObtainCodeTv.setText(l / 1000 + context.getString(R.string.s_regain));
             mObtainCodeTv.setClickable(false);
             mObtainCodeTv.setTextSize(12);
         }

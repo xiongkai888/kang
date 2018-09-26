@@ -59,14 +59,16 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.UserInfoApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.UserInfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.loader.DataLoader;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.DataBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -987,11 +989,11 @@ public class DemoHelper {
                 userIdMap.put(username,username);
             }
         }
-        HttpClient httpClient = HttpClient.newInstance(appContext);
-        UserInfoApi api = new UserInfoApi();
+        KangQiMeiApi api = new KangQiMeiApi("member/member");
         String uid = username.substring(2, username.length());
-        api.uid = uid;
-        httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
+        api.addParams("uid",uid);
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(appContext).request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
             @Override
             public void onResponse(DataBean<UserInfoBean> response) {
                 if (!userBeanMap.containsKey(username)){

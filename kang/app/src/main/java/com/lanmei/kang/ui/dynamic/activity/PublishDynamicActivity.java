@@ -21,7 +21,7 @@ import com.baidu.location.BDLocationListener;
 import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.PublishDynamicApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.LocationChooseEvent;
 import com.lanmei.kang.event.PublishDynamicEvent;
 import com.lanmei.kang.helper.BGASortableNinePhotoHelper;
@@ -30,6 +30,7 @@ import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.CompressPhotoUtils;
 import com.lanmei.kang.util.loc.LocationService;
 import com.oss.ManageOssUpload;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -182,14 +183,13 @@ public class PublishDynamicActivity extends BaseActivity implements BGASortableN
 
 
     private void ajaxHttp() {
-
-        HttpClient httpClient = HttpClient.newInstance(this);
-        PublishDynamicApi api = new PublishDynamicApi();
-        api.title = title;
-        api.city = CommonUtils.getStringByTextView(mLocationTv);
-        api.uid = api.getUserId(this);
-        api.file = CommonUtils.getStringArr(successPath);
-        httpClient.request(api, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("Posts/add");
+        api.addParams("title",title);
+        api.addParams("city",CommonUtils.getStringByTextView(mLocationTv));
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("file",CommonUtils.getStringArr(successPath));
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (isFinishing()) {

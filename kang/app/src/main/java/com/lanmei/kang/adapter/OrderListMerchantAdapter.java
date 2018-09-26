@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.OrderDelApi;
-import com.lanmei.kang.api.ReserveOrderApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.OrderListMerchantBean;
 import com.lanmei.kang.event.OrderOperationMerchantEvent;
 import com.lanmei.kang.qrcode.ScanActivity;
@@ -20,6 +19,7 @@ import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
@@ -254,10 +254,10 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
 
     //3拒绝退款和7同意退款
     private void agreeRefund(OrderListMerchantBean bean, String type) {
-        ReserveOrderApi api = new ReserveOrderApi();
-        api.id = bean.getId();
-        api.status = type;
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/save");
+        api.addParams("id",bean.getId());
+        api.addParams("status",type);
+        api.addParams("uid",api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -272,9 +272,11 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
 
     //删除订单
     private void orderDel(OrderListMerchantBean bean, final int position) {
-        OrderDelApi api = new OrderDelApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/del");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
+
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -8,8 +8,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.WithdrawApi;
-import com.xson.common.helper.UserHelper;
+import com.lanmei.kang.api.KangQiMeiApi;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -77,16 +77,18 @@ public class BoundKaActivity extends BaseActivity {
             UIHelper.ToastMessage(this,getString(R.string.input_brank_num));
             return;
         }
-
-        HttpClient httpClient = HttpClient.newInstance(getContext());
-        WithdrawApi api = new WithdrawApi();
-        api.token = UserHelper.getInstance(getContext()).getToken();
-        api.banks_name = mKa;
-        api.banks_no = kaHao;
-        api.realname = name;
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
+        api.addParams("token",api.getToken(this));
+        api.addParams("banks_name",mKa);
+        api.addParams("banks_no",kaHao);
+        api.addParams("realname",name);
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
+                if (isFinishing()){
+                    return;
+                }
                 UIHelper.ToastMessage(BoundKaActivity.this,response.getInfo());
                 setResult(RESULT_OK);
                 finish();

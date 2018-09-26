@@ -140,5 +140,6 @@
     <string name="out_product">确定要下架该产品？</string>
     <string name="pay_failure">支付失败</string>
     <string name="pay_succeed">支付成功</string>
+    <string name="s_regain">s后重新获取</string>
 
 </resources>

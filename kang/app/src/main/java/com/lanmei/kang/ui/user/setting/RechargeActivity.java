@@ -11,11 +11,10 @@ import android.widget.LinearLayout;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.RechargeAdapter;
 import com.lanmei.kang.alipay.AlipayHelper;
-import com.lanmei.kang.api.RechargeApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.RechargeSubBean;
 import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.event.PaySucceedEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.helper.WXPayHelper;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.DataBean;
@@ -142,10 +141,10 @@ public class RechargeActivity extends BaseActivity {
 
     private void ajaxPay() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        RechargeApi api = new RechargeApi();
-        api.token = UserHelper.getInstance(this).getToken();
-        api.money = rechargeMoney;
-        api.pay_type = type;
+        KangQiMeiApi api = new KangQiMeiApi("member/recharge");
+        api.addParams("token",api.getToken(this));
+        api.addParams("money",rechargeMoney);
+        api.addParams("pay_type",type);
         if (type == 1) {//支付宝充值
 //            UIHelper.ToastMessage(this,R.string.developing);
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {

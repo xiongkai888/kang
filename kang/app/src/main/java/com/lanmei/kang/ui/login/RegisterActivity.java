@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.api.RegisterApi;
-import com.lanmei.kang.api.ResetPwdApi;
 import com.lanmei.kang.event.RegisterEvent;
 import com.lanmei.kang.util.CodeCountDownTimer;
 import com.lanmei.kang.util.CommonUtils;
@@ -193,9 +191,9 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
 
     //找回密码或修改密码
     private void retrieveOrResetPwd(final String mobile, String pwd, String code, HttpClient httpClient) {
-        ResetPwdApi api = new ResetPwdApi();
-        api.phone = mobile;
-        api.password = pwd;
+        KangQiMeiApi api = new KangQiMeiApi("public/resetPwd");
+        api.addParams("phone",mobile);
+        api.addParams("password",pwd);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -210,11 +208,11 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
 
     //注册
     private void register(String nickName,final String mobile, String pwd, String code,HttpClient httpClient) {
-        RegisterApi api = new RegisterApi();
-        api.phone = mobile;
-        api.password = pwd;
-        api.repassword = pwd;
-        api.nickname = nickName;
+        KangQiMeiApi api = new KangQiMeiApi("public/regist");
+        api.addParams("phone",mobile);
+        api.addParams("password",pwd);
+        api.addParams("repassword",pwd);
+        api.addParams("nickname",nickName);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

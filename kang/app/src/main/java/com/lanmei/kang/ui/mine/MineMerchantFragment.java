@@ -18,9 +18,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.UserUpdateApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
@@ -35,9 +34,11 @@ import com.lanmei.kang.util.CommonUtils;
 import com.oss.ManageOssUpload;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.ImageUtils;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
@@ -304,12 +305,11 @@ public class MineMerchantFragment extends BaseFragment {
     }
 
     private void ajaxUploadingHead(final String headUrl) {
-        HttpClient httpClient = HttpClient.newInstance(getContext());
-        UserUpdateApi api = new UserUpdateApi();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
-        api.pic = headUrl;
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("member/update");
+        api.addParams("token",api.getToken(context));
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("pic",headUrl);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (userNameTv == null) {

@@ -6,6 +6,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.FriendsRankAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.FriendsRankBean;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -48,6 +49,7 @@ public class FriendsRankingFragment extends BaseFragment {
         }
         KangQiMeiApi api = new KangQiMeiApi("friend/rank");
         api.addParams("uid",uid);
+        api.setMethod(AbstractApi.Method.GET);
         mAdapter = new FriendsRankAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<FriendsRankBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

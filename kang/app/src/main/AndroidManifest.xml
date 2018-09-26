@@ -203,9 +203,6 @@
             android:name=".ui.merchant.ReserveInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.setting.MyIntegralActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.user.setting.ClubActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -252,9 +249,6 @@
             android:theme="@style/MenuText" />
         <activity
             android:name=".ui.mine.activity.CouponActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.PublishHonorActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.news.activity.NewsDetailsActivity"

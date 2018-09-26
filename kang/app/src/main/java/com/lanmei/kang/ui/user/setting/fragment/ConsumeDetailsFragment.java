@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.TopUpAdapter;
-import com.lanmei.kang.api.TopUpApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.RechargeResultBean;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -49,9 +50,10 @@ public class ConsumeDetailsFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
-        TopUpApi api = new TopUpApi();
-        api.token = api.getToken(context);
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("member/money_log");
+        api.addParams("token",api.getToken(context));
+        api.addParams("uid",api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
         mAdapter = new TopUpAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

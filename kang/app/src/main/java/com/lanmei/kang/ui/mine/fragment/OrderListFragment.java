@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.OrderListAdapter;
-import com.lanmei.kang.api.OrderListApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.OrderListBean;
 import com.lanmei.kang.event.OrderOperationEvent;
 import com.xson.common.app.BaseFragment;
@@ -50,10 +50,10 @@ public class OrderListFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         String status = getArguments().getString("status");
-        OrderListApi api = new OrderListApi();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
-        api.status = status;//0全部1待付款2已付款3未消费4已完成
+        KangQiMeiApi api = new KangQiMeiApi("Reservation/index");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",api.getToken(context));
+        api.addParams("status",status);//0全部1待付款2已付款3未消费4已完成
         mAdapter = new OrderListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<OrderListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

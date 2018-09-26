@@ -4,18 +4,17 @@ import android.os.Bundle;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.OrderListMerchantAdapter;
-import com.lanmei.kang.api.OrderDelApi;
-import com.lanmei.kang.api.OrderListMerchantApi;
-import com.lanmei.kang.api.ReserveOrderApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.OrderListMerchantBean;
 import com.lanmei.kang.event.ScanSucceedEvent;
-import com.xson.common.helper.UserHelper;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
@@ -55,13 +54,13 @@ public class MerchantOrderListFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
-        OrderListMerchantApi api = new OrderListMerchantApi();
+        KangQiMeiApi api = new KangQiMeiApi("Reservation/sellerOrder");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",UserHelper.getInstance(context).getToken());
         Bundle bundle = getArguments();
         if (bundle != null) {
-            api.status = bundle.getString("status");
+            api.addParams("status",bundle.getString("status"));
         }
-        api.uid = api.getUserId(context);
-        api.token = UserHelper.getInstance(context).getToken();
         mAdapter = new OrderListMerchantAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<OrderListMerchantBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
@@ -73,11 +72,11 @@ public class MerchantOrderListFragment extends BaseFragment {
     }
 
     private void ajaxDelOrder(String id) {//删除订单
-        HttpClient httpClient = HttpClient.newInstance(context);
-        OrderDelApi api = new OrderDelApi();
-        api.id = id;
-        api.token = UserHelper.getInstance(context).getToken();
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        KangQiMeiApi api = new KangQiMeiApi("reservation/del");
+        api.addParams("id",id);
+        api.addParams("token",api.getToken(context));
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (context == null){
@@ -90,9 +89,9 @@ public class MerchantOrderListFragment extends BaseFragment {
 
     private void ajaxCancelOrder(String id,String status) {//取消订单
         HttpClient httpClient = HttpClient.newInstance(context);
-        ReserveOrderApi api = new ReserveOrderApi();
-        api.status = status;//1、下单 2、确认订单 3、取消订单 4、作废 5、完成
-        api.token = UserHelper.getInstance(context).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("reservation/save");
+        api.addParams("status",status);//1、下单 2、确认订单 3、取消订单 4、作废 5、完成
+        api.addParams("token",api.getToken(context));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

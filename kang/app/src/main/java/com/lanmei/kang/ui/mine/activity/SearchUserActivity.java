@@ -11,7 +11,6 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PhysiotherapyTabAdapter;
 import com.lanmei.kang.adapter.SearchUserAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.api.SearchUserApi;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.lanmei.kang.bean.SearchUserBean;
 import com.lanmei.kang.util.SharedAccount;
@@ -46,6 +45,7 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
 
 
     String searchType;
+
     @Override
     public int getContentViewId() {
         return R.layout.activity_search_user;
@@ -61,7 +61,7 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
 
 
         searchType = getIntent().getStringExtra("value");
-        if (StringUtils.isSame("user",searchType)) {//用户搜索
+        if (StringUtils.isSame("user", searchType)) {//用户搜索
             mUserAdapter = new SearchUserAdapter(this);
             mRecyclerView.setAdapter(mUserAdapter);
             mKeywordEditText.setHint(R.string.search_friends);
@@ -95,9 +95,9 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
     private void ajaxMerchant(String key) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
-        api.addParams("lat",SharedAccount.getInstance(this).getLat());
-        api.addParams("lon",SharedAccount.getInstance(this).getLon());
-        api.addParams("keyword",key);
+        api.addParams("lat", SharedAccount.getInstance(this).getLat());
+        api.addParams("lon", SharedAccount.getInstance(this).getLon());
+        api.addParams("keyword", key);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantListBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantListBean> response) {
@@ -110,15 +110,14 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
 
     //搜索用户
     private void ajaxSearchUser(String key) {
-
-        SearchUserApi api = new SearchUserApi();
-        api.keyword = key;
-        api.token = api.getToken(this);
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("member/search");
+        api.addParams("keyword", key);
+        api.addParams("token", api.getToken(this));
+        api.addParams("uid", api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<SearchUserBean>>() {
             @Override
             public void onResponse(NoPageListBean<SearchUserBean> response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
                 List<SearchUserBean> list = response.getDataList();
@@ -129,7 +128,7 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
     }
 
     @OnClick(R.id.back_iv)
-    public void showBack(){//返回
+    public void showBack() {//返回
         onBackPressed();
     }
 

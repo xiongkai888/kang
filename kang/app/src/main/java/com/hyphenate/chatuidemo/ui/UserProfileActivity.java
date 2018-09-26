@@ -27,6 +27,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.UserInfoBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.CommonUtils;
 

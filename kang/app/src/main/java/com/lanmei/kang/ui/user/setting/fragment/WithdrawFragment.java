@@ -8,17 +8,19 @@ import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.WithdrawApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.WithdrawCardListBean;
 import com.lanmei.kang.helper.ReceiverHelper;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.user.setting.BoundKaActivity;
 import com.lanmei.kang.ui.user.setting.ChooseKaActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 
 import java.util.List;
@@ -85,8 +87,9 @@ public class WithdrawFragment extends BaseFragment {
 
     private void ajaxWithdraw() {
         HttpClient httpClient = HttpClient.newInstance(context);
-        WithdrawApi api = new WithdrawApi();
-        api.token = UserHelper.getInstance(context).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
+        api.addParams("token",api.getToken(context));
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override
             public void onResponse(NoPageListBean<WithdrawCardListBean> response) {

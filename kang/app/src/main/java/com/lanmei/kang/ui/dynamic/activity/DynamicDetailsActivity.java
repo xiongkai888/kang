@@ -22,6 +22,7 @@ import com.lanmei.kang.helper.ShareHelper;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.view.DetailsMoreView;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
@@ -104,6 +105,7 @@ public class DynamicDetailsActivity extends BaseActivity {
         KangQiMeiApi api = new KangQiMeiApi("PostsReviews/index");
         api.addParams("posts_id",id);
         api.addParams("uid",api.getUserId(this));
+        api.setMethod(AbstractApi.Method.GET);
         mAdapter = new DynamicDetailsCommAdapter(this, mbean, isSelf);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<DynamicCommBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
@@ -217,6 +219,7 @@ public class DynamicDetailsActivity extends BaseActivity {
         api.addParams("content",content);
         api.addParams("uid",api.getUserId(this));
         api.addParams("posts_id",id);
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

@@ -11,13 +11,12 @@ import android.widget.EditText;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.NewsDetailsCommentAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.api.NewsCommentListApi;
-import com.lanmei.kang.api.NewsDetailsApi;
 import com.lanmei.kang.bean.NewsCommentBean;
 import com.lanmei.kang.bean.NewsDetailsBean;
 import com.lanmei.kang.event.NewsCommEvent;
 import com.lanmei.kang.helper.ShareHelper;
 import com.lanmei.kang.util.CommonUtils;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
@@ -80,10 +79,12 @@ public class NewsDetailsActivity extends BaseActivity {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
 
 
-        NewsCommentListApi api = new NewsCommentListApi();
-        api.id = getIntent().getStringExtra("value");
-        api.uid = api.getUserId(this);
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("post/reviews");
+        api.setMethod(AbstractApi.Method.GET);
+        api.addParams("id",getIntent().getStringExtra("value"));
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",api.getToken(this));
+
         mAdapter = new NewsDetailsCommentAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
@@ -97,10 +98,11 @@ public class NewsDetailsActivity extends BaseActivity {
 
     private void loadBiDetails() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        NewsDetailsApi api = new NewsDetailsApi();
-        api.id = id;
-        api.uid = api.getUserId(this);
-        api.token = api.getToken(this);
+        KangQiMeiApi api = new KangQiMeiApi("post/details");
+        api.setMethod(AbstractApi.Method.GET);
+        api.addParams("id",id);
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",api.getToken(this));
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<NewsDetailsBean>>() {
             @Override
             public void onResponse(DataBean<NewsDetailsBean> response) {

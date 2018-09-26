@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.AddFriendsApi;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.SearchUserBean;
 import com.lanmei.kang.event.AddFriendsEvent;
@@ -122,13 +121,16 @@ public class SearchUserAdapter extends SwipeRefreshAdapter<SearchUserBean> {
 
 
     private void isAddFriend(final SearchUserBean bean) {
-        AddFriendsApi api = new AddFriendsApi();
-        api.mid = bean.getId();
-        api.uid = api.getUserId(context);
-        api.token = api.getToken(context);
+        KangQiMeiApi api = new KangQiMeiApi("friend/add");
+        api.addParams("mid",bean.getId());
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",api.getToken(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
+                if (bean == null){
+                    return;
+                }
                 bean.setIs_friend(1);
                 UIHelper.ToastMessage(context, response.getInfo());
                 EventBus.getDefault().post(new AddFriendsEvent());//在好友界面点击进入搜索好友时需刷新好友列表
@@ -145,6 +147,9 @@ public class SearchUserAdapter extends SwipeRefreshAdapter<SearchUserBean> {
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
+                if (bean == null){
+                    return;
+                }
                 final String followed = bean.getFollowed();
                 if (CommonUtils.isZero.equals(followed)) {//0|1  未关注|已关注
                     bean.setFollowed(CommonUtils.isOne);

@@ -10,12 +10,11 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.api.SystemSettingInfoApi;
-import com.lanmei.kang.api.UserInfoApi;
 import com.lanmei.kang.bean.NewsCategoryTabBean;
 import com.lanmei.kang.bean.SystemSettingInfoBean;
 import com.lanmei.kang.bean.UserInfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
@@ -49,11 +48,11 @@ public class DataLoader {
 
     //加载用户数据
     public void loadUserInfo(final Context context, final LoadUserInfoListener l) {
-        HttpClient httpClient = HttpClient.newInstance(context);
-        UserInfoApi api = new UserInfoApi();
-        api.token = api.getToken(context);
-        api.uid = api.getUserId(context);
-        httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
+        KangQiMeiApi api = new KangQiMeiApi("member/member");
+        api.addParams("uid",api.getUserId(context));
+        api.addParams("token",api.getToken(context));
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {
                 mUserBean = response.data;
@@ -138,9 +137,9 @@ public class DataLoader {
             }
             return;
         }
-        HttpClient httpClient = HttpClient.newInstance(context);
-        SystemSettingInfoApi api = new SystemSettingInfoApi();
-        httpClient.request(api, new BeanRequest.SuccessListener<DataBean<SystemSettingInfoBean>>() {
+        KangQiMeiApi api = new KangQiMeiApi("index/siteinfo");
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<SystemSettingInfoBean>>() {
             @Override
             public void onResponse(DataBean<SystemSettingInfoBean> response) {
                 systemInfoBean = response.data;

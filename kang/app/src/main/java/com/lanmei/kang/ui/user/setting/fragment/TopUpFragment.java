@@ -5,19 +5,20 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.TopUpAdapter;
-import com.lanmei.kang.api.TopUpApi;
-import com.lanmei.kang.api.UserInfoApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.RechargeResultBean;
 import com.lanmei.kang.event.PaySucceedEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.user.setting.RechargeActivity;
 import com.lanmei.kang.util.CommonUtils;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
@@ -65,10 +66,11 @@ public class TopUpFragment extends BaseFragment {
         }
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
-        TopUpApi api = new TopUpApi();
-        api.type = "2";
-        api.token = api.getToken(context);
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("member/money_log");
+        api.addParams("type",2);
+        api.addParams("token",api.getToken(context));
+        api.addParams("uid",api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
         mAdapter = new TopUpAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
@@ -88,8 +90,9 @@ public class TopUpFragment extends BaseFragment {
 
     private void ajaxUserInfo() {
         HttpClient httpClient = HttpClient.newInstance(context);
-        UserInfoApi api = new UserInfoApi();
-        api.token = UserHelper.getInstance(context).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("member/member");
+        api.addParams("token",api.getToken(context));
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {

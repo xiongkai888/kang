@@ -20,10 +20,11 @@ import com.lanmei.kang.bean.AlbumBean;
 import com.lanmei.kang.bean.ItemsBean;
 import com.lanmei.kang.bean.ItemsCompileBean;
 import com.lanmei.kang.bean.SystemSettingInfoBean;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.loader.DataLoader;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.webviewpage.PhotoBrowserActivity;
+import com.xson.common.bean.UserBean;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 

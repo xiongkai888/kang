@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.OrderCancelApi;
-import com.lanmei.kang.api.OrderDelApi;
-import com.lanmei.kang.api.OrderRefundApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.OrderListBean;
 import com.lanmei.kang.event.OrderOperationEvent;
 import com.lanmei.kang.ui.details.OrderDetailsActivity;
@@ -21,6 +19,7 @@ import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
@@ -235,9 +234,9 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
     //取消订单
     private void orderCancel(final OrderListBean bean, final int position) {
-        OrderCancelApi api = new OrderCancelApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/cancel");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -252,9 +251,9 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
     //申请退款
     private void orderRefund(final OrderListBean bean,final int position) {
-        OrderRefundApi api = new OrderRefundApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/refund");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -269,9 +268,10 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
     //删除订单
     private void orderDel(final OrderListBean bean, final int position) {
-        OrderDelApi api = new OrderDelApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(context);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/del");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

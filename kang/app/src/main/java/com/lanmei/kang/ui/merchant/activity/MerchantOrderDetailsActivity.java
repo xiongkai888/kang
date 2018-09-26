@@ -8,14 +8,13 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.api.OrderDelApi;
-import com.lanmei.kang.api.ReserveOrderApi;
 import com.lanmei.kang.bean.OrderListMerchantBean;
 import com.lanmei.kang.event.OrderOperationMerchantEvent;
 import com.lanmei.kang.qrcode.ScanActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
@@ -279,10 +278,10 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
 
     //3拒绝退款和7同意退款
     private void agreeRefund(OrderListMerchantBean bean, String type) {
-        ReserveOrderApi api = new ReserveOrderApi();
-        api.id = bean.getId();
-        api.status = type;
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/save");
+        api.addParams("id",bean.getId());
+        api.addParams("status",type);
+        api.addParams("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -298,9 +297,11 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
 
     //删除订单
     private void orderDel(OrderListMerchantBean bean, final int position) {
-        OrderDelApi api = new OrderDelApi();
-        api.id = bean.getId();
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("reservation/del");
+        api.addParams("id",bean.getId());
+        api.addParams("uid",api.getUserId(this));
+        api.setMethod(AbstractApi.Method.GET);
+
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

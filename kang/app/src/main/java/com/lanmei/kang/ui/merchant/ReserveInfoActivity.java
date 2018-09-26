@@ -12,8 +12,7 @@ import com.data.volley.Response;
 import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.alipay.AlipayHelper;
-import com.lanmei.kang.api.PayMentApi;
-import com.lanmei.kang.api.ReserveOrderApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantDetailsBean;
 import com.lanmei.kang.bean.OrderIDBean;
 import com.lanmei.kang.bean.WeiXinBean;
@@ -23,6 +22,7 @@ import com.lanmei.kang.helper.WXPayHelper;
 import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.EditTextWatcher;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.DataBean;
 import com.xson.common.helper.BeanRequest;
@@ -135,15 +135,16 @@ public class ReserveInfoActivity extends BaseActivity {
 
     private void ajaxBalancePay() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        ReserveOrderApi api = new ReserveOrderApi();
-        api.uid = api.getUserId(this);
-        api.mid = bean.getMid();
-        api.items_id = bean.getId();
-        api.guest = orderNum + "";
-        api.stime = api.etime = System.currentTimeMillis() + "";
-        api.pay_type = type + "";
-        api.token = api.getToken(this);
-//        api.status = "3";//1下单(待付款)2已付款3未消费4已完成5取消订单6申请退款7退款完成
+        KangQiMeiApi api = new KangQiMeiApi("reservation/save");
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("mid",bean.getMid());
+        api.addParams("items_id",bean.getId());
+        api.addParams("guest",orderNum);
+        long time = System.currentTimeMillis();
+        api.addParams("stime",time);
+        api.addParams("etime",time);
+        api.addParams("pay_type",type);
+        api.addParams("token",api.getToken(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<OrderIDBean>>() {
             @Override
             public void onResponse(DataBean<OrderIDBean> response) {
@@ -159,11 +160,12 @@ public class ReserveInfoActivity extends BaseActivity {
     }
 
     private void loadPayMent(String order_id) {
+        KangQiMeiApi api = new KangQiMeiApi("payment/pay");
+        api.addParams("order_id",order_id);
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("token",api.getToken(this));
+        api.setMethod(AbstractApi.Method.GET);
         HttpClient httpClient = HttpClient.newInstance(this);
-        PayMentApi api = new PayMentApi();
-        api.order_id = order_id;
-        api.uid = api.getUserId(this);
-        api.token = api.getToken(this);
         if (type == 1) {//支付宝支付
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {
                 @Override

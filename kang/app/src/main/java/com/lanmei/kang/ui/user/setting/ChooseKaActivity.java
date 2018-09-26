@@ -11,14 +11,15 @@ import android.view.View;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.WithdrawCardListAdapter;
-import com.lanmei.kang.api.WithdrawApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.WithdrawCardListBean;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.user.setting.fragment.WithdrawFragment;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.StringUtils;
@@ -117,11 +118,15 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
 
     private void ajaxWithdrawCardList() {
         HttpClient httpClient = HttpClient.newInstance(this);
-        WithdrawApi api = new WithdrawApi();
-        api.token = UserHelper.getInstance(this).getToken();
+        KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
+        api.addParams("token",api.getToken(this));
+        api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override
             public void onResponse(NoPageListBean<WithdrawCardListBean> response) {
+                if (isFinishing()){
+                    return;
+                }
                 List<WithdrawCardListBean> list = response.data;
                 mAdapter.setData(list);
                 mAdapter.notifyDataSetChanged();

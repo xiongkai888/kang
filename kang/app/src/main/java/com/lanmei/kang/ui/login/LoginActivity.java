@@ -22,11 +22,10 @@ import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.LoginApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.RegisterEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.loader.DataLoader;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
@@ -35,8 +34,10 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.DataBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.DrawClickableEditText;
@@ -181,7 +182,7 @@ public class LoginActivity extends BaseActivity {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
 
-                if (!LoginActivity.this.isFinishing() && mProgressHUD.isShowing()) {
+                if (!isFinishing() && mProgressHUD.isShowing()) {
                     mProgressHUD.dismiss();
                 }
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
@@ -274,14 +275,17 @@ public class LoginActivity extends BaseActivity {
 
     protected void otherTypeLogin(String loginType, String openid, String userName, final String userImgUrl) {
         HttpClient httpClient = HttpClient.newInstance(this);
-        LoginApi api = new LoginApi();
-        api.open_type = loginType;
-        api.open_id = openid;
-        api.nickname = userName;
-        api.pic = userImgUrl;
+        KangQiMeiApi api = new KangQiMeiApi("public/login");
+        api.addParams("open_type",loginType);
+        api.addParams("open_id",openid);
+        api.addParams("nickname",userName);
+        api.addParams("pic",userImgUrl);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {
+                if (isFinishing()){
+                    return;
+                }
                 mBean = response.data;
                 loginHx();
             }

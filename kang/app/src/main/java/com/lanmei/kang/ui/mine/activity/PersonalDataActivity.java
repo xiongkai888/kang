@@ -23,18 +23,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.UserUpdateApi;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.oss.ManageOssUpload;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.SimpleTextWatcher;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.ImageUtils;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
@@ -183,21 +184,20 @@ public class PersonalDataActivity extends BaseActivity {
         final String address = CommonUtils.getStringByTextView(mAddressTv);//
         final String signature = CommonUtils.getStringByEditText(mSignatureEt);//
 
-        HttpClient httpClient = HttpClient.newInstance(this);
-        UserUpdateApi api = new UserUpdateApi();
-        api.uid = api.getUserId(this);
+        KangQiMeiApi api = new KangQiMeiApi("member/update");
+        api.addParams("uid",api.getUserId(this));
         if (StringUtils.isEmpty(mHeadUrl)){
-            api.pic = pic;
+            api.addParams("pic",pic);
         }else {
-            api.pic = mHeadUrl;
+            api.addParams("pic",mHeadUrl);
         }
-        api.nickname = name;
-        api.qq = qq;
-        api.email = email;
-        api.phone = phone;
-        api.address = address;
-        api.signature = signature;
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        api.addParams("nickname",name);
+        api.addParams("qq",qq);
+        api.addParams("email",email);
+        api.addParams("phone",phone);
+        api.addParams("address",address);
+        api.addParams("signature",signature);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (isFinishing()) {

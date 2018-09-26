@@ -15,20 +15,19 @@ import java.lang.ref.WeakReference;
 
 /**
  * Created by xson on 2016/11/14.
- *
+ * <p>
  * 本地获取json数据，在开发的前期阶段，当接口文档写好之后就可以投入开发，不用等待接口都写好后才开发
  */
 
 public class MockHttpClient implements IHttpClient {
-    private static final String TAG = "MockHttpClient";
-    private static String mPageName = "com.xson.online";
     private ProgressHUD mProgressHUD;
     private final WeakReference<Context> contextWeakReference;
+
     private MockHttpClient(Context context) {
         this.contextWeakReference = new WeakReference<Context>(context);
     }
 
-    public  static MockHttpClient newInstance(Context content) {
+    public static MockHttpClient newInstance(Context content) {
         return new MockHttpClient(content);
     }
 
@@ -44,12 +43,12 @@ public class MockHttpClient implements IHttpClient {
 
     @Override
     public <T extends BaseBean> BeanRequest<T> request(AbstractApi api) {
-        return request(api,null,null);
+        return request(api, null, null);
     }
 
     @Override
     public <T extends BaseBean> BeanRequest<T> request(AbstractApi api, BeanRequest.SuccessListener<T> successListener) {
-        return request(api,successListener, null);
+        return request(api, successListener, null);
     }
 
     @Override
@@ -64,27 +63,28 @@ public class MockHttpClient implements IHttpClient {
 
     @Override
     public <T extends BaseBean> BeanRequest<T> loadingRequest(AbstractApi api, BeanRequest.SuccessListener<T> successListener) {
-        return loadingRequest(api, successListener,null, null );
+        return loadingRequest(api, successListener, null, null);
     }
 
     @Override
     public <T extends BaseBean> BeanRequest<T> loadingRequest(AbstractApi api, BeanRequest.SuccessListener<T> successListener, Response.ErrorListener errorListener) {
-        return loadingRequest(api, successListener,errorListener, null );
+        return loadingRequest(api, successListener, errorListener, null);
     }
 
     @Override
     public <T extends BaseBean> BeanRequest<T> loadingRequest(AbstractApi api, BeanRequest.SuccessListener<T> successListener, Response.ErrorListener errorListener, String loadingText) {
-        new LocalAsyncTask(api,successListener, loadingText).execute();
+        new LocalAsyncTask(api, successListener, loadingText).execute();
         return null;
     }
 
 
     // 加载本地数据，每次都是成功的
-    private class LocalAsyncTask<T extends BaseBean> extends AsyncTask<Object,Void,T> {
+    private class LocalAsyncTask<T extends BaseBean> extends AsyncTask<Object, Void, T> {
         AbstractApi mApi;
         BeanRequest.SuccessListener<T> mSuccessListener;
         private String mLoadingText;
-        public  LocalAsyncTask(AbstractApi api, BeanRequest.SuccessListener<T> successListener, String loadingText) {
+
+        public LocalAsyncTask(AbstractApi api, BeanRequest.SuccessListener<T> successListener, String loadingText) {
             mApi = api;
             mSuccessListener = successListener;
             mLoadingText = loadingText;
@@ -101,18 +101,14 @@ public class MockHttpClient implements IHttpClient {
             AbstractApi api = mApi;
             String url = api.getUrl();
             String name = url.substring(url.lastIndexOf("/") + 1);
-            L.d(TAG, "url=" + url+"name=" + name);
-
             // 获取json.xml中lastPath 字段的json值
             Context context = contextWeakReference.get();
             String json = "";
             if (context != null) {
-               int resId =  context.getResources().getIdentifier(name,"string",context.getPackageName());
+                int resId = context.getResources().getIdentifier(name, "string", context.getPackageName());
                 json = context.getResources().getString(resId);
             }
-            L.d(TAG, "json=" + json);
             T bean = null;
-
             try {
                 bean = JSON.parseObject(json, mSuccessListener.getType());
                 Thread.sleep(2000);
@@ -160,7 +156,7 @@ public class MockHttpClient implements IHttpClient {
 
 
     private void stopLoading() {
-        if(mProgressHUD != null) {
+        if (mProgressHUD != null) {
             mProgressHUD.dismiss();
             mProgressHUD = null;
         }

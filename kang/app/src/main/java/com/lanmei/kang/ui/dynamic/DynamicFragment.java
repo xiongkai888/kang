@@ -33,13 +33,6 @@ public class DynamicFragment extends BaseFragment implements Toolbar.OnMenuItemC
     DynamicAdapter mAdapter;
 
 
-    public static DynamicFragment newInstance() {
-        Bundle args = new Bundle();
-        DynamicFragment fragment = new DynamicFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public int getContentViewId() {
         return R.layout.fragment_dynamic;

@@ -7,7 +7,5 @@ import java.util.List;
  */
 
 public abstract class AbsListBean<T> extends  BaseBean{
-    public abstract int getTotalPage();
-    public abstract int getCurrPage();
     public abstract List<T> getDataList();
 }

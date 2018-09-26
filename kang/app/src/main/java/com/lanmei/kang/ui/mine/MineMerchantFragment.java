@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -65,6 +66,8 @@ public class MineMerchantFragment extends BaseFragment {
     private static final int CHOOSE_FROM_CAMERA = 2;
     private static final int RESULT_FROM_CROP = 3;
 
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
     @InjectView(R.id.head_iv)
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
@@ -95,6 +98,7 @@ public class MineMerchantFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        mToolbar.setTitle(R.string.mine);
         manageOssUpload = new ManageOssUpload(context);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);

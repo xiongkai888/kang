@@ -63,6 +63,32 @@
     </LinearLayout>
 
 
-    <include layout="@layout/fragment_single_listview" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                style="@style/v_match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <include layout="@layout/head_home" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

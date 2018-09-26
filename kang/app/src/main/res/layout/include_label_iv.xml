@@ -19,7 +19,6 @@
 
             <TextView
                 android:id="@+id/label_tv"
-                android:text="广州"
                 android:layout_gravity="center"
                 style="@style/text12colorWhite" />
 

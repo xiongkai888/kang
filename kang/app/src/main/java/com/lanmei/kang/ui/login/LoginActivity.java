@@ -27,6 +27,7 @@ import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.RegisterEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.loader.DataLoader;
+import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
 import com.umeng.socialize.UMAuthListener;
@@ -38,6 +39,7 @@ import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.DrawClickableEditText;
@@ -189,6 +191,7 @@ public class LoginActivity extends BaseActivity {
                 UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
                 EventBus.getDefault().post(new LoginQuitEvent());//
                 EventBus.getDefault().post(new SetUserInfoEvent());
+                IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
                 if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
                     SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
                 }

@@ -18,7 +18,6 @@ import com.xson.common.R;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.utils.L;
-import com.xson.common.utils.SysUtils;
 import com.xson.common.widget.ProgressHUD;
 
 import java.io.File;
@@ -36,12 +35,11 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Milk <249828165@qq.com>
  */
-public class HttpClient implements IHttpClient{
+public class HttpClient implements IHttpClient {
     private static RequestQueue requestQueue;
     private final WeakReference<Context> contextWeakReference;
     private ProgressHUD mProgressHUD;
     private boolean useCache = false;
-    private static boolean debug;
     private ConcurrentLinkedQueue<BeanRequest> mWaitingRequests;
     private OnRequestFinishListener onRequestFinishListener;
     private boolean cancelable = true;
@@ -49,12 +47,12 @@ public class HttpClient implements IHttpClient{
 
     private HttpClient(Context context) {
         this.contextWeakReference = new WeakReference<Context>(context);
-        debug = SysUtils.isDebug(context); //直接显示详细错误
     }
 
     public synchronized static HttpClient newInstance(Context context) {
-        if(requestQueue == null)
+        if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        }
 
         return new HttpClient(context);
     }
@@ -88,14 +86,11 @@ public class HttpClient implements IHttpClient{
             return null;
         String url = api.getUrl();
         Map<String, Object> params = api.getParams();
-        api.handleParams(contextWeakReference.get(), params);
-
-        if(api.requestMethod() == AbstractApi.Method.POST)
-        {
+        if (api.requestMethod() == AbstractApi.Method.POST) {
             enctype = api.requestEnctype();
             return post(url, params, successListener, errorListener);
-        }else{
-            if(!params.isEmpty()) {
+        } else {
+            if (!params.isEmpty()) {
                 url += "?" + mapToQueryString(params);
             }
             return get(url, successListener, errorListener);
@@ -104,6 +99,7 @@ public class HttpClient implements IHttpClient{
 
     /**
      * 同步请求
+     *
      * @param api
      * @param <T>
      * @return
@@ -113,15 +109,12 @@ public class HttpClient implements IHttpClient{
             return null;
         String url = api.getUrl();
         Map<String, Object> params = api.getParams();
-        api.handleParams(contextWeakReference.get(), params);
-
         BeanRequest<T> request;
-        if(api.requestMethod() == AbstractApi.Method.POST)
-        {
+        if (api.requestMethod() == AbstractApi.Method.POST) {
             enctype = api.requestEnctype();
             request = post(url, params, future, future);
-        }else{
-            if(!params.isEmpty()) {
+        } else {
+            if (!params.isEmpty()) {
                 url += "?" + mapToQueryString(params);
             }
             request = get(url, future, future);
@@ -149,13 +142,11 @@ public class HttpClient implements IHttpClient{
             return null;
         String url = api.getUrl();
         Map<String, Object> params = api.getParams();
-        api.handleParams(contextWeakReference.get(), params);
-        if(api.requestMethod() == AbstractApi.Method.POST)
-        {
+        if (api.requestMethod() == AbstractApi.Method.POST) {
             enctype = api.requestEnctype();
             return loadingPost(url, params, successListener, errorListener, loadingText);
-        }else{
-            if(!params.isEmpty()) {
+        } else {
+            if (!params.isEmpty()) {
                 url += "?" + mapToQueryString(params);
             }
             return loadingGet(url, successListener, errorListener, loadingText);
@@ -193,7 +184,7 @@ public class HttpClient implements IHttpClient{
     private <T extends BaseBean> void addRequest(BeanRequest<T> request, boolean hasLoading, String loadingText) {
         String tag = getTagAndCount();
 
-        if(hasLoading)
+        if (hasLoading)
             startLoading(tag, loadingText);
 
         request.setTag(tag);
@@ -203,7 +194,7 @@ public class HttpClient implements IHttpClient{
 
         requestQueue.add(request);
 
-        if(mWaitingRequests == null)
+        if (mWaitingRequests == null)
             mWaitingRequests = new ConcurrentLinkedQueue<>();
         mWaitingRequests.add(request);
     }
@@ -216,13 +207,13 @@ public class HttpClient implements IHttpClient{
         StringBuilder encodedParams = new StringBuilder();
         try {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                if(entry.getValue() == null || entry.getValue() instanceof File)
+                if (entry.getValue() == null || entry.getValue() instanceof File)
                     continue;
 //                Log.d("xkai","key=" + entry.getKey() +",=valueClass" +entry.getValue().getClass());
-                if(entry.getValue() instanceof String[]) {
+                if (entry.getValue() instanceof String[]) {
                     String[] files = (String[]) entry.getValue();
                     for (String file : files) {
-                        encodedParams.append(URLEncoder.encode(entry.getKey()+"[]", "UTF-8"));
+                        encodedParams.append(URLEncoder.encode(entry.getKey() + "[]", "UTF-8"));
                         encodedParams.append('=');
                         encodedParams.append(URLEncoder.encode(String.valueOf(file), "UTF-8"));
                         encodedParams.append('&');
@@ -244,7 +235,7 @@ public class HttpClient implements IHttpClient{
 
     private String getTagAndCount() {
         int num = requestQueue.getSequenceNumber();
-        return "HttpRequest-"+num;
+        return "HttpRequest-" + num;
     }
 
     private static class ResolveMemoryLeakSuccessListener<T> extends BeanRequest.SuccessListener<T> {
@@ -297,36 +288,36 @@ public class HttpClient implements IHttpClient{
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            if(appInfo != null && appInfo.metaData != null) {
+            if (appInfo != null && appInfo.metaData != null) {
                 String interceptor = appInfo.metaData.getString("http_error_interceptor");
-                if(!TextUtils.isEmpty(interceptor)) {
-                    if(interceptor.startsWith(".")) {
+                if (!TextUtils.isEmpty(interceptor)) {
+                    if (interceptor.startsWith(".")) {
                         interceptor = appInfo.packageName + interceptor;
                     }
                     try {
                         ErrorInterceptor errorInterceptor = (ErrorInterceptor) Class.forName(interceptor).newInstance();
-                        if(errorInterceptor.onError(context, error))
+                        if (errorInterceptor.onError(context, error))
                             return;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-            if(errorListener != null)
+            if (errorListener != null)
                 errorListener.onErrorResponse(error);
         }
     }
 
     private static VolleyError humanError(Context context, VolleyError error) {
 
-        if(!(error instanceof BeanRequest.UserLevelError)) {
-            if (!NetworkHelper.isNetworkAvailable(context)){
+        if (!(error instanceof BeanRequest.UserLevelError)) {
+            if (!NetworkHelper.isNetworkAvailable(context)) {
                 error = new VolleyError(context.getString(R.string.network_unconnect), error);
-            } else if(error instanceof TimeoutError) {
+            } else if (error instanceof TimeoutError) {
                 error = new VolleyError(context.getString(R.string.http_request_timeout), error);
             } else {
                 String msg;
-                if(error != null && error.getCause() != null && error.getCause() instanceof JSONException) {
+                if (error != null && error.getCause() != null && error.getCause() instanceof JSONException) {
                     msg = context.getString(R.string.http_request_error);
                 } else {
                     msg = context.getString(R.string.http_parse_error);
@@ -344,7 +335,7 @@ public class HttpClient implements IHttpClient{
         return new ResolveMemoryLeakErrorListener(contextWeakReference, errorListener);
     }
 
-    public Response.ErrorListener getErrorListener( ) {
+    public Response.ErrorListener getErrorListener() {
         return new DefaultErrorListener(contextWeakReference.get());
     }
 
@@ -376,7 +367,7 @@ public class HttpClient implements IHttpClient{
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     requestQueue.cancelAll(tag);
-                    if(onRequestFinishListener != null)
+                    if (onRequestFinishListener != null)
                         onRequestFinishListener.onFinish(null);
                 }
             });
@@ -393,17 +384,17 @@ public class HttpClient implements IHttpClient{
             public void onFinish() {
 
                 try {
-                    if(mWaitingRequests != null) {
+                    if (mWaitingRequests != null) {
                         mWaitingRequests.remove(request);
                     }
-                    if(mProgressHUD != null) {
+                    if (mProgressHUD != null) {
                         mProgressHUD.dismiss();
                         mProgressHUD = null;
                     }
                 } catch (Exception e) {
                     L.d(e);
                 }
-                if(onRequestFinishListener != null)
+                if (onRequestFinishListener != null)
                     onRequestFinishListener.onFinish(request);
 
             }
@@ -411,7 +402,7 @@ public class HttpClient implements IHttpClient{
     }
 
     public int queueSize() {
-        if(mWaitingRequests == null)
+        if (mWaitingRequests == null)
             return 0;
         return mWaitingRequests.size();
     }
@@ -419,18 +410,18 @@ public class HttpClient implements IHttpClient{
     public static void cancelAll() {
         if (requestQueue != null)
             requestQueue.cancelAll(new RequestQueue.RequestFilter() {
-            @Override
-            public boolean apply(Request<?> request) {
-                return true;
-            }
-        });
+                @Override
+                public boolean apply(Request<?> request) {
+                    return true;
+                }
+            });
     }
 
     public void setOnRequestFinishListener(OnRequestFinishListener onRequestFinishListener) {
         this.onRequestFinishListener = onRequestFinishListener;
     }
 
-    public void setCanCancelProgressHUD(boolean cancelable){
+    public void setCanCancelProgressHUD(boolean cancelable) {
         this.cancelable = cancelable;
     }
 }

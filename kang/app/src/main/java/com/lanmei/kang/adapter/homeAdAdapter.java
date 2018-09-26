@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.lanmei.kang.R;
 import com.xson.common.adapter.ViewPagerAdapter;
-import com.xson.common.bean.BannerBean;
+import com.xson.common.bean.HomeListBean;
 import com.xson.common.helper.ImageHelper;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class homeAdAdapter extends ViewPagerAdapter {
 
     private Context context;
 
-    List<BannerBean> mList;
+    List<HomeListBean.BannerBean> mList;
 
     public homeAdAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<BannerBean> list) {
+    public void setData(List<HomeListBean.BannerBean> list) {
         mList = list;
     }
 

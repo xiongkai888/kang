@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -74,33 +73,18 @@ public class BeanRequest<T extends BaseBean> extends MultiPartRequest<T> {
         multipart = true;
     }
 
-    public BeanRequest(int method, String url, Map<String, Object> postParamMap, SuccessListener<T> successListener,  Response.ErrorListener errorListener) {
+    public BeanRequest(int method, String url, Map<String, Object> postParamMap, SuccessListener<T> successListener, Response.ErrorListener errorListener) {
         super(method, url, null, errorListener);
-        L.d("BeanRequest", "URL="+url+" POST="+postParamMap);
-
+        L.d(L.TAG, "URL=" + url + " POST=" + postParamMap);
         mSuccessListener = successListener;
-        if(postParamMap != null) {
+        if (postParamMap != null) {
             Object value;
             for (Map.Entry<String, Object> entry : postParamMap.entrySet()) {
                 value = entry.getValue();
-                if(value instanceof File) {
+                if (value instanceof File) {
                     File file = (File) value;
                     addFile(entry.getKey(), file.getAbsolutePath());
-                } else if(value instanceof Iterable) {
-                    Iterator iter = ((Iterable) value).iterator();
-                    Object item;
-                    for(; iter.hasNext(); ) {
-                        item = iter.next();
-                        if(item instanceof File) {
-                            File file = (File) item;
-                            addFile(entry.getKey(), file.getAbsolutePath());
-                        } else {
-                            addMultipartParam(entry.getKey(), "text/plain", String.valueOf(value));
-                            mPostParamMap.put(entry.getKey(), String.valueOf(value));
-                        }
-                    }
                 } else {
-                    addMultipartParam(entry.getKey(), "text/plain", String.valueOf(value));
                     mPostParamMap.put(entry.getKey(), String.valueOf(value));
                 }
             }

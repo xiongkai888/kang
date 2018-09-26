@@ -26,13 +26,6 @@ public class NewsFragment extends BaseFragment {
 
     NewsTabAdapter mTabAdapter;
 
-    public static NewsFragment newInstance() {
-        Bundle args = new Bundle();
-        NewsFragment fragment = new NewsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public int getContentViewId() {
         return R.layout.fragment_news;

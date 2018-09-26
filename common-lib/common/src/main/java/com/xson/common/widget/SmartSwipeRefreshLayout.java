@@ -40,20 +40,21 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     private OnTryLoadListener onTryLoadListener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean loadingMore = false;
-    private Mode mode = Mode.REFRESH;
+    private Mode mode = Mode.BOTH;
     private Drawable divider;
     private int dividerHeight;
     private BaseAttacher attacher;
     private HorizontalDividerItemDecoration.Builder itemDecoration;
 
     public static enum Mode {
-        DISABLED,
-        //pull from start
-        REFRESH,
-        //pull from end
-        LOAD_MORE,
-        //refresh and load more
-        BOTH
+        ONLY_PULL_UP,//只上拉加载
+        NONE,//不上拉加载下一页
+        BOTH,//下拉刷新、上拉加载
+        NO_PAGE//既不下拉刷新、也不上拉加载（不分页时候）
+    }
+
+    public Mode getMode() {
+        return mode;
     }
 
     public SmartSwipeRefreshLayout(Context context) {
@@ -140,7 +141,18 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
                 * This is useful when say, the data is being fetched from the network
                 */
                 //return false;
-                return onLoadingListener == null || (mode != Mode.BOTH && mode != Mode.LOAD_MORE);
+                if (onLoadingListener == null) {
+                    return true;
+                }
+                switch (mode) {
+                    case NONE://不加载下一页
+                    case NO_PAGE://没有分页
+                        return true;
+                    case BOTH:
+                    case ONLY_PULL_UP:
+                        return false;
+                }
+                return true;
             }
         }).start();
 
@@ -380,25 +392,20 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         swipeRefreshLayout.setVisibility(VISIBLE);
     }
 
+
     public void setMode(Mode mode) {
         this.mode = mode;
-
         switch (mode) {
-            case DISABLED:
+            case ONLY_PULL_UP:
                 swipeRefreshLayout.setEnabled(false);
-                break;
-            case REFRESH:
-                swipeRefreshLayout.setEnabled(true);
-                break;
-            case LOAD_MORE:
-                swipeRefreshLayout.setEnabled(false);
-                //避免当前位置在最底下没有更多数据，更新后有更多数据时不能上拉更新，这里自动帮Ta加载下一页
-//                onScrollListener.onScrolled(recyclerView, 0, 0);
                 break;
             case BOTH:
                 swipeRefreshLayout.setEnabled(true);
                 //避免当前位置在最底下没有更多数据，更新后有更多数据时不能上拉更新，这里自动帮Ta加载下一页
 //                onScrollListener.onScrolled(recyclerView, 0, 0);
+                break;
+            case NO_PAGE:
+                swipeRefreshLayout.setEnabled(false);
                 break;
         }
 
@@ -445,14 +452,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         if(isLoading())
             hideLoadingLayout();
     }
-
-    // use: getAdapter().setEmptyView();
-//    public void setEmptyView(View view) {
-//        emptyParentLayout.removeAllViews();
-//        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        lp.gravity = Gravity.CENTER;
-//        emptyParentLayout.addView(view, lp);
-//    }
 
     public void scrollToPosition(int position) {
         recyclerView.scrollToPosition(position);

@@ -7,8 +7,4 @@ package com.lanmei.kang.event;
 
 public class SetUserInfoEvent {
 
-    public SetUserInfoEvent(){
-
-    }
-
 }

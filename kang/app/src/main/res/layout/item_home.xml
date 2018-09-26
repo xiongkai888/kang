@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
 
-    <include layout="@layout/include_label_iv"/>
+    <include layout="@layout/include_label_iv" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,9 +18,7 @@
 
         <TextView
             android:id="@+id/name_tv"
-            style="@style/text16color4D4D"
-            android:text="@string/tem_zhongyi"
-            />
+            style="@style/text16color4D4D" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,34 +28,29 @@
 
             <TextView
                 android:id="@+id/price_tv"
-                style="@style/text14colorFD"
-                android:text="@string/price_sub"/>
+                style="@style/text14colorFD" />
 
             <TextView
                 style="@style/text14color999"
-                android:visibility="gone"
-                android:text="起"
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
 
-        <LinearLayout
-           style="@style/text_match">
+        <LinearLayout style="@style/text_match">
 
             <ImageView
                 android:id="@+id/index_iv"
                 style="@style/text"
-                android:layout_marginTop="@dimen/d_3dp"
                 android:layout_marginRight="@dimen/d_2dp"
-                android:src="@mipmap/icon_coordinate"/>
+                android:layout_marginTop="@dimen/d_3dp"
+                android:src="@mipmap/icon_coordinate" />
 
             <TextView
                 android:id="@+id/distance_tv"
                 style="@style/text12color666"
                 android:layout_width="wrap_content"
                 android:lineSpacingMultiplier="1.1"
-                android:text="10km   广州天河区科韵路110号"
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
 
         </LinearLayout>
     </LinearLayout>

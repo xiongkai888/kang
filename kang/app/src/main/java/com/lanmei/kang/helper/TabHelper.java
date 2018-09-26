@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.xson.common.utils.StringUtils;
 
 import java.util.List;
 
@@ -28,18 +29,23 @@ public class TabHelper {
     /**
      *
      * @param context
-     * @param titleList  Tab标题列表
-     * @param imageArray 图片资源
      * @param tabLayout
      * @param colorId  选中的颜色ID
      */
-    public TabHelper(Context context, List<String> titleList, int[] imageArray, TabLayout tabLayout,int colorId) {
+    public TabHelper(Context context,TabLayout tabLayout,int colorId) {
         this.context = context;
-        this.titleList = titleList;
-        this.imageArray = imageArray;
         this.tabLayout = tabLayout;
         this.colorId = colorId;
-        setupTabIcons();
+//        setupTabIcons();
+    }
+
+    /**
+     * @param titleList  Tab标题列表
+     * @param imageArray 图片资源
+     */
+    public void setParameter(List<String> titleList, int[] imageArray){
+        this.titleList = titleList;
+        this.imageArray = imageArray;
     }
 
     public View getTabView(int position) {
@@ -58,13 +64,15 @@ public class TabHelper {
         return view;
     }
 
-    private void setupTabIcons() {
-        if (com.xson.common.utils.StringUtils.isEmpty(titleList)) {
+    public void setupTabIcons() {
+        if (StringUtils.isEmpty(titleList)) {
             return;
         }
         int size = titleList.size();
         for (int i = 0; i < size; i++) {
-            tabLayout.getTabAt(i).setCustomView(getTabView(i));
+            TabLayout.Tab tab = tabLayout.newTab();
+            tabLayout.addTab(tab);
+            tab.setCustomView(getTabView(i));
         }
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

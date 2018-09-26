@@ -64,13 +64,21 @@ public class CommonUtils {
     public static boolean isSelf(Context context,String uid){
         return StringUtils.isSame(uid,getUserId(context));
     }
-
+    //获取用户ID
     public static String getUserId(Context context){
         UserBean bean = UserHelper.getInstance(context).getUserBean();
         if (StringUtils.isEmpty(bean)){
             return "";
         }
         return bean.getId();
+    }
+    //获取用户类型
+    public static String getUserType(Context context){
+        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        if (StringUtils.isEmpty(bean)){
+            return "";
+        }
+        return bean.getUser_type();
     }
 
     /**

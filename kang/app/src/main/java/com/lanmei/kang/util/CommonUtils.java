@@ -27,6 +27,7 @@ import com.xson.common.bean.UserBean;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,6 +123,9 @@ public class CommonUtils {
         return arr;
     }
 
+    public static void developing(Context context) {
+        UIHelper.ToastMessage(context, R.string.developing);
+    }
 
     //获取项目id
     public static String getItemId(List<ItemsBean> itemList, String itemStr) {

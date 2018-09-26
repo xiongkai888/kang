@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_parent"
+    android:layout_margin="@dimen/d_5dp">
+
+    <LinearLayout
+        style="@style/v_match_parent_no"
+        android:padding="@dimen/d_8dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_pic" />
+
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/text"
+            android:layout_marginTop="@dimen/d_2dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="高效洗洁精" />
+
+
+        <LinearLayout
+            style="@style/ll_no_border"
+            android:layout_marginTop="@dimen/d_5dp">
+
+            <TextView
+                android:id="@+id/money_tv"
+                style="@style/text_weight"
+                android:text="￥5000"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/sell_num_tv"
+                style="@style/text12color999"
+                android:text="已购买81" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

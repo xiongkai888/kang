@@ -1,6 +1,9 @@
 package com.lanmei.kang.widget;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -10,7 +13,7 @@ import com.lanmei.kang.adapter.ItemImageAdapter;
 import com.lanmei.kang.view.DoubleScaleImageView;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.widget.FullGridView;
+import com.xson.common.utils.UIBaseUtils;
 
 import java.util.List;
 
@@ -25,28 +28,34 @@ public class SudokuView extends RelativeLayout {
 
     @InjectView(R.id.only_imageView)
     DoubleScaleImageView oneImageView;
-    @InjectView(R.id.gridView)
-    FullGridView gridView;
-
+    @InjectView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    ItemImageAdapter adapter;
     Context context;
 
     public SudokuView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        adapter = new ItemImageAdapter(context);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.inject(this);
+        int padding = UIBaseUtils.dp2pxInt(getContext(), 4);
+        recyclerView.addItemDecoration(new SpaceItemDecoration(padding));
     }
 
     public void setListData(final List<String> list) {
 
-        if (!StringUtils.isEmpty(list) && list.size() == 1) {
-            gridView.setVisibility(View.GONE);
+        if (StringUtils.isEmpty(list)) {
+            recyclerView.setVisibility(View.GONE);
+            oneImageView.setVisibility(View.GONE);
+        } else if (list.size() == 1) {
+            recyclerView.setVisibility(View.GONE);
             oneImageView.setVisibility(View.VISIBLE);
-            ImageHelper.load(context, list.get(0), oneImageView, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            ImageHelper.load(getContext(), list.get(0), oneImageView, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             oneImageView.setDoubleClickListener(new DoubleScaleImageView.DoubleClickListener() {
                 @Override
                 public void onSingleTapConfirmed() {
@@ -62,12 +71,13 @@ public class SudokuView extends RelativeLayout {
                     }
                 }
             });
-
         } else {
-            gridView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
             oneImageView.setVisibility(View.GONE);
-            ItemImageAdapter adapter = new ItemImageAdapter(context, list);
-            gridView.setAdapter(adapter);
+            adapter.setData(list);
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
             adapter.setOnClickListener(new ItemImageAdapter.SingleTapConfirmedListener() {
                 @Override
                 public void onClick(int position) {
@@ -98,5 +108,21 @@ public class SudokuView extends RelativeLayout {
         this.l = l;
     }
 
+    public static class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int space;
+
+        public SpaceItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.top = space / 2;
+            outRect.bottom = space / 2;
+            outRect.left = space / 2;
+            outRect.right = space / 2;
+        }
+    }
 
 }

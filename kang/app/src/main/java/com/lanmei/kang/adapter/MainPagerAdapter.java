@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.kang.ui.dynamic.DynamicFragment;
 import com.lanmei.kang.ui.home.HomeFragment;
+import com.lanmei.kang.ui.merchant_tab.MerchantTabFragment;
 import com.lanmei.kang.ui.mine.MineMerchantFragment;
 import com.lanmei.kang.ui.mine.MineUserFragment;
 import com.lanmei.kang.ui.news.NewsFragment;
@@ -38,7 +39,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         }else {//商家
             switch (position) {
                 case 0:
-                    return MineUserFragment.newInstance();
+                    return new MerchantTabFragment();
                 case 1:
                     return new HomeFragment();
                 case 2:

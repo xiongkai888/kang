@@ -41,4 +41,8 @@ public class DynamicAdapter extends FragmentPagerAdapter {
     }
 
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return position == 0 ? "最新" : "精选";
+    }
 }

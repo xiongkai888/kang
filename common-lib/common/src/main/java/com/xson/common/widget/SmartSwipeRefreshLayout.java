@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -20,12 +21,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xson.common.R;
-import com.xson.common.adapter.LoadMoreAdapter;
-import com.xson.common.utils.L;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 import com.mugen.attachers.BaseAttacher;
+import com.xson.common.R;
+import com.xson.common.adapter.LoadMoreAdapter;
+import com.xson.common.utils.L;
 
 /**
  * @author Milk <249828165@qq.com>
@@ -177,6 +178,25 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         * mugen will automatically forward all scroll events to the listener.
         */
         recyclerView.addOnScrollListener(onScrollListener);
+    }
+
+    /**
+     *
+     * @param spanCount
+     * @param location  位置location 跨度 spanCount
+     */
+    public void initGridLinearLayout(final int spanCount,final int location) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),spanCount);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == location){
+                    return spanCount;
+                }
+                return 1;
+            }
+        });
+        setLayoutManager(layoutManager);
     }
 
     public void initWithLinearLayout() {

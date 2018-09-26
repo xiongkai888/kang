@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/goods_details_ad" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_5dp"
+            android:drawableTop="@mipmap/merchant_tab_1"
+            android:gravity="center_horizontal"
+            android:text="面膜"
+            android:textColor="@color/color666" />
+
+        <TextView
+            android:textColor="@color/color666"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_5dp"
+            android:drawableTop="@mipmap/merchant_tab_2"
+            android:gravity="center_horizontal"
+            android:text="爽肤水" />
+
+        <TextView
+            android:textColor="@color/color666"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_5dp"
+            android:drawableTop="@mipmap/merchant_tab_3"
+            android:gravity="center_horizontal"
+            android:text="彩妆" />
+
+        <TextView
+            android:textColor="@color/color666"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_5dp"
+            android:drawableTop="@mipmap/merchant_tab_4"
+            android:gravity="center_horizontal"
+            android:text="乳液" />
+
+    </LinearLayout>
+
+    <View style="@style/line_H1dp_CD" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorF4F4" />
+
+    <View style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:id="@+id/ll_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="@dimen/d_3dp"
+            android:layout_height="@dimen/d_25dp"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:textSize="3sp" />
+
+        <TextView
+            style="@style/text"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="热销商品" />
+
+    </LinearLayout>
+
+</LinearLayout>

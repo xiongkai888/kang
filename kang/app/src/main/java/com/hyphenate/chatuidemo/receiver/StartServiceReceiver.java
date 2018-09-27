@@ -19,7 +19,6 @@ import com.hyphenate.chat.EMChatService;
 import com.hyphenate.util.EMLog;
 
 /**
- * @deprecated instead of use {@link EMReceiver}
  *
  */
 public class StartServiceReceiver extends BroadcastReceiver{

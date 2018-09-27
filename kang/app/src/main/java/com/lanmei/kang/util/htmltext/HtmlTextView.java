@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class HtmlTextView extends TextView {
+public class HtmlTextView extends android.support.v7.widget.AppCompatTextView {
     public static final String TAG = "HtmlTextView";
     public static final boolean DEBUG = false;
 

@@ -28,7 +28,7 @@ import com.hyphenate.chatuidemo.video.util.RecyclingBitmapDrawable;
  * Sub-class of ImageView which automatically notifies the drawable when it is
  * being displayed.
  */
-public class RecyclingImageView extends ImageView {
+public class RecyclingImageView extends android.support.v7.widget.AppCompatImageView {
 
     public RecyclingImageView(Context context) {
         super(context);

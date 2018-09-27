@@ -100,8 +100,8 @@
             android:windowSoftInputMode="adjustResize" />
 
         <!--<service-->
-            <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
-            <!--android:exported="false" />-->
+        <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
+        <!--android:exported="false" />-->
         <service
             android:name=".updateversion.UpdateVersionService"
             android:exported="false" />
@@ -136,11 +136,14 @@
         <!-- 8888888888888888888888888 -->
 
         <receiver android:name=".ui.ApkInstallBroadcast">
-            <action android:name="android.intent.action.PACKAGE_ADDED" />
-            <action android:name="android.intent.action.PACKAGE_REPLACED" />
-            <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-            <data android:scheme="package" />
+                <data android:scheme="package" />
+            </intent-filter>
+
         </receiver>
         <!-- 微信Pay -->
         <activity
@@ -805,16 +808,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.HelpActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".qrcode.NCodeActivity" />
+            android:name=".qrcode.NCodeActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".qrcode.ScanActivity" />
+            android:name=".qrcode.ScanActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".ui.merchant.activity.CategoryActivity" />
+            android:name=".ui.merchant.activity.CategoryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

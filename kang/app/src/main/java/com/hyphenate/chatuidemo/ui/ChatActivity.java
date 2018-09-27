@@ -17,7 +17,7 @@ import com.lanmei.kang.bean.UserInfoBean;
 import static com.hyphenate.chatuidemo.ui.ConversationListFragment.REFRESH_CONVERSATIONLIST;
 
 /**
- * chat activity，EaseChatFragment was used {@link #EaseChatFragment}
+ * chat activity，EaseChatFragment was used
  *
  */
 public class ChatActivity extends BaseActivity{

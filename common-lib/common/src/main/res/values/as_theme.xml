@@ -2,12 +2,12 @@
 <resources>
 
     <style name="ActionSheetStyleiOS6">
-        <item name="actionSheetBackground">@mipmap/actionsheet_bg_ios6</item>
-        <item name="cancelButtonBackground">@mipmap/actionsheet_cancel_bt_bg</item>
-        <item name="otherButtonTopBackground">@mipmap/actionsheet_other_bt_bg</item>
-        <item name="otherButtonMiddleBackground">@mipmap/actionsheet_other_bt_bg</item>
-        <item name="otherButtonBottomBackground">@mipmap/actionsheet_other_bt_bg</item>
-        <item name="otherButtonSingleBackground">@mipmap/actionsheet_other_bt_bg</item>
+        <item name="actionSheetBackground">@drawable/actionsheet_bg_ios6</item>
+        <item name="cancelButtonBackground">@drawable/actionsheet_cancel_bt_bg</item>
+        <item name="otherButtonTopBackground">@drawable/actionsheet_other_bt_bg</item>
+        <item name="otherButtonMiddleBackground">@drawable/actionsheet_other_bt_bg</item>
+        <item name="otherButtonBottomBackground">@drawable/actionsheet_other_bt_bg</item>
+        <item name="otherButtonSingleBackground">@drawable/actionsheet_other_bt_bg</item>
         <item name="cancelButtonTextColor">@android:color/white</item>
         <item name="otherButtonTextColor">@android:color/black</item>
         <item name="actionSheetPadding">20dp</item>

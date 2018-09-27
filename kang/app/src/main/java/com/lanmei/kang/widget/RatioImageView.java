@@ -11,7 +11,7 @@ import android.widget.ImageView;
  * 设置高宽比的ImageView
  */
 
-public class RatioImageView extends ImageView{
+public class RatioImageView extends android.support.v7.widget.AppCompatImageView{
     private float mRatio = (float) 3/4;
     public RatioImageView(Context context, AttributeSet attrs) {
         super(context, attrs);

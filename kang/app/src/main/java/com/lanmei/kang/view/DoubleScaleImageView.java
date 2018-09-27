@@ -12,7 +12,7 @@ import android.widget.ImageView;
  * 单双击监听
  */
 
-public class DoubleScaleImageView extends ImageView implements GestureDetector.OnGestureListener {
+public class DoubleScaleImageView extends android.support.v7.widget.AppCompatImageView implements GestureDetector.OnGestureListener {
 
     private GestureDetector gestureScanner;
     Context mContext;

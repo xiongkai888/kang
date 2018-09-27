@@ -145,5 +145,8 @@
     <string name="merchant_data">商家资料</string>
     <string name="chu_ku">出库</string>
     <string name="ru_ku">入库</string>
+    <string name="merchant">商家</string>
+    <string name="dynamic">动态</string>
+    <string name="nearby">附近</string>
 
 </resources>

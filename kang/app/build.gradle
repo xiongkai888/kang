@@ -126,6 +126,6 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
 //    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.5'
 
-    //    compile files('libs/BASE64Encoder.jar')
-//    implementation files('libs/sun.misc.BASE64Decoder.jar')
+    //VerticalTabLayout
+    implementation 'q.rorbin:VerticalTabLayout:1.2.5'
 }

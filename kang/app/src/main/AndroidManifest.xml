@@ -69,7 +69,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lanmei.kang.fileprovider"
@@ -99,9 +98,9 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!--<service-->
-        <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
-        <!--android:exported="false" />-->
+        <!-- <service -->
+        <!-- android:name="com.sina.weibo.sdk.net.DownloadService" -->
+        <!-- android:exported="false" /> -->
         <service
             android:name=".updateversion.UpdateVersionService"
             android:exported="false" />
@@ -143,7 +142,6 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
         <!-- 微信Pay -->
         <activity
@@ -824,6 +822,7 @@
         <activity
             android:name=".ui.merchant.activity.GoodsChuKuActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.merchant_tab.activity.GoodsClassifyActivity"></activity>
     </application>
 
 </manifest>

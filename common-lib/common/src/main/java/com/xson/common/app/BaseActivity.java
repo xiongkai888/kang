@@ -29,35 +29,36 @@ import butterknife.ButterKnife;
  * @author Milk <249828165@qq.com>
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private static final int RC_PERMISSION_STORAGE = 110;
+
     private boolean isAttached;
     private ArrayList<DispatchTouchEventListener> dispatchTouchEventListeners;
 
     /**
-     *
      * @return contentViewId   布局Id
      */
     public abstract int getContentViewId();
 
     /**
-     *
-     * @param savedInstanceState  onCreate()中的参数,Bundle类型
+     * @param savedInstanceState onCreate()中的参数,Bundle类型
      */
     protected abstract void initAllMembersView(Bundle savedInstanceState);
+
     public interface DispatchTouchEventListener {
         void onDispatchTouchEvent(MotionEvent event);
     }
 
-    public void initIntent(Intent intent){
+    public void initIntent(Intent intent) {
 
     }
 
     @Override
     protected void onDestroy() {
+        L.fixInputMethodManagerLeak(this);
         super.onDestroy();
 //        ((BaseApp)getApplication()).watch(this);
         ButterKnife.reset(this);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,88 +66,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentViewId());
         initIntent(getIntent());
         ButterKnife.inject(this, this);
-        initAllMembersView(savedInstanceState);
-        if (SysUtils.isMonkeyTester(this)) {//Monkey Test
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED
-                ) {
-            requestPermission();
-        }
-
-        if (SysUtils.isAutoTester(this) || SysUtils.isMonkeyTester(this)) {
-            hideStatusBar();
-        }
-    }
-
-    private void requestPermission() {
-        final String[] permissions = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.ACCESS_FINE_LOCATION
-                , Manifest.permission.READ_PHONE_STATE
-        };
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.need_to_enable_read_storage_permissions)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(BaseActivity.this, permissions, RC_PERMISSION_STORAGE);
-                            finish();
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                            System.exit(1);
-                        }
-                    })
-                    .show();
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, RC_PERMISSION_STORAGE);
-        }
-    }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        switch (keyCode){
-//            case KeyEvent.KEYCODE_HOME:
-//                return true;
-//            case KeyEvent.KEYCODE_BACK:
-//                return true;
-//            case KeyEvent.KEYCODE_CALL:
-//                return true;
-//            case KeyEvent.KEYCODE_SYM:
-//                return true;
-//            case KeyEvent.KEYCODE_VOLUME_DOWN:
-//                return true;
-//            case KeyEvent.KEYCODE_VOLUME_UP:
-//                return true;
-//            case KeyEvent.KEYCODE_STAR:
-//                return true;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//6.0以上
+//            Window window = getWindow();
+//            window.setStatusBarColor(getResources().getColor(R.color.white_selectable_bg));
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+        initAllMembersView(savedInstanceState);
+    }
+
 
     public Context getContext() {
         return this;
     }
 
-    private void hideStatusBar() {
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            // Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -217,5 +153,4 @@ public abstract class BaseActivity extends AppCompatActivity {
             return;
         dispatchTouchEventListeners.remove(l);
     }
-
 }

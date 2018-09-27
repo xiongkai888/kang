@@ -7,10 +7,12 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantTabAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
+import com.lanmei.kang.ui.merchant_tab.activity.GoodsClassifyActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
@@ -51,7 +53,7 @@ public class MerchantTabFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.classify_iv://分类
-                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, GoodsClassifyActivity.class);
                 break;
             case R.id.search_tv://搜索
                 CommonUtils.developing(context);

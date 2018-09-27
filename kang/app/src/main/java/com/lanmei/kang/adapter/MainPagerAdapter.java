@@ -18,14 +18,14 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private int count;//tabItem个数
 
-    public MainPagerAdapter(FragmentManager fm,int count) {
+    public MainPagerAdapter(FragmentManager fm, int count) {
         super(fm);
         this.count = count;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (count == 4){//用户
+        if (count == 4) {//商家
             switch (position) {
                 case 0:
                     return new HomeFragment();
@@ -34,9 +34,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 case 2:
                     return new DynamicFragment();
                 case 3:
-                    return MineUserFragment.newInstance();
+                    return MineMerchantFragment.newInstance();
             }
-        }else {//商家
+        } else {//用户
             switch (position) {
                 case 0:
                     return new MerchantTabFragment();
@@ -47,7 +47,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 case 3:
                     return new DynamicFragment();
                 case 4:
-                    return MineMerchantFragment.newInstance();
+                    return MineUserFragment.newInstance();
             }
         }
         return null;
@@ -58,8 +58,4 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return count;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "000";
-    }
 }

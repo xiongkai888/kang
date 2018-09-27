@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lanmei.kang.ui.merchant_tab.activity.GoodsClassifyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom_white"
+        android:paddingLeft="@dimen/d_5dp">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/text"
+            android:paddingRight="@dimen/d_15dp"
+            android:src="@mipmap/back_g" />
+
+
+        <TextView
+            android:id="@+id/search_tv"
+            android:layout_width="@dimen/d_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/search_bg1"
+            android:drawableLeft="@mipmap/merchant_tab_search"
+            android:drawablePadding="8dp"
+            android:hint="@string/input_keyword"
+            android:padding="7dp"
+            android:textSize="12sp" />
+
+
+        <ImageView
+            style="@style/text"
+            android:visibility="invisible"
+            android:paddingLeft="@dimen/d_5dp"
+            android:paddingRight="@dimen/d_5dp"
+            android:src="@mipmap/merchant_tab_message" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <q.rorbin.verticaltablayout.VerticalTabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorF4F4"
+            app:indicator_color="@color/white"
+            app:indicator_gravity="fill"
+            app:tab_height="50dp"
+            app:tab_margin="1dp"
+            app:tab_mode="scrollable" />
+
+
+        <com.xson.common.widget.SmartSwipeRefreshLayout
+            android:id="@+id/pull_refresh_rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_weight="3"
+            android:listSelector="@null" />
+
+    </LinearLayout>
+
+</LinearLayout>

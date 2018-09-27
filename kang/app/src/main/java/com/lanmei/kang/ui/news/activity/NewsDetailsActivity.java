@@ -73,7 +73,7 @@ public class NewsDetailsActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.news_details);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));

@@ -229,7 +229,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
                     switch (status) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
                         case "2":
                         case "3"://消费
-                           IntentUtil.startActivity(context, ScanActivity.class);
+                           IntentUtil.startActivity(context, ScanActivity.class,CommonUtils.isOne);
                             break;
                         case "5"://删除订单
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {

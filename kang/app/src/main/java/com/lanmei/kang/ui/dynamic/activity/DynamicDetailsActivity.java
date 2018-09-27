@@ -76,7 +76,7 @@ public class DynamicDetailsActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("动态详情");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         //分享初始化
         mShareHelper = new ShareHelper(this);
         initSwipeRefreshLayout();

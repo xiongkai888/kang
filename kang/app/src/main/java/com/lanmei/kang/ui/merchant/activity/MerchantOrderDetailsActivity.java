@@ -91,7 +91,7 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.order_details);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 //订单详情的接口数据和列表项的数据一样
 //        MerchantOrderDetailsApi api = new MerchantOrderDetailsApi();
 //        api.id = getIntent().getStringExtra("value");
@@ -254,7 +254,7 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
                 switch (status) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
                     case "2":
                     case "3"://消费
-                        IntentUtil.startActivity(MerchantOrderDetailsActivity.this, ScanActivity.class);
+                        IntentUtil.startActivity(MerchantOrderDetailsActivity.this, ScanActivity.class,CommonUtils.isOne);
                         break;
                     case "5"://删除订单
                         AKDialog.getAlertDialog(MerchantOrderDetailsActivity.this, MerchantOrderDetailsActivity.this.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {

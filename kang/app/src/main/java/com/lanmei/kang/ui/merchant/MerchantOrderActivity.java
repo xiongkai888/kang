@@ -15,6 +15,7 @@ import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.qrcode.Des;
 import com.lanmei.kang.qrcode.ScanActivity;
 import com.lanmei.kang.updateversion.JsonUtil;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -57,7 +58,7 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("订单");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new MerchantOrderAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
@@ -126,7 +127,7 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_scan_qr_code:
-                IntentUtil.startActivity(this, ScanActivity.class);
+                IntentUtil.startActivity(this, ScanActivity.class, CommonUtils.isOne);
                 break;
         }
         return super.onOptionsItemSelected(item);

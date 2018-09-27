@@ -38,7 +38,7 @@ public class HuoDongActivity extends BaseActivity implements TabLayout.OnTabSele
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("活动");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new HuoDongAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);

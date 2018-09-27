@@ -86,7 +86,7 @@ public class CourseDetailsActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         //分享初始化
         mShareHelper = new ShareHelper(this);
         Intent intent = getIntent();

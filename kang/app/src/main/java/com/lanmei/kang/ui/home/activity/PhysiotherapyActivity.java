@@ -48,7 +48,7 @@ public class PhysiotherapyActivity extends BaseActivity{
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(bean.getName());
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new PhysiotherapyAdapter(getSupportFragmentManager(),bean);
         mViewPager.setAdapter(mAdapter);

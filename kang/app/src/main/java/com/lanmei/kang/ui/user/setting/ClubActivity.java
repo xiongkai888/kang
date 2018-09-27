@@ -40,7 +40,7 @@ public class ClubActivity extends BaseActivity implements TabLayout.OnTabSelecte
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initViewPager();
     }

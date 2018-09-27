@@ -92,7 +92,7 @@ public class ReserveInfoActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.reserve_info);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
 
         String priceStr = bean.getSell_price();

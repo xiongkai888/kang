@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(R.string.login);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         mShareAPI = UMShareAPI.get(this);
         String mobile = SharedAccount.getInstance(LoginActivity.this).getMobile();
         mMobileET.setText(mobile);
@@ -189,12 +189,11 @@ public class LoginActivity extends BaseActivity {
                 }
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                 UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
-                EventBus.getDefault().post(new LoginQuitEvent());//
                 EventBus.getDefault().post(new SetUserInfoEvent());
-                IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
                 if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
                     SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
                 }
+                IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
                 finish();
             }
 
@@ -290,6 +289,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
+                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         });
@@ -378,6 +378,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = bean;
+                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
 

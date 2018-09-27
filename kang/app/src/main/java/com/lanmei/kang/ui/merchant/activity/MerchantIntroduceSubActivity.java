@@ -43,7 +43,7 @@ public class MerchantIntroduceSubActivity extends BaseActivity {
         actionbar.setTitle(bean.getName());
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         contentTv.setText("\u3000\u3000"+bean.getPlace_introduction());
     }

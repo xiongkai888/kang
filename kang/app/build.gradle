@@ -96,7 +96,7 @@ dependencies {
     compile project(':easeui')
     compile project(':redpacketlibrary')
     //    compile files('libs/hyphenatechat_3.3.2.jar')
-    compile project(':Zxing')
+//    compile project(':Zxing')
     //    provided files('../easeui/libs/BaiduLBS_Android.jar')
     compile files('libs/open_sdk_r5781.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
@@ -120,9 +120,12 @@ dependencies {
     //轮播图
     compile 'com.bigkoo:convenientbanner:2.0.5'
     // 扫一扫
-    provided 'com.google.zxing:core:3.2.1'
-    compile 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
-    compile 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
+//    implementation 'com.google.zxing:core:3.2.1'
+//    implementation 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
+//    implementation 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
+//    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.5'
+
     //    compile files('libs/BASE64Encoder.jar')
 //    implementation files('libs/sun.misc.BASE64Decoder.jar')
 }

@@ -29,7 +29,7 @@ public class HelpActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(R.string.help);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         helpTv.setText(getIntent().getStringExtra("value"));
     }

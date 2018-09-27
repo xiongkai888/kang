@@ -59,7 +59,7 @@ public class SettingActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.setting);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         try {
             mCleanCacheTv.setText(DataCleanManager.getCacheSize(getCacheDir()));

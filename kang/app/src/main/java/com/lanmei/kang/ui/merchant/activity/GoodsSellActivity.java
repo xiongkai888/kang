@@ -31,9 +31,9 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.InjectView;
 
 /**
- * 分类
+ * 商品销售
  */
-public class CategoryActivity extends BaseActivity {
+public class GoodsSellActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
@@ -56,12 +56,11 @@ public class CategoryActivity extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("分类");
+        actionbar.setTitle(R.string.goods_sell);
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        pid = getIntent().getStringExtra("value");
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new CategoryAdapter(this);
@@ -71,7 +70,7 @@ public class CategoryActivity extends BaseActivity {
         mAdapter.setCompileCategoryListener(new CategoryAdapter.CompileCategoryListener() {
             @Override
             public void compileCategory(final CategoryBean bean) {
-                dialog = AKDialog.getCompileCategoryDialog(CategoryActivity.this, getString(R.string.compile_category), bean.getName() ,new AKDialog.ConfirmListener() {
+                dialog = AKDialog.getCompileCategoryDialog(GoodsSellActivity.this, getString(R.string.compile_category), bean.getName() ,new AKDialog.ConfirmListener() {
                     @Override
                     public void yes(String code) {
                         addCategory(code,bean.getId(),2);
@@ -153,9 +152,9 @@ public class CategoryActivity extends BaseActivity {
                 }
                 loadClass();
                 if (type != 1){
-                    UIHelper.ToastMessage(CategoryActivity.this,response.getInfo());
+                    UIHelper.ToastMessage(GoodsSellActivity.this,response.getInfo());
                 }else {
-                    UIHelper.ToastMessage(CategoryActivity.this,"添加成功");
+                    UIHelper.ToastMessage(GoodsSellActivity.this,"添加成功");
                 }
                 EventBus.getDefault().post(new CompileProductEvent());//刷新服务项目列表
             }

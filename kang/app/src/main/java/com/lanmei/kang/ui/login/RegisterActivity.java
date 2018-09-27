@@ -93,7 +93,7 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
             mButton.setText(R.string.submit);
             mllName.setVisibility(View.INVISIBLE);
         }
-        mToolbar.setNavigationIcon(R.mipmap.back);
+        mToolbar.setNavigationIcon(R.mipmap.back_g);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

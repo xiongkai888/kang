@@ -55,7 +55,7 @@ public class MerchantItemsActivity extends BaseActivity {
         actionbar.setTitle("服务项目");
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
 
         smartSwipeRefreshLayout.initWithLinearLayout();

@@ -15,7 +15,7 @@
             android:id="@+id/back_iv"
             style="@style/text"
             android:padding="@dimen/d_10dp"
-            android:src="@mipmap/back" />
+            android:src="@mipmap/back_g" />
 
         <include layout="@layout/search_edittext" />
 

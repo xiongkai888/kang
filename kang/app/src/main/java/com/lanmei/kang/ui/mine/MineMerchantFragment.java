@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
 import com.lanmei.kang.ui.merchant.MerchantOrderActivity;
+import com.lanmei.kang.ui.merchant.activity.GoodsChuKuActivity;
 import com.lanmei.kang.ui.merchant.activity.MerchantItemsActivity;
 import com.lanmei.kang.ui.mine.activity.AlbumActivity;
 import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
@@ -66,8 +66,6 @@ public class MineMerchantFragment extends BaseFragment {
     private static final int CHOOSE_FROM_CAMERA = 2;
     private static final int RESULT_FROM_CROP = 3;
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
     @InjectView(R.id.head_iv)
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
@@ -98,7 +96,6 @@ public class MineMerchantFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        mToolbar.setTitle(R.string.mine);
         manageOssUpload = new ManageOssUpload(context);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -199,12 +196,21 @@ public class MineMerchantFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.head_iv, R.id.ll_m_data, R.id.ll_m_order, R.id.ll_m_album, R.id.ll_m_services, R.id.ll_m_evaluate, R.id.ll_m_setting, R.id.ll_m_center,R.id.ll_mime_order})
+    @OnClick({R.id.ll_m_sell,R.id.ll_m_chuku,R.id.ll_m_ruku,R.id.head_iv, R.id.ll_m_data, R.id.ll_m_order, R.id.ll_m_album, R.id.ll_m_services, R.id.ll_m_evaluate, R.id.ll_m_setting, R.id.ll_m_center,R.id.ll_mime_order})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)){
             return;
         }
         switch (view.getId()) {
+            case R.id.ll_m_sell://商品销售
+                CommonUtils.developing(context);
+                break;
+            case R.id.ll_m_chuku://出库
+                IntentUtil.startActivity(context, GoodsChuKuActivity.class,CommonUtils.isZero);
+                break;
+            case R.id.ll_m_ruku://入库
+                IntentUtil.startActivity(context, GoodsChuKuActivity.class,CommonUtils.isOne);
+                break;
             case R.id.ll_m_data://商家资料
                 IntentUtil.startActivity(context, MerchantDataActivity.class);
                 break;

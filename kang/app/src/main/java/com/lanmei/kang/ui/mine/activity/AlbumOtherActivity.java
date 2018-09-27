@@ -47,7 +47,7 @@ public class AlbumOtherActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("商家相册");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         GridLayoutManager layoutManager = new GridLayoutManager(this,3);
         mRecyclerView.setLayoutManager(layoutManager);
         int padding = UIBaseUtils.dp2pxInt(this, 5);

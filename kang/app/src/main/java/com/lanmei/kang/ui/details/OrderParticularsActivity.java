@@ -65,7 +65,7 @@ public class OrderParticularsActivity extends BaseActivity {
         actionbar.setTitle("订单明细");
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         Intent intent = getIntent();
         if (intent == null){

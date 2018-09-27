@@ -49,7 +49,7 @@ public class BoundKaActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("绑定银行卡");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

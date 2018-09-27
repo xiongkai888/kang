@@ -88,7 +88,7 @@ public class MerchantIntroduceActivity extends BaseActivity {
         actionbar.setTitle("商家详情");
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         KangQiMeiApi api = new KangQiMeiApi("place/details");
         api.addParams("id", api.getUserId(this));

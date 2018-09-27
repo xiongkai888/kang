@@ -72,8 +72,8 @@ public class MerchantDataActivity extends BaseActivity implements Toolbar.OnMenu
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle("商家资料");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setTitle(R.string.merchant_data);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         //toolbar的menu点击事件的监听
         mToolbar.setOnMenuItemClickListener(this);
         etID = new EditText[]{mNameEt, mAddressEt, mPhoneEt, mPlaceIntroductionEt};

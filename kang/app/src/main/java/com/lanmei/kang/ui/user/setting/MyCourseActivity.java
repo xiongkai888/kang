@@ -37,7 +37,7 @@ public class MyCourseActivity extends BaseActivity implements TabLayout.OnTabSel
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.my_course);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new MyCourseAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);

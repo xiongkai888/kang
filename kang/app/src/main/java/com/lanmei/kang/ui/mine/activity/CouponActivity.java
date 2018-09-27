@@ -39,7 +39,7 @@ public class CouponActivity extends BaseActivity implements TabLayout.OnTabSelec
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("我的优惠卷");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new CouponAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);

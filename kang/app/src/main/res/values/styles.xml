@@ -8,23 +8,23 @@
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/txt_14sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorPrimaryDark</item>
         <item name="actionMenuTextAppearance">@style/MenuTextStyle</item>
     </style>
 
     <style name="MenuText" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/txt_14sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorPrimaryDark</item>
         <item name="actionMenuTextAppearance">@style/MenuTextStyle</item>
     </style>
 
     <style name="MenuTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="MyTabLayoutText15Appearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
@@ -281,7 +281,7 @@
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <!--背景白色，有底部边框-->
     <style name="ll_bottom" parent="text_match">
@@ -551,8 +551,8 @@
         <item name="android:textColorHint">#ffffff</item>
         <item name="android:textColorPrimary">#ffffff</item>
         <item name="android:paddingTop">0dp</item>
-        <item name="android:homeAsUpIndicator" tools:ignore="NewApi">@mipmap/back</item>
-        <item name="homeAsUpIndicator">@mipmap/back</item>
+        <item name="android:homeAsUpIndicator" tools:ignore="NewApi">@mipmap/back_g</item>
+        <item name="homeAsUpIndicator">@mipmap/back_g</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="actionMenuTextAppearance">@style/MenuTextStyle</item>
         <item name="elevation">0dp</item>

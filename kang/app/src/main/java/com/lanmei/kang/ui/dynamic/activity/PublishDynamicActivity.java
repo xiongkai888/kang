@@ -90,7 +90,7 @@ public class PublishDynamicActivity extends BaseActivity implements BGASortableN
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("发表动态");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initPhotoHelper();
         manageOssUpload = new ManageOssUpload(this);

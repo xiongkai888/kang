@@ -38,7 +38,7 @@ public class MyOrderActivity extends BaseActivity{
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.my_order);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new MyOrderAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);

@@ -18,7 +18,7 @@ public class Des {
     // 加解密统一使用的编码方式
     private final static String encoding = "utf-8";
 
-    public byte[] desEncrypt(byte[] plainText) throws Exception {
+    public static byte[] desEncrypt(byte[] plainText) throws Exception {
 
         IvParameterSpec iv = new IvParameterSpec(iv1);
 
@@ -38,7 +38,7 @@ public class Des {
      * @param input
      * @return
      */
-    public String encrypt(String input) {
+    public static String encrypt(String input) {
         String result = "input";
         try {
             result = base64Encode(desEncrypt(input.getBytes()));
@@ -49,7 +49,7 @@ public class Des {
         return result;
     }
 
-    public String base64Encode(byte[] s) {
+    public static String base64Encode(byte[] s) {
         if (s == null)
             return null;
         return Base64.encodeToString(s, Base64.DEFAULT);
@@ -63,7 +63,7 @@ public class Des {
      * @return
      * @throws Exception
      */
-    public String decode(String encryptText) throws Exception {
+    public static String decode(String encryptText) throws Exception {
         DESKeySpec spec = new DESKeySpec(DESKey.getBytes());
         SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("DES");
         SecretKey deskey = keyfactory.generateSecret(spec);

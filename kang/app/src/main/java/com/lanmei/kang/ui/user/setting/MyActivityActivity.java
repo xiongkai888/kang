@@ -38,7 +38,7 @@ public class MyActivityActivity extends BaseActivity implements TabLayout.OnTabS
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.my_activity);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new MyActivityAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);

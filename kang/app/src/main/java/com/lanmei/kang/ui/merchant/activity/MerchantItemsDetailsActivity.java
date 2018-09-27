@@ -81,7 +81,7 @@ public class MerchantItemsDetailsActivity extends BaseActivity {
         actionbar.setTitle(bean.getPlace_name());
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         //广告轮播
         CommonUtils.setBanner(banner, bean.getFile(),true);
         contentTv.setText("\u3000\u3000" + bean.getContent());

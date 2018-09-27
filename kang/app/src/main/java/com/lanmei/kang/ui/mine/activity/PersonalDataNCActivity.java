@@ -60,7 +60,7 @@ public class PersonalDataNCActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.personal_data);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         bean = (UserBean) getIntent().getSerializableExtra("bean");
         if (bean != null) {

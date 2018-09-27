@@ -43,7 +43,7 @@ public class GoodFriendsActivity extends BaseActivity implements TabLayout.OnTab
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initViewPager();
     }

@@ -57,7 +57,7 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
         mToolbar.inflateMenu(R.menu.menu_edit);
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.setTitle("选择银行卡");
-        mToolbar.setNavigationIcon(R.mipmap.back);
+        mToolbar.setNavigationIcon(R.mipmap.back_g);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

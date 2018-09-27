@@ -20,9 +20,10 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.ScanEvent;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.ImageUtils;
-import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,6 +32,7 @@ import java.nio.charset.Charset;
 import java.util.Hashtable;
 
 import butterknife.InjectView;
+import cn.bingoogolapple.qrcode.core.BarcodeType;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
@@ -39,12 +41,14 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
  * http://blog.csdn.net/qq_25943493/article/details/52065096
  */
 public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
-    private static final String TAG = "scan";
+
     private static final int CHOOSE_FROM_GALLAY = 1;
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
     @InjectView(R.id.zxingview)
     ZXingView mQRCodeView;
+
+    private boolean isQR;//false为二维码扫描 true为条形码扫描
 
     @Override
     public int getContentViewId() {
@@ -53,8 +57,17 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        mQRCodeView.startSpot();
-        mQRCodeView.setResultHandler(this);//这个参数是一个Delegate接口，已经在本类实现了，也可以在这里进行实现
+        mQRCodeView.setDelegate(this);
+
+        isQR = StringUtils.isSame(CommonUtils.isZero,getIntent().getStringExtra("value"));//1为二维码 0条形码
+
+        if (!isQR){
+            mQRCodeView.changeToScanQRCodeStyle(); // 切换成扫描二维码样式
+            mQRCodeView.setType(BarcodeType.TWO_DIMENSION, null); // 只识别二维条码
+        }else {
+            mQRCodeView.changeToScanBarcodeStyle(); // 切换成扫描条码样式
+            mQRCodeView.setType(BarcodeType.ONE_DIMENSION, null); // 只识别一维条码
+        }
 
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -66,14 +79,18 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        EventBus.getDefault().post(new ScanEvent(result));
+        if (isQR){
+            CommonUtils.developing(this);
+        }else {
+            EventBus.getDefault().post(new ScanEvent(result));
+        }
+//        UIHelper.ToastMessage(this,result);
         vibrate();
         onBackPressed();
     }
 
     @Override
     public void onScanQRCodeOpenCameraError() {
-        L.d(TAG, "onScanQRCodeOpenCameraError");
         Toast.makeText(this, R.string.open_camera_error, Toast.LENGTH_LONG).show();
     }
 
@@ -83,30 +100,27 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         vibrator.vibrate(200);
     }
 
+
     @Override
-    protected void onDestroy() {
-        mQRCodeView.stopCamera();
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+
+        mQRCodeView.startCamera(); // 打开后置摄像头开始预览，但是并未开始识别
+//        mZXingView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT); // 打开前置摄像头开始预览，但是并未开始识别
+        mQRCodeView.startSpotAndShowRect(); // 显示扫描框，并且延迟0.5秒后开始识别
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_publish_dynamic, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.action_publish:
-////                Toast.makeText(this, "相册", Toast.LENGTH_LONG).show();
-//                Intent intent = ImageUtils.getImagePickerIntent();
-//                startActivityForResult(intent, CHOOSE_FROM_GALLAY);
-//                break;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    protected void onStop() {
+        mQRCodeView.stopCamera(); // 关闭摄像头预览，并且隐藏扫描框
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mQRCodeView.onDestroy(); // 销毁二维码扫描控件
+        super.onDestroy();
+    }
 
 
     // 扫描本地图片
@@ -203,4 +217,5 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

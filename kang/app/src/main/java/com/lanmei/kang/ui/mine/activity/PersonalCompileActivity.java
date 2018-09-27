@@ -49,7 +49,7 @@ public class PersonalCompileActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.mipmap.back);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initPersonal(actionbar);
     }

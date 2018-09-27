@@ -118,7 +118,7 @@
     <string name="pay_zhifubao">支付宝支付</string>
     <string name="pay_weixin">微信支付</string>
     <string name="pay_balance">余额支付</string>
-    <string name="qr_code">扫一扫二维码</string>
+    <string name="qr_code">扫码</string>
     <string name="open_camera_error">打开相机出错</string>
     <string name="contact_user">联系用户</string>
     <string name="deal_close">交易关闭</string>
@@ -141,5 +141,9 @@
     <string name="pay_failure">支付失败</string>
     <string name="pay_succeed">支付成功</string>
     <string name="s_regain">s后重新获取</string>
+    <string name="goods_sell">商品销售</string>
+    <string name="merchant_data">商家资料</string>
+    <string name="chu_ku">出库</string>
+    <string name="ru_ku">入库</string>
 
 </resources>

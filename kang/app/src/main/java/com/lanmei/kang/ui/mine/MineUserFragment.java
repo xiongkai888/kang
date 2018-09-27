@@ -1,14 +1,11 @@
 package com.lanmei.kang.ui.mine;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.xson.common.bean.UserBean;
-import com.xson.common.helper.UserHelper;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
@@ -20,7 +17,9 @@ import com.lanmei.kang.ui.shake.ShakeActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
+import com.xson.common.bean.UserBean;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.CircleImageView;
 
@@ -38,8 +37,6 @@ import butterknife.OnClick;
 
 public class MineUserFragment extends BaseFragment {
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
     @InjectView(R.id.head_iv)
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
@@ -59,7 +56,6 @@ public class MineUserFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        mToolbar.setTitle(R.string.mine);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }

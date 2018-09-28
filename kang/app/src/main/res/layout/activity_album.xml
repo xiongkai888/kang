@@ -8,8 +8,7 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_height="55dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="@dimen/d_50dp"
         android:layout_width="match_parent"
         >
 
@@ -26,6 +25,7 @@
             android:layout_centerInParent="true"
             android:text="商家轮播图"
             android:textStyle="normal"
+            android:textColor="@color/black"
             style="@style/text18colorWhite"/>
 
         <TextView

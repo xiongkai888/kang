@@ -18,8 +18,8 @@
 
             <com.xson.common.widget.CircleImageView
                 android:id="@+id/head_iv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/d_100dp"
+                android:layout_height="@dimen/d_100dp"
                 android:layout_marginTop="@dimen/d_20dp"
                 android:src="@mipmap/default_pic" />
 
@@ -30,6 +30,29 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/txt_18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_membership_card"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_membership_card" />
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/my_membership_card" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_50dp"
+        android:paddingBottom="1dp"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabTextAppearance="@style/TabLayoutAppearance" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        style="@style/text"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/d_5dp"
+        android:src="@mipmap/back_g" />
+
+
+    <TextView
+        android:id="@+id/menu_tv"
+        style="@style/text"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/d_15dp"
+        android:textColor="@color/colorPrimaryDark" />
+
+</RelativeLayout>

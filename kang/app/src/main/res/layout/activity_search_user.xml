@@ -8,7 +8,7 @@
     <LinearLayout
         style="@style/ll_no_border"
         android:layout_height="@dimen/d_50dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/white"
         android:paddingRight="@dimen/d_15dp">
 
         <ImageView

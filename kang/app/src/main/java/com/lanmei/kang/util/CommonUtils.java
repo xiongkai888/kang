@@ -3,6 +3,7 @@ package com.lanmei.kang.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -481,4 +482,18 @@ public class CommonUtils {
         }
     }
 
+
+    /**
+     *
+     * @param context
+     * @param textView
+     * @param drawableId 本地图片资源
+     * @param position 图片在文字的位置  0左、1上、2右、3下
+     */
+    public static void setCompoundDrawables(Context context, TextView textView, int drawableId, int position) {
+        Drawable img = context.getResources().getDrawable(drawableId);
+// 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+        textView.setCompoundDrawables(position == 0 ? img : null, position == 1 ? img : null, position == 2 ? img : null, position == 3 ? img : null); //设置右图标
+    }
 }

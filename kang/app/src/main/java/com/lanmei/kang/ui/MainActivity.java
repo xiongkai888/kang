@@ -59,12 +59,12 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         EventBus.getDefault().register(this);
 
         tabHelper = new TabHelper(this, mTabLayout, R.color.colorPrimaryDark);
-        if (!StringUtils.isSame(CommonUtils.getUserType(this), CommonUtils.isOne)) {//商家
-            tabHelper.setParameter(getTitleListM(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
-            mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), 4);
-        } else {//用户
+        if (!StringUtils.isSame(CommonUtils.getUserType(this), CommonUtils.isZero)) {//用户
             tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.location_on, R.mipmap.location_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
             mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), 5);
+        } else {//商家
+            tabHelper.setParameter(getTitleListM(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
+            mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), 4);
         }
         tabHelper.setupTabIcons();
         initViewPager();

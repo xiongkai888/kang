@@ -39,9 +39,20 @@ public class GoodFriendsAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-
         return 2;
     }
 
-
+    @Override
+    public CharSequence getPageTitle(int position) {
+        String title = "";
+        switch (position){
+            case 0:
+                title = "私信";
+                break;
+            case 1:
+                title = "好友";
+                break;
+        }
+        return title;
+    }
 }

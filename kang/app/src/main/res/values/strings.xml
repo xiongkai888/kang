@@ -148,5 +148,7 @@
     <string name="merchant">商家</string>
     <string name="dynamic">动态</string>
     <string name="nearby">附近</string>
+    <string name="merbership_card_num">会员卡号</string>
+    <string name="my_membership_card">我的会员卡</string>
 
 </resources>

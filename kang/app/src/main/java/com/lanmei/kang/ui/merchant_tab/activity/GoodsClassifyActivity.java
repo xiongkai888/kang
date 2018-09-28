@@ -53,7 +53,7 @@ public class GoodsClassifyActivity extends BaseActivity {
         tablayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                CommonUtils.developing(getContext());
+//                CommonUtils.developing(getContext());
 //                changeStatus(position);//改变订单状态（全部、未付款、代练中等）
             }
 

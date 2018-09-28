@@ -41,7 +41,7 @@
             <ImageView
                 style="@style/text"
                 android:padding="5dp"
-                android:src="@mipmap/search" />
+                android:src="@mipmap/merchant_tab_search" />
 
             <TextView
                 style="@style/text12colorWhite"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/search_bg"
-    android:drawableLeft="@mipmap/search"
+    android:drawableLeft="@mipmap/merchant_tab_search"
     android:drawablePadding="8dp"
     android:hint="@string/input_keyword"
     android:imeOptions="actionSearch"

@@ -12,6 +12,7 @@ import com.lanmei.kang.event.AttentionFriendEvent;
 import com.lanmei.kang.event.DynamicLikedEvent;
 import com.lanmei.kang.event.PublishDynamicEvent;
 import com.lanmei.kang.helper.ShareHelper;
+import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -66,6 +67,7 @@ public class DynamicListFragment extends BaseFragment {
         KangQiMeiApi api = new KangQiMeiApi("posts/index");
         api.addParams("type",type);
         api.addParams("id",api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
         mAdapter = new DynamicListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<DynamicBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

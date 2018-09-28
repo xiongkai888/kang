@@ -210,6 +210,9 @@
             android:name=".ui.mine.activity.MyCollectActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.MembershipCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.user.setting.MyActivityActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -226,15 +229,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.PersonalDataActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MenuText" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dynamic.activity.DynamicDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dynamic.activity.PublishDynamicActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MenuText" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AlbumActivity"
             android:screenOrientation="portrait" />
@@ -246,8 +247,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.InterestedFriendActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MenuText" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />

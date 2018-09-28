@@ -33,9 +33,23 @@ public class ClubAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-
         return 3;
     }
 
-
+    @Override
+    public CharSequence getPageTitle(int position) {
+        String title = "";
+        switch (position){
+            case 0:
+                title = "消费明细";
+                break;
+            case 1:
+                title = "充值记录";
+                break;
+            case 2:
+                title = "提现";
+                break;
+        }
+        return title;
+    }
 }

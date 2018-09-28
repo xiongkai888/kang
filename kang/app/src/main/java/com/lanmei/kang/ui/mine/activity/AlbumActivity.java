@@ -141,7 +141,7 @@ public class AlbumActivity extends BaseActivity {
             int size = mAlbumBeanlist.size();
             if (size != albumNum){
                 mDoneTv.setEnabled(true);
-                mDoneTv.setTextColor(getResources().getColor(R.color.white));
+                mDoneTv.setTextColor(getResources().getColor(R.color.black));
                 return;
             }else {
                 mDoneTv.setEnabled(false);

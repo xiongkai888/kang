@@ -19,7 +19,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * 出库
+ * 出库(入库)
  */
 public class GoodsChuKuActivity extends BaseActivity {
 
@@ -39,7 +39,7 @@ public class GoodsChuKuActivity extends BaseActivity {
     LinearLayout llMerchant;
     @InjectView(R.id.ll_price)
     LinearLayout llPrice;
-    private boolean type;
+    private boolean isChuKu;
 
     @Override
     public int getContentViewId() {
@@ -49,16 +49,16 @@ public class GoodsChuKuActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
-        type = StringUtils.isSame(getIntent().getStringExtra("value"),CommonUtils.isZero);
+        isChuKu = StringUtils.isSame(getIntent().getStringExtra("value"),CommonUtils.isZero);
 
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle(type?R.string.chu_ku:R.string.ru_ku);
+        actionbar.setTitle(isChuKu ?R.string.chu_ku:R.string.ru_ku);
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        if (!type){//入库
+        if (!isChuKu){//入库
             llMerchant.setVisibility(View.GONE);
             llPrice.setVisibility(View.GONE);
         }

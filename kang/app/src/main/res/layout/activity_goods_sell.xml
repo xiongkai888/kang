@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF4F4"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        style="@style/ll_bottom">
+
+        <TextView
+            style="@style/mine_text"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:text="输入会员"
+            android:textColor="@color/color666" />
+
+
+        <EditText
+            android:id="@+id/number_et"
+            style="@style/text"
+            android:background="@null"
+            android:hint="请输入会员名称"
+            android:inputType="number"
+            android:maxLength="15" />
+
+        <ImageView
+            android:id="@+id/qr_code_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:src="@mipmap/m_scan_qr_code" />
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/ll_goods_sell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+
+    </ScrollView>
+
+
+    <LinearLayout
+        style="@style/ll_top"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/total_price_tv"
+            style="@style/text_weight"
+            android:layout_marginLeft="@dimen/d_15dp"
+            android:text="总计：￥0" />
+
+
+        <TextView
+            android:layout_width="@dimen/d_100dp"
+            android:layout_height="@dimen/d_40dp"
+            android:background="@color/colorCC000A"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

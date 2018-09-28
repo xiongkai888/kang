@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@color/colorF4F4"
+    android:orientation="vertical">
+
+    <!--出库入库列表和销售列表公用-->
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:gravity="center_vertical"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/time_tv"
+            style="@style/text_weight"
+            android:text="2018-10-1" />
+
+        <!--<ImageView-->
+            <!--style="@style/text"-->
+            <!--android:src="@mipmap/back_g" />-->
+        <TextView
+            android:id="@+id/filter_tv"
+            style="@style/text"
+            android:text="筛选" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <include layout="@layout/fragment_single_listview_no" />
+
+
+</LinearLayout>

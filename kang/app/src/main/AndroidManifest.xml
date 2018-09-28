@@ -817,12 +817,20 @@
             android:name=".ui.merchant.activity.CategoryActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.merchant.activity.ChuKuListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.merchant.activity.GoodsSellActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant.activity.GoodsChuKuActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.merchant_tab.activity.GoodsClassifyActivity"></activity>
+        <activity
+            android:name=".ui.merchant.activity.GoodsSellListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.merchant_tab.activity.GoodsClassifyActivity"/>
     </application>
 
 </manifest>

@@ -27,9 +27,7 @@
             style="@style/text14color4D4D"
             android:layout_weight="1"
             android:maxLines="3"
-            android:ellipsize="end"
-            android:text="@string/tem_zhongyi"
-            />
+            android:ellipsize="end" />
 
         <LinearLayout
             style="@style/text"

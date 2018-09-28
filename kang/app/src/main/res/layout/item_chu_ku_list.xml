@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:text="编号：2313213213"
+            android:textColor="@color/color666" />
+
+        <TextView
+            style="@style/text"
+            android:text="@string/time"
+            android:textColor="@color/color666" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/line_H1dp_CD"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:text="商品名称：粮果"
+            android:textColor="@color/color666" />
+
+        <TextView
+            style="@style/text"
+            android:text="数量：323"
+            android:textColor="@color/color666" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H10dp_on" />
+
+</LinearLayout>

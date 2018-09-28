@@ -24,7 +24,8 @@ import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
 import com.lanmei.kang.ui.merchant.MerchantOrderActivity;
-import com.lanmei.kang.ui.merchant.activity.GoodsChuKuActivity;
+import com.lanmei.kang.ui.merchant.activity.ChuKuListActivity;
+import com.lanmei.kang.ui.merchant.activity.GoodsSellListActivity;
 import com.lanmei.kang.ui.merchant.activity.MerchantItemsActivity;
 import com.lanmei.kang.ui.mine.activity.AlbumActivity;
 import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
@@ -203,13 +204,13 @@ public class MineMerchantFragment extends BaseFragment {
         }
         switch (view.getId()) {
             case R.id.ll_m_sell://商品销售
-                CommonUtils.developing(context);
+                IntentUtil.startActivity(context, GoodsSellListActivity.class);
                 break;
             case R.id.ll_m_chuku://出库
-                IntentUtil.startActivity(context, GoodsChuKuActivity.class,CommonUtils.isZero);
+                IntentUtil.startActivity(context, ChuKuListActivity.class,CommonUtils.isZero);
                 break;
             case R.id.ll_m_ruku://入库
-                IntentUtil.startActivity(context, GoodsChuKuActivity.class,CommonUtils.isOne);
+                IntentUtil.startActivity(context, ChuKuListActivity.class,CommonUtils.isOne);
                 break;
             case R.id.ll_m_data://商家资料
                 IntentUtil.startActivity(context, MerchantDataActivity.class);
@@ -242,7 +243,6 @@ public class MineMerchantFragment extends BaseFragment {
                     public void photograph() {
                         isCamera = true;
                         applyWritePermission();
-//                startActionCamera();
                     }
 
                     @Override

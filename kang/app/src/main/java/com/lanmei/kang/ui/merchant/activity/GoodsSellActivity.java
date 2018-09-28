@@ -2,31 +2,15 @@ package com.lanmei.kang.ui.merchant.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.adapter.CategoryAdapter;
-import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.bean.CategoryBean;
-import com.lanmei.kang.event.AddCategoryEvent;
-import com.lanmei.kang.event.CompileProductEvent;
-import com.lanmei.kang.util.AKDialog;
-import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.helper.AddGoodsSellHelper;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.bean.BaseBean;
-import com.xson.common.bean.NoPageListBean;
-import com.xson.common.helper.BeanRequest;
-import com.xson.common.helper.HttpClient;
-import com.xson.common.utils.StringUtils;
-import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
-import com.xson.common.widget.EmptyRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.InjectView;
 
@@ -37,19 +21,15 @@ public class GoodsSellActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
-
-    @InjectView(R.id.empty_view)
-    View mEmptyView;
-    @InjectView(R.id.recyclerView)
-    EmptyRecyclerView mRecyclerView;
-
-    CategoryAdapter mAdapter;
-
-    String pid;
+    @InjectView(R.id.ll_goods_sell)
+    LinearLayout root;
+    @InjectView(R.id.total_price_tv)
+    TextView totalPriceTv;
+    private AddGoodsSellHelper helper;
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_category;
+        return R.layout.activity_goods_sell;
     }
 
     @Override
@@ -60,49 +40,9 @@ public class GoodsSellActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
-
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new CategoryAdapter(this);
-        mRecyclerView.setEmptyView(mEmptyView);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mAdapter.setCompileCategoryListener(new CategoryAdapter.CompileCategoryListener() {
-            @Override
-            public void compileCategory(final CategoryBean bean) {
-                dialog = AKDialog.getCompileCategoryDialog(GoodsSellActivity.this, getString(R.string.compile_category), bean.getName() ,new AKDialog.ConfirmListener() {
-                    @Override
-                    public void yes(String code) {
-                        addCategory(code,bean.getId(),2);
-                    }
-                });
-                dialog.show();
-            }
-        });
-
-        loadClass();
+        helper = new AddGoodsSellHelper(this,root,totalPriceTv);
     }
 
-    boolean isFirst = true;
-
-    private void loadClass() {
-        KangQiMeiApi api = new KangQiMeiApi("member/category");
-        api.addParams("mid",pid);
-        api.addParams("token",api.getToken(this));
-        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<CategoryBean>>() {
-            @Override
-            public void onResponse(NoPageListBean<CategoryBean> response) {
-                mAdapter.setData(response.data);
-                mAdapter.notifyDataSetChanged();
-                if (isFirst){
-                    isFirst = !isFirst;
-                }else {
-                    EventBus.getDefault().post(new AddCategoryEvent(response.data));
-                }
-
-            }
-        });
-    }
 
 
     @Override
@@ -111,54 +51,15 @@ public class GoodsSellActivity extends BaseActivity {
         return true;
     }
 
-    AlertDialog dialog;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                if (!CommonUtils.isLogin(this)) {
-                    break;
-                }
-                dialog = AKDialog.getCompileCategoryDialog(this, getString(R.string.add_category), "",new AKDialog.ConfirmListener() {
-                    @Override
-                    public void yes(String code) {
-                        addCategory(code,"",1);
-                    }
-                });
-                dialog.show();
+                helper.addItem();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void addCategory(String code,String id,final int type) {
-        if (StringUtils.isEmpty(code)){
-            UIHelper.ToastMessage(this,getString(R.string.input_category_name));
-            return;
-        }
-        dialog.cancel();
-        KangQiMeiApi api = new KangQiMeiApi("place/addClassify");
-        api.addParams("mid",pid);
-        api.addParams("name",code);
-        if (type != 1){//编辑分类
-            api.addParams("id",id);
-        }
-        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-            @Override
-            public void onResponse(BaseBean response) {
-                if (isFinishing()){
-                    return;
-                }
-                loadClass();
-                if (type != 1){
-                    UIHelper.ToastMessage(GoodsSellActivity.this,response.getInfo());
-                }else {
-                    UIHelper.ToastMessage(GoodsSellActivity.this,"添加成功");
-                }
-                EventBus.getDefault().post(new CompileProductEvent());//刷新服务项目列表
-            }
-        });
     }
 
 }

@@ -7,10 +7,14 @@
     <include layout="@layout/include_centertitletoolbar" />
 
 
+    <TextView
+       android:layout_marginTop="@dimen/d_10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_0dp"/>
+
     <LinearLayout
         android:id="@+id/ll_merchant"
-        style="@style/ll_bottom"
-        android:layout_marginTop="@dimen/d_10dp">
+        style="@style/ll_bottom">
 
         <TextView
             style="@style/mine_text"
@@ -46,11 +50,11 @@
 
         <ImageView
             android:id="@+id/qr_code_iv"
-            android:layout_marginLeft="@dimen/d_5dp"
-            android:src="@mipmap/m_scan_qr_code"
-            android:layout_marginRight="@dimen/d_10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:src="@mipmap/m_scan_qr_code" />
 
     </LinearLayout>
 
@@ -73,6 +77,7 @@
             android:maxLength="10" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_price"
         style="@style/ll_bottom">
@@ -95,8 +100,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_bottom">
+    <LinearLayout style="@style/ll_bottom">
 
         <TextView
             style="@style/mine_text"
@@ -122,8 +126,8 @@
 
     <Button
         android:id="@+id/submit_bt"
-        android:layout_gravity="bottom"
         style="@style/button_style"
+        android:layout_gravity="bottom"
         android:text="@string/submit" />
 
 </LinearLayout>

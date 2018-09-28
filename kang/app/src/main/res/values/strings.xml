@@ -63,8 +63,7 @@
     <string name="chinese_medicine">中医</string>
     <string name="chinese_medicine_physiotherapy">中医理疗</string>
     <string name="mine">我的</string>
-    <string name="tem_zhongyi">广州天河中医理疗</string>
-    <string name="time">2017-12-25 12:33:55</string>
+    <string name="time">2018-10-1 12:33:55</string>
     <string name="input_consume_code">请输入消费验证码</string>
     <string name="price_sub">￥0</string>
     <string name="price">￥%1$s</string>
@@ -150,5 +149,8 @@
     <string name="nearby">附近</string>
     <string name="merbership_card_num">会员卡号</string>
     <string name="my_membership_card">我的会员卡</string>
+    <string name="chu_ku_list">出库列表</string>
+    <string name="ru_ku_list">入库列表</string>
+    <string name="sell_list">销售列表</string>
 
 </resources>

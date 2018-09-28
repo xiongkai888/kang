@@ -532,6 +532,10 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="h_match_parent_no" parent="match_parent_no">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <style name="all_match_parent" parent="match_parent">
         <item name="android:layout_height">match_parent</item>
     </style>

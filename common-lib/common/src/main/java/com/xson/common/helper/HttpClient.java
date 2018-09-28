@@ -318,9 +318,9 @@ public class HttpClient implements IHttpClient {
             } else {
                 String msg;
                 if (error != null && error.getCause() != null && error.getCause() instanceof JSONException) {
-                    msg = context.getString(R.string.http_request_error);
-                } else {
                     msg = context.getString(R.string.http_parse_error);
+                } else {
+                    msg = context.getString(R.string.http_request_error);
                 }
                 if (error != null && error.networkResponse != null) {
                     msg += " #" + error.networkResponse.statusCode;

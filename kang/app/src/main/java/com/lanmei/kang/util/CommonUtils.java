@@ -439,6 +439,8 @@ public class CommonUtils {
         banner.startTurning(3000);
     }
 
+
+
     LoadUserInfoListener l;
 
     public interface LoadUserInfoListener{

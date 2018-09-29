@@ -1,21 +1,25 @@
 package com.lanmei.kang.bean;
 
 /**
- * Created by Administrator on 2017/5/22.
- * 用户端-商家tab  轮播图 和 热门活动 的bean一样
+ * Created by xkai on 2018/9/29.
+ *
+ * 用户端-商家tab-热门活动
  */
 
-public class AdBean {
+public class MerchantTabHotImgBean {
+
 
     /**
-     * id : 17
-     * sort : 1
+     * id : 32
+     * sort : 2
      * classid : 1
      * category_id : 0
-     * pic : http://stdrimages.img-cn-shenzhen.aliyuncs.com/170519/591e90a866cfd.jpg
+     * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180201/5a7275ea7ffa2.png
      * smallpic :
      * bgcolor :
-     * link :
+     * link : p_178
+     * type : 2
+     * url : www.baidu.com
      */
 
     private String id;
@@ -26,11 +30,6 @@ public class AdBean {
     private String smallpic;
     private String bgcolor;
     private String link;
-    /**
-     * type : 1
-     * url : www.baidu.com
-     */
-
     private String type;
     private String url;
 

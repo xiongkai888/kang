@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorF4F4"
@@ -58,17 +59,18 @@
         style="@style/ll_top"
         android:gravity="center_vertical">
 
-        <TextView
+        <com.xson.common.widget.FormatTextView
             android:id="@+id/total_price_tv"
             style="@style/text_weight"
             android:layout_marginLeft="@dimen/d_15dp"
-            android:text="总计：￥0" />
+            app:defaultValue="0.00"
+            app:formatText="@string/total_cash" />
 
 
         <TextView
             android:layout_width="@dimen/d_100dp"
             android:layout_height="@dimen/d_40dp"
-            android:background="@color/colorCC000A"
+            android:background="@color/colorF5484A"
             android:gravity="center"
             android:text="@string/submit"
             android:textColor="@color/white" />

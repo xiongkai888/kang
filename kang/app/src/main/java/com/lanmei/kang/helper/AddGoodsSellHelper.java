@@ -6,15 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsSellBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.helper.SimpleTextWatcher;
-import com.xson.common.utils.DoubleUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
+import com.xson.common.widget.FormatTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +30,14 @@ public class AddGoodsSellHelper {
 
     private Context context;
     private LinearLayout root;
-    private TextView totalPriceTv;
+    private FormatTextView totalPriceTv;
     private List<GoodsSellBean> list;
 
     public List<GoodsSellBean> getList() {
         return list;
     }
 
-    public AddGoodsSellHelper(Context context, LinearLayout root, TextView totalPriceTv) {
+    public AddGoodsSellHelper(Context context, LinearLayout root, FormatTextView totalPriceTv) {
         this.context = context;
         this.root = root;
         this.totalPriceTv = totalPriceTv;
@@ -53,10 +52,10 @@ public class AddGoodsSellHelper {
     }
 
 
-    public void addItem(){
+    public void addItem() {
         GoodsSellBean bean = new GoodsSellBean();
         list.add(bean);
-        addView(list.size()-1);
+        addView(list.size() - 1);
     }
 
     /**
@@ -66,7 +65,7 @@ public class AddGoodsSellHelper {
      */
     private void addView(int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell, null);
-        root.addView(view,position);
+        root.addView(view, position);
         new ViewHolder(view, position);
     }
 
@@ -99,13 +98,13 @@ public class AddGoodsSellHelper {
             setParameter();
         }
 
-        public void setParameter(){
+        public void setParameter() {
             subtractIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!isEmpty() && list.size() == 1){
-                        UIHelper.ToastMessage(context,"至少添加一项");
-                    }else {
+                    if (!isEmpty() && list.size() == 1) {
+                        UIHelper.ToastMessage(context, "至少添加一项");
+                    } else {
                         list.remove(position);
                         refresh();
                     }
@@ -119,34 +118,39 @@ public class AddGoodsSellHelper {
                 }
             });
             numberEt.setText(bean.getNumber());
-            numTv.setText(bean.getNum()+"");
-            priceEt.setText(bean.getPrice()+"");
+            numTv.setText(bean.getNum() + "");
+            priceEt.setText(bean.getPrice() + "");
             unitEt.setText(bean.getUnit());
 
             numberEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    list.get(position).setNumber(String.valueOf(s));
+                    bean.setNumber(String.valueOf(s));
                 }
             });
             numTv.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    list.get(position).setNum(SimpleTextWatcher.StringToDouble(s));
-                    totalPriceTv.setText("总价：￥"+ DoubleUtil.formatFloatNumber(getTotalPrice()));
+                    bean.setNum(SimpleTextWatcher.StringToDouble(s));
+                    if (bean.getPrice() != 0) {
+                        totalPriceTv.setTextValue(String.format("%.2f", getTotalPrice()));
+                    }
                 }
             });
             priceEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    list.get(position).setPrice(SimpleTextWatcher.StringToDouble(s));
-                    totalPriceTv.setText("总价：￥"+ DoubleUtil.formatFloatNumber(getTotalPrice()));
+                    bean.setPrice(SimpleTextWatcher.StringToDouble(s));
+                    if (bean.getNum() != 0) {
+                        totalPriceTv.setTextValue(String.format("%.2f", getTotalPrice()));
+                    }
+
                 }
             });
             unitEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    list.get(position).setUnit(String.valueOf(s));
+                    bean.setUnit(String.valueOf(s));
                 }
             });
         }
@@ -154,13 +158,15 @@ public class AddGoodsSellHelper {
     }
 
 
-    private double getTotalPrice(){
+    private double getTotalPrice() {
         double totalPrice = 0;
-        if (isEmpty()){
+        if (isEmpty()) {
             return 0;
         }
-        for (GoodsSellBean bean:list){
-            totalPrice += bean.getPrice()* bean.getNum();
+        for (GoodsSellBean bean : list) {
+            if (bean.getPrice() != 0 && bean.getPrice() != 0) {
+                totalPrice += bean.getPrice() * bean.getNum();
+            }
         }
         return totalPrice;
     }

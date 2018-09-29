@@ -3,9 +3,8 @@ package com.lanmei.kang.adapter;
 import android.content.Context;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.bean.MerchantTabClassifyBean;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
@@ -18,21 +17,17 @@ import q.rorbin.verticaltablayout.widget.TabView;
 
 public class GoodsClassifyVerticalTabAdapter implements TabAdapter {
 
-    List<String> menus;
-    Context mContext;
+    private Context context;
+    private List<MerchantTabClassifyBean> classifyList;
 
-    public GoodsClassifyVerticalTabAdapter(Context context) {
-        menus = new ArrayList<>();
-        Collections.addAll(menus, "面膜"//0
-                , "爽肤水"//2
-                , "乳液"//3
-        );
-        mContext = context;
+    public GoodsClassifyVerticalTabAdapter(Context context,List<MerchantTabClassifyBean> classifyList) {
+        this.classifyList = classifyList;
+        this.context = context;
     }
 
     @Override
     public int getCount() {
-        return menus.size();
+        return classifyList.size();
     }
 
     //    @Override
@@ -74,8 +69,8 @@ public class GoodsClassifyVerticalTabAdapter implements TabAdapter {
     @Override
     public TabView.TabTitle getTitle(int position) {
         return new TabView.TabTitle.Builder()
-                .setContent(menus.get(position))
-                .setTextColor(mContext.getResources().getColor(R.color.colorPrimaryDark), mContext.getResources().getColor(R.color.black))
+                .setContent(classifyList.get(position).getClassname())
+                .setTextColor(context.getResources().getColor(R.color.colorPrimaryDark), context.getResources().getColor(R.color.black))
                 .build();
     }
 
@@ -85,7 +80,7 @@ public class GoodsClassifyVerticalTabAdapter implements TabAdapter {
     }
 
     protected int dp2px(float dp) {
-        final float scale = mContext.getResources().getDisplayMetrics().density;
+        final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
 

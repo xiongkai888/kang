@@ -89,6 +89,7 @@
     <string name="no_consumption">未消费</string>
     <string name="doned">已完成</string>
     <string name="order_no">订单号：%1$s</string>
+    <string name="have_sales">已销售%1$s</string>
     <string name="total_price">总价：</string>
     <string name="cancel_order">取消订单</string>
     <string name="go_consumption">去消费</string>
@@ -152,5 +153,6 @@
     <string name="chu_ku_list">出库列表</string>
     <string name="ru_ku_list">入库列表</string>
     <string name="sell_list">销售列表</string>
+    <string name="total_cash"><![CDATA[总计 :<font color="#F5484A">￥%s</font>]]></string>
 
 </resources>

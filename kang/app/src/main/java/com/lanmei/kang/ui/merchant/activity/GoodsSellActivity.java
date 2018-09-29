@@ -5,12 +5,12 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.helper.AddGoodsSellHelper;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.widget.CenterTitleToolbar;
+import com.xson.common.widget.FormatTextView;
 
 import butterknife.InjectView;
 
@@ -24,7 +24,7 @@ public class GoodsSellActivity extends BaseActivity {
     @InjectView(R.id.ll_goods_sell)
     LinearLayout root;
     @InjectView(R.id.total_price_tv)
-    TextView totalPriceTv;
+    FormatTextView totalPriceTv;
     private AddGoodsSellHelper helper;
 
     @Override

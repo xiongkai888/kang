@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <corners android:radius="@dimen/d_5dp"/>
     <!-- 线的宽度、颜色 -->
     <stroke
         android:color="@color/divider"

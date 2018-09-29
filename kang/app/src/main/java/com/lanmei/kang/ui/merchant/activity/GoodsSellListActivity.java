@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.adapter.ChuKuListAdapter;
+import com.lanmei.kang.adapter.GoodsSellListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.lanmei.kang.util.CommonUtils;
@@ -58,7 +58,7 @@ public class GoodsSellListActivity extends BaseActivity {
     private void initSwipeRefreshLayout() {
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
         api.addParams("more", 1);
-        ChuKuListAdapter adapter = new ChuKuListAdapter(this);
+        GoodsSellListAdapter adapter = new GoodsSellListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, adapter) {

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:text="订单号：2313213213" />
+
+        <TextView
+            style="@style/text"
+            android:text="@string/time" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp"
+        android:background="@drawable/border_divider_corner"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:paddingRight="@dimen/d_10dp"
+            android:paddingLeft="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_3dp"
+            android:paddingTop="@dimen/d_10dp"
+            style="@style/h_match_parent_no">
+
+            <TextView
+                style="@style/text_weight"
+                android:text="美白面膜" />
+
+            <TextView
+                style="@style/text14color666"
+                android:text="￥253" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginLeft="@dimen/d_10dp"
+            style="@style/text14color666"
+            android:text="单价：￥253" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/d_10dp"
+            style="@style/text14color666"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:text="数量：1" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text12color666"
+            android:text="共计1件商品" />
+
+        <com.xson.common.widget.FormatTextView
+            android:id="@+id/total_price_tv"
+            style="@style/text12color666"
+            android:layout_marginLeft="@dimen/d_10dp"
+            app:defaultValue="253.00"
+            app:formatText="@string/total_cash" />
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/line_H1dp_CD"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:layout_marginRight="@dimen/d_10dp" />
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:gravity="center_vertical"
+        android:padding="@dimen/d_5dp">
+
+        <com.xson.common.widget.CircleImageView
+            android:layout_width="@dimen/d_30dp"
+            android:layout_height="@dimen/d_30dp"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:src="@mipmap/default_pic" />
+
+        <TextView
+            style="@style/text_weight"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:text="@string/app_name"
+            android:textColor="@color/color666"
+            android:textSize="@dimen/txt_12sp" />
+
+        <TextView
+            style="@style/text12colorWhite"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/button_bg_red"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_2dp"
+            android:paddingLeft="@dimen/d_20dp"
+            android:paddingRight="@dimen/d_20dp"
+            android:paddingTop="@dimen/d_2dp"
+            android:text="@string/delete" />
+
+    </LinearLayout>
+
+    <TextView style="@style/line_H10dp_on" />
+
+</LinearLayout>

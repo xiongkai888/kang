@@ -1,5 +1,7 @@
 package com.xson.common.api;
 
+import com.xson.common.utils.L;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +61,9 @@ public abstract class AbstractApi {
             } else {
                 params.put(item.getKey(), item.getValue());
             }
+        }
+        if (p > 0) {
+            params.put(L.p, p);
         }
         return params;
     }

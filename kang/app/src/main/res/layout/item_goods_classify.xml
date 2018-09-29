@@ -23,8 +23,7 @@
             android:maxLines="2"
             android:paddingLeft="@dimen/d_5dp"
             android:paddingRight="@dimen/d_5dp"
-            android:paddingTop="@dimen/d_5dp"
-            android:text="高效洗洁精" />
+            android:paddingTop="@dimen/d_5dp" />
 
 
         <LinearLayout
@@ -38,14 +37,12 @@
             <TextView
                 android:id="@+id/money_tv"
                 style="@style/text_weight"
-                android:text="￥5000"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/txt_12sp" />
 
             <TextView
                 android:id="@+id/sell_num_tv"
-                style="@style/text10color999"
-                android:text="已购买81" />
+                style="@style/text10color999" />
 
         </LinearLayout>
     </LinearLayout>

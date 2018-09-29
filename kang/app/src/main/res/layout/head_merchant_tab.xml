@@ -10,57 +10,46 @@
     <include layout="@layout/goods_details_ad" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/d_5dp"
-        android:paddingTop="@dimen/d_5dp">
-
-        <TextView
-            style="@style/text_weight"
-            android:drawablePadding="@dimen/d_5dp"
-            android:drawableTop="@mipmap/merchant_tab_1"
-            android:gravity="center_horizontal"
-            android:text="面膜"
-            android:textColor="@color/color666" />
-
-        <TextView
-            android:textColor="@color/color666"
-            style="@style/text_weight"
-            android:drawablePadding="@dimen/d_5dp"
-            android:drawableTop="@mipmap/merchant_tab_2"
-            android:gravity="center_horizontal"
-            android:text="爽肤水" />
-
-        <TextView
-            android:textColor="@color/color666"
-            style="@style/text_weight"
-            android:drawablePadding="@dimen/d_5dp"
-            android:drawableTop="@mipmap/merchant_tab_3"
-            android:gravity="center_horizontal"
-            android:text="彩妆" />
-
-        <TextView
-            android:textColor="@color/color666"
-            style="@style/text_weight"
-            android:drawablePadding="@dimen/d_5dp"
-            android:drawableTop="@mipmap/merchant_tab_4"
-            android:gravity="center_horizontal"
-            android:text="乳液" />
-
-    </LinearLayout>
-
-    <View style="@style/line_H1dp_CD" />
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorF4F4" />
+        android:layout_height="wrap_content" />
 
-    <View style="@style/line_H1dp_CD" />
+    <View style="@style/line_H10dp_on" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/d_30dp"
+        android:paddingRight="@dimen/d_30dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+        <TextView
+            style="@style/text14color666"
+            android:layout_margin="@dimen/d_10dp"
+            android:drawableLeft="@mipmap/merchant_tab_hot"
+            android:drawablePadding="@dimen/d_5dp"
+            android:gravity="center_vertical"
+            android:text="热门活动" />
+
+        <TextView
+            style="@style/text_weight"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_hot_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/ll_more"

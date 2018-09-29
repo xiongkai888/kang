@@ -5,19 +5,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.HomeBean;
+import com.lanmei.kang.bean.MerchantTabGoodsBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
-import com.xson.common.utils.L;
+import com.xson.common.helper.ImageHelper;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /**
  * 商品分类筛选
  */
-public class GoodsClassifyAdapter extends SwipeRefreshAdapter<HomeBean> {
+public class GoodsClassifyAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> {
 
 
 
@@ -33,20 +36,35 @@ public class GoodsClassifyAdapter extends SwipeRefreshAdapter<HomeBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
+        MerchantTabGoodsBean bean = getItem(position);
+        if (bean == null) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.image)
+        ImageView image;
+        @InjectView(R.id.content_tv)
+        TextView contentTv;
+        @InjectView(R.id.money_tv)
+        TextView moneyTv;
+        @InjectView(R.id.sell_num_tv)
+        TextView sellNumTv;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
+        }
 
+        public void setParameter(MerchantTabGoodsBean bean) {
+            ImageHelper.load(context, bean.getImgs(), image, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            contentTv.setText(bean.getGoodsname());
+            moneyTv.setText(String.format(context.getString(R.string.price), bean.getPrice()));
+            sellNumTv.setText(String.format(context.getString(R.string.have_sales), bean.getSales()));
         }
     }
-
-    @Override
-    public int getCount() {
-        return L.limit;
-    }
-
 }

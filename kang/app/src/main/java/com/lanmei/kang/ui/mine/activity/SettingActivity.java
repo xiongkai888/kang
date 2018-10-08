@@ -14,6 +14,7 @@ import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.HelpInfoBean;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
+import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.ui.login.RegisterActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
@@ -98,6 +99,8 @@ public class SettingActivity extends BaseActivity {
                         EventBus.getDefault().post(new SetUserInfoEvent());
                         EventBus.getDefault().post(new LoginQuitEvent());//
                         Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
+                        IntentUtil.startActivity(getContext(), LoginActivity.class);
+
                         onBackPressed();
 
                     }

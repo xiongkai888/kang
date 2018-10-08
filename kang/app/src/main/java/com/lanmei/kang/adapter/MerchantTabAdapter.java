@@ -15,8 +15,10 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.bean.AdBean;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
+import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 
 import java.util.List;
 
@@ -35,12 +37,12 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
 
     public MerchantTabAdapter(Context context) {
         super(context);
+        bannerViewHolder = new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.head_merchant_tab, null, false));
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
         if (viewType == TYPE_BANNER) { // banner
-            bannerViewHolder = new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.head_merchant_tab, parent, false));
             return bannerViewHolder;
         }
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_merchant_tab, parent, false));
@@ -53,12 +55,18 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
 
             return;
         }
-        MerchantTabGoodsBean bean = getItem(position - 1);
+        final MerchantTabGoodsBean bean = getItem(position - 1);
         if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtil.startActivity(context, GoodsDetailsActivity.class,bean.getId());
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -93,6 +101,11 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
         return super.getItemViewType2(position);
     }
 
+
+    @Override
+    public int getCount() {
+        return super.getCount()+1;
+    }
 
     //头部
     public class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -138,15 +151,27 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
         }
     }
 
+    //轮播图
     public void setBannerParameter(List<AdBean> adBeanList) {
+        if (bannerViewHolder == null){
+            return;
+        }
         bannerViewHolder.setBannerParameter(adBeanList);
     }
 
+    //商品分类
     public void setClassifyParameter(List<MerchantTabClassifyBean> list) {
+        if (bannerViewHolder == null){
+            return;
+        }
         bannerViewHolder.setClassifyParameter(list);
     }
 
+    //热门活动
     public void setHotImgParameter(List<AdBean> list) {
+        if (bannerViewHolder == null){
+            return;
+        }
         bannerViewHolder.setHotImgParameter(list);
     }
 

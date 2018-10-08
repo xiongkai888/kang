@@ -13,6 +13,8 @@
 
     <!---->
     <dimen name="d_0dp">0dp</dimen>
+    <dimen name="d_0.5dp">0.5dp</dimen>
+    <dimen name="d_1dp">1dp</dimen>
     <dimen name="d_2dp">2dp</dimen>
     <dimen name="d_3dp">3dp</dimen>
     <dimen name="d_5dp">5dp</dimen>
@@ -32,6 +34,8 @@
     <dimen name="d_100dp">100dp</dimen>
     <dimen name="d_120dp">120dp</dimen>
     <dimen name="d_150dp">150dp</dimen>
+    <dimen name="d_160dp">160dp</dimen>
+    <dimen name="d_180dp">180dp</dimen>
 
     <dimen name="tabLayout_h">50dp</dimen>
 

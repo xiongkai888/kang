@@ -552,4 +552,10 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="style_navigation">
+        <item name="android:layout_width">190dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

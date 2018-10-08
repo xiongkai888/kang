@@ -1,6 +1,7 @@
 package com.lanmei.kang.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,10 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
-import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.ui.merchant_tab.activity.GoodsListActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,7 +46,9 @@ public class MerchantTabClassifyAdapter extends SwipeRefreshAdapter<MerchantTabC
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.developing(context);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean",bean);
+                IntentUtil.startActivity(context,GoodsListActivity.class,bundle);
             }
         });
     }

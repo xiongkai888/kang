@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dddddd"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.lanmei.kang.widget.SlideDetailsLayout
+            android:id="@+id/slideDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+
+                <LinearLayout style="@style/v_match_parent">
+
+                    <include layout="@layout/goods_details_ad" />
+
+                    <TextView
+                        android:id="@+id/name_tv"
+                        style="@style/text"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:padding="@dimen/d_10dp"
+                        android:text="道具黑色" />
+
+                    <LinearLayout
+                        style="@style/h_match_parent"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/d_10dp"
+                        android:paddingLeft="@dimen/d_10dp"
+                        android:paddingRight="12dp">
+
+                        <TextView
+                            android:id="@+id/price_tv"
+                            style="@style/text_weight"
+                            android:text="￥0"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/txt_16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/pay_num_tv"
+                            style="@style/text14color999"
+                            android:layout_marginLeft="7dp"
+                            android:text="已有0人购买" />
+
+                    </LinearLayout>
+
+                    <TextView style="@style/line_H10dp_on" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_choose_parameter"
+                        style="@style/ll_no_border"
+                        android:padding="@dimen/d_10dp">
+
+                        <TextView
+                            style="@style/text_weight"
+                            android:text="选择参数" />
+
+
+                        <ImageView
+                            style="@style/text"
+                            android:src="@mipmap/in_right" />
+
+                    </LinearLayout>
+
+
+                    <TextView style="@style/line_H10dp_on" />
+
+                    <LinearLayout
+                        style="@style/ll_bottom"
+                        android:gravity="center_vertical"
+                        android:padding="10dp">
+
+
+                        <TextView
+                            android:id="@+id/comment_num_tv"
+                            style="@style/text_weight"
+                            android:text="商品评价(0)" />
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="好评度"
+                                android:textColor="#222222"
+                                android:textSize="13dp" />
+
+                            <TextView
+                                style="@style/text"
+                                android:layout_marginLeft="2dp"
+                                android:text="100%"
+                                android:textColor="@color/colorAccent" />
+
+                            <ImageView
+                                style="@style/text"
+                                android:layout_marginLeft="6dp"
+                                android:src="@mipmap/in_right" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/all_comment_tv"
+                        style="@style/text14colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_margin="@dimen/d_10dp"
+                        android:background="@drawable/button_bg_red"
+                        android:gravity="center"
+                        android:text="查看全部评论" />
+
+                    <!-- 上拉查看图文详情 -->
+                    <TextView
+                        android:id="@+id/pull_up_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@mipmap/top"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="上拉查看图文详情"
+                        android:textColor="#222222"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <include layout="@layout/include_item_tab" />
+
+        </com.lanmei.kang.widget.SlideDetailsLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="30dp"
+            android:src="@mipmap/go_top"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

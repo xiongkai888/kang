@@ -10,7 +10,7 @@ android {
         targetSdkVersion 26
         versionCode 21
         versionName "2.0.3"
-        buildConfigField "String", "API_URL", "\"http://120.79.56.96/Api/\""
+        buildConfigField "String", "API_URL", "\"http://120.79.56.96/api/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs "zh"

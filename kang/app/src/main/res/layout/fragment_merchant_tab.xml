@@ -44,6 +44,12 @@
 
     </LinearLayout>
 
-    <include layout="@layout/fragment_single_listview_no" />
+
+    <com.xson.common.widget.SmartSwipeRefreshLayout
+        android:id="@+id/pull_refresh_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:listSelector="@null" />
 
 </LinearLayout>

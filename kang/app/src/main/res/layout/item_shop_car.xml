@@ -8,7 +8,7 @@
         android:id="@+id/select_iv"
         style="@style/text"
         android:layout_marginRight="@dimen/d_10dp"
-        android:src="@mipmap/pay_off" />
+        android:src="@mipmap/choose_off" />
 
     <ImageView
         android:id="@+id/head_iv"

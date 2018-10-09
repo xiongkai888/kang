@@ -1,6 +1,5 @@
 package com.lanmei.kang.ui.merchant_tab.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
@@ -16,10 +15,10 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -33,20 +32,11 @@ public class GoodsClassifyActivity extends BaseActivity {
     VerticalTabLayout tablayout;//垂直tabLayout
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-
-    private SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller;
+    GoodsClassifyAdapter adapter;
     private List<MerchantTabClassifyBean> classifyList;//分类列表
     private KangQiMeiApi api;
+    private HashMap<Integer,List<MerchantTabGoodsBean>>  hashMap;
 
-    @Override
-    public void initIntent(Intent intent) {
-        super.initIntent(intent);
-        Bundle bundle = intent.getBundleExtra("bundle");
-        if (bundle == null) {
-            return;
-        }
-        classifyList = (List<MerchantTabClassifyBean>) bundle.getSerializable("list");
-    }
 
     @Override
     public int getContentViewId() {
@@ -55,13 +45,12 @@ public class GoodsClassifyActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        hashMap = new HashMap<>();
+
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(this, 2));
         api = new KangQiMeiApi("app/good_list");
-        api.addParams("hot",0);
-        GoodsClassifyAdapter adapter = new GoodsClassifyAdapter(this);
+        adapter = new GoodsClassifyAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
-        };
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         loadGoodsClassify();
     }
@@ -86,9 +75,24 @@ public class GoodsClassifyActivity extends BaseActivity {
         refresh(0);
     }
 
-    private void refresh(int position) {
+    private void refresh(final int position) {
+        if (hashMap.containsKey(position)){
+            adapter.setData(hashMap.get(position));
+            adapter.notifyDataSetChanged();
+            return;
+        }
         api.addParams("classid", classifyList.get(position).getId());
-        controller.loadFirstPage();
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
+                if (adapter == null){
+                    return;
+                }
+                hashMap.put(position,response.data);
+                adapter.setData(response.data);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     //用户端-商家tab  产品分类

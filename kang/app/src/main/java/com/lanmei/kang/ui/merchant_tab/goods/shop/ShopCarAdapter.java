@@ -71,9 +71,9 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
         public void setParameter(final ShopCarBean bean,final int position) {
             goodsCount = bean.getGoodsCount();
             ImageHelper.load(context,bean.getGoodsImg(),headIv,null,true,R.mipmap.default_pic,R.mipmap.default_pic);
-            priceTv.setText("￥"+bean.getSell_price());
+            priceTv.setText(String.format(context.getString(R.string.price),String.valueOf(bean.getSell_price())));
             nameTv.setText(bean.getGoodsName());
-            payNumEt.setText(goodsCount+"");
+            payNumEt.setText(String.valueOf(goodsCount));
             payNumEt.setFocusable(false);
             numAddIv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,9 +94,9 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
             });
             final boolean isSelect = bean.isSelect();
             if (isSelect){
-                selectIv.setImageResource(R.mipmap.pay_on);
+                selectIv.setImageResource(R.mipmap.choose_on);
             }else {
-                selectIv.setImageResource(R.mipmap.pay_off);
+                selectIv.setImageResource(R.mipmap.choose_off);
             }
             selectIv.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -9,38 +9,40 @@ package com.lanmei.kang.bean;
 public class MerchantTabGoodsBean {
 
     /**
-     * id : 26
+     * id : 3
      * uid : null
-     * addtime : 1537953303
-     * uptime : 1537955749
-     * goodsname : 玩一玩
+     * addtime : 2018-09-29 15:42:17
+     * uptime : 0000-00-00 00:00:00
+     * goodsname : 三星手机
      * type : ,63,
-     * price : 888.00
-     * up_time : 1537955749
-     * down_time : 1537953303
-     * inventory : 888
+     * price : 1000.00
+     * up_time : 1538206339
+     * down_time : 1493269366
+     * inventory : 100
      * is_del : 0
      * order_by : 1
-     * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379532752527.jpg
-     * imgs : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379532793191.jpg
+     * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180929/15382063285035.jpg
+     * imgs : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180929/15382063334849.png
      * state : 1
-     * userid : null
-     * content :
+     * userid : 5
+     * content : 
      * hot : 1
      * vipprice : 0.00
-     * sales : 888
+     * sales : 1
      * promotion : 1
      * spot : 1
      * vgoods : 1
      * comments : 0
      * model : 0
-     * specifications : null
-     * specificationsname :
-     * attribute :
-     * business_price : 888.00
-     * sale_price : 888.00
-     * barcode : 545454ssja
-     * status : 1
+     * specifications : 红色,M
+     * specificationsname : 
+     * attribute : 
+     * business_price : 0.00
+     * sale_price : 0.00
+     * barcode : 
+     * status : null
+     * shoucang : 0
+     * classid : 7
      */
 
     private String id;
@@ -75,6 +77,8 @@ public class MerchantTabGoodsBean {
     private String sale_price;
     private String barcode;
     private String status;
+    private String shoucang;
+    private String classid;
 
     public String getId() {
         return id;
@@ -330,5 +334,21 @@ public class MerchantTabGoodsBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getShoucang() {
+        return shoucang;
+    }
+
+    public void setShoucang(String shoucang) {
+        this.shoucang = shoucang;
+    }
+
+    public String getClassid() {
+        return classid;
+    }
+
+    public void setClassid(String classid) {
+        this.classid = classid;
     }
 }

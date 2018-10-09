@@ -15,29 +15,8 @@
         android:background="@color/colorF4F4"
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:tabTextAppearance="@style/TabLayoutAppearance">
+        app:tabTextAppearance="@style/TabLayoutAppearance"/>
 
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/all" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/wait_pay" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/no_consumption" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/doned" />
-
-    </android.support.design.widget.TabLayout>
 
     <View style="@style/line_H1dp_CD"/>
 

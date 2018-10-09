@@ -60,8 +60,8 @@
                             android:id="@+id/pay_num_tv"
                             style="@style/text10color999"
                             android:layout_marginLeft="7dp"
-                            android:gravity="center_vertical"
                             android:drawableLeft="@mipmap/goods_sales"
+                            android:gravity="center_vertical"
                             android:text="已有0人购买" />
 
                     </LinearLayout>
@@ -135,10 +135,16 @@
                     <TextView
                         android:id="@+id/all_comment_tv"
                         style="@style/text14colorWhite"
-                        android:layout_width="match_parent"
-                        android:layout_margin="@dimen/d_10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/d_10dp"
+                        android:layout_marginTop="@dimen/d_10dp"
                         android:background="@drawable/button_bg_red"
                         android:gravity="center"
+                        android:paddingBottom="@dimen/d_5dp"
+                        android:paddingLeft="@dimen/d_20dp"
+                        android:paddingRight="@dimen/d_20dp"
+                        android:paddingTop="@dimen/d_5dp"
                         android:text="查看全部评论" />
 
                     <!-- 上拉查看图文详情 -->
@@ -153,8 +159,7 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="上拉查看图文详情"
-                        android:textColor="#222222"
-                        android:textSize="14dp" />
+                        android:textColor="#222222" />
                 </LinearLayout>
             </ScrollView>
 

@@ -221,6 +221,9 @@
             android:name=".ui.mine.activity.MyOrderActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.MyGoodsOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.merchant.MerchantActivity"
             android:screenOrientation="portrait" />
         <activity

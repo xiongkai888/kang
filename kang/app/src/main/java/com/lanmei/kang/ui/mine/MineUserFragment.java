@@ -11,6 +11,7 @@ import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
 import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
 import com.lanmei.kang.ui.mine.activity.MyDynamicActivity;
+import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
@@ -63,7 +64,7 @@ public class MineUserFragment extends BaseFragment {
         setUser(UserHelper.getInstance(context).getUserBean());//初始化用户信息
     }
 
-    @OnClick({R.id.ll_membership_card,R.id.head_iv, R.id.ll_my_order, R.id.ll_my_personal, R.id.ll_my_coupon, R.id.ll_my_collect,R.id.ll_my_account,
+    @OnClick({R.id.ll_goods_order,R.id.ll_membership_card,R.id.head_iv, R.id.ll_my_order, R.id.ll_my_personal, R.id.ll_my_coupon, R.id.ll_my_collect,R.id.ll_my_account,
             R.id.ll_my_friend, R.id.ll_my_dynamic, R.id.ll_online, R.id.ll_setting, R.id.ll_vibrator})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
@@ -73,8 +74,11 @@ public class MineUserFragment extends BaseFragment {
             case R.id.ll_membership_card://我的会员卡
                 IntentUtil.startActivity(context, MembershipCardActivity.class);
                 break;
-            case R.id.ll_my_order://我的订单
+            case R.id.ll_my_order://我的项目订单
                 IntentUtil.startActivity(context, MyOrderActivity.class);
+                break;
+            case R.id.ll_goods_order://我的商品订单
+                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
             case R.id.ll_my_personal://我的资料
             case R.id.head_iv://头像

@@ -16,6 +16,7 @@ import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.ui.login.RegisterActivity;
+import com.lanmei.kang.ui.merchant_tab.goods.shop.DBShopCartHelper;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -100,7 +101,7 @@ public class SettingActivity extends BaseActivity {
                         EventBus.getDefault().post(new LoginQuitEvent());//
                         Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
                         IntentUtil.startActivity(getContext(), LoginActivity.class);
-
+                        DBShopCartHelper.dbGoodsCartManager = null;//不同用户登录uid重新赋值
                         onBackPressed();
 
                     }

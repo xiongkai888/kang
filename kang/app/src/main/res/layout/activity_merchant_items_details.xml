@@ -98,7 +98,7 @@
                         android:id="@+id/order_subtract_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/m_num_subtract" />
+                        android:src="@mipmap/num_subtract" />
 
                     <EditText
                         android:id="@+id/order_num_et"
@@ -115,7 +115,7 @@
                         android:id="@+id/order_add_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/m_num_add" />
+                        android:src="@mipmap/num_add" />
 
                 </LinearLayout>
 

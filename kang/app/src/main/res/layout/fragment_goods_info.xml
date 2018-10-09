@@ -44,16 +44,24 @@
 
                         <TextView
                             android:id="@+id/price_tv"
-                            style="@style/text_weight"
+                            style="@style/text"
                             android:text="￥0"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/txt_16sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/sale_price_tv"
+                            style="@style/text_weight"
+                            android:layout_marginLeft="@dimen/d_20dp"
+                            android:text="市场价：￥0"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
                             android:id="@+id/pay_num_tv"
-                            style="@style/text14color999"
+                            style="@style/text10color999"
                             android:layout_marginLeft="7dp"
+                            android:gravity="center_vertical"
+                            android:drawableLeft="@mipmap/goods_sales"
                             android:text="已有0人购买" />
 
                     </LinearLayout>
@@ -85,10 +93,11 @@
                         android:padding="10dp">
 
 
-                        <TextView
+                        <com.xson.common.widget.FormatTextView
                             android:id="@+id/comment_num_tv"
-                            style="@style/text_weight"
-                            android:text="商品评价(0)" />
+                            style="@style/text"
+                            app:defaultValue="0"
+                            app:formatText="@string/comments" />
 
 
                         <LinearLayout

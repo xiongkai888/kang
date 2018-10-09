@@ -42,15 +42,15 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         final NewsCategoryListBean bean = getItem(position);
-        if (StringUtils.isEmpty(bean)){
+        if (StringUtils.isEmpty(bean)) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean,position);
+        viewHolder.setParameter(bean);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, NewsDetailsActivity.class,bean.getId());
+                IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
             }
         });
     }
@@ -73,17 +73,17 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(final NewsCategoryListBean bean,final int position){
+        public void setParameter(final NewsCategoryListBean bean) {
             titleTv.setText(bean.getTitle());
             cnameTv.setText(bean.getName());
-            commentTv.setText(String.format(context.getString(R.string.comment_num),bean.getReviews()));
+            commentTv.setText(String.format(context.getString(R.string.comment_num), bean.getReviews()));
             time.setTime(bean.getAddtime());
             timeTv.setText(time.getFormatTime());
             sudokuView.setListData(bean.getFile());
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override
                 public void onClick(int positionSub) {
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class,bean.getId());
+                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
                 }
 
                 @Override
@@ -92,7 +92,5 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
                 }
             });
         }
-
     }
-
 }

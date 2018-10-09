@@ -22,9 +22,6 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.OnLoadingListener;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
-import java.io.Serializable;
-import java.util.List;
-
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -39,7 +36,6 @@ public class MerchantTabFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     MerchantTabAdapter mAdapter;
-    private List<MerchantTabClassifyBean> classifyList;
 
     @Override
     public int getContentViewId() {
@@ -130,11 +126,7 @@ public class MerchantTabFragment extends BaseFragment {
                 if (mAdapter == null) {
                     return;
                 }
-                classifyList = response.data;
-                if (StringUtils.isEmpty(classifyList)) {
-                    return;
-                }
-                mAdapter.setClassifyParameter(classifyList);
+                mAdapter.setClassifyParameter(response.data);
             }
         });
     }
@@ -143,9 +135,7 @@ public class MerchantTabFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.classify_iv://分类
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("list", (Serializable) classifyList);
-                IntentUtil.startActivity(context, GoodsClassifyActivity.class, bundle);
+                IntentUtil.startActivity(context, GoodsClassifyActivity.class);
                 break;
             case R.id.search_tv://搜索
                 CommonUtils.developing(context);

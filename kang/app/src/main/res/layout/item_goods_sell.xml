@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/d_12dp"
-            android:src="@mipmap/m_num_subtract" />
+            android:src="@mipmap/num_subtract" />
 
         <LinearLayout
             android:id="@+id/ll_goods_sell"

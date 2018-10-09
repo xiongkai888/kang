@@ -153,25 +153,16 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
 
     //轮播图
     public void setBannerParameter(List<AdBean> adBeanList) {
-        if (bannerViewHolder == null){
-            return;
-        }
         bannerViewHolder.setBannerParameter(adBeanList);
     }
 
     //商品分类
     public void setClassifyParameter(List<MerchantTabClassifyBean> list) {
-        if (bannerViewHolder == null){
-            return;
-        }
         bannerViewHolder.setClassifyParameter(list);
     }
 
     //热门活动
     public void setHotImgParameter(List<AdBean> list) {
-        if (bannerViewHolder == null){
-            return;
-        }
         bannerViewHolder.setHotImgParameter(list);
     }
 

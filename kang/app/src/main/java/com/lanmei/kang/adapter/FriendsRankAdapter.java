@@ -43,10 +43,10 @@ public class FriendsRankAdapter extends SwipeRefreshAdapter<FriendsRankBean> {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.userNameTv.setText(bean.getNickname());
         if (rank > 3) {
-            viewHolder.rankingTv.setBackgroundResource(R.drawable.cirlce_colorfe6);
+            viewHolder.rankingTv.setBackgroundResource(R.drawable.circle_colorfe6);
             viewHolder.rankingTv.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
         } else {
-            viewHolder.rankingTv.setBackgroundResource(R.drawable.cirlce_colorfe3);
+            viewHolder.rankingTv.setBackgroundResource(R.drawable.circle_colorfe3);
             viewHolder.rankingTv.setTextColor(context.getResources().getColor(R.color.white));
         }
         viewHolder.rankingTv.setText(rank + "");

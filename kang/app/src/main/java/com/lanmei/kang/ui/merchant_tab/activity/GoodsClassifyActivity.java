@@ -42,10 +42,10 @@ public class GoodsClassifyActivity extends BaseActivity {
     public void initIntent(Intent intent) {
         super.initIntent(intent);
         Bundle bundle = intent.getBundleExtra("bundle");
-        if (bundle == null){
+        if (bundle == null) {
             return;
         }
-        classifyList = (List<MerchantTabClassifyBean>)bundle.getSerializable("list");
+        classifyList = (List<MerchantTabClassifyBean>) bundle.getSerializable("list");
     }
 
     @Override
@@ -57,25 +57,21 @@ public class GoodsClassifyActivity extends BaseActivity {
     protected void initAllMembersView(Bundle savedInstanceState) {
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(this, 2));
         api = new KangQiMeiApi("app/good_list");
-        GoodsClassifyAdapter  adapter = new GoodsClassifyAdapter(this);
+        api.addParams("hot",0);
+        GoodsClassifyAdapter adapter = new GoodsClassifyAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-
-        if (StringUtils.isEmpty(classifyList)){
-            loadGoodsClassify();
-        }else {
-            initTabLayout();
-        }
-
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
+        loadGoodsClassify();
     }
 
     private void initTabLayout() {
-        if (StringUtils.isEmpty(classifyList)){
+        if (StringUtils.isEmpty(classifyList)) {
             return;
         }
         //垂直VerticalTab
-        tablayout.setTabAdapter(new GoodsClassifyVerticalTabAdapter(this,classifyList));
+        tablayout.setTabAdapter(new GoodsClassifyVerticalTabAdapter(this, classifyList));
         tablayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
@@ -90,14 +86,15 @@ public class GoodsClassifyActivity extends BaseActivity {
         refresh(0);
     }
 
-    private void refresh(int position){
-        api.addParams("id", classifyList.get(position).getId());
+    private void refresh(int position) {
+        api.addParams("classid", classifyList.get(position).getId());
         controller.loadFirstPage();
     }
 
     //用户端-商家tab  产品分类
     private void loadGoodsClassify() {
         KangQiMeiApi api = new KangQiMeiApi("app/good_type");
+        api.addParams("type",1);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabClassifyBean> response) {

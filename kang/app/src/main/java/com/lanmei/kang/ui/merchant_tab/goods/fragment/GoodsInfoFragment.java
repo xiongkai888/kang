@@ -20,6 +20,7 @@ import com.lanmei.kang.widget.SlideDetailsLayout;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
+import com.xson.common.widget.FormatTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,11 +61,13 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
     @InjectView(R.id.pay_num_tv)
     TextView payNumTv;
     @InjectView(R.id.comment_num_tv)
-    TextView commentNumTv;
+    FormatTextView commentNumTv;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.all_comment_tv)
     TextView allCommentTv;
+    @InjectView(R.id.sale_price_tv)
+    TextView salePriceTv;//市场价
 
     private GoodsConfigFragment goodsConfigFragment;
     private GoodsInfoWebFragment goodsInfoWebFragment;
@@ -101,10 +104,10 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
         if (!StringUtils.isEmpty(bundle)) {
             bean = (GoodsDetailsBean) bundle.getSerializable("bean");
         }
-        initSlide();
         if (bean == null) {
             return;
         }
+        initSlide();
         setParameter();
         initView();
         initTabView();
@@ -113,9 +116,10 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
     }
 
     private void setParameter() {
-        nameTv.setText(bean.getName());
-        priceTv.setText(String.format(context.getString(R.string.price), bean.getSell_price()));
-        payNumTv.setText(String.format(context.getString(R.string.pay_num), bean.getSale()));
+        nameTv.setText(bean.getGoodsname());
+        priceTv.setText(String.format(context.getString(R.string.price), bean.getPrice()));
+        payNumTv.setText(String.format(context.getString(R.string.pay_num), bean.getSales()));
+        salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getSale_price()));
     }
 
     private void initTabView() {

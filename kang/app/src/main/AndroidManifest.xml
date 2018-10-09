@@ -836,6 +836,9 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.merchant_tab.goods.activity.GoodsDetailsActivity"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.merchant_tab.goods.shop.ShopCarActivity"/>
     </application>
 
 </manifest>

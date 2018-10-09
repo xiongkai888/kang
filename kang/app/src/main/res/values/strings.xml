@@ -154,5 +154,9 @@
     <string name="ru_ku_list">入库列表</string>
     <string name="sell_list">销售列表</string>
     <string name="total_cash"><![CDATA[总计 :<font color="#F5484A">￥%s</font>]]></string>
+    <string name="comments"><![CDATA[商品评价(<font color="#F5484A">%s</font>)]]></string>
     <string name="pay_num">已有%1$s人购买</string>
+    <string name="sale_price">市场价：￥%1$s</string>
+    <string name="graphic_details">图文详情</string>
+    <string name="shop">购物车</string>
 </resources>

@@ -33,7 +33,7 @@
             style="@style/text"
             android:layout_marginLeft="@dimen/d_5dp"
             android:layout_marginRight="@dimen/d_5dp"
-            android:background="@drawable/cirlce_colorfe1"
+            android:background="@drawable/circle_colorfe1"
             android:gravity="center"
             android:textSize="3sp" />
 

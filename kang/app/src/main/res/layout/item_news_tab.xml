@@ -12,9 +12,8 @@
     <TextView
         android:id="@+id/title_tv"
         style="@style/text16color4D4D"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/tem_new_text"
+        android:paddingTop="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_10dp"
         android:textSize="18sp" />
 
 
@@ -31,20 +30,17 @@
 
         <TextView
             android:id="@+id/cname_tv"
-            style="@style/text10color9292"
-            android:text="@string/chinese_medicine" />
+            style="@style/text10color9292" />
 
         <TextView
             android:id="@+id/comment_tv"
             style="@style/text10color9292"
-            android:layout_marginLeft="10dp"
-            android:text="@string/comment_num" />
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:id="@+id/time_tv"
             style="@style/text10color9292"
-            android:layout_marginLeft="10dp"
-            android:text="40分钟前" />
+            android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 

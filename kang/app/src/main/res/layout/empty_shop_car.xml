@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        style="@style/text"
+        android:text="HI~"
+        android:textColor="@color/color999"
+        android:textSize="@dimen/txt_18sp" />
+
+    <TextView
+        android:id="@+id/ssrl___desc"
+        style="@style/text"
+        android:text="购物车暂时没有商品"
+        android:textColor="@color/color999"
+        android:textSize="@dimen/txt_18sp" />
+
+    <Button
+        android:id="@+id/go_bt"
+        style="@style/button_style"
+        android:layout_height="@dimen/d_40dp"
+        android:layout_marginLeft="@dimen/d_80dp"
+        android:layout_marginRight="@dimen/d_80dp"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:text="去逛逛" />
+
+</LinearLayout>

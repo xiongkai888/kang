@@ -11,7 +11,6 @@ import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,13 +37,8 @@ public class NewsListFragment extends BaseFragment {
         return R.layout.fragment_single_listview;
     }
 
-
-//    NewsCategoryTabBean bean;
-
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-//        Bundle bundle = getArguments();
-//        bean = (NewsCategoryTabBean) bundle.getSerializable("bean");
         initSwipeRefreshLayout();
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -54,7 +48,6 @@ public class NewsListFragment extends BaseFragment {
 
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         Bundle bundle = getArguments();
         KangQiMeiApi api = new KangQiMeiApi("post/index");

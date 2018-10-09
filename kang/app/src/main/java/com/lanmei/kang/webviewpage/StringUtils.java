@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
     public static String [] returnImageUrlsFromHtml(String htmlCode) {
+        if (com.xson.common.utils.StringUtils.isEmpty(htmlCode)){
+            return null;
+        }
         List<String> imageSrcList = new ArrayList<String>();
         Pattern p = Pattern.compile("<img\\b[^>]*\\bsrc\\b\\s*=\\s*('|\")?([^'\"\n\r\f>]+(\\.jpg|\\.bmp|\\.eps|\\.gif|\\.mif|\\.miff|\\.png|\\.tif|\\.tiff|\\.svg|\\.wmf|\\.jpe|\\.jpeg|\\.dib|\\.ico|\\.tga|\\.cut|\\.pic)\\b)[^>]*>", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(htmlCode);

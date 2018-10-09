@@ -10,12 +10,19 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.event.PaySucceedEvent;
 import com.lanmei.kang.ui.merchant_tab.goods.GoodsDetailsPagerAdapter;
+import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.widget.NoScrollViewPager;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.DataBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -65,21 +72,20 @@ public class GoodsDetailsActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         EventBus.getDefault().register(this);
 
-//        KangQiMeiApi api = new KangQiMeiApi("");
-//        api.addParams("id",id).addParams("uid",api.getUserId(this));
-//        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<GoodsDetailsBean>>() {
-//            @Override
-//            public void onResponse(DataBean<GoodsDetailsBean> response) {
-//                if (isFinishing()) {
-//                    return;
-//                }
-//                bean = response.data;
-//                if (!StringUtils.isEmpty("")) {
-//                    init(bean);
-//                }
-//            }
-//        });
-        init(bean);
+        KangQiMeiApi api = new KangQiMeiApi("app/goodsdetail");
+        api.addParams("id",id);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<GoodsDetailsBean>>() {
+            @Override
+            public void onResponse(DataBean<GoodsDetailsBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                bean = response.data;
+                if (!StringUtils.isEmpty(bean)) {
+                    init(bean);
+                }
+            }
+        });
     }
 
 
@@ -95,11 +101,13 @@ public class GoodsDetailsActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new GoodsDetailsPagerAdapter(getSupportFragmentManager(), bean));
         tabLayout.setupWithViewPager(viewPager);
+
+        loadCollect(false);
     }
 
     public void operaTitleBar(boolean scroAble, boolean titleVisiable) {
         viewPager.setNoScroll(scroAble);
-        toolbar.setTitle(titleVisiable?"图文详情":"");
+        toolbar.setTitle(titleVisiable?getString(R.string.graphic_details):"");
         tabLayout.setVisibility(titleVisiable ? View.GONE : View.VISIBLE);
     }
 
@@ -123,13 +131,14 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
         switch (item.getItemId()) {
             case R.id.action_share:
+                CommonUtils.developing(this);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    @OnClick({R.id.ll_collect, R.id.ll_service, R.id.add_shop_car_tv, R.id.pay_now_tv})
+    @OnClick({R.id.ll_collect, R.id.ll_shop, R.id.add_shop_car_tv, R.id.pay_now_tv})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(this)) {
             return;
@@ -139,12 +148,12 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
         switch (view.getId()) {
             case R.id.ll_collect://收藏
-                UIHelper.ToastMessage(this, R.string.developing);
-                loadCollect();
+                loadCollect(true);
                 break;
-            case R.id.ll_service://在线客服
-                UIHelper.ToastMessage(this, R.string.developing);
+            case R.id.ll_shop://购物车
+//                UIHelper.ToastMessage(this, R.string.developing);
 //                CommonUtils.startChatActivity(this, SharedAccount.getInstance(this).getServiceId(), false);
+                IntentUtil.startActivity(this, ShopCarActivity.class);
                 break;
             case R.id.add_shop_car_tv://加入购物车
                 addShopCar();
@@ -164,32 +173,34 @@ public class GoodsDetailsActivity extends BaseActivity {
 //        mDialog.show(getSupportFragmentManager(), DIALOG);
     }
 
-    private void loadCollect() {
-//        if (StringUtils.isEmpty(id)) {
-//            return;
-//        }
-//        CollectGoodsApi api = new CollectGoodsApi();
-//        api.pro_id = id;
-//        api.uid = api.getUserId(this);
-//        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-//            @Override
-//            public void onResponse(BaseBean response) {
-//                if (isFinishing()) {
-//                    return;
-//                }
-//                String collect = "";
-//                if (favorite == 1) {
-//                    favorite = 0;
-//                    collect = getString(R.string.cancel_collected);
-//                    collectIv.setImageResource(R.mipmap.icon_collect_off);
-//                } else {
-//                    collect = getString(R.string.collected);
-//                    favorite = 1;
-//                    collectIv.setImageResource(R.mipmap.icon_collect_on);
-//                }
-//                UIHelper.ToastMessage(GoodsDetailsActivity.this, collect);
-//            }
-//        });
+    private void loadCollect(boolean isClick) {
+        if (StringUtils.isEmpty(id)) {
+            return;
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/collection");
+        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
+        if (isClick){
+
+        }
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()) {
+                    return;
+                }
+                String collect = "";
+                if (favorite == 1) {
+                    favorite = 0;
+                    collect = getString(R.string.collect);
+                    collectIv.setImageResource(R.mipmap.goods_collect_off);
+                } else {
+                    collect = getString(R.string.collected);
+                    favorite = 1;
+                    collectIv.setImageResource(R.mipmap.goods_collect_on);
+                }
+                UIHelper.ToastMessage(GoodsDetailsActivity.this, collect);
+            }
+        });
     }
 
     //支付成功调用

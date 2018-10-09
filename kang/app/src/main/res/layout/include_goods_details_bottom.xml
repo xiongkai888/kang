@@ -3,17 +3,18 @@
     style="@style/ll_top">
 
     <LinearLayout
+        android:paddingLeft="@dimen/d_20dp"
+        android:paddingRight="@dimen/d_20dp"
         android:id="@+id/ll_collect"
-        style="@style/text_weight"
-        android:layout_weight="2"
-        android:gravity="center"
+        style="@style/text"
         android:layout_marginBottom="@dimen/d_2dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/collect_iv"
             style="@style/text"
-            android:layout_margin="@dimen/d_5dp"
+            android:layout_margin="@dimen/d_2dp"
             android:src="@mipmap/goods_collect_off" />
 
         <TextView
@@ -22,24 +23,43 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_service"
-        style="@style/text_weight"
-        android:layout_weight="2"
-        android:gravity="center"
+    <RelativeLayout
+        android:id="@+id/ll_shop"
+        style="@style/text"
+        android:paddingLeft="@dimen/d_20dp"
+        android:paddingRight="@dimen/d_20dp"
         android:layout_marginBottom="@dimen/d_2dp"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/d_2dp">
 
         <ImageView
+            android:id="@+id/shop_iv"
             style="@style/text"
-            android:layout_margin="@dimen/d_5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/d_2dp"
             android:src="@mipmap/goods_shop" />
 
+
         <TextView
+            android:id="@+id/shop_tv"
             style="@style/text"
+            android:layout_below="@+id/shop_iv"
+            android:layout_centerHorizontal="true"
             android:text="购物车" />
 
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/num_tv"
+            android:layout_width="@dimen/d_15dp"
+            android:layout_height="@dimen/d_15dp"
+            android:layout_marginTop="@dimen/d_2dp"
+            android:background="@drawable/circle_shop_num"
+            android:gravity="center"
+            android:text="0"
+            android:layout_toRightOf="@+id/shop_iv"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_8sp" />
+
+    </RelativeLayout>
 
 
     <TextView
@@ -51,14 +71,15 @@
         android:gravity="center"
         android:text="加入购物车"
         android:textColor="@color/white" />
+
     <TextView
         android:id="@+id/pay_now_tv"
-        android:layout_weight="3"
-        android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
+        android:layout_weight="3"
         android:background="@color/colorF5484A"
-        android:text="立即购买" />
+        android:gravity="center"
+        android:text="立即购买"
+        android:textColor="@color/white" />
 
 </LinearLayout>

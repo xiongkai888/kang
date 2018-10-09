@@ -86,7 +86,7 @@
                     <ImageView
                         android:id="@+id/order_subtract_iv"
                         style="@style/text"
-                        android:src="@mipmap/m_num_subtract" />
+                        android:src="@mipmap/num_subtract" />
 
                     <EditText
                         android:id="@+id/order_num_et"
@@ -102,7 +102,7 @@
                     <ImageView
                         android:id="@+id/order_add_iv"
                         style="@style/text"
-                        android:src="@mipmap/m_num_add" />
+                        android:src="@mipmap/num_add" />
 
                 </LinearLayout>
 

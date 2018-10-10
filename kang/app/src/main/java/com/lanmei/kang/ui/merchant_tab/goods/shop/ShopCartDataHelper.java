@@ -121,8 +121,8 @@ public class ShopCartDataHelper {
         dbShopCartHelper.delete(list);
     }
 
-    public void update(String goodsId,int count){
-        dbShopCartHelper.update(goodsId,count);
+    public void update(ShopCarBean bean,int count){
+        dbShopCartHelper.update(bean,count);
     }
 
 }

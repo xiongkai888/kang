@@ -55,6 +55,7 @@
             android:background="@drawable/circle_shop_num"
             android:gravity="center"
             android:text="0"
+            android:visibility="gone"
             android:layout_toRightOf="@+id/shop_iv"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_8sp" />

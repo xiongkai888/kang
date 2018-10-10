@@ -64,11 +64,11 @@ public class ShopCartContract {
         List<ShopCarBean> getShopCartList();
 
         //设置商品的数量
-        void setGoodsNum(String goodsId, int position, int num);
+        void setGoodsNum(ShopCarBean bean, int position, int num);
         //设置商品的数量
         void setSelect(int position, boolean select);
 
-        void update(String goodsId, int count);
+        void update(ShopCarBean bean, int count);
 
     }
 }

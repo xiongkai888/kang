@@ -55,6 +55,8 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
         TextView nameTv;
         @InjectView(R.id.price_tv)
         TextView priceTv;
+        @InjectView(R.id.specifications_tv)
+        TextView specificationsTv;//规格
         @InjectView(R.id.num_subtract_iv)
         ImageView numSubtractIv;
         @InjectView(R.id.pay_num_et)
@@ -75,11 +77,12 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
             nameTv.setText(bean.getGoodsName());
             payNumEt.setText(String.valueOf(goodsCount));
             payNumEt.setFocusable(false);
+            specificationsTv.setText(bean.getSpecifications());
             numAddIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     goodsCount ++;
-                    mPresenter.setGoodsNum(bean.getGoods_id(),position, goodsCount);
+                    mPresenter.setGoodsNum(bean,position, goodsCount);
                 }
             });
             numSubtractIv.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +92,7 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
                         return;
                     }
                     goodsCount --;
-                    mPresenter.setGoodsNum(bean.getGoods_id(),position, goodsCount);
+                    mPresenter.setGoodsNum(bean,position, goodsCount);
                 }
             });
             final boolean isSelect = bean.isSelect();

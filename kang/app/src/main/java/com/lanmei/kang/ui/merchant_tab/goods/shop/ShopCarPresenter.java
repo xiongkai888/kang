@@ -14,18 +14,16 @@ import java.util.List;
 class ShopCarPresenter implements ShopCartContract.Presenter {
 
     private ShopCartContract.View view;
-    private Context content;
     private ShopCartDataHelper mDataHelper;
 
     @Override
-    public void setGoodsNum(String goodsId,int position, int num) {
+    public void setGoodsNum(ShopCarBean bean,int position, int num) {
         mDataHelper.setGoodsNum(position, num);
-        update(goodsId,num);
+        update(bean,num);
         updateList();
     }
 
     public ShopCarPresenter(Context content, ShopCartContract.View view) {
-        this.content = content;
         this.view = view;
         mDataHelper = new ShopCartDataHelper(content);
     }
@@ -91,8 +89,8 @@ class ShopCarPresenter implements ShopCartContract.Presenter {
     }
 
     @Override
-    public void update(String goodsId,int count){
-        mDataHelper.update(goodsId,count);
+    public void update(ShopCarBean bean,int count){
+        mDataHelper.update(bean,count);
     }
 
 }

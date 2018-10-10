@@ -4,6 +4,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,12 +15,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.adapter.GoodsSpecificationsAdapter;
 import com.lanmei.kang.bean.GoodsDetailsBean;
+import com.lanmei.kang.bean.GoodsSpecificationsBean;
+import com.lanmei.kang.ui.merchant_tab.goods.shop.DBShopCartHelper;
+import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -42,8 +53,15 @@ public class AddShopCarDialogFragment extends DialogFragment {
     TextView numTv;
     @InjectView(R.id.pay_num_et)
     EditText payNumEt;
+    @InjectView(R.id.ll_specifications)
+    LinearLayout llSpecifications;//规格
+    @InjectView(R.id.specifications_name_tv)
+    TextView specificationsNameTv;//规格
+    @InjectView(R.id.recyclerView)
+    RecyclerView recyclerView;//规格列表
     private View mRootView;
-    GoodsDetailsBean bean;
+    private GoodsDetailsBean detailsBean;
+    private List<GoodsSpecificationsBean> specificationsBeans;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,15 +88,35 @@ public class AddShopCarDialogFragment extends DialogFragment {
     }
 
     public void setParameter() {
-        nameTv.setText(bean.getGoodsname());
-        ImageHelper.load(getContext(), bean.getCover(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-        priceTvTv.setText(String.format(getString(R.string.price), bean.getPrice()));
-        numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
+        nameTv.setText(detailsBean.getGoodsname());
+        ImageHelper.load(getContext(), detailsBean.getCover(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+        priceTvTv.setText(String.format(getString(R.string.price), detailsBean.getPrice()));
+        numTv.setText(String.format(getString(R.string.inventory), detailsBean.getInventory()));
         payNumEt.setFocusable(false);
+
+        if (StringUtils.isEmpty(specificationsBeans)) {
+            llSpecifications.setVisibility(View.GONE);
+            return;
+        }
+        specificationsNameTv.setText(specificationsBeans.get(0).getSpecificationsname());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        GoodsSpecificationsAdapter teacherFiltrateAdapter = new GoodsSpecificationsAdapter(getContext());
+        teacherFiltrateAdapter.setData(specificationsBeans);
+        recyclerView.setAdapter(teacherFiltrateAdapter);
+        teacherFiltrateAdapter.setTeacherFiltrateListener(new GoodsSpecificationsAdapter.GoodsSpecificationsFiltrateListener() {
+            @Override
+            public void onFiltrate(GoodsSpecificationsBean bean) {
+                priceTvTv.setText(String.format(getString(R.string.price), bean.getPrice()));
+                numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
+                detailsBean.setPrice(bean.getPrice());
+                detailsBean.setSpecifications(bean.getSpecifications());
+            }
+        });
     }
 
-    public void setData(GoodsDetailsBean bean) {
-        this.bean = bean;
+    public void setData(GoodsDetailsBean bean, List<GoodsSpecificationsBean> specificationsBeans) {
+        this.detailsBean = bean;
+        this.specificationsBeans = specificationsBeans;
     }
 
 
@@ -127,35 +165,51 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 payNumEt.setText(orderNum + "");
                 break;
             case R.id.add_shop_car_tv:
-                CommonUtils.developing(getContext());
-//                ShopCarBean shopCarBean = new ShopCarBean();
-//                shopCarBean.setGoodsName(bean.getGoodsname());
-////                L.d(DBhelper.TAG, DoubleUtil.formatFloatNumber(bean.getSell_price())+"  =   "+bean.getSell_price());
-//                shopCarBean.setSell_price(DoubleUtil.formatFloatNumber(bean.getPrice()));
-//                shopCarBean.setGoods_id(bean.getId());
-//                shopCarBean.setGoodsImg(bean.getCover());
-//                shopCarBean.setGoodsCount(orderNum);
-//                DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
-//                dismiss();
+                if (!StringUtils.isEmpty(specificationsBeans) && !isChooseGoodsSpecifications()) {
+                    UIHelper.ToastMessage(getContext(),"请选择商品"+specificationsNameTv.getText().toString().trim());
+                    return;
+                }
+                ShopCarBean shopCarBean = new ShopCarBean();
+                shopCarBean.setGoodsName(detailsBean.getGoodsname());
+//                L.d(DBhelper.TAG, DoubleUtil.formatFloatNumber(detailsBean.getSell_price())+"  =   "+detailsBean.getSell_price());
+                shopCarBean.setSell_price(Double.valueOf(detailsBean.getPrice()));
+                shopCarBean.setGoods_id(detailsBean.getId());
+                shopCarBean.setGoodsImg(detailsBean.getCover());
+                shopCarBean.setGoodsCount(orderNum);
+                shopCarBean.setSpecifications(detailsBean.getSpecifications());
+                DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
+                dismiss();
                 break;
             case R.id.pay_now_tv:
                 CommonUtils.developing(getContext());
-//                List<GoodsDetailsBean.ProductsBean> list = bean.getProducts();
+//                List<GoodsDetailsBean.ProductsBean> list = detailsBean.getProducts();
 //                if (!StringUtils.isEmpty(list)){
 //                    for(GoodsDetailsBean.ProductsBean productsBean:list){//只有一件商品
-////                        productsBean.setId(bean.getId());
+////                        productsBean.setId(detailsBean.getId());
 //                        productsBean.setCount(orderNum);
-//                        productsBean.setName(bean.getName());//要自己加，坑
-//                        productsBean.setSell_price(bean.getSell_price());
-//                        productsBean.setProducts_img(bean.getImg());
+//                        productsBean.setName(detailsBean.getName());//要自己加，坑
+//                        productsBean.setSell_price(detailsBean.getSell_price());
+//                        productsBean.setProducts_img(detailsBean.getImg());
 //                    }
 //                }
 //                Bundle bundle = new Bundle();
-//                bundle.putSerializable("bean", bean);
+//                bundle.putSerializable("detailsBean", detailsBean);
 //                bundle.putInt("num", orderNum);
 //                IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
 //                dismiss();
                 break;
         }
     }
+
+    private boolean isChooseGoodsSpecifications() {
+        int size = specificationsBeans.size();
+        for (int i = 0; i < size; i++) {
+            GoodsSpecificationsBean bean = specificationsBeans.get(i);
+            if (bean.isSelect()){
+                return bean.isSelect();
+            }
+        }
+        return false;
+    }
+
 }

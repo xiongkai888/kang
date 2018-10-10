@@ -15,9 +15,12 @@ import android.widget.RelativeLayout;
 import com.lanmei.kang.R;
 import com.lanmei.kang.core.IPresenter;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.EmptyRecyclerView;
 import com.xson.common.widget.FormatTextView;
@@ -168,9 +171,9 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
     List<ShopCarBean> delecteList;//支付成功后要删除的数据
     @OnClick(R.id.balance_bt)
     public void onClick() {
-//        delecteList = mPresenter.getSeletctedCarList();
-        CommonUtils.developing(this);
-//        if (style == 1) {//1去付款，2删除
+        delecteList = mPresenter.getSeletctedCarList();
+        if (style == 1) {//1去付款，2删除
+            CommonUtils.developing(this);
 //            if (StringUtils.isEmpty(delecteList)) {
 //                UIHelper.ToastMessage(this, "请选择要付款的商品");
 //                return;
@@ -193,24 +196,24 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
 //            bundle.putSerializable("bean", bean);
 //            bundle.putInt("num", orderNum);
 //            IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
-//            //            UIHelper.ToastMessage(this,"去付款");
-//        } else {
-//            if (StringUtils.isEmpty(delecteList)) {
-//                UIHelper.ToastMessage(this, "请选择要删除的商品");
-//                return;
-//            }
-//            AKDialog.getAlertDialog(this, "确认要删除选择的商品？", new AKDialog.AlertDialogListener() {
-//                @Override
-//                public void yes() {
-//                    deleteGoods(delecteList);
-//                }
-//            });
-//        }
+            //            UIHelper.ToastMessage(this,"去付款");
+        } else {
+            if (StringUtils.isEmpty(delecteList)) {
+                UIHelper.ToastMessage(this, "请选择要删除的商品");
+                return;
+            }
+            AKDialog.getAlertDialog(this, "确认要删除选择的商品？", new AKDialog.AlertDialogListener() {
+                @Override
+                public void yes() {
+                    deleteGoods(delecteList);
+                }
+            });
+        }
     }
 
     private void deleteGoods(List<ShopCarBean> list) {
         mPresenter.deleteSelectShopCar(list);
-//        EventBus.getDefault().post(new ShowShopCountEvent());//商品详情显示购物车数量
+        EventBus.getDefault().post(new ShowShopCountEvent());//商品详情显示购物车数量
     }
 
     private CompoundButton.OnCheckedChangeListener mAllSelectedChangeListener = new CompoundButton.OnCheckedChangeListener() {

@@ -37,7 +37,9 @@ public class DBShopCartHelper {
     public static final String Cart_goodsPrice = "goodsPrice";
     public static final String Cart_goodsParams = "goodsParams";
     public static final String Cart_goodsCount = "goodsCount";
-
+    public static final String Cart_goodsSpecifications = "goodsSpecifications";//规格
+    public static final String where1 = Cart_goodsid + "=? and " + Cart_goodsSpecifications + "=?";//
+    public static final String where2 = Cart_goodsid + "=?";//
 
 
     public static final String createTable = "CREATE TABLE " + Cart +
@@ -49,6 +51,7 @@ public class DBShopCartHelper {
             Cart_goodsImg + " TEXT, " +
             Cart_goodsPrice + " REAL, " +
             Cart_goodsParams + " TEXT, " +
+            Cart_goodsSpecifications + " TEXT, " +
             Cart_goodsCount + " INTEGER)";
 
     public static String uid;
@@ -63,8 +66,8 @@ public class DBShopCartHelper {
         db = dBhelper.getWritableDatabase();
     }
 
-    public static DBShopCartHelper getInstance(Context context){
-        if (dbGoodsCartManager == null){
+    public static DBShopCartHelper getInstance(Context context) {
+        if (dbGoodsCartManager == null) {
             dbGoodsCartManager = new DBShopCartHelper(context);
         }
         return dbGoodsCartManager;
@@ -88,6 +91,7 @@ public class DBShopCartHelper {
                 cartGoods.setGoodsImg(c.getString(c.getColumnIndex(Cart_goodsImg)));
                 cartGoods.setGoods_id(c.getString(c.getColumnIndex(Cart_goodsid)));
                 cartGoods.setSell_price(c.getDouble(c.getColumnIndex(Cart_goodsPrice)));
+                cartGoods.setSpecifications(c.getString(c.getColumnIndex(Cart_goodsSpecifications)));
                 shopCarBeanList.add(cartGoods);
             }
         }
@@ -97,27 +101,26 @@ public class DBShopCartHelper {
     }
 
     //获取购物车个数
-    public int getShopCarListCount(){
+    public int getShopCarListCount() {
         String selection = Cart_user_id + " = " + uid;
         Cursor c = db.query(Cart, null, selection, null, null, null, null);
         return c.getCount();
     }
 
 
-//加入购物车（将数据插入数据库）
+    //加入购物车（将数据插入数据库）
     public long insertGoods(ShopCarBean bean) {
         String selection = Cart_user_id + " = " + uid;
         Cursor c = db.query(Cart, null, selection, null, null, null, null);
         if (c.getCount() > 0) {
             while (c.moveToNext()) {
-                if (StringUtils.isSame(c.getString(c.getColumnIndex(Cart_goodsid)),bean.getGoods_id())){//已经插入的商品（根据id判断）
-                    updateGoods(bean.getGoods_id(),c.getInt(c.getColumnIndex(Cart_goodsCount))+bean.getGoodsCount(),bean.getGoodsImg(),bean.getGoodsName(),bean.getSell_price());
+                if (StringUtils.isSame(c.getString(c.getColumnIndex(Cart_goodsid)), bean.getGoods_id()) && StringUtils.isSame(c.getString(c.getColumnIndex(Cart_goodsSpecifications)), bean.getSpecifications())) {//已经插入的商品（根据id判断）
+                    updateGoods(bean.getGoods_id(), c.getInt(c.getColumnIndex(Cart_goodsCount)) + bean.getGoodsCount(), bean.getGoodsImg(), bean.getGoodsName(), bean.getSell_price(), bean.getSpecifications());
                     UIHelper.ToastMessage(context, "加入购物车成功!");
                     return 0;
                 }
             }
         }
-
 
         ContentValues values = new ContentValues();
         values.put(Cart_user_id, uid);
@@ -125,59 +128,73 @@ public class DBShopCartHelper {
         values.put(Cart_goodsName, bean.getGoodsName());
         values.put(Cart_goodsImg, bean.getGoodsImg());
         values.put(Cart_goodsPrice, bean.getSell_price());
-//        values.put(Cart_goodsParams, bean.getSpec());
         values.put(Cart_goodsCount, bean.getGoodsCount());
+        values.put(Cart_goodsSpecifications, bean.getSpecifications());
         long insC = db.insert(Cart, Cart_goodsid, values);
         L.d(DBhelper.TAG, ":加入购物车:id" + bean.getGoods_id() + "---insC:" + insC);
         if (insC > 0) {
             UIHelper.ToastMessage(context, "加入购物车成功!!");
             EventBus.getDefault().post(new ShowShopCountEvent());
-//            queryUserCartGoods();
         }
         return insC;
     }
 
-    public void deleteDatabase(){
+    public void deleteDatabase() {
         dBhelper.deleteDatabase(context);
     }
 
 
     public void delete(List<ShopCarBean> list) {
-        String where = Cart_goodsid+"=?";
-        int size  = list.size();
-        for (int i = 0;i<size;i++){
-            db.delete(Cart, where, new String[]{list.get(i).getGoods_id()});
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            ShopCarBean bean = list.get(i);
+            if (!StringUtils.isEmpty(bean.getSpecifications())){
+                db.delete(Cart, where1, new String[]{bean.getGoods_id(), bean.getSpecifications()});
+            }else {
+                db.delete(Cart, where2, new String[]{bean.getGoods_id()});
+            }
         }
     }
 
     /**
      * 根据goodsId 更新商品个数
-     * @param goodsId
+     *
+     * @param bean
      * @param count
      */
-    public void update(String goodsId,int count){
+    public void update(ShopCarBean bean, int count) {
         ContentValues cv = new ContentValues();
         cv.put(Cart_goodsCount, count);
-        db.update(Cart ,cv, Cart_goodsid + "=" + goodsId, null);
+        if (!StringUtils.isEmpty(bean.getSpecifications())){
+            db.update(Cart, cv, where1, new String[]{bean.getGoods_id(), bean.getSpecifications()});
+        }else {
+            db.update(Cart, cv, where2, new String[]{bean.getGoods_id()});
+        }
     }
 
     /**
-     * 根据goodsId 更新商品个数、图片、商品名称，价格
+     * 根据goodsId 更新商品个数、图片、商品名称，价格、规格
+     *
      * @param goodsId
      * @param count
      * @param imge
      * @param goodsName
      * @param sellPrice
+     * @param specifications
      */
-    public void updateGoods(String goodsId,int count,String imge,String goodsName,double sellPrice){
+    public void updateGoods(String goodsId, int count, String imge, String goodsName, double sellPrice, String specifications) {
         ContentValues cv = new ContentValues();
         cv.put(Cart_goodsCount, count);
-
         cv.put(Cart_goodsName, goodsName);
         cv.put(Cart_goodsImg, imge);
         cv.put(Cart_goodsPrice, sellPrice);
-//        values.put(Cart_goodsParams, bean.getSpec());
-        db.update(Cart ,cv, Cart_goodsid + "=" + goodsId, null);
+        cv.put(Cart_goodsSpecifications, specifications);
+        if (!StringUtils.isEmpty(specifications)){
+            db.update(Cart, cv, where1, new String[]{goodsId, specifications});
+        }else {
+            db.update(Cart, cv, where2, new String[]{goodsId});
+        }
+
     }
 
 }

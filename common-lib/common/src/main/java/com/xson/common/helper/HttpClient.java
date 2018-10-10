@@ -317,7 +317,7 @@ public class HttpClient implements IHttpClient {
                 error = new VolleyError(context.getString(R.string.http_request_timeout), error);
             } else {
                 String msg;
-                if (error != null && error.getCause() != null && error.getCause() instanceof JSONException) {
+                if (error != null && error.getCause() instanceof JSONException) {
                     msg = context.getString(R.string.http_parse_error);
                 } else {
                     msg = context.getString(R.string.http_request_error);

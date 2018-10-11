@@ -831,17 +831,26 @@
             android:name=".ui.merchant.activity.GoodsSellListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".ui.merchant_tab.activity.GoodsClassifyActivity"/>
+            android:name=".ui.merchant_tab.activity.GoodsClassifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.goods.activity.GoodsDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.goods.activity.AddAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.goods.activity.AddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.goods.shop.ShopCarActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".ui.merchant_tab.activity.GoodsListActivity"/>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".ui.merchant_tab.goods.activity.GoodsDetailsActivity"/>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".ui.merchant_tab.goods.shop.ShopCarActivity"/>
+            android:name=".ui.merchant_tab.activity.ConfirmOrderActivity"/>
     </application>
 
 </manifest>

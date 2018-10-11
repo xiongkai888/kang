@@ -165,4 +165,11 @@
     <string name="my_item_order">我的项目订单</string>
     <string name="my_goods_order">我的商品订单</string>
     <string name="goods_price_num">￥1221\nx1</string>
+    <string name="my_coupon">我的优惠卷</string>
+    <string name="confirm_order">确认订单</string>
+    <string name="is_default">默认</string>
+    <string name="set_default">设为默认</string>
+    <string name="input_reception_name">请输入收货人姓名</string>
+    <string name="input_details_address">请输入详细地址</string>
+    <string name="choose_address">请选择收货地址</string>
 </resources>

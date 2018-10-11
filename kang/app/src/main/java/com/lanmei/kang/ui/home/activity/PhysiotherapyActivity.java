@@ -25,7 +25,6 @@ public class PhysiotherapyActivity extends BaseActivity{
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    PhysiotherapyAdapter mAdapter;
     HomeListBean.CategoryBean bean;
 
     @Override
@@ -50,8 +49,7 @@ public class PhysiotherapyActivity extends BaseActivity{
         actionbar.setTitle(bean.getName());
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mAdapter = new PhysiotherapyAdapter(getSupportFragmentManager(),bean);
-        mViewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(new PhysiotherapyAdapter(getSupportFragmentManager(),bean));
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
     }

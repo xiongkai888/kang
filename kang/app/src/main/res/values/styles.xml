@@ -568,4 +568,15 @@
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="editText_bottom_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color2b</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:lines">1</item>
+        <item name="android:background">@drawable/border_bottom_divider</item>
+        <item name="android:textColorHint">@color/color999</item>
+    </style>
+
 </resources>

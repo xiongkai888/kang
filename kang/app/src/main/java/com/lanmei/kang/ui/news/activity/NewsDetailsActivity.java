@@ -27,7 +27,6 @@ import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,8 +75,6 @@ public class NewsDetailsActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
-
 
         KangQiMeiApi api = new KangQiMeiApi("post/reviews");
         api.setMethod(AbstractApi.Method.GET);
@@ -89,6 +86,7 @@ public class NewsDetailsActivity extends BaseActivity {
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCommentBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         controller.loadFirstPage();
         loadBiDetails();//加载资讯详情
         //分享初始化

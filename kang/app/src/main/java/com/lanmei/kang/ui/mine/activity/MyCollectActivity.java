@@ -24,7 +24,6 @@ public class MyCollectActivity extends BaseActivity {
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    MyCollectAdapter mAdapter;
 
     @Override
     public int getContentViewId() {
@@ -40,8 +39,7 @@ public class MyCollectActivity extends BaseActivity {
         actionbar.setTitle(R.string.my_collect);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mAdapter = new MyCollectAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(new MyCollectAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
     }

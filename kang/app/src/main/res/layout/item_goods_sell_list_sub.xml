@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/h_match_parent_no"
+        android:paddingBottom="@dimen/d_3dp"
+        android:paddingLeft="@dimen/d_10dp"
+        android:paddingRight="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text_weight"
+            android:text="美白面膜" />
+
+        <TextView
+            style="@style/text14color666"
+            android:text="￥253" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/text14color666"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:text="单价：￥253" />
+
+    <TextView
+        style="@style/text14color666"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_marginLeft="@dimen/d_10dp"
+        android:text="数量：1" />
+
+    <TextView
+        android:id="@+id/line_tv"
+        style="@style/line_H1dp_CD" />
+
+</LinearLayout>

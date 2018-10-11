@@ -22,10 +22,12 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodsSpecificationsAdapter;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.bean.GoodsSpecificationsBean;
+import com.lanmei.kang.ui.merchant_tab.activity.ConfirmOrderActivity;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.DBShopCartHelper;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -155,34 +157,28 @@ public class AddShopCarDialogFragment extends DialogFragment {
                     return;
                 }
                 orderNum--;
-                payNumEt.setText(orderNum + "");
+                payNumEt.setText(String.valueOf(orderNum));
                 break;
             case R.id.num_add_iv:
                 if (orderNum == 9999) {
                     return;
                 }
                 orderNum++;
-                payNumEt.setText(orderNum + "");
+                payNumEt.setText(String.valueOf(orderNum));
                 break;
             case R.id.add_shop_car_tv:
-                if (!StringUtils.isEmpty(specificationsBeans) && !isChooseGoodsSpecifications()) {
-                    UIHelper.ToastMessage(getContext(),"请选择商品"+specificationsNameTv.getText().toString().trim());
-                    return;
-                }
-                ShopCarBean shopCarBean = new ShopCarBean();
-                shopCarBean.setGoodsName(detailsBean.getGoodsname());
-//                L.d(DBhelper.TAG, DoubleUtil.formatFloatNumber(detailsBean.getSell_price())+"  =   "+detailsBean.getSell_price());
-                shopCarBean.setSell_price(Double.valueOf(detailsBean.getPrice()));
-                shopCarBean.setGoods_id(detailsBean.getId());
-                shopCarBean.setGoodsImg(detailsBean.getCover());
-                shopCarBean.setGoodsCount(orderNum);
-                shopCarBean.setSpecifications(detailsBean.getSpecifications());
-                DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
-                dismiss();
+                addShopCar();
                 break;
             case R.id.pay_now_tv:
-                CommonUtils.developing(getContext());
-//                List<GoodsDetailsBean.ProductsBean> list = detailsBean.getProducts();
+                goPayment();
+                break;
+        }
+    }
+
+    //去付款
+    private void goPayment() {
+//        CommonUtils.developing(getContext());
+        //                List<GoodsDetailsBean.ProductsBean> list = detailsBean.getProducts();
 //                if (!StringUtils.isEmpty(list)){
 //                    for(GoodsDetailsBean.ProductsBean productsBean:list){//只有一件商品
 ////                        productsBean.setId(detailsBean.getId());
@@ -197,15 +193,32 @@ public class AddShopCarDialogFragment extends DialogFragment {
 //                bundle.putInt("num", orderNum);
 //                IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
 //                dismiss();
-                break;
+        IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class);
+        dismiss();
+    }
+
+    //加入购物车
+    private void addShopCar() {
+        if (!StringUtils.isEmpty(specificationsBeans) && !isChooseGoodsSpecifications()) {
+            UIHelper.ToastMessage(getContext(), "请选择商品 " + CommonUtils.getStringByTextView(specificationsNameTv));
+            return;
         }
+        ShopCarBean shopCarBean = new ShopCarBean();
+        shopCarBean.setGoodsName(detailsBean.getGoodsname());
+        shopCarBean.setSell_price(Double.valueOf(detailsBean.getPrice()));
+        shopCarBean.setGoods_id(detailsBean.getId());
+        shopCarBean.setGoodsImg(detailsBean.getCover());
+        shopCarBean.setGoodsCount(orderNum);
+        shopCarBean.setSpecifications(detailsBean.getSpecifications());
+        DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
+        dismiss();
     }
 
     private boolean isChooseGoodsSpecifications() {
         int size = specificationsBeans.size();
         for (int i = 0; i < size; i++) {
             GoodsSpecificationsBean bean = specificationsBeans.get(i);
-            if (bean.isSelect()){
+            if (bean.isSelect()) {
                 return bean.isSelect();
             }
         }

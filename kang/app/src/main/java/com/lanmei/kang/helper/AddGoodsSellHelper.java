@@ -58,11 +58,6 @@ public class AddGoodsSellHelper {
         addView(list.size() - 1);
     }
 
-    /**
-     * 添加采购明细
-     *
-     * @param position 采购明细
-     */
     private void addView(int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell, null);
         root.addView(view, position);

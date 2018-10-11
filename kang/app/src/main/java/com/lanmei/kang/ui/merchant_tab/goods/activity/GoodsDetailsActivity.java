@@ -24,6 +24,7 @@ import com.lanmei.kang.ui.merchant_tab.goods.shop.ShowShopCountEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.widget.NoScrollViewPager;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
@@ -31,6 +32,7 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +119,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
         if (UserHelper.getInstance(this).hasLogin()){
             showShopCount();
-            loadCollect(false);
+//            loadCollect(false);
         }
 
     }
@@ -161,11 +163,13 @@ public class GoodsDetailsActivity extends BaseActivity {
             return;
         }
         if (StringUtils.isEmpty(bean)) {
+//            IntentUtil.startActivity(this, AddressListActivity.class);
             return;
         }
         switch (view.getId()) {
             case R.id.ll_collect://收藏
-                loadCollect(true);
+                CommonUtils.developing(this);
+//                loadCollect(true);
                 break;
             case R.id.ll_shop://购物车
 //                UIHelper.ToastMessage(this, R.string.developing);
@@ -196,20 +200,20 @@ public class GoodsDetailsActivity extends BaseActivity {
         if (isClick){
             CommonUtils.developing(this);
         }
-//        if (StringUtils.isEmpty(id)) {
-//            return;
-//        }
-//        KangQiMeiApi api = new KangQiMeiApi("app/collection");
-//        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
-//        if (isClick){
-//
-//        }
-//        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-//            @Override
-//            public void onResponse(BaseBean response) {
-//                if (isFinishing()) {
-//                    return;
-//                }
+        if (StringUtils.isEmpty(id)) {
+            return;
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/collection");
+        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
+        if (isClick){
+
+        }
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()) {
+                    return;
+                }
 //                String collect = "";
 //                if (favorite == 1) {
 //                    favorite = 0;
@@ -220,9 +224,9 @@ public class GoodsDetailsActivity extends BaseActivity {
 //                    favorite = 1;
 //                    collectIv.setImageResource(R.mipmap.goods_collect_on);
 //                }
-//                UIHelper.ToastMessage(GoodsDetailsActivity.this, response.getInfo());
-//            }
-//        });
+                UIHelper.ToastMessage(GoodsDetailsActivity.this, response.getInfo());
+            }
+        });
     }
 
     private boolean isSpecifications = false;
@@ -258,12 +262,8 @@ public class GoodsDetailsActivity extends BaseActivity {
     //显示购物车数量
     private void showShopCount() {
         int count = DBShopCartHelper.getInstance(getApplicationContext()).getShopCarListCount();
-        if (count == 0){
-            shopNumTv.setVisibility(View.GONE);
-        }else {
-            shopNumTv.setText(String.valueOf(count));
-            shopNumTv.setVisibility(View.VISIBLE);
-        }
+        shopNumTv.setText(String.valueOf(count));
+        shopNumTv.setVisibility(count == 0?View.GONE:View.VISIBLE);
     }
 
     @Override

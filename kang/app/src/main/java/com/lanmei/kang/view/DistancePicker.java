@@ -79,8 +79,8 @@ public class DistancePicker extends WheelPicker {
         integerView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         integerView.setTextSize(textSize);
         integerView.setTextColor(textColorNormal, textColorFocus);
-        integerView.setLineVisible(lineVisible);
-        integerView.setLineColor(lineColor);
+//        integerView.setLineVisible(lineVisible);
+//        integerView.setLineColor(lineColor);
         layout.addView(integerView);
         TextView integerTextView = new TextView(activity);
         integerTextView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
@@ -95,8 +95,8 @@ public class DistancePicker extends WheelPicker {
         decimalsView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         decimalsView.setTextSize(textSize);
         decimalsView.setTextColor(textColorNormal, textColorFocus);
-        decimalsView.setLineVisible(lineVisible);
-        decimalsView.setLineColor(lineColor);
+//        decimalsView.setLineVisible(lineVisible);
+//        decimalsView.setLineColor(lineColor);
         decimalsView.setOffset(offset);
         layout.addView(decimalsView);
         TextView decimalsTextView = new TextView(activity);
@@ -122,13 +122,13 @@ public class DistancePicker extends WheelPicker {
         }
         decimalsView.setItems(decimals, selectedDecimals);
 
-        integerView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        integerView.setOnWheelListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedInteger = item;
             }
         });
-        decimalsView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        decimalsView.setOnWheelListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedDecimals = item;

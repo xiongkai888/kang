@@ -114,8 +114,8 @@ public class TimePickerView extends WheelPicker {
         hourView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         hourView.setTextSize(textSize);
         hourView.setTextColor(textColorNormal, textColorFocus);
-        hourView.setLineVisible(lineVisible);
-        hourView.setLineColor(lineColor);
+//        hourView.setLineVisible(lineVisible);
+//        hourView.setLineColor(lineColor);
         layout.addView(hourView);
         TextView hourTextView = new TextView(activity);
         hourTextView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
@@ -130,8 +130,8 @@ public class TimePickerView extends WheelPicker {
         minuteView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         minuteView.setTextSize(textSize);
         minuteView.setTextColor(textColorNormal, textColorFocus);
-        minuteView.setLineVisible(lineVisible);
-        minuteView.setLineColor(lineColor);
+//        minuteView.setLineVisible(lineVisible);
+//        minuteView.setLineColor(lineColor);
         minuteView.setOffset(offset);
         layout.addView(minuteView);
         TextView minuteTextView = new TextView(activity);
@@ -147,8 +147,8 @@ public class TimePickerView extends WheelPicker {
         secondView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         secondView.setTextSize(textSize);
         secondView.setTextColor(textColorNormal, textColorFocus);
-        secondView.setLineVisible(lineVisible);
-        secondView.setLineColor(lineColor);
+//        secondView.setLineVisible(lineVisible);
+//        secondView.setLineColor(lineColor);
         secondView.setOffset(offset);
         layout.addView(secondView);
         TextView secondTextView = new TextView(activity);
@@ -185,20 +185,20 @@ public class TimePickerView extends WheelPicker {
         }
         secondView.setItems(minutes, selectedSecond);
 
-        hourView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        hourView.setOnWheelListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedHour = item;
             }
         });
-        minuteView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        minuteView.setOnWheelListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedMinute = item;
             }
         });
 
-        secondView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+        secondView.setOnWheelListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedSecond = item;

@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * 我的活动
  */
-public class MyActivityActivity extends BaseActivity implements TabLayout.OnTabSelectedListener{
+public class MyActivityActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
@@ -24,7 +24,6 @@ public class MyActivityActivity extends BaseActivity implements TabLayout.OnTabS
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    MyActivityAdapter mAdapter;
 
     @Override
     public int getContentViewId() {
@@ -40,27 +39,10 @@ public class MyActivityActivity extends BaseActivity implements TabLayout.OnTabS
         actionbar.setTitle(R.string.my_activity);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mAdapter = new MyActivityAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(new MyActivityAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(3);
-        mTabLayout.addOnTabSelectedListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        mViewPager.setCurrentItem(position);
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 }

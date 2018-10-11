@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.lanmei.kang.ui.merchant_tab.activity.ConfirmOrderActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_address"
+                android:gravity="center_vertical"
+                android:padding="@dimen/d_10dp"
+                style="@style/h_match_parent">
+
+                <ImageView
+                    style="@style/text"
+                    android:src="@mipmap/location_on" />
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name_tv"
+                        style="@style/text"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/phone_tv"
+                        style="@style/text"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:layout_toRightOf="@+id/name_tv"
+                        android:text="15936363555" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/d_5dp"
+                        android:layout_below="@id/name_tv"
+                        android:id="@+id/address_tv"
+                        style="@style/text12color666"
+                        android:text="广东省广州市天河区" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:src="@mipmap/in_right"
+                   style="@style/text" />
+
+            </LinearLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/d_10dp">
+
+                <ImageView
+                    android:id="@+id/items_icon_iv"
+                    android:layout_width="@dimen/d_100dp"
+                    android:layout_height="@dimen/d_100dp"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_pic" />
+
+                <TextView
+                    android:id="@+id/title_tv"
+                    style="@style/text"
+                    android:layout_toRightOf="@id/items_icon_iv"
+                    android:text="我们不一样" />
+
+                <TextView
+                    style="@style/text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:text="@string/goods_price_num"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <LinearLayout style="@style/ll_bottom">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:text="配送方式" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_no_border">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:text="结算详情" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <LinearLayout style="@style/ll_bottom">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:text="支付方式" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/include_confirm_order_bottom" />
+
+</LinearLayout>

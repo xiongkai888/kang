@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * 我的优惠卷
  */
-public class CouponActivity extends BaseActivity implements TabLayout.OnTabSelectedListener{
+public class CouponActivity extends BaseActivity{
 
 
     @InjectView(com.lanmei.kang.R.id.toolbar)
@@ -25,7 +25,6 @@ public class CouponActivity extends BaseActivity implements TabLayout.OnTabSelec
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    CouponAdapter mAdapter;
 
     @Override
     public int getContentViewId() {
@@ -38,29 +37,11 @@ public class CouponActivity extends BaseActivity implements TabLayout.OnTabSelec
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle("我的优惠卷");
+        actionbar.setTitle(R.string.my_coupon);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mAdapter = new CouponAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout.addOnTabSelectedListener(this);
+        mViewPager.setAdapter(new CouponAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
-
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        mViewPager.setCurrentItem(position);
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 }

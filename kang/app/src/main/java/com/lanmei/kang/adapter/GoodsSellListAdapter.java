@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /**
@@ -34,8 +36,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
 //        if (bean == null) {
 //            return;
 //        }
-//        ViewHolder viewHolder = (ViewHolder) holder;
-//        viewHolder.setParameter(bean);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(null);
 //        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -52,6 +54,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.ll_items)
+        LinearLayout layout;
 
         ViewHolder(View view) {
             super(view);
@@ -59,7 +63,21 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
         }
 
         public void setParameter(MerchantListBean bean) {
+            layout.removeAllViews();
+            int size = 2;
+            for (int i = 0; i < size; i++) {
+                addView(i, size);
+            }
 
         }
+
+        private void addView(int position, int size) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell_list_sub, null);
+            if (position == size - 1) {
+                view.findViewById(R.id.line_tv).setVisibility(View.GONE);
+            }
+            layout.addView(view);
+        }
+
     }
 }

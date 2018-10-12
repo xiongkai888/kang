@@ -16,8 +16,7 @@
 
         <TextView
             android:id="@+id/time_tv"
-            style="@style/text_weight"
-            android:text="2018-10-1" />
+            style="@style/text_weight" />
 
         <!--<ImageView-->
             <!--style="@style/text"-->

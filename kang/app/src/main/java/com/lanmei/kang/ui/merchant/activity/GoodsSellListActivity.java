@@ -10,7 +10,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodsSellListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
-import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.util.FormatTime;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -20,6 +20,7 @@ import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.qqtheme.framework.picker.DateTimePicker;
 
 /**
  * 销售列表
@@ -33,6 +34,8 @@ public class GoodsSellListActivity extends BaseActivity {
     @InjectView(R.id.time_tv)
     TextView timeTv;
     private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
+    private DateTimePicker picker;
+    private FormatTime time;
 
     @Override
     public int getContentViewId() {
@@ -52,8 +55,27 @@ public class GoodsSellListActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initSwipeRefreshLayout();
+        initPicker();
     }
 
+
+    private void initPicker() {
+        picker = new DateTimePicker(this, DateTimePicker.YEAR_MONTH,DateTimePicker.NONE);
+        time = new FormatTime();
+        int year = time.getYear();
+        int month = time.getMonth();
+        picker.setDateRangeStart(year- 3, 1);
+        picker.setDateRangeEnd(year, month);
+        picker.setSelectedItem(year, month,0,0);
+        picker.setLabel("-","","","","");
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String hour, String minute) {
+                timeTv.setText(String.format(getString(R.string.year_month),year,month));
+            }
+        });
+
+    }
 
     private void initSwipeRefreshLayout() {
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
@@ -87,6 +109,6 @@ public class GoodsSellListActivity extends BaseActivity {
 
     @OnClick(R.id.filter_tv)
     public void onViewClicked() {
-        CommonUtils.developing(this);
+        picker.show();
     }
 }

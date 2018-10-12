@@ -11,6 +11,7 @@ import com.lanmei.kang.adapter.ChuKuListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantListBean;
 import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.util.FormatTime;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -21,6 +22,7 @@ import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.qqtheme.framework.picker.DateTimePicker;
 
 /**
  * 出库（入库）列表
@@ -35,6 +37,8 @@ public class ChuKuListActivity extends BaseActivity {
     TextView timeTv;
     private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
     private boolean isChuKu;
+    private DateTimePicker picker;
+    private FormatTime time;
 
     @Override
     public int getContentViewId() {
@@ -55,6 +59,25 @@ public class ChuKuListActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         initSwipeRefreshLayout();
+        initPicker();
+    }
+
+    private void initPicker() {
+        picker = new DateTimePicker(this, DateTimePicker.YEAR_MONTH,DateTimePicker.NONE);
+        time = new FormatTime();
+        int year = time.getYear();
+        int month = time.getMonth();
+        picker.setDateRangeStart(year- 3, 1);
+        picker.setDateRangeEnd(year, month);
+        picker.setSelectedItem(year, month,0,0);
+        picker.setLabel("-","","","","");
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String hour, String minute) {
+                timeTv.setText(String.format(getString(R.string.year_month),year,month));
+            }
+        });
+
     }
 
 
@@ -90,6 +113,6 @@ public class ChuKuListActivity extends BaseActivity {
 
     @OnClick(R.id.filter_tv)
     public void onViewClicked() {
-        CommonUtils.developing(this);
+        picker.show();
     }
 }

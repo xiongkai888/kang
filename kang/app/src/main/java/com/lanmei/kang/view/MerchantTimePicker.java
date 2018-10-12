@@ -128,7 +128,7 @@ public class MerchantTimePicker extends WheelPicker {
         minuteView.setTextColor(textColorNormal, textColorFocus);
 //        minuteView.setLineVisible(lineVisible);
 //        minuteView.setLineColor(lineColor);
-        minuteView.setOffset(offset);
+        minuteView.setOffset(2);
         layout.addView(minuteView);
         TextView minuteTextView = new TextView(activity);
         minuteTextView.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
@@ -138,7 +138,7 @@ public class MerchantTimePicker extends WheelPicker {
             minuteTextView.setText(minuteLabel);
         }
         layout.addView(minuteTextView);
-        ArrayList<String> hours = new ArrayList<String>();
+        final ArrayList<String> hours = new ArrayList<String>();
         if (mode == HOUR) {
             for (int i = 1; i <= 12; i++) {
                 hours.add(DateUtils.fillZero(i));
@@ -149,20 +149,20 @@ public class MerchantTimePicker extends WheelPicker {
             }
         }
         hourView.setItems(hours, selectedHour);
-        ArrayList<String> minutes = new ArrayList<String>();
+        final ArrayList<String> minutes = new ArrayList<String>();
         minutes.add(DateUtils.fillZero(0));
         minutes.add(DateUtils.fillZero(30));
         minuteView.setItems(minutes, selectedMinute);
-        hourView.setOnWheelListener(new WheelView.OnWheelViewListener() {
+        hourView.setOnItemSelectListener(new WheelView.OnItemSelectListener() {
             @Override
-            public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
-                selectedHour = item;
+            public void onSelected(int index) {
+                selectedHour = hours.get(index);
             }
         });
-        minuteView.setOnWheelListener(new WheelView.OnWheelViewListener() {
+        minuteView.setOnItemSelectListener(new WheelView.OnItemSelectListener() {
             @Override
-            public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
-                selectedMinute = item;
+            public void onSelected(int index) {
+                selectedMinute = minutes.get(index);
             }
         });
         return layout;

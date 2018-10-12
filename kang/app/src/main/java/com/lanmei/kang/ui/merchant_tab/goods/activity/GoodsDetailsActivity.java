@@ -163,7 +163,6 @@ public class GoodsDetailsActivity extends BaseActivity {
             return;
         }
         if (StringUtils.isEmpty(bean)) {
-//            IntentUtil.startActivity(this, AddressListActivity.class);
             return;
         }
         switch (view.getId()) {
@@ -172,13 +171,9 @@ public class GoodsDetailsActivity extends BaseActivity {
 //                loadCollect(true);
                 break;
             case R.id.ll_shop://购物车
-//                UIHelper.ToastMessage(this, R.string.developing);
-//                CommonUtils.startChatActivity(this, SharedAccount.getInstance(this).getServiceId(), false);
                 IntentUtil.startActivity(this, ShopCarActivity.class);
                 break;
             case R.id.add_shop_car_tv://加入购物车
-                addShopCar();
-                break;
             case R.id.pay_now_tv://立即购买
                 addShopCar();
                 break;

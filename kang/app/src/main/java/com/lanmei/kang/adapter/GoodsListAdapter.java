@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
+import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -35,12 +37,18 @@ public class GoodsListAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> 
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        MerchantTabGoodsBean bean = getItem(position);
+        final MerchantTabGoodsBean bean = getItem(position);
         if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtil.startActivity(context, GoodsDetailsActivity.class,bean.getId());
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

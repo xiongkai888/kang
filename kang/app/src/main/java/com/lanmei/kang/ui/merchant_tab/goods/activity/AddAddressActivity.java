@@ -55,9 +55,9 @@ public class AddAddressActivity extends BaseActivity {
     EditText detailAddressEt;
     @InjectView(R.id.is_default_checkbox)
     CheckBox isDefaultCheckbox;
-    String isDefault = "0";
-    AddressListBean bean;//地址信息
-    boolean isAdd;
+    private int isDefault = 0;
+    private AddressListBean bean;//地址信息
+    private boolean isAdd;
     private AddressAsyncTask addressAsyncTask;
     private AddressPicker addressPicker;
 
@@ -78,7 +78,7 @@ public class AddAddressActivity extends BaseActivity {
 
     private void initAddressPicker(ArrayList<Province> data) {
         addressPicker = new AddressPicker(this, data);
-        addressPicker.setSelectedItem("广东", "广州", "天河");
+        addressPicker.setSelectedItem(getString(R.string.province), getString(R.string.city), getString(R.string.county));
         addressPicker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
             @Override
             public void onAddressPicked(Province province, City city, County county) {
@@ -110,12 +110,12 @@ public class AddAddressActivity extends BaseActivity {
         if (isAdd){
             actionbar.setTitle("添加收货地址");
         }else {
-            actionbar.setTitle("编辑地址");
+            actionbar.setTitle(R.string.compile_address);
             String address = bean.getAddress();
             detailAddressEt.setText(bean.getAddr());
             if (StringUtils.isSame("1",bean.getDefaultX())){
                 isDefaultCheckbox.setChecked(true);
-                isDefault = "1";
+                isDefault = 1;
             }else {
                 isDefaultCheckbox.setChecked(false);
             }
@@ -134,9 +134,9 @@ public class AddAddressActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    isDefault = "1";
+                    isDefault = 1;
                 } else {
-                    isDefault = "0";
+                    isDefault = 0;
                 }
             }
         });
@@ -183,7 +183,7 @@ public class AddAddressActivity extends BaseActivity {
         }
         String area = CommonUtils.getStringByTextView(areaTv);//
         if (StringUtils.isEmpty(area)) {
-            UIHelper.ToastMessage(this, "请选择项所在区域");
+            UIHelper.ToastMessage(this, getString(R.string.choose_area));
             return;
         }
         String detailAddress = CommonUtils.getStringByEditText(detailAddressEt);//areaTv
@@ -195,7 +195,7 @@ public class AddAddressActivity extends BaseActivity {
     }
 
     private void httpAddress(String name, String phone, String area, String detailAddress) {
-        KangQiMeiApi api = new KangQiMeiApi("");
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
         api.addParams("userid",api.getUserId(this));
         if (isAdd) {
             api.addParams("operation",1);//1|2|3|4=>添加|修改|删除|列表
@@ -209,7 +209,7 @@ public class AddAddressActivity extends BaseActivity {
         api.addParams("province",provinceId);
         api.addParams("city",cityId);
         api.addParams("area",areaId);
-        api.addParams("mDefault",isDefault);
+        api.addParams("default",isDefault);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

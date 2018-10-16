@@ -10,6 +10,12 @@ public class KangQiMeiApi extends ApiV2 {
 
     private String path;
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+    public KangQiMeiApi(){
+    }
+
     public KangQiMeiApi(String path){
         this.path = path;
     }

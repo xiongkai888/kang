@@ -10,13 +10,13 @@
         android:padding="@dimen/d_10dp">
 
         <TextView
+            android:id="@+id/barcode_tv"
             style="@style/text_weight"
-            android:text="编号：2313213213"
             android:textColor="@color/color666" />
 
         <TextView
+            android:id="@+id/time_tv"
             style="@style/text"
-            android:text="@string/time"
             android:textColor="@color/color666" />
 
     </LinearLayout>
@@ -31,13 +31,13 @@
         android:padding="@dimen/d_10dp">
 
         <TextView
+            android:id="@+id/goodsname_tv"
             style="@style/text_weight"
-            android:text="商品名称：粮果"
             android:textColor="@color/color666" />
 
         <TextView
+            android:id="@+id/number_tv"
             style="@style/text"
-            android:text="数量：323"
             android:textColor="@color/color666" />
 
     </LinearLayout>

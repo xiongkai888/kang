@@ -11,6 +11,7 @@ import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AdBean;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
+import com.lanmei.kang.search.SearchGoodsActivity;
 import com.lanmei.kang.ui.merchant_tab.activity.GoodsClassifyActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -81,14 +82,15 @@ public class MerchantTabFragment extends BaseFragment {
                 }
                 mAdapter.setData(response.data);
                 mAdapter.notifyDataSetChanged();
-                smartSwipeRefreshLayout.setRefreshing(false);
+                if (smartSwipeRefreshLayout != null) {
+                    smartSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (smartSwipeRefreshLayout == null) {
+                if (smartSwipeRefreshLayout != null) {
                     smartSwipeRefreshLayout.setRefreshing(false);
-                    return;
                 }
             }
         });
@@ -137,8 +139,8 @@ public class MerchantTabFragment extends BaseFragment {
             case R.id.classify_iv://分类
                 IntentUtil.startActivity(context, GoodsClassifyActivity.class);
                 break;
-            case R.id.search_tv://搜索
-                CommonUtils.developing(context);
+            case R.id.search_tv://搜索商品
+                IntentUtil.startActivity(context, SearchGoodsActivity.class);
                 break;
             case R.id.message_iv://消息
                 CommonUtils.developing(context);

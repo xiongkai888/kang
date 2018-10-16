@@ -18,6 +18,7 @@
             android:src="@mipmap/goods_collect_off" />
 
         <TextView
+            android:id="@+id/collect_tv"
             style="@style/text"
             android:text="@string/collect" />
 

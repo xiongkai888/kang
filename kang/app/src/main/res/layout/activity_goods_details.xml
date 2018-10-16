@@ -41,6 +41,9 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <include layout="@layout/include_goods_details_bottom" />
+    <include
+        android:id="@+id/ll_details_bottom"
+        android:visibility="gone"
+        layout="@layout/include_goods_details_bottom" />
 
 </LinearLayout>

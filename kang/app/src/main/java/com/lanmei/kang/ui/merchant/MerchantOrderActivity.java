@@ -15,7 +15,6 @@ import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.qrcode.Des;
 import com.lanmei.kang.qrcode.ScanActivity;
 import com.lanmei.kang.updateversion.JsonUtil;
-import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
@@ -127,7 +126,10 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_scan_qr_code:
-                IntentUtil.startActivity(this, ScanActivity.class, CommonUtils.isOne);
+                Bundle bundle = new Bundle();
+                bundle.putInt("type",3);//商家订单
+                bundle.putBoolean("isQR",false);//二维码
+                IntentUtil.startActivity(this, ScanActivity.class, bundle);
                 break;
         }
         return super.onOptionsItemSelected(item);

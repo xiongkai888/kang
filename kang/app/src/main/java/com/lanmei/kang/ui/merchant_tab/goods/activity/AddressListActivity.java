@@ -78,10 +78,10 @@ public class AddressListActivity extends BaseActivity {
 
             @Override
             public void delete(final String id,final int position) {
-                AKDialog.getAlertDialog(getContext(), "确定要删除该地址？", new AKDialog.AlertDialogListener() {
+                AKDialog.getAlertDialog(getContext(), getString(R.string.delete_this_address), new AKDialog.AlertDialogListener() {
                     @Override
                     public void yes() {
-                        KangQiMeiApi api = new KangQiMeiApi("");
+                        KangQiMeiApi api = new KangQiMeiApi("app/address");
                         api.addParams("userid",api.getUserId(getContext()));
                         api.addParams("operation",3);
                         api.addParams("id",id);
@@ -102,11 +102,11 @@ public class AddressListActivity extends BaseActivity {
 
     //设为默认
     private void setAddressDefault(String id, final int position) {
-        KangQiMeiApi api = new KangQiMeiApi("");
-        api.addParams("userid",api.getUserId(this));
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
+        api.addParams("useid",api.getUserId(this));
         api.addParams("operation",2);
         api.addParams("id",id);
-        api.addParams("mDefault",1);
+        api.addParams("default",1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -122,8 +122,8 @@ public class AddressListActivity extends BaseActivity {
     }
 
     private void loadAddressList() {
-        KangQiMeiApi api = new KangQiMeiApi("");
-        api.addParams("userid",api.getUserId(this));
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
+        api.addParams("useid",api.getUserId(this));
         api.addParams("operation",4);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AddressListBean>>() {
             @Override

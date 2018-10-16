@@ -14,6 +14,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.bean.GoodsSpecificationsBean;
+import com.lanmei.kang.event.CollectGoodsEvent;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.PaySucceedEvent;
 import com.lanmei.kang.ui.merchant_tab.goods.GoodsDetailsPagerAdapter;
@@ -57,12 +58,17 @@ public class GoodsDetailsActivity extends BaseActivity {
     NoScrollViewPager viewPager;
     @InjectView(R.id.collect_iv)
     ImageView collectIv;
+    @InjectView(R.id.collect_tv)
+    TextView collectTv;
+    @InjectView(R.id.ll_details_bottom)
+    View llDetailsBottom;
     @InjectView(R.id.num_tv)
     TextView shopNumTv;//购物车数量
     GoodsDetailsBean bean;//商品详情信息
     String id;//商品详情ID
     AddShopCarDialogFragment mDialog;
     private static final String DIALOG = "dialog_fragment_kang";
+    private boolean isCollect;//是否收藏
 
     @Override
     public void initIntent(Intent intent) {
@@ -84,6 +90,10 @@ public class GoodsDetailsActivity extends BaseActivity {
         actionbar.setTitle("");
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         EventBus.getDefault().register(this);
+
+//        if (UserHelper.getInstance(this).hasLogin()){
+//            loadCollect(false);
+//        }
 
         loadSpecifications();
 
@@ -107,6 +117,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 //    int favorite;//是否收藏了该商品
 
     private void init(GoodsDetailsBean bean) {
+        llDetailsBottom.setVisibility(View.VISIBLE);
 //        favorite = bean.getFavorite();
 //        if (favorite == 1) {
 //            collectIv.setImageResource(R.mipmap.icon_collect_on);
@@ -119,7 +130,6 @@ public class GoodsDetailsActivity extends BaseActivity {
 
         if (UserHelper.getInstance(this).hasLogin()){
             showShopCount();
-//            loadCollect(false);
         }
 
     }
@@ -167,8 +177,8 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
         switch (view.getId()) {
             case R.id.ll_collect://收藏
-                CommonUtils.developing(this);
 //                loadCollect(true);
+                CommonUtils.developing(this);
                 break;
             case R.id.ll_shop://购物车
                 IntentUtil.startActivity(this, ShopCarActivity.class);
@@ -191,35 +201,43 @@ public class GoodsDetailsActivity extends BaseActivity {
         mDialog.show(getSupportFragmentManager(), DIALOG);
     }
 
-    private void loadCollect(boolean isClick) {
-        if (isClick){
-            CommonUtils.developing(this);
-        }
+    private void loadCollect(final boolean isClick) {
         if (StringUtils.isEmpty(id)) {
             return;
         }
-        KangQiMeiApi api = new KangQiMeiApi("app/collection");
-        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
-        if (isClick){
 
+        KangQiMeiApi api = new KangQiMeiApi();
+        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
+        String url;
+        if (isClick){
+            url = "app/collection";//收藏的相关操作 (1添加收藏2修改收藏3删除收藏4收藏列表)
+            if (isCollect){
+                api.addParams("state",0);
+                api.addParams("operation",2);
+            }else {
+                api.addParams("state",1);
+                api.addParams("operation",1);
+            }
+        }else {
+            url = "app/collection_list";//判断是否收藏
         }
+        api.setPath(url);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (isFinishing()) {
                     return;
                 }
-//                String collect = "";
-//                if (favorite == 1) {
-//                    favorite = 0;
-//                    collect = getString(R.string.collect);
-//                    collectIv.setImageResource(R.mipmap.goods_collect_off);
-//                } else {
-//                    collect = getString(R.string.collected);
-//                    favorite = 1;
-//                    collectIv.setImageResource(R.mipmap.goods_collect_on);
-//                }
-                UIHelper.ToastMessage(GoodsDetailsActivity.this, response.getInfo());
+                if (isClick){
+                    isCollect = !isCollect;
+                    UIHelper.ToastMessage(getContext(),response.getInfo());
+                    EventBus.getDefault().post(new CollectGoodsEvent());
+                }else {
+                    isCollect = !response.getInfo().contains("未");
+                }
+                String collect = isCollect?getString(R.string.collected):getString(R.string.collect);
+                collectIv.setImageResource(isCollect?R.mipmap.goods_collect_on:R.mipmap.goods_collect_off);
+                collectTv.setText(collect);
             }
         });
     }

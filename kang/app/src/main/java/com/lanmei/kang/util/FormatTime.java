@@ -11,17 +11,13 @@ import java.util.Date;
  */
 
 public class FormatTime {
+
     private long time;
     private boolean is12Hour;
     private Calendar calendar = Calendar.getInstance();
 
-    public int year;
-    public int month;
-    public int day;
-    public int hour;
-    public int minute;
-
-    public int week;
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private Date date = new Date();
 
     public FormatTime() {
         this.time = System.currentTimeMillis();
@@ -31,7 +27,6 @@ public class FormatTime {
      * @param time 毫秒
      */
     public FormatTime(long time) {
-
         this.time = time * 1000;
         calendar.setTimeInMillis(this.time);
     }
@@ -206,7 +201,6 @@ public class FormatTime {
                 return "前天";
             } else if (day > 2 && day < 11) {
                 return day+"天前";
-//                return getWeekStr();
             } else {
                 return formatterTime();
             }

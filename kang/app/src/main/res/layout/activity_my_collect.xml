@@ -15,23 +15,7 @@
         android:background="@color/colorF4F4"
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:tabTextAppearance="@style/TabLayoutAppearance">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="全部" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="活动" />
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="课程" />
-
-    </android.support.design.widget.TabLayout>
+        app:tabTextAppearance="@style/TabLayoutAppearance"/>
 
     <View style="@style/line_H1dp_CD"/>
 

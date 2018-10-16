@@ -149,6 +149,7 @@
     <string name="chu_ku">出库</string>
     <string name="ru_ku">入库</string>
     <string name="merchant">商家</string>
+    <string name="mall">商城</string>
     <string name="dynamic">动态</string>
     <string name="nearby">附近</string>
     <string name="merbership_card_num">会员卡号</string>
@@ -165,6 +166,7 @@
     <string name="my_item_order">我的项目订单</string>
     <string name="my_goods_order">我的商品订单</string>
     <string name="goods_price_num">￥1221\nx1</string>
+    <string name="goods_price_and_num">￥%1$s\nx%2$s</string>
     <string name="my_coupon">我的优惠卷</string>
     <string name="confirm_order">确认订单</string>
     <string name="is_default">默认</string>
@@ -173,4 +175,20 @@
     <string name="input_details_address">请输入详细地址</string>
     <string name="choose_address">请选择收货地址</string>
     <string name="year_month">%1$s-%2$s</string>
+    <string name="barcode">编号：%1$s</string>
+    <string name="goodsname">商品名称：%1$s</string>
+    <string name="number">数量：%1$s</string>
+    <string name="province">广东</string>
+    <string name="city">广州</string>
+    <string name="county">天河</string>
+    <string name="compile_address">编辑地址</string>
+    <string name="choose_area">请选择项所在区域</string>
+    <string name="delete_this_address">确定要删除该地址？</string>
+    <string name="search_goods">搜索商品</string>
+    <string name="input_serial_number">请输入编号或扫描获取</string>
+    <string name="input_number">请输入数量</string>
+    <string name="input_unit">请输入单位</string>
+    <string name="choose_merchant">请选择商家</string>
+    <string name="pattern_payment">支付方式</string>
+    <string name="understock">库存不足</string>
 </resources>

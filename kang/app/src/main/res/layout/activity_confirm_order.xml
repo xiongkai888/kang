@@ -82,33 +82,40 @@
                 <TextView
                     android:id="@+id/title_tv"
                     style="@style/text"
-                    android:layout_toRightOf="@id/items_icon_iv"
-                    android:text="我们不一样" />
+                    android:layout_toRightOf="@id/items_icon_iv" />
 
                 <TextView
+                    android:id="@+id/price_num_tv"
                     style="@style/text"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:gravity="right"
-                    android:text="@string/goods_price_num"
                     android:visibility="visible" />
 
             </RelativeLayout>
 
             <TextView style="@style/line_H10dp_on" />
 
-            <LinearLayout style="@style/ll_bottom">
+            <LinearLayout
+                android:id="@+id/ll_distribution"
+                style="@style/ll_bottom">
 
                 <TextView
                     style="@style/mine_text"
                     android:layout_marginLeft="@dimen/d_10dp"
                     android:text="配送方式" />
 
-                <ImageView style="@style/in_right_icon" />
+                <TextView
+                    android:id="@+id/distribution_tv"
+                    android:layout_marginRight="@dimen/d_12dp"
+                    android:drawableRight="@mipmap/in_right"
+                    style="@style/text" />
 
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_no_border">
+            <LinearLayout
+                android:id="@+id/ll_billing_details"
+                style="@style/ll_no_border">
 
                 <TextView
                     style="@style/mine_text"

@@ -50,7 +50,7 @@ public class HttpClient implements IHttpClient {
     }
 
     public synchronized static HttpClient newInstance(Context context) {
-        if (requestQueue == null){
+        if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
 
@@ -348,10 +348,8 @@ public class HttpClient implements IHttpClient {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            String msg;
-            error = humanError(context, error);
-            msg = error.getMessage();
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+//            error = humanError(context, error);
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

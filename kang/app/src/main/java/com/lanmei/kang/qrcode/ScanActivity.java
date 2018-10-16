@@ -19,11 +19,11 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.lanmei.kang.R;
+import com.lanmei.kang.event.ChuKuGoodsInfoEvent;
 import com.lanmei.kang.event.ScanEvent;
-import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.event.ScanSucceedEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.ImageUtils;
-import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,25 +48,35 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     @InjectView(R.id.zxingview)
     ZXingView mQRCodeView;
 
-    private boolean isQR;//false为二维码扫描 true为条形码扫描
+    private boolean isQR;//true为条形码扫描 false为二维码扫描
+    private int type;//1添加出库入库时扫描的商品、2消费、3商家订单
 
     @Override
     public int getContentViewId() {
         return R.layout.activity_scan;
     }
 
+
+    @Override
+    public void initIntent(Intent intent) {
+        super.initIntent(intent);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle != null){
+            type = bundle.getInt("type");
+            isQR = bundle.getBoolean("isQR");
+        }
+    }
+
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         mQRCodeView.setDelegate(this);
 
-        isQR = StringUtils.isSame(CommonUtils.isZero,getIntent().getStringExtra("value"));//1为二维码 0条形码
-
-        if (!isQR){
-            mQRCodeView.changeToScanQRCodeStyle(); // 切换成扫描二维码样式
-            mQRCodeView.setType(BarcodeType.TWO_DIMENSION, null); // 只识别二维条码
-        }else {
+        if (isQR){
             mQRCodeView.changeToScanBarcodeStyle(); // 切换成扫描条码样式
             mQRCodeView.setType(BarcodeType.ONE_DIMENSION, null); // 只识别一维条码
+        }else {
+            mQRCodeView.changeToScanQRCodeStyle(); // 切换成扫描二维码样式
+            mQRCodeView.setType(BarcodeType.TWO_DIMENSION, null); // 只识别二维条码
         }
 
         setSupportActionBar(mToolbar);
@@ -79,12 +89,17 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        if (isQR){
-            CommonUtils.developing(this);
-        }else {
-            EventBus.getDefault().post(new ScanEvent(result));
+        switch (type){
+            case 1://
+                EventBus.getDefault().post(new ChuKuGoodsInfoEvent(result));//ChuKuGoodsInfoEvent
+                break;
+            case 2://
+                EventBus.getDefault().post(new ScanEvent(result));
+                break;
+            case 3://
+                EventBus.getDefault().post(new ScanSucceedEvent());
+                break;
         }
-//        UIHelper.ToastMessage(this,result);
         vibrate();
         onBackPressed();
     }

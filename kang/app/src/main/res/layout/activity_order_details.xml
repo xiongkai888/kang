@@ -228,7 +228,7 @@
                         style="@style/text"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="支付方式" />
+                        android:text="@string/pattern_payment" />
 
                     <TextView
                         style="@style/line_H1dp_CD"
@@ -309,7 +309,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="支付方式：" />
+                    android:text="@string/pattern_payment" />
 
                 <TextView
                     android:id="@+id/pay_type_tv"

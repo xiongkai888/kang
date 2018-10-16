@@ -4,6 +4,7 @@
     style="@style/ll_top">
 
     <com.xson.common.widget.FormatTextView
+        android:id="@+id/price_tv"
         android:paddingBottom="@dimen/d_15dp"
         android:paddingTop="@dimen/d_15dp"
         app:defaultValue="1221"

@@ -16,7 +16,8 @@
 
         <TextView
             android:id="@+id/time_tv"
-            style="@style/text_weight" />
+            style="@style/text_weight"
+            android:text="@string/all"/>
 
         <!--<ImageView-->
             <!--style="@style/text"-->

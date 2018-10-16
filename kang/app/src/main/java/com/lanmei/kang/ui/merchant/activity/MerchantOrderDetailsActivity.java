@@ -254,10 +254,13 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
                 switch (status) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
                     case "2":
                     case "3"://消费
-                        IntentUtil.startActivity(MerchantOrderDetailsActivity.this, ScanActivity.class,CommonUtils.isOne);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("type",2);//消费
+                        bundle.putBoolean("isQR",false);//二维码
+                        IntentUtil.startActivity(getContext(), ScanActivity.class,bundle);
                         break;
                     case "5"://删除订单
-                        AKDialog.getAlertDialog(MerchantOrderDetailsActivity.this, MerchantOrderDetailsActivity.this.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {
+                        AKDialog.getAlertDialog(getContext(), MerchantOrderDetailsActivity.this.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {
                             @Override
                             public void yes() {
                                 orderDel(bean, 0);

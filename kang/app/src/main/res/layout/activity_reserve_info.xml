@@ -146,7 +146,7 @@
                     android:drawableLeft="@mipmap/icon_pay"
                     android:drawablePadding="@dimen/d_5dp"
                     android:padding="@dimen/d_10dp"
-                    android:text="支付方式" />
+                    android:text="@string/pattern_payment" />
 
                 <TextView
                    style="@style/line_H1dp_CD" />

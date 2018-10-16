@@ -253,6 +253,10 @@
         <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".search.SearchGoodsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.news.activity.NewsDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

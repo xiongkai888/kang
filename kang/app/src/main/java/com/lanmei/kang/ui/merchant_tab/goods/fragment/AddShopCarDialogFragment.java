@@ -64,6 +64,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
     private View mRootView;
     private GoodsDetailsBean detailsBean;
     private List<GoodsSpecificationsBean> specificationsBeans;
+    private int inventory;//商品库存
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,9 +106,20 @@ public class AddShopCarDialogFragment extends DialogFragment {
         GoodsSpecificationsAdapter teacherFiltrateAdapter = new GoodsSpecificationsAdapter(getContext());
         teacherFiltrateAdapter.setData(specificationsBeans);
         recyclerView.setAdapter(teacherFiltrateAdapter);
+
+        inventory = Integer.valueOf(detailsBean.getInventory());
+        if (orderNum > inventory){
+            payNumEt.setText(String.valueOf(inventory));
+        }
+
+
         teacherFiltrateAdapter.setTeacherFiltrateListener(new GoodsSpecificationsAdapter.GoodsSpecificationsFiltrateListener() {
             @Override
             public void onFiltrate(GoodsSpecificationsBean bean) {
+                inventory = Integer.valueOf(bean.getInventory());
+                if (orderNum > inventory){
+                    payNumEt.setText(String.valueOf(inventory));
+                }
                 priceTvTv.setText(String.format(getString(R.string.price), bean.getPrice()));
                 numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
                 detailsBean.setPrice(bean.getPrice());
@@ -160,7 +172,8 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 payNumEt.setText(String.valueOf(orderNum));
                 break;
             case R.id.num_add_iv:
-                if (orderNum == 9999) {
+                if (orderNum == inventory) {
+                    UIHelper.ToastMessage(getContext(),getString(R.string.understock));
                     return;
                 }
                 orderNum++;
@@ -177,23 +190,14 @@ public class AddShopCarDialogFragment extends DialogFragment {
 
     //去付款
     private void goPayment() {
-//        CommonUtils.developing(getContext());
-        //                List<GoodsDetailsBean.ProductsBean> list = detailsBean.getProducts();
-//                if (!StringUtils.isEmpty(list)){
-//                    for(GoodsDetailsBean.ProductsBean productsBean:list){//只有一件商品
-////                        productsBean.setId(detailsBean.getId());
-//                        productsBean.setCount(orderNum);
-//                        productsBean.setName(detailsBean.getName());//要自己加，坑
-//                        productsBean.setSell_price(detailsBean.getSell_price());
-//                        productsBean.setProducts_img(detailsBean.getImg());
-//                    }
-//                }
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("detailsBean", detailsBean);
-//                bundle.putInt("num", orderNum);
-//                IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
-//                dismiss();
-        IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class);
+        if (!StringUtils.isEmpty(specificationsBeans) && !isChooseGoodsSpecifications()) {
+            UIHelper.ToastMessage(getContext(), "请选择商品 " + CommonUtils.getStringByTextView(specificationsNameTv));
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", detailsBean);
+        bundle.putInt("num", orderNum);
+        IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class,bundle);
         dismiss();
     }
 

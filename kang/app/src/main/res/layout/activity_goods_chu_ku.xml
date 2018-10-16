@@ -8,16 +8,22 @@
 
 
     <TextView
-       android:layout_marginTop="@dimen/d_10dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d_0dp"/>
+        android:layout_height="@dimen/d_0dp"
+        android:layout_marginTop="@dimen/d_10dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_merchant"
-        style="@style/ll_bottom">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/d_12dp"
+        android:paddingTop="@dimen/d_12dp">
 
         <TextView
-            style="@style/mine_text"
+            android:id="@+id/merchant_name_u_tv"
+            style="@style/text"
             android:layout_marginLeft="@dimen/d_10dp"
             android:text="选择商家"
             android:textColor="@color/color666" />
@@ -26,10 +32,16 @@
         <TextView
             android:id="@+id/merchant_name_tv"
             style="@style/text"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/d_5dp"
             android:layout_marginRight="@dimen/d_10dp"
-            android:drawableRight="@mipmap/in_right" />
+            android:layout_toRightOf="@id/merchant_name_u_tv"
+            android:drawableRight="@mipmap/in_right"
+            android:gravity="center_vertical|right" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
 
     <LinearLayout style="@style/ll_bottom">
 
@@ -44,9 +56,11 @@
             android:id="@+id/number_et"
             style="@style/text"
             android:background="@null"
-            android:hint="请输入编号或扫描获取"
+            android:hint="@string/input_serial_number"
             android:inputType="number"
-            android:maxLength="30" />
+            android:gravity="right"
+            android:imeOptions="actionSearch"
+            android:maxLength="25" />
 
         <ImageView
             android:id="@+id/qr_code_iv"
@@ -72,7 +86,8 @@
             style="@style/text"
             android:layout_marginRight="@dimen/d_10dp"
             android:background="@null"
-            android:hint="请输入数量"
+            android:hint="@string/input_number"
+            android:gravity="right"
             android:inputType="numberDecimal"
             android:maxLength="10" />
 
@@ -94,8 +109,9 @@
             style="@style/text"
             android:layout_marginRight="@dimen/d_10dp"
             android:background="@null"
-            android:hint="请输入单价"
+            android:hint="@string/input_price"
             android:inputType="numberDecimal"
+            android:gravity="right"
             android:maxLength="10" />
 
     </LinearLayout>
@@ -114,7 +130,8 @@
             style="@style/text"
             android:layout_marginRight="@dimen/d_10dp"
             android:background="@null"
-            android:hint="请输入单位"
+            android:hint="@string/input_unit"
+            android:gravity="right"
             android:maxLength="10" />
 
     </LinearLayout>

@@ -169,7 +169,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     //用户
     private List<String> getTitleListU() {
         List<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.merchant));
+        titles.add(getString(R.string.mall));
         titles.add(getString(R.string.nearby));
         titles.add(getString(R.string.news));
         titles.add(getString(R.string.dynamic));

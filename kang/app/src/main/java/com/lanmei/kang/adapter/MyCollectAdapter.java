@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.lanmei.kang.ui.mine.fragment.CollectGoodsFragment;
 import com.lanmei.kang.ui.mine.fragment.CollectItemsFragment;
 import com.lanmei.kang.ui.mine.fragment.CollectMerchantFragment;
 import com.lanmei.kang.ui.mine.fragment.CollectNewsFragment;
@@ -26,14 +27,16 @@ public class MyCollectAdapter extends FragmentPagerAdapter {
             case 1:
                 return new CollectItemsFragment();//服务
             case 2:
-                return new CollectNewsFragment();//咨询
+                return new CollectNewsFragment();//资讯
+            case 3:
+                return new CollectGoodsFragment();//商品
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -45,6 +48,8 @@ public class MyCollectAdapter extends FragmentPagerAdapter {
                 return "服务";
             case 2:
                 return "资讯";
+            case 3:
+                return "商品";
         }
         return null;
     }

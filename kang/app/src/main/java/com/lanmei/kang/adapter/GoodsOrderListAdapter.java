@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
 public class GoodsOrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
 
-    FormatTime time;
+    private FormatTime time;
     public GoodsOrderListAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     @Override

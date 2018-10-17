@@ -40,10 +40,11 @@ import butterknife.InjectView;
 public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
 
-    FormatTime time;
+    private FormatTime time;
+
     public OrderListAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     @Override
@@ -63,8 +64,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean",bean);
-                IntentUtil.startActivity(context, OrderDetailsActivity.class,bean.getId());
+                bundle.putSerializable("bean", bean);
+                IntentUtil.startActivity(context, OrderDetailsActivity.class, bean.getId());
 //                IntentUtil.startActivity(context, OrderDetailsActivity.class,bundle);
             }
         });
@@ -134,10 +135,10 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
                     payStatus = context.getString(R.string.doned);
                     order1.setText(context.getString(R.string.delete_order));//删除订单
                     //                    order2.setText(context.getString(R.string.contact_merchant));
-                    if (StringUtils.isSame(CommonUtils.isZero,bean.getIs_reviews())){//为评价
+                    if (StringUtils.isSame(CommonUtils.isZero, bean.getIs_reviews())) {//为评价
 //                        order3.setVisibility(View.VISIBLE);
                         order3.setText(context.getString(R.string.evaluate));//晒单评价
-                    }else {
+                    } else {
                         order3.setVisibility(View.GONE);
                     }
                     break;
@@ -169,7 +170,7 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_cancel), new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {
-                                    orderCancel(bean,position);
+                                    orderCancel(bean, position);
                                 }
                             });
                             break;
@@ -178,7 +179,7 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_refund), new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {
-                                    orderRefund(bean,position);
+                                    orderRefund(bean, position);
                                 }
                             });
                             break;
@@ -209,15 +210,15 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
                 public void onClick(View v) {
                     switch (status) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
                         case "1"://去付款
-                            IntentUtil.startActivity(context, OrderDetailsActivity.class,bean.getId());
+                            IntentUtil.startActivity(context, OrderDetailsActivity.class, bean.getId());
                             break;
                         case "2":
                         case "3"://去消费
 //                            IntentUtil.startActivity(context,NCodeActivity.class);
-                            IntentUtil.startActivity(context, OrderDetailsActivity.class,bean.getId());
+                            IntentUtil.startActivity(context, OrderDetailsActivity.class, bean.getId());
                             break;
                         case "4"://晒单评价
-                            IntentUtil.startActivity(context,OrderEvaluationActivity.class,bean.getId());
+                            IntentUtil.startActivity(context, OrderEvaluationActivity.class, bean.getId());
                             break;
                         case "5"://无操作
                             break;
@@ -235,8 +236,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     //取消订单
     private void orderCancel(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/cancel");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(context));
+        api.addParams("id", bean.getId());
+        api.addParams("uid", api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -250,10 +251,10 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     }
 
     //申请退款
-    private void orderRefund(final OrderListBean bean,final int position) {
+    private void orderRefund(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/refund");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(context));
+        api.addParams("id", bean.getId());
+        api.addParams("uid", api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -269,8 +270,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     //删除订单
     private void orderDel(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(context));
+        api.addParams("id", bean.getId());
+        api.addParams("uid", api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

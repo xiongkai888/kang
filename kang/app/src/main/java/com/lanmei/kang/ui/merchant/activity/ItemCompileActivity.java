@@ -4,11 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.data.volley.Response;
-import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.ItemsCompileAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
@@ -34,7 +29,6 @@ import com.lanmei.kang.ui.merchant.ClassifyToDialogFragment;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.CompressPhotoUtils;
-import com.oss.ManageOssUpload;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
@@ -47,7 +41,6 @@ import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.DividerItemDecoration;
-import com.xson.common.widget.ProgressHUD;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -87,26 +80,24 @@ public class ItemCompileActivity extends BaseActivity {
     EditText priceEt;
     @InjectView(R.id.category_tv)
     TextView categoryTv;
-    MerchantItemsListBean bean;
-    boolean isAdd;
-    String is_del;//是否下架0正常2下架
-    ItemsCompileAdapter adapter1;
-    ItemsCompileAdapter adapter2;
-    List<ItemsCompileBean> list1;//商品图片
-    List<ItemsCompileBean> list2;//商品详情图片
+    private MerchantItemsListBean bean;
+    private boolean isAdd;
+    private String is_del;//是否下架0正常2下架
+    private ItemsCompileAdapter adapter1;
+    private ItemsCompileAdapter adapter2;
+    private List<ItemsCompileBean> list1;//商品图片
+    private List<ItemsCompileBean> list2;//商品详情图片
     private String pid;
-    List<String> paths1; // 本地需要上传图片的集合路径(压缩后的)
-    List<String> paths2; // 本地需要上传图片的集合路径(压缩后的)
-    List<String> paths3; // 本地需要上传图片的集合路径(压缩后的)  (封面的)
-    private ManageOssUpload manageOssUpload1;//图片上传类
-    private ManageOssUpload manageOssUpload2;//图片上传类
-    private ManageOssUpload manageOssUpload3;//图片上传类（封面的）
+
+    private CompressPhotoUtils compressPhotoUtils1;
+    private CompressPhotoUtils compressPhotoUtils2;
+    private CompressPhotoUtils compressPhotoUtils3;
 
     private static final int REQUEST_CODE_PERMISSION_PHOTO_PICKER = 1;
 
-    String name;
-    String content;
-    String price;
+    private String name;
+    private String content;
+    private String price;
 
     private void done(int what) {
         name = CommonUtils.getStringByEditText(projectNameEt);
@@ -137,48 +128,67 @@ public class ItemCompileActivity extends BaseActivity {
             UIHelper.ToastMessage(this, "请选择分类");
             return;
         }
-        mProgressHUD.show();
         successPath1 = null;
         successPath2 = null;
         successPath3 = null;
         List<String> stringList1 = getStringList1();//没有封面
         if (!StringUtils.isEmpty(stringList1)) {
-            isCompress1 = true;//在压缩
-            successPath1 = new ArrayList<>();
-            new CompressPhotoUtils().CompressPhoto(ItemCompileActivity.this, stringList1, new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+            isCompress1 = true;//在压缩上传
+            compressPhotoUtils1 = new CompressPhotoUtils(this);
+            compressPhotoUtils1.compressPhoto(CommonUtils.toArray(stringList1), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
                 @Override
                 public void success(List<String> list) {
-                    paths1 = list;
-                    new UpdateImageViewTask(1).execute();
+                    if (isFinishing()) {
+                        return;
+                    }
+                    isCompress1 = false;//
+                    successPath1 = list;
+                    load();
                 }
-            },"1");
+            }, "1");
+
         }
         List<String> cover = getCoverString();//只要封面的
         if (!StringUtils.isEmpty(cover)) {
-            successPath3 = new ArrayList<>();
             isCompress3 = true;//在压缩
-            new CompressPhotoUtils().CompressPhoto(ItemCompileActivity.this, cover, new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+            compressPhotoUtils3 = new CompressPhotoUtils(this);
+            compressPhotoUtils3.compressPhoto(CommonUtils.toArray(cover), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
                 @Override
                 public void success(List<String> list) {
-                    paths3 = list;
-                    new UpdateImageViewTask(3).execute();
+                    if (isFinishing()) {
+                        return;
+                    }
+                    successPath3 = list;
+                    isCompress3 = false;//
+                    load();
                 }
-            },"3");
+            }, "3");
+
         }
         List<String> stringList2 = getStringList2();
         if (!StringUtils.isEmpty(stringList2)) {
-            successPath2 = new ArrayList<>();
             isCompress2 = true;//在压缩
-            new CompressPhotoUtils().CompressPhoto(ItemCompileActivity.this, stringList2, new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
+            compressPhotoUtils2 = new CompressPhotoUtils(this);
+            compressPhotoUtils2.compressPhoto(CommonUtils.toArray(stringList2), new CompressPhotoUtils.CompressCallBack() {//压缩图片（可多张）
                 @Override
                 public void success(List<String> list) {
-                    paths2 = list;
-                    new UpdateImageViewTask(2).execute();
+                    if (isFinishing()) {
+                        return;
+                    }
+                    isCompress2 = false;//
+                    successPath2 = list;
+                    load();
                 }
-            },"2");
+            }, "2");
         }
         if (!isCompress1 && !isCompress2 && !isCompress3) {
             loadCompile(what);
+        }
+    }
+
+    private void load(){
+        if (!isCompress1 && !isCompress2 && !isCompress3) {
+            loadCompile(0);
         }
     }
 
@@ -207,14 +217,7 @@ public class ItemCompileActivity extends BaseActivity {
             public void onResponse(BaseBean response) {
                 UIHelper.ToastMessage(ItemCompileActivity.this, response.getInfo());
                 EventBus.getDefault().post(new CompileProductEvent());
-                mProgressHUD.cancel();
                 finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mProgressHUD.cancel();
-                UIHelper.ToastMessage(ItemCompileActivity.this, error.getMessage());
             }
         });
     }
@@ -279,123 +282,6 @@ public class ItemCompileActivity extends BaseActivity {
     boolean isCompress1 = false;//
     boolean isCompress2 = false;//是否在压缩图片
     boolean isCompress3 = false;//是否在压缩图片
-
-    public class UpdateImageViewTask extends AsyncTask<Void, Integer, Void> {
-
-        int status;
-
-        public UpdateImageViewTask(int status) {
-            this.status = status;
-        }
-
-        /**
-         * 运行在UI线程中，在调用doInBackground()之前执行
-         */
-        @Override
-        protected void onPreExecute() {
-            //            Toast.makeText(PublishDynamicActivity.this, "开始执行", Toast.LENGTH_SHORT).show();
-        }
-
-        /**
-         * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
-         */
-        @Override
-        protected Void doInBackground(Void... params) {
-            if (status == 1) {//商品图片
-                int size = paths1.size();
-                for (int i = 0; i < size; i++) {
-                    String picPath1 = paths1.get(i);
-                    String urlPic1 = manageOssUpload1.uploadFile_img(picPath1,""+status);
-                    L.d("CompressPhotoUtils", "上传1："+urlPic1+",本地路径："+picPath1);
-                    if (StringUtils.isEmpty(urlPic1)) {
-                        //写上传失败逻辑
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = 1;
-                        msg.arg1 = i;
-                        msg.obj = picPath1;
-                        mHandler.sendMessage(msg);
-                    } else {
-                        successPath1.add(urlPic1);
-                    }
-                }
-            } else if (status == 2) {//商品详情图片
-                int size = paths2.size();
-                for (int i = 0; i < size; i++) {
-                    String picPath2 = paths2.get(i);
-                    String urlPic2 = manageOssUpload2.uploadFile_img(picPath2,""+status);
-                    L.d("CompressPhotoUtils", "上传2："+urlPic2+",本地路径："+picPath2);
-                    if (StringUtils.isEmpty(urlPic2)) {
-                        //写上传失败逻辑
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = 1;
-                        msg.arg1 = i;
-                        msg.obj = picPath2;
-                        mHandler.sendMessage(msg);
-                    } else {
-                        successPath2.add(urlPic2);
-                    }
-                }
-            } else if (status == 3) {//封面
-                int size = paths3.size();
-                for (int i = 0; i < size; i++) {
-                    String picPath3 = paths3.get(i);
-                    String urlPic3 = manageOssUpload3.uploadFile_img(picPath3,""+status);
-                    L.d("CompressPhotoUtils", "上传3："+urlPic3+",本地路径："+picPath3);
-                    if (StringUtils.isEmpty(urlPic3)) {
-                        //写上传失败逻辑
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = 1;
-                        msg.arg1 = i;
-                        msg.obj = picPath3;
-                        mHandler.sendMessage(msg);
-                    } else {
-                        successPath3.add(urlPic3);
-                    }
-                }
-            }
-            return null;
-        }
-
-        /**
-         * 运行在ui线程中，在doInBackground()执行完毕后执行
-         */
-        @Override
-        protected void onPostExecute(Void integer) {
-            //            mProgressDialog.cancel();
-            if (status == 1) {
-                isCompress1 = false;
-            } else if (status == 2) {
-                isCompress2 = false;
-            } else if (status == 3) {
-                isCompress3 = false;
-            }
-            if (!isCompress1 && !isCompress2 && !isCompress3) {
-                loadCompile(0);
-            }
-        }
-
-        /**
-         * 在publishProgress()被调用以后执行，publishProgress()用于更新进度
-         */
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-
-        }
-    }
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1://上传某张图片失败
-                    UIHelper.ToastMessage(ItemCompileActivity.this, "上传图片失败：" + msg.obj);
-                    break;
-                case 2:
-                    break;
-            }
-        }
-    };
 
 
     //获取本地图片路径（不包括封面）
@@ -467,20 +353,9 @@ public class ItemCompileActivity extends BaseActivity {
         return R.layout.activity_item_compile;
     }
 
-    ProgressHUD mProgressHUD;
-
-    private void initProgressDialog() {
-        mProgressHUD = ProgressHUD.show(this, "", true, false, null);
-        mProgressHUD.setCancelable(true);
-        mProgressHUD.cancel();
-    }
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        manageOssUpload1 = new ManageOssUpload(this);
-        manageOssUpload2 = new ManageOssUpload(this);
-        manageOssUpload3 = new ManageOssUpload(this);
-        initProgressDialog();
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
@@ -784,6 +659,15 @@ public class ItemCompileActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (compressPhotoUtils1 != null) {
+            compressPhotoUtils1.cancelled();
+        }
+        if (compressPhotoUtils2 != null) {
+            compressPhotoUtils2.cancelled();
+        }
+        if (compressPhotoUtils3 != null) {
+            compressPhotoUtils3.cancelled();
+        }
         EventBus.getDefault().unregister(this);
     }
 }

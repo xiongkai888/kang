@@ -31,7 +31,7 @@ public class MyCollectNewsAdapter extends SwipeRefreshAdapter<CollectNewsBean> {
 
     public MyCollectNewsAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MyCollectNewsAdapter extends SwipeRefreshAdapter<CollectNewsBean> {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean,position);
+        viewHolder.setParameter(bean);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +73,7 @@ public class MyCollectNewsAdapter extends SwipeRefreshAdapter<CollectNewsBean> {
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(final CollectNewsBean bean, final int position){
+        public void setParameter(final CollectNewsBean bean){
             titleTv.setText(bean.getTitle());
             time.setTime(bean.getAddtime());
             timeTv.setText(time.formatterTime());
@@ -86,7 +86,7 @@ public class MyCollectNewsAdapter extends SwipeRefreshAdapter<CollectNewsBean> {
 
                 @Override
                 public void onDoubleTap(int position) {
-                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.getStringArr(bean.getFile()), position);
+                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.toArray(bean.getFile()), position);
                 }
             });
             cnameTv.setVisibility(View.GONE);

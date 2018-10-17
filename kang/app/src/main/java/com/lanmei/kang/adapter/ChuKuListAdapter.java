@@ -26,7 +26,7 @@ public class ChuKuListAdapter extends SwipeRefreshAdapter<ChuKuListBean> {
 
     public ChuKuListAdapter(Context context) {
         super(context);
-        formatTime = new FormatTime();
+        formatTime = new FormatTime(context);
     }
 
     @Override

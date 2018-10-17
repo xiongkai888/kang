@@ -28,7 +28,7 @@ public class MerchantOrderListAdapter extends SwipeRefreshAdapter<OrderListBean>
     public MerchantOrderListAdapter(Context context) {
         super(context);
         this.context = context;
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     @Override

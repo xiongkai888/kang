@@ -31,7 +31,7 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
 
     public NewsItemAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
 
                 @Override
                 public void onDoubleTap(int position) {
-                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.getStringArr(bean.getFile()), position);
+                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.toArray(bean.getFile()), position);
                 }
             });
         }

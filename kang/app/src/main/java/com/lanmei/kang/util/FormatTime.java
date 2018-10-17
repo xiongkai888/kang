@@ -1,5 +1,8 @@
 package com.lanmei.kang.util;
 
+import android.content.Context;
+
+import com.lanmei.kang.R;
 import com.xson.common.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -15,30 +18,34 @@ public class FormatTime {
     private long time;
     private boolean is12Hour;
     private Calendar calendar = Calendar.getInstance();
-
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private SimpleDateFormat format = new SimpleDateFormat();//默认的时间格式
     private Date date = new Date();
+    private Context context;
 
-    public FormatTime() {
+    public FormatTime(Context context) {
+        this.context = context;
         this.time = System.currentTimeMillis();
+        setApplyToAllTime();
     }
 
     /**
      * @param time 毫秒
      */
-    public FormatTime(long time) {
+    public FormatTime(Context context, long time) {
+        this(context);
         this.time = time * 1000;
         calendar.setTimeInMillis(this.time);
     }
 
     /**
-     * @param timeStr 毫秒 String类型
+     * @param s 毫秒 String类型
      */
-    public FormatTime(String timeStr) {
-        if (StringUtils.isEmpty(timeStr)) {
-            timeStr = "0";
+    public FormatTime(Context context, String s) {
+        this(context);
+        if (StringUtils.isEmpty(s)) {
+            s = CommonUtils.isZero;
         }
-        this.time = Long.parseLong(timeStr) * 1000;
+        this.time = Long.parseLong(s) * 1000;
         calendar.setTimeInMillis(this.time);
     }
 
@@ -51,43 +58,55 @@ public class FormatTime {
 
     }
 
+    public String getAllTime() {
+        return context.getString(R.string.format_all_time);
+    }
+
+    public String getTimeNoSecond() {
+        return context.getString(R.string.format_time_no_second);
+    }
+
+    public String getTimeYearMonthDay() {
+        return context.getString(R.string.format_time_year_month_day);
+    }
+
     /**
-     * @param timeStr 毫秒  String 类型
+     * @param s 毫秒  String 类型
      */
-    public void setTime(String timeStr) {
-        if (StringUtils.isEmpty(timeStr)) {
-            timeStr = "0";
+    public void setTime(String s) {
+        if (StringUtils.isEmpty(s)) {
+            s = CommonUtils.isZero;
         }
-        this.time = Long.parseLong(timeStr) * 1000;
+        this.time = Long.parseLong(s) * 1000;
         calendar.setTimeInMillis(this.time);
 
     }
 
     /**
-     * 时间戳格式为“yyyy-MM-dd  HH:mm:ss     ”
+     * 默认时间格式：时间戳格式为“yyyy-MM-dd HH:mm:ss”
      */
     public String formatterTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(time);
+        date.setTime(time);
         return format.format(date);
     }
 
     /**
-     * 时间戳格式为“yyyy-MM-dd”
+     * 通过替换 pattern 变换时间格式
      */
-    public String formatterTimeToDay() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(time);
-        return format.format(date);
+    public void setApplyPattern(String applyPattern) {
+        format.applyPattern(applyPattern);
     }
 
-    /**
-     * 时间戳格式为“yyyy-MM-dd  HH:mm     ”
-     */
-    public String formatterTimeNoSeconds() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date date = new Date(time);
-        return format.format(date);
+    public void setApplyToAllTime() {
+        format.applyPattern(getAllTime());
+    }
+
+    public void setApplyToTimeNoSecond() {
+        format.applyPattern(getTimeNoSecond());
+    }
+
+    public void setApplyToTimeYearMonthDay() {
+        format.applyPattern(getTimeYearMonthDay());
     }
 
     /**
@@ -121,66 +140,6 @@ public class FormatTime {
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
 
-    public String getWeekStr() {
-        String week = "";
-        switch (getWeek()) {
-            case 1:
-                week = "星期日";
-
-                break;
-            case 2:
-                week = "星期一";
-
-                break;
-            case 3:
-                week = "星期二";
-
-                break;
-            case 4:
-                week = "星期三";
-
-                break;
-            case 5:
-                week = "星期四";
-
-                break;
-            case 6:
-                week = "星期五";
-
-                break;
-            case 7:
-                week = "星期六";
-                break;
-
-        }
-        return week;
-    }
-
-    public boolean isAM() {
-        //0-上午；1-下午
-        int am = calendar.get(Calendar.AM_PM);
-        return am == 0;
-    }
-
-    public String getAgoDateFomat() {
-
-        long curr = System.currentTimeMillis() / 1000;
-        long item = curr - (this.time / 1000);
-
-        if (item < 60) {
-            return "刚刚";
-        } else if (item < 60 * 60) {
-            return item / 60 + "分钟前";
-        } else if (item < (60 * 60 * 24)) {
-            return item / 60 / 60 + "小时前";
-        } else if (item < (60 * 60 * 24 * 30)) {
-            return item / 60 / 60 / 24 + "天前";
-        } else if (item < (60 * 60 * 24 * 30 * 12)) {
-            return item / 60 / 60 / 24 / 30 + "个月前";
-        } else
-            return item / 60 / 60 / 24 / 30 / 12 + "年前";
-    }
-
 
     public String getFormatTime() {
 
@@ -188,23 +147,23 @@ public class FormatTime {
         long item = curr - (this.time / 1000);
 
         if (item < 60) {
-            return "刚刚";
+            return context.getString(R.string.just_now);
         } else if (item < 60 * 60) {
-            return item / 60 + "分钟前";
+            return item / 60 + context.getString(R.string.minutes_ago);
         } else if (item < (60 * 60 * 24)) {
-            return item / 60 / 60 + "小时前";
+            return item / 60 / 60 + context.getString(R.string.hours_ago);
         } else if (item < (60 * 60 * 24 * 30)) {
             long day = item / 60 / 60 / 24;
             if (day == 1) {
-                return "昨天";
+                return context.getString(R.string.yesterday);
             } else if (day == 2) {
-                return "前天";
+                return context.getString(R.string.day_before_yesterday);
             } else if (day > 2 && day < 11) {
-                return day+"天前";
+                return day + context.getString(R.string.days_ago);
             } else {
                 return formatterTime();
             }
-        }else {
+        } else {
             return formatterTime();
         }
     }

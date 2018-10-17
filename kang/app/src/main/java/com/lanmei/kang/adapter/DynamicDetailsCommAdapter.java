@@ -52,7 +52,7 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
 
     public DynamicDetailsCommAdapter(Context context, DynamicBean bean, boolean isSelf) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
         mBean = bean;
         this.isSelf = isSelf;
     }
@@ -199,7 +199,6 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
         viewHolder.userNameTv.setText(mBean.getNickname());
         time.setTime(mBean.getAddtime());
         viewHolder.timeTv.setText(time.getFormatTime());
-        viewHolder.timeTv.setText(time.getFormatTime());
         viewHolder.commentTv.setText(mBean.getReviews());
         viewHolder.contentTv.setText(mBean.getTitle());
         viewHolder.sudokuView.setListData(mBean.getFile());
@@ -209,7 +208,7 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
                 if (!CommonUtils.isLogin(context)){
                     return;
                 }
-                CommonUtils.startPhotoBrowserActivity(context, CommonUtils.getStringArr(mBean.getFile()), positionSub);
+                CommonUtils.startPhotoBrowserActivity(context, CommonUtils.toArray(mBean.getFile()), positionSub);
             }
 
             @Override

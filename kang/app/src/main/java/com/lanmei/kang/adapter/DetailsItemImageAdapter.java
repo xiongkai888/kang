@@ -26,7 +26,7 @@ public class DetailsItemImageAdapter extends BaseAdapter {
     public DetailsItemImageAdapter(Context context, List<String> list){
         mContext = context;
         mList = list;
-        arry = CommonUtils.getStringArr(mList);
+        arry = CommonUtils.toArray(mList);
     }
 
     @Override

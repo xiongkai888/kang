@@ -49,7 +49,7 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
 
     public DynamicListAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     public void setType(int who){
@@ -157,7 +157,7 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
 
                 @Override
                 public void onDoubleTap(int position) {
-                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.getStringArr(bean.getFile()), position);
+                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.toArray(bean.getFile()), position);
                 }
             });
             final String liked = bean.getLiked();

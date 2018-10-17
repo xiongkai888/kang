@@ -9,7 +9,6 @@
     <string name="my_integral">我的积分</string>
     <string name="my_collect">我的收藏</string>
     <string name="my_activity">我的活动</string>
-    <string name="my_course">我的课程</string>
     <string name="my_order">我的订单</string>
     <string name="edit">编辑</string>
     <string name="done">完成</string>
@@ -191,4 +190,13 @@
     <string name="choose_merchant">请选择商家</string>
     <string name="pattern_payment">支付方式</string>
     <string name="understock">库存不足</string>
+    <string name="just_now">刚刚</string>
+    <string name="minutes_ago">分钟前</string>
+    <string name="hours_ago">小时前</string>
+    <string name="yesterday">昨天</string>
+    <string name="day_before_yesterday">前天</string>
+    <string name="days_ago">天前</string>
+    <string name="format_all_time">yyyy-MM-dd HH:mm:ss</string>
+    <string name="format_time_no_second">yyyy-MM-dd HH:mm</string>
+    <string name="format_time_year_month_day">yyyy-MM-dd</string>
 </resources>

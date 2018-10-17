@@ -32,7 +32,7 @@ public class MerchantItemsListAdapter extends SwipeRefreshAdapter<MerchantItemsL
 
     public MerchantItemsListAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
     public void setPid(String pid){

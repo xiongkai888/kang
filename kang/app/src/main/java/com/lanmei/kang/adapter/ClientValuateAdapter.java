@@ -28,7 +28,7 @@ public class ClientValuateAdapter extends SwipeRefreshAdapter<ClientValuateBean>
     public ClientValuateAdapter(Context context) {
         super(context);
         this.context = context;
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {

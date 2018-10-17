@@ -129,9 +129,10 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
         telTv.setText("电话：" + bean.getPhone());
 //                mAddressTv.setText("地址：" + bean.getAddress());
         itemNameTv.setText(bean.getName());
-        FormatTime time = new FormatTime();
+        FormatTime time = new FormatTime(this);
+        time.setApplyToTimeYearMonthDay();
         time.setTime(bean.getStime());
-        timeTv.setText(time.formatterTimeToDay());
+        timeTv.setText(time.formatterTime());
         numTv.setText(bean.getGuest());
         orderNoTv.setText(bean.getPay_no());
 //        String sTime = time.formatterTimeNoSeconds();

@@ -39,11 +39,11 @@ import butterknife.InjectView;
 public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerchantBean> {
 
 
-    FormatTime time;
+    private FormatTime time;
 //    String status;//0全部1待付款2已付款3未消费4已完成
     public OrderListMerchantAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
 //        this.status = status;
     }
 
@@ -59,7 +59,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean, position);
+        viewHolder.setParameter(bean);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +104,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(final OrderListMerchantBean bean, final int position) {
+        public void setParameter(final OrderListMerchantBean bean) {
             order1.setVisibility(View.VISIBLE);//
             order2.setVisibility(View.VISIBLE);
             order3.setVisibility(View.VISIBLE);
@@ -199,7 +199,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {
-                                    orderDel(bean, position);
+                                    orderDel(bean);
                                 }
                             });
                         case "5"://无操作
@@ -216,7 +216,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {
-                                    orderDel(bean, position);
+                                    orderDel(bean);
                                 }
                             });
                             break;
@@ -238,7 +238,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
                             AKDialog.getAlertDialog(context, context.getString(R.string.order_affirm_del), new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {
-                                    orderDel(bean, position);
+                                    orderDel(bean);
                                 }
                             });
                             break;
@@ -274,7 +274,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
     }
 
     //删除订单
-    private void orderDel(OrderListMerchantBean bean, final int position) {
+    private void orderDel(OrderListMerchantBean bean) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
         api.addParams("id",bean.getId());
         api.addParams("uid",api.getUserId(context));

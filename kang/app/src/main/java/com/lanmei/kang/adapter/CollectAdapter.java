@@ -24,10 +24,11 @@ import butterknife.InjectView;
  */
 public class CollectAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
 
-    FormatTime time = new FormatTime();
+    private FormatTime time;
 
     public CollectAdapter(Context context) {
         super(context);
+        time = new FormatTime(context);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CollectAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
         viewHolder.mCommentTv.setText(bean.getReviews() + " 条评论");
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @InjectView(R.id.title_tv)
         TextView mTitleTv;
         @InjectView(R.id.cname_tv)

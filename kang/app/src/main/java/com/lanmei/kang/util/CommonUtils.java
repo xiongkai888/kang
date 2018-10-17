@@ -31,6 +31,7 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,45 +40,39 @@ public class CommonUtils {
     public final static String isOne = "1";
     public final static String isZero = "0";
 
+
     /**
-     * List<String> 传化未String[]
-     *
      * @param list
      * @return
      */
-    public static String[] getStringArr(List<String> list) {
-        String[] arr = null;
-        if (list != null && list.size() > 0) {
-            int size = list.size();
-            arr = new String[size];
-            for (int i = 0; i < size; i++) {
-                arr[i] = list.get(i);
-            }
-        }
-        return arr;
+    public static String[] toArray(List<String> list) {
+        return list.toArray(new String[list.size()]);
     }
 
     /**
      * 判断是不是自己
+     *
      * @param context
      * @param uid
      * @return
      */
-    public static boolean isSelf(Context context,String uid){
-        return StringUtils.isSame(uid,getUserId(context));
+    public static boolean isSelf(Context context, String uid) {
+        return StringUtils.isSame(uid, getUserId(context));
     }
+
     //获取用户ID
-    public static String getUserId(Context context){
+    public static String getUserId(Context context) {
         UserBean bean = UserHelper.getInstance(context).getUserBean();
-        if (StringUtils.isEmpty(bean)){
+        if (StringUtils.isEmpty(bean)) {
             return "";
         }
         return bean.getId();
     }
+
     //获取用户类型
-    public static String getUserType(Context context){
+    public static String getUserType(Context context) {
         UserBean bean = UserHelper.getInstance(context).getUserBean();
-        if (StringUtils.isEmpty(bean)){
+        if (StringUtils.isEmpty(bean)) {
             return "";
         }
         return bean.getUser_type();
@@ -178,26 +173,17 @@ public class CommonUtils {
     }
 
 
-
     /**
      * 字符串转换成 List<String>
      *
      * @param pic "dfasf,fasdfa,fasdfa"
      * @return
      */
-    public static List<String> getListString(String pic) {
+    public static List<String> asList(String pic) {
         if (StringUtils.isEmpty(pic)) {
             return null;
         }
-        String[] arr = pic.split(",");
-        List<String> list = new ArrayList<>();
-        if (arr != null && arr.length > 0) {
-            int size = arr.length;
-            for (int i = 0; i < size; i++) {
-                list.add(arr[i]);
-            }
-        }
-        return list;
+        return Arrays.asList(pic.split(","));
     }
 
     public static boolean isLogin(Context context) {
@@ -322,6 +308,7 @@ public class CommonUtils {
      * @return
      */
     public static String getAlbumsPics(List<AlbumBean> list) {
+
         String pics = "";
         if (list == null || list.size() == 0) {
             return pics;
@@ -386,11 +373,24 @@ public class CommonUtils {
      * @return
      */
     public static String getPic(String pics) {
-        List<String> list = CommonUtils.getListString(pics);
-        if (list != null && list.size() > 0) {
+        List<String> list = asList(pics);
+        if (!StringUtils.isEmpty(list)) {
             return list.get(0);
         }
         return "";
+    }
+
+
+    public static String getStringByList(List<String> list) {
+        if (StringUtils.isEmpty(list)) {
+            return "";
+        }
+        StringBuffer buffer = new StringBuffer();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            buffer.append(((size - 1) != i) ? list.get(i) + "," : list.get(i));
+        }
+        return buffer.toString();
     }
 
 
@@ -433,7 +433,7 @@ public class CommonUtils {
      * 图片预览
      *
      * @param context
-     * @param arry        图片地址数组
+     * @param arry     图片地址数组
      * @param position 点击当前图片的地址位置
      */
     public static void startPhotoBrowserActivity(Context context, String[] arry, int position) {
@@ -454,7 +454,7 @@ public class CommonUtils {
     }
 
 
-    public static void setBanner(ConvenientBanner banner,List<String> list,boolean isTurning) {
+    public static void setBanner(ConvenientBanner banner, List<String> list, boolean isTurning) {
         //初始化商品图片轮播
         banner.setPages(new CBViewHolderCreator() {
             @Override
@@ -468,7 +468,7 @@ public class CommonUtils {
         if (list.size() == 1) {
             return;
         }
-        if (!isTurning){
+        if (!isTurning) {
             return;
         }
         banner.startTurning(3000);
@@ -476,23 +476,19 @@ public class CommonUtils {
 
 
 
-    LoadUserInfoListener l;
-
-    public interface LoadUserInfoListener{
-        void succeed(UserBean bean);
-    }
 
     /**
      * 启动聊天界面
+     *
      * @param context
      * @param userId  聊天对方的id
      * @param isGroup 是不是群聊
      */
-    public static void startChatActivity(Context context,String userId,boolean isGroup){
+    public static void startChatActivity(Context context, String userId, boolean isGroup) {
         Intent intent = new Intent(context, ChatActivity.class);
-        if (isGroup){
+        if (isGroup) {
             intent.putExtra(com.hyphenate.chatuidemo.Constant.EXTRA_CHAT_TYPE, com.hyphenate.chatuidemo.Constant.CHATTYPE_GROUP);
-        }else {
+        } else {
             userId = KangApp.HX_USER_Head + userId;
         }
         intent.putExtra(com.hyphenate.chatuidemo.Constant.EXTRA_USER_ID, userId);
@@ -501,31 +497,31 @@ public class CommonUtils {
 
     /**
      * 设置字体的背景和颜色，文字。
+     *
      * @param context
-     * @param type  0或1
+     * @param type     0或1
      * @param textView
      * @param strId
      * @param strIdEd
      */
-    public static void setTextViewType(Context context,String type,TextView textView,int strId,int strIdEd){
-        if (CommonUtils.isZero.equals(type)){
+    public static void setTextViewType(Context context, String type, TextView textView, int strId, int strIdEd) {
+        if (StringUtils.isSame(CommonUtils.isZero,type)) {
             textView.setText(strId);
             textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-            textView.setBackground(context.getResources().getDrawable(R.drawable.send));
-        }else {
+            textView.setBackgroundResource(R.drawable.send);
+        } else {
             textView.setText(strIdEd);
             textView.setTextColor(context.getResources().getColor(R.color.color999));
-            textView.setBackground(context.getResources().getDrawable(R.drawable.send_on));
+            textView.setBackgroundResource(R.drawable.send_on);
         }
     }
 
 
     /**
-     *
      * @param context
      * @param textView
      * @param drawableId 本地图片资源
-     * @param position 图片在文字的位置  0左、1上、2右、3下
+     * @param position   图片在文字的位置  0左、1上、2右、3下
      */
     public static void setCompoundDrawables(Context context, TextView textView, int drawableId, int position) {
         Drawable img = context.getResources().getDrawable(drawableId);

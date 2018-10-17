@@ -43,7 +43,7 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
 
     public NewsDetailsCommentAdapter(Context context) {
         super(context);
-        time = new FormatTime();
+        time = new FormatTime(context);
     }
 
 

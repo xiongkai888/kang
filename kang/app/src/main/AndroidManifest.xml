@@ -212,9 +212,6 @@
             android:name=".ui.mine.activity.MembershipCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.setting.MyActivityActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.user.setting.MyCourseActivity"
             android:screenOrientation="portrait" />
         <activity

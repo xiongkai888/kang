@@ -62,7 +62,7 @@ public class GoodsSellListActivity extends BaseActivity {
 
     private void initPicker() {
         picker = new DateTimePicker(this, DateTimePicker.YEAR_MONTH, DateTimePicker.NONE);
-        time = new FormatTime();
+        time = new FormatTime(this);
         int year = time.getYear();
         int month = time.getMonth();
         picker.setDateRangeStart(2017, 1);

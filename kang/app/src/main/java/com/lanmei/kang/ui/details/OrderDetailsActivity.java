@@ -285,7 +285,7 @@ public class OrderDetailsActivity extends BaseActivity {
         statusTv.setText(payStatus);
         nameTv.setText(bean.getName());
         projectTv.setText(bean.getGoodsName());
-        FormatTime time = new FormatTime(bean.getAddtime());
+        FormatTime time = new FormatTime(this,bean.getAddtime());
         subscribeTimeTv.setText(time.formatterTime());
         orderTimeTv.setText(time.formatterTime());
         numTv.setText(bean.getGuest());

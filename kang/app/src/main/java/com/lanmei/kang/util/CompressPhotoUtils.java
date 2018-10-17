@@ -1,10 +1,17 @@
 package com.lanmei.kang.util;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+
+import com.oss.ManageOssUpload;
+import com.xson.common.utils.L;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
+import com.xson.common.widget.ProgressHUD;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,27 +26,44 @@ import java.util.List;
  */
 
 public class CompressPhotoUtils {
-    private List<String> fileList = new ArrayList<>();
-    private ProgressDialog progressDialog;
+    //    private ProgressDialog progressDialog;
     private String type;
+    private Context context;
+    private CompressCallBack callBack;
+    private CompressTask compressTask;
+    private UpdateImageViewTask updateImageViewTask;
+    private String uploadingText = "照片上传中...";
+    private ProgressHUD mProgressHUD;
 
-    public void CompressPhoto(Context context, List<String> list, CompressCallBack callBack,String type) {
-        this.type = type;
-        CompressTask task = new CompressTask(context, list, callBack);
-        task.execute();
+    public void setUploadingText(String uploadingText) {
+        this.uploadingText = uploadingText;
     }
 
-    class CompressTask extends AsyncTask<Void, Integer, Integer> {
-        private Context context;
-        private List<String> list;
-        private CompressCallBack callBack;
+    public CompressPhotoUtils(Context context) {
+        this.context = context;
+    }
 
-        CompressTask(Context context, List<String> list, CompressCallBack callBack) {
-            this.context = context;
-            this.list = list;
-            this.callBack = callBack;
-        }
+    public void compressPhoto(String[] urls, CompressCallBack callBack, String type) {
+        compressPhoto(callBack, type);
+        compressTask.execute(urls);
+    }
 
+    public void compressPhoto(String path, CompressCallBack callBack, String type) {
+        compressPhoto(callBack, type);
+        compressTask.execute(path);
+    }
+
+    public void compressPhoto(CompressCallBack callBack, String type) {
+        this.type = type;
+        this.callBack = callBack;
+        compressTask = new CompressTask();
+        mProgressHUD = ProgressHUD.show(context, uploadingText, true, false, null);
+    }
+
+    public class CompressTask extends AsyncTask<String, Integer, List<String>> {
+
+        private int num = 0;
+        private List<String> fileList = new ArrayList<>();
         /**
          * 运行在UI线程中，在调用doInBackground()之前执行
          */
@@ -52,22 +76,33 @@ public class CompressPhotoUtils {
          * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
          */
         @Override
-        protected Integer doInBackground(Void... params) {
-            for (int i = 0; i < list.size(); i++) {
-                Bitmap bitmap = getBitmap(list.get(i));
-                String path = SaveBitmap(bitmap, i);
-                fileList.add(path);
+        protected List<String> doInBackground(String... params) {
+            for (String s : params) {
+                setList(s, num);
+                num += 1;
             }
-            return null;
+            return fileList;
+        }
+
+        public void setList(String nativePath, int num) {
+            Bitmap bitmap = getBitmap(nativePath);
+            String path = saveBitmap(bitmap, num);
+            L.d("AyncListObjects", "压缩后的图片地址：" + path);
+            fileList.add(path);
         }
 
         /**
          * 运行在ui线程中，在doInBackground()执行完毕后执行
          */
         @Override
-        protected void onPostExecute(Integer integer) {
-//            progressDialog.dismiss();
-            callBack.success(fileList);
+        protected void onPostExecute(List<String> result) {
+            if (!StringUtils.isEmpty(result)) {
+                L.d("CompressPhotoUtils", "图片压缩成功");
+                updateImageViewTask = new UpdateImageViewTask();
+                updateImageViewTask.execute(CommonUtils.toArray(result));
+            } else {
+                mProgressHUD.cancel();
+            }
         }
 
         /**
@@ -81,7 +116,7 @@ public class CompressPhotoUtils {
     /**
      * 从sd卡获取压缩图片bitmap
      */
-    public static Bitmap getBitmap(String srcPath) {
+    public Bitmap getBitmap(String srcPath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -105,13 +140,13 @@ public class CompressPhotoUtils {
     /**
      * 保存bitmap到内存卡
      */
-    public String SaveBitmap(Bitmap bmp, int num) {
-        File file = new File("mnt/sdcard/xkai"+type+"/");
+    public String saveBitmap(Bitmap bmp, int num) {
+        File file = new File("mnt/sdcard/yixiuge" + type + "/");
         String path = null;
         if (!file.exists())
             file.mkdirs();
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String picName = formatter.format(new Date());
             path = file.getPath() + "/" + picName + "-" + num + ".jpg";
             FileOutputStream fileOutputStream = new FileOutputStream(path);
@@ -127,4 +162,90 @@ public class CompressPhotoUtils {
     public interface CompressCallBack {
         void success(List<String> list);
     }
+
+
+    /**
+     * Created by xkai on 2018/5/30.
+     */
+
+    public class UpdateImageViewTask extends AsyncTask<String, Integer, List<String>> {
+
+
+        /**
+         * 运行在UI线程中，在调用doInBackground()之前执行
+         */
+        @Override
+        protected void onPreExecute() {
+        }
+
+        /**
+         * 后台运行的方法，可以运行非UI线程，可以执行耗时的方法
+         */
+        @Override
+        protected List<String> doInBackground(String... params) {
+            List<String> successPath = new ArrayList<>();
+            ManageOssUpload manageOssUpload = new ManageOssUpload(context);//图片上传类
+            for (String picPath : params) {
+                String urlPic = manageOssUpload.uploadFile_img(picPath, type);
+                if (StringUtils.isEmpty(urlPic)) {
+                    //写上传失败逻辑
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 1;
+                    msg.obj = picPath;
+                    mHandler.sendMessage(msg);
+                } else {
+                    successPath.add(urlPic);
+                    L.d("CompressPhotoUtils", "上传成功返回的图片地址:" + urlPic);
+                }
+            }
+            return successPath;
+        }
+
+        /**
+         * 运行在ui线程中，在doInBackground()执行完毕后执行
+         */
+        @Override
+        protected void onPostExecute(List<String> list) {
+            //            mProgressDialog.cancel();
+            mProgressHUD.cancel();
+            if (StringUtils.isEmpty(list)) {
+                return;
+            }
+            if (callBack != null) {
+                callBack.success(list);
+            }
+            mProgressHUD = null;
+        }
+
+        /**
+         * 在publishProgress()被调用以后执行，publishProgress()用于更新进度
+         */
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+    }
+
+    public void cancelled() {
+        if (compressTask != null && compressTask.getStatus() == AsyncTask.Status.RUNNING) {
+            compressTask.cancel(true);
+        }
+        if (updateImageViewTask != null && updateImageViewTask.getStatus() == AsyncTask.Status.RUNNING) {
+            updateImageViewTask.cancel(true);
+        }
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1://上传某张图片失败
+                    UIHelper.ToastMessage(context, "上传文件失败：" + msg.obj);
+                    break;
+            }
+        }
+    };
+
 }

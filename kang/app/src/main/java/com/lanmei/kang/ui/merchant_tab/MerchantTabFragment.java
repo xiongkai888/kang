@@ -3,8 +3,6 @@ package com.lanmei.kang.ui.merchant_tab;
 import android.os.Bundle;
 import android.view.View;
 
-import com.data.volley.Response;
-import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MerchantTabAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
@@ -18,9 +16,9 @@ import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.widget.OnLoadingListener;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
@@ -36,7 +34,8 @@ public class MerchantTabFragment extends BaseFragment {
 
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    MerchantTabAdapter mAdapter;
+    private MerchantTabAdapter adapter;
+    private SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -48,53 +47,18 @@ public class MerchantTabFragment extends BaseFragment {
         smartSwipeRefreshLayout.initGridLinearLayout(2, 0);
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");//热销产品
         api.addParams("hot",1);
-        mAdapter = new MerchantTabAdapter(context);
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        smartSwipeRefreshLayout.setOnLoadingListener(new OnLoadingListener() {
-            @Override
-            public void onRefresh() {
-                loadGoodsList();
-            }
+        adapter = new MerchantTabAdapter(context);
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+        };
+        controller.loadFirstPage();
+        adapter.notifyDataSetChanged();
 
-            @Override
-            public void onLoadMore() {
-
-            }
-        });
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NONE);
-
-        loadGoodsList();
         loadGoodsClassify();
         loadAd(1);
         loadAd(2);
     }
 
-    //热销商品
-    private void loadGoodsList() {
-        KangQiMeiApi api = new KangQiMeiApi("app/good_list");//热销产品
-        api.addParams("hot",1);
-        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
-            @Override
-            public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
-                if (mAdapter == null) {
-                    return;
-                }
-                mAdapter.setData(response.data);
-                mAdapter.notifyDataSetChanged();
-                if (smartSwipeRefreshLayout != null) {
-                    smartSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (smartSwipeRefreshLayout != null) {
-                    smartSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        });
-    }
 
     //用户端-商家tab  轮播图
     private void loadAd(final int type) {
@@ -103,16 +67,16 @@ public class MerchantTabFragment extends BaseFragment {
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<AdBean>>() {
             @Override
             public void onResponse(NoPageListBean<AdBean> response) {
-                if (mAdapter == null) {
+                if (smartSwipeRefreshLayout == null) {
                     return;
                 }
                 if (StringUtils.isEmpty(response.data)) {
                     return;
                 }
                 if (type == 1){
-                    mAdapter.setBannerParameter(response.data);
+                    adapter.setBannerParameter(response.data);
                 }else {
-                    mAdapter.setHotImgParameter(response.data);
+                    adapter.setHotImgParameter(response.data);
                 }
             }
         });
@@ -125,10 +89,10 @@ public class MerchantTabFragment extends BaseFragment {
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabClassifyBean> response) {
-                if (mAdapter == null) {
+                if (adapter == null) {
                     return;
                 }
-                mAdapter.setClassifyParameter(response.data);
+                adapter.setClassifyParameter(response.data);
             }
         });
     }

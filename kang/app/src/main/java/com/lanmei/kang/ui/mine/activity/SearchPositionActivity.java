@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -33,7 +33,7 @@ import com.baidu.mapapi.search.poi.PoiSortType;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.SearchPositionAdapter;
 import com.lanmei.kang.event.LocationChooseEvent;
-import com.lanmei.kang.util.loc.LocationService;
+import com.lanmei.kang.util.BaiduLocation;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -62,7 +62,7 @@ public class SearchPositionActivity extends BaseActivity implements TextView.OnE
     RecyclerView mRecyclerView;
     SearchPositionAdapter adapter;
 
-    private static final int PERMISSION_LOCATION = 100;
+    private final int PERMISSION_LOCATION = 100;
 
     @Override
     public int getContentViewId() {
@@ -110,7 +110,7 @@ public class SearchPositionActivity extends BaseActivity implements TextView.OnE
     }
 
     // 地理编码
-    GeoCoder mGeoCoder = null;
+    private GeoCoder mGeoCoder = null;
 
 
     private void initPoiSearch() {
@@ -142,7 +142,7 @@ public class SearchPositionActivity extends BaseActivity implements TextView.OnE
         });
     }
 
-    List<PoiInfo> mInfoList = new ArrayList<>();
+    private List<PoiInfo> mInfoList = new ArrayList<>();
 
     // 地理编码监听器
     OnGetGeoCoderResultListener GeoListener = new OnGetGeoCoderResultListener() {
@@ -196,46 +196,24 @@ public class SearchPositionActivity extends BaseActivity implements TextView.OnE
         return false;
     }
 
-    private LocationService locationService;
-
     private void initBaiDu() {
-        // -----------location config ------------
-        locationService = new LocationService(getApplicationContext());//放在SattingApp里面有问题
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        locationService.registerListener(mListener);
-        //注册监听
-        locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        locationService.start();// 定位SDK
+        new BaiduLocation(this, new BaiduLocation.WHbdLocationListener() {
+            @Override
+            public void bdLocationListener(LocationClient locationClient, BDLocation location) {
+                if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                    mCurrentLantitude = location.getLatitude();
+                    mCurrentLongitude = location.getLongitude();
+                    // 发起反地理编码检索
+                    mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption())
+                            .location(new LatLng(mCurrentLantitude, mCurrentLongitude)));
+                    locationClient.stop();
+                }
+            }
+        });
     }
 
-    BDLocation lastLocation;
     double mCurrentLantitude;
     double mCurrentLongitude;
-
-
-    /*****
-     * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
-     */
-    private BDLocationListener mListener = new BDLocationListener() {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            if (location == null) {
-                return;
-            }
-            lastLocation = location;
-            mCurrentLantitude = lastLocation.getLatitude();
-            mCurrentLongitude = lastLocation.getLongitude();
-            // 发起反地理编码检索
-            mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption())
-                    .location(new LatLng(mCurrentLantitude, mCurrentLongitude)));
-            L.d("resultListener", "onReceiveLocation");
-        }
-
-        public void onConnectHotSpotMessage(String s, int i) {
-        }
-    };
-
     PoiSearch poiSearch;
 
     /**
@@ -261,10 +239,6 @@ public class SearchPositionActivity extends BaseActivity implements TextView.OnE
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (locationService != null){
-            locationService.unregisterListener(mListener);
-            locationService.stop();
-        }
         if (poiSearch != null){
             poiSearch.destroy();
         }

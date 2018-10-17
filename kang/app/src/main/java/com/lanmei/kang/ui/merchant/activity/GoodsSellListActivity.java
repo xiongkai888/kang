@@ -80,15 +80,14 @@ public class GoodsSellListActivity extends BaseActivity {
     }
 
     private void initSwipeRefreshLayout() {
-        KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
-        api.addParams("more", 1);
+        KangQiMeiApi api = new KangQiMeiApi("app/goods_sale_list");
+        api.addParams("sellerid",api.getUserId(this));
         GoodsSellListAdapter adapter = new GoodsSellListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        adapter.notifyDataSetChanged();
-//        controller.loadFirstPage();
+        controller.loadFirstPage();
     }
 
 

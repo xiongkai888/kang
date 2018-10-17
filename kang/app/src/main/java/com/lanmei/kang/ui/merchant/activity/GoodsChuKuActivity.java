@@ -106,6 +106,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
 
     private void loadMerchantList(){
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
+        api.addParams("user_type",1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
             @Override
             public void onResponse(NoPageListBean<UserBean> response) {

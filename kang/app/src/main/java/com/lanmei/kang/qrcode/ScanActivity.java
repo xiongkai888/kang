@@ -22,6 +22,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.event.ChuKuGoodsInfoEvent;
 import com.lanmei.kang.event.ScanEvent;
 import com.lanmei.kang.event.ScanSucceedEvent;
+import com.lanmei.kang.event.ScanUserEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.ImageUtils;
 
@@ -49,7 +50,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     ZXingView mQRCodeView;
 
     private boolean isQR;//true为条形码扫描 false为二维码扫描
-    private int type;//1添加出库入库时扫描的商品、2消费、3商家订单
+    private int type;//1添加出库入库时扫描的商品、2消费、3商家订单、4扫描会员
 
     @Override
     public int getContentViewId() {
@@ -98,6 +99,9 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                 break;
             case 3://
                 EventBus.getDefault().post(new ScanSucceedEvent());
+                break;
+            case 4://扫描会员
+                EventBus.getDefault().post(new ScanUserEvent(result));
                 break;
         }
         vibrate();

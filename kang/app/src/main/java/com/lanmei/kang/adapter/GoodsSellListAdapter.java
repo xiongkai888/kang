@@ -36,20 +36,14 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
 //        if (bean == null) {
 //            return;
 //        }
-        ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(null);
+//        ViewHolder viewHolder = (ViewHolder) holder;
+//        viewHolder.setParameter(null);
 //        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                IntentUtil.startActivity(context, MerchantIntroduceActivity.class, bean.getUid());
 //            }
 //        });
-    }
-
-
-    @Override
-    public int getCount() {
-        return 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

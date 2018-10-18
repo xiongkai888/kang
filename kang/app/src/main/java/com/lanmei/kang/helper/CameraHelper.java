@@ -102,7 +102,7 @@ public class CameraHelper {
                 }
 
             } else {
-                ((BaseActivity) context).requestPermissions(permissions, 1);
+                ((BaseActivity) context).requestPermissions(permissions, REQUEST_PERMISSIONS);
             }
         } else {
             if (isCamera) {
@@ -152,9 +152,8 @@ public class CameraHelper {
         ((BaseActivity) context).startActivityForResult(intent, CHOOSE_FROM_GALLAY);
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSIONS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (isCamera) {
                 startActionCamera();
             } else {

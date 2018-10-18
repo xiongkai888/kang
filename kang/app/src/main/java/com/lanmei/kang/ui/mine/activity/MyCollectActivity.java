@@ -40,7 +40,7 @@ public class MyCollectActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mViewPager.setAdapter(new MyCollectAdapter(getSupportFragmentManager()));
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

@@ -55,7 +55,7 @@ public class MembershipCardActivity extends BaseActivity{
             protected Bitmap doInBackground(Void... params) {
                 int width = BGAQRCodeUtil.dp2px(getContext(), 250);
                 int height = BGAQRCodeUtil.dp2px(getContext(), 70);
-                int textSize = BGAQRCodeUtil.sp2px(getContext(), 18);
+                int textSize = BGAQRCodeUtil.sp2px(getContext(), 16);
                 return QRCodeEncoder.syncEncodeBarcode(CommonUtils.getUserBean(getContext()).getMenber_num(), width, height, textSize);
             }
 

@@ -64,7 +64,6 @@
     <string name="mine">我的</string>
     <string name="time">2018-10-1 12:33:55</string>
     <string name="input_consume_code">请输入消费验证码</string>
-    <string name="price_sub">￥0</string>
     <string name="price">￥%1$s</string>
     <string name="comment_num">%1$s条评论</string>
     <string name="share">分享</string>
@@ -201,4 +200,8 @@
     <string name="format_time_year_month_day">yyyy-MM-dd</string>
     <string name="input_user_number">请输入会员编号或扫描获取</string>
     <string name="user_digits">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="goods">商品</string>
+    <string name="serve">服务</string>
+    <string name="goods_number">共计%1$s件商品</string>
+    <string name="price_sub">单价：￥%1$s</string>
 </resources>

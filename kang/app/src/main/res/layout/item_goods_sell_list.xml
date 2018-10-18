@@ -11,11 +11,12 @@
         android:padding="@dimen/d_10dp">
 
         <TextView
-            style="@style/text_weight"
-            android:text="订单号：2313213213" />
+            android:id="@+id/order_no_tv"
+            style="@style/text_weight" />
 
         <TextView
-            style="@style/text"
+            android:id="@+id/time_tv"
+            style="@style/text12colorBlack"
             android:text="@string/time" />
 
     </LinearLayout>
@@ -38,6 +39,7 @@
         android:padding="@dimen/d_10dp">
 
         <TextView
+            android:id="@+id/num_tv"
             style="@style/text12color666"
             android:text="共计1件商品" />
 
@@ -62,12 +64,14 @@
         android:padding="@dimen/d_5dp">
 
         <com.xson.common.widget.CircleImageView
+            android:id="@+id/pic_iv"
             android:layout_width="@dimen/d_30dp"
             android:layout_height="@dimen/d_30dp"
             android:layout_marginLeft="@dimen/d_5dp"
             android:src="@mipmap/default_pic" />
 
         <TextView
+            android:id="@+id/name_tv"
             style="@style/text_weight"
             android:layout_marginLeft="@dimen/d_5dp"
             android:text="@string/app_name"

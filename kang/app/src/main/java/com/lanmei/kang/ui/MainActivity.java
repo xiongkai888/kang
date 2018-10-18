@@ -1,6 +1,7 @@
 package com.lanmei.kang.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MainPagerAdapter;
+import com.lanmei.kang.event.ActivityResultEvent;
 import com.lanmei.kang.event.LocationEvent;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.helper.CameraHelper;
@@ -22,6 +24,7 @@ import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.util.BaiduLocation;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
+import com.xson.common.utils.ImageUtils;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -103,6 +106,29 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         }
     }
 
+    //在我的上家界面修改头像时
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case CameraHelper.CHOOSE_FROM_GALLAY:
+                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ImageUtils.getImageFileFromPickerResult(this, data)));
+                L.d(L.TAG,"MainActivity.onActivityResult 0");
+                break;
+            case CameraHelper.CHOOSE_FROM_CAMERA:
+                //注意小米拍照后data 为null
+                L.d(L.TAG,"MainActivity.onActivityResult 1");
+                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
+                break;
+            case CameraHelper.RESULT_FROM_CROP:
+                L.d(L.TAG,"MainActivity.onActivityResult 2");
+                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
+                break;
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -110,13 +136,8 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
             case PERMISSION_LOCATION:
                 initBaiDu();
                 break;
-            case CameraHelper.REQUEST_PERMISSIONS:
-
-                break;
         }
     }
-
-
 
     public void initViewPager() {
         mViewPager.setAdapter(mainPagerAdapter);

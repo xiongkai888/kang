@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodsSellListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.bean.MerchantListBean;
+import com.lanmei.kang.bean.GoodsSellListBean;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.app.BaseActivity;
@@ -34,7 +34,7 @@ public class GoodsSellListActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     @InjectView(R.id.time_tv)
     TextView timeTv;
-    private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
+    private SwipeRefreshController<NoPageListBean<GoodsSellListBean>> controller;
     private DateTimePicker picker;
     private FormatTime time;
     private KangQiMeiApi api;
@@ -89,7 +89,7 @@ public class GoodsSellListActivity extends BaseActivity {
         GoodsSellListAdapter adapter = new GoodsSellListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+        controller = new SwipeRefreshController<NoPageListBean<GoodsSellListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
     }

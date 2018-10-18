@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.lanmei.kang.KangApp;
+import com.lanmei.kang.R;
 import com.lanmei.kang.ui.mine.fragment.CollectGoodsFragment;
 import com.lanmei.kang.ui.mine.fragment.CollectItemsFragment;
 import com.lanmei.kang.ui.mine.fragment.CollectMerchantFragment;
@@ -43,13 +45,13 @@ public class MyCollectAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "商家";
+                return KangApp.applicationContext.getString(R.string.merchant);//
             case 1:
-                return "服务";
+                return KangApp.applicationContext.getString(R.string.serve);
             case 2:
-                return "资讯";
+                return KangApp.applicationContext.getString(R.string.news);
             case 3:
-                return "商品";
+                return KangApp.applicationContext.getString(R.string.goods);
         }
         return null;
     }

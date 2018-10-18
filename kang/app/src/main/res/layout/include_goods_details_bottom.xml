@@ -3,8 +3,7 @@
     style="@style/ll_top">
 
     <LinearLayout
-        android:paddingLeft="@dimen/d_20dp"
-        android:paddingRight="@dimen/d_20dp"
+        android:layout_width="@dimen/d_80dp"
         android:id="@+id/ll_collect"
         style="@style/text"
         android:layout_marginBottom="@dimen/d_2dp"
@@ -27,8 +26,7 @@
     <RelativeLayout
         android:id="@+id/ll_shop"
         style="@style/text"
-        android:paddingLeft="@dimen/d_20dp"
-        android:paddingRight="@dimen/d_20dp"
+        android:layout_width="@dimen/d_80dp"
         android:layout_marginBottom="@dimen/d_2dp"
         android:layout_marginTop="@dimen/d_2dp">
 

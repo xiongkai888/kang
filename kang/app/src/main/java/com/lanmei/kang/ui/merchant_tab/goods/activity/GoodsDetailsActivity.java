@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.GoodsCollectBean;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.bean.GoodsSpecificationsBean;
 import com.lanmei.kang.event.CollectGoodsEvent;
@@ -25,7 +26,6 @@ import com.lanmei.kang.ui.merchant_tab.goods.shop.ShowShopCountEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.widget.NoScrollViewPager;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
@@ -91,12 +91,14 @@ public class GoodsDetailsActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         EventBus.getDefault().register(this);
 
-//        if (UserHelper.getInstance(this).hasLogin()){
-//            loadCollect(false);
-//        }
-
+        if (UserHelper.getInstance(this).hasLogin()){
+            loadCollect(false);
+        }
         loadSpecifications();
+        loadGoodsDetails();
+    }
 
+    private void loadGoodsDetails() {
         KangQiMeiApi api = new KangQiMeiApi("app/goodsdetail");
         api.addParams("id",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<GoodsDetailsBean>>() {
@@ -118,12 +120,6 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private void init(GoodsDetailsBean bean) {
         llDetailsBottom.setVisibility(View.VISIBLE);
-//        favorite = bean.getFavorite();
-//        if (favorite == 1) {
-//            collectIv.setImageResource(R.mipmap.icon_collect_on);
-//        } else {
-//            collectIv.setImageResource(R.mipmap.icon_collect_off);
-//        }
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new GoodsDetailsPagerAdapter(getSupportFragmentManager(), bean));
         tabLayout.setupWithViewPager(viewPager);
@@ -177,8 +173,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
         switch (view.getId()) {
             case R.id.ll_collect://收藏
-//                loadCollect(true);
-                CommonUtils.developing(this);
+                loadCollect(true);
                 break;
             case R.id.ll_shop://购物车
                 IntentUtil.startActivity(this, ShopCarActivity.class);
@@ -201,43 +196,25 @@ public class GoodsDetailsActivity extends BaseActivity {
         mDialog.show(getSupportFragmentManager(), DIALOG);
     }
 
+    //修改收藏
     private void loadCollect(final boolean isClick) {
-        if (StringUtils.isEmpty(id)) {
-            return;
-        }
-
-        KangQiMeiApi api = new KangQiMeiApi();
+        KangQiMeiApi api = new KangQiMeiApi(isClick?"app/collection":"app/collection_type");
         api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
-        String url;
-        if (isClick){
-            url = "app/collection";//收藏的相关操作 (1添加收藏2修改收藏3删除收藏4收藏列表)
-            if (isCollect){
-                api.addParams("state",0);
-                api.addParams("operation",2);
-            }else {
-                api.addParams("state",1);
-                api.addParams("operation",1);
-            }
-        }else {
-            url = "app/collection_list";//判断是否收藏
-        }
-        api.setPath(url);
-        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<GoodsCollectBean>>() {
             @Override
-            public void onResponse(BaseBean response) {
+            public void onResponse(NoPageListBean<GoodsCollectBean> response) {
                 if (isFinishing()) {
                     return;
                 }
                 if (isClick){
                     isCollect = !isCollect;
-                    UIHelper.ToastMessage(getContext(),response.getInfo());
                     EventBus.getDefault().post(new CollectGoodsEvent());
+                    UIHelper.ToastMessage(getContext(),response.getInfo());
                 }else {
-                    isCollect = !response.getInfo().contains("未");
+                    isCollect = !StringUtils.isEmpty(response.data);
                 }
-                String collect = isCollect?getString(R.string.collected):getString(R.string.collect);
                 collectIv.setImageResource(isCollect?R.mipmap.goods_collect_on:R.mipmap.goods_collect_off);
-                collectTv.setText(collect);
+                collectTv.setText(isCollect?getString(R.string.collected):getString(R.string.collect));
             }
         });
     }

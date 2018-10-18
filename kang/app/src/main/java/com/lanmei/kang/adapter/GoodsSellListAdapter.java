@@ -9,8 +9,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.MerchantListBean;
+import com.lanmei.kang.bean.GoodsSellListBean;
+import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.widget.CircleImageView;
+import com.xson.common.widget.FormatTextView;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,11 +26,14 @@ import butterknife.InjectView;
 /**
  * 销售列表
  */
-public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> {
+public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean> {
 
+    private FormatTime time;
 
     public GoodsSellListAdapter(Context context) {
         super(context);
+        time = new FormatTime(context);
+        time.setApplyToTimeNoSecond();
     }
 
     @Override
@@ -33,18 +43,18 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-//        final MerchantListBean bean = getItem(position);
-//        if (bean == null) {
-//            return;
-//        }
-//        ViewHolder viewHolder = (ViewHolder) holder;
-//        viewHolder.setParameter(null);
-//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        final GoodsSellListBean bean = getItem(position);
+        if (bean == null) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                IntentUtil.startActivity(context, MerchantIntroduceActivity.class, bean.getUid());
-//            }
-//        });
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,16 +64,41 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
         @InjectView(R.id.delete_tv)
         TextView deleteTv;
 
+        @InjectView(R.id.order_no_tv)
+        TextView orderNoTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
+        @InjectView(R.id.num_tv)
+        TextView numTv;
+        @InjectView(R.id.total_price_tv)
+        FormatTextView totalPriceTv;
+
+        @InjectView(R.id.pic_iv)
+        CircleImageView picIv;
+        @InjectView(R.id.name_tv)
+        TextView nameTv;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(MerchantListBean bean) {
+        public void setParameter(GoodsSellListBean bean) {
             layout.removeAllViews();
-            int size = 2;
+
+            orderNoTv.setText(String.format(context.getString(R.string.order_no), bean.getOrder_no()));
+            time.setTime(bean.getAddtime());
+            timeTv.setText(time.formatterTime());
+            numTv.setText(String.format(context.getString(R.string.goods_number), String.valueOf(bean.getNum())));
+            totalPriceTv.setTextValue(bean.getTotal_price());
+
+            ImageHelper.load(context, bean.getPic(), picIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            nameTv.setText(bean.getUsername());
+
+            List<GoodsSellListBean.GoodsBean> goodsBeanList = bean.getGoods();
+            int size = StringUtils.isEmpty(goodsBeanList) ? 0 : goodsBeanList.size();
             for (int i = 0; i < size; i++) {
-                addView(i, size);
+                addView(i, goodsBeanList.get(i), size);
             }
             deleteTv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,15 +108,18 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
             });
         }
 
-        private void addView(int position, int size) {
+        private void addView(int position, GoodsSellListBean.GoodsBean bean, int size) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell_list_sub, null);
             if (position == size - 1) {
                 view.findViewById(R.id.line_tv).setVisibility(View.GONE);
             }
+            ((TextView)view.findViewById(R.id.goods_name_tv)).setText(bean.getGoodsname());
+            ((TextView)view.findViewById(R.id.price_tv)).setText(String.format(context.getString(R.string.price),bean.getPrice()));
+            ((TextView)view.findViewById(R.id.price_sub_tv)).setText(String.format(context.getString(R.string.price_sub),bean.getPrice()));
+            ((TextView)view.findViewById(R.id.num_tv)).setText(String.format(context.getString(R.string.number),bean.getNum()));
             layout.addView(view);
         }
     }
-
 
 
 }

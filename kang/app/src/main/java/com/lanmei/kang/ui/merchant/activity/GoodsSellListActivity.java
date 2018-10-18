@@ -37,6 +37,7 @@ public class GoodsSellListActivity extends BaseActivity {
     private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
     private DateTimePicker picker;
     private FormatTime time;
+    private KangQiMeiApi api;
 
     @Override
     public int getContentViewId() {
@@ -73,14 +74,17 @@ public class GoodsSellListActivity extends BaseActivity {
             @Override
             public void onDateTimePicked(String year, String month, String hour, String minute) {
                 timeTv.setText(String.format(getString(R.string.year_month), year, month));
-                CommonUtils.developing(getContext());
+                int days = CommonUtils.getMonthDays(Integer.valueOf(year), Integer.valueOf(month));
+                api.addParams("starttime",year+"-"+month+"-"+1);
+                api.addParams("endtime",year+"-"+month+"-"+days);
+                controller.loadFirstPage();
             }
         });
 
     }
 
     private void initSwipeRefreshLayout() {
-        KangQiMeiApi api = new KangQiMeiApi("app/goods_sale_list");
+        api = new KangQiMeiApi("app/goods_sale_list");
         api.addParams("sellerid",api.getUserId(this));
         GoodsSellListAdapter adapter = new GoodsSellListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();

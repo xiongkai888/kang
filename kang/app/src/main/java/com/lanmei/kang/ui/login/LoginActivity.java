@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.data.volley.Response;
+import com.data.volley.error.VolleyError;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
@@ -26,7 +28,6 @@ import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.RegisterEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.loader.DataLoader;
 import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
@@ -371,24 +372,28 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         mProgressHUD.show();
-        DataLoader.getInstance().loadLogin(this, phone, pwd, new DataLoader.LoginListener() {
+        KangQiMeiApi api = new KangQiMeiApi("public/login");
+        api.addParams("phone",phone);
+        api.addParams("password",pwd);
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
-            public void succeed(UserBean bean) {
+            public void onResponse(DataBean<UserBean> response) {
                 if (isFinishing()) {
                     return;
                 }
-                mBean = bean;
+                mBean = response.data;
                 EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            public void failure(String error) {
+            public void onErrorResponse(VolleyError error) {
                 if (isFinishing()) {
                     return;
                 }
                 mProgressHUD.cancel();
-                UIHelper.ToastMessage(LoginActivity.this, error);
+                UserHelper.getInstance(getContext()).cleanLogin();
+                UIHelper.ToastMessage(LoginActivity.this, error.getMessage());
             }
         });
     }

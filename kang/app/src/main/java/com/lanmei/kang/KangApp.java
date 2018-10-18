@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.redpacketsdk.RPInitRedPacketCallback;
 import com.easemob.redpacketsdk.RPValueCallback;
@@ -16,9 +17,11 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.lanmei.kang.util.Constant;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.xson.common.app.BaseApp;
+import com.xson.common.utils.L;
 
 /**
  * Created by Administrator on 2017/5/5.
@@ -46,6 +49,13 @@ public class KangApp extends BaseApp {
 
     @Override
     protected void installMonitor() {
+        applicationContext = this;
+        instance = this;
+        L.debug = OSSLog.enableLog = true;
+        if (L.debug) {
+            LeakCanary.install(this);//LeakCanary内存泄漏监控
+        }
+
         initHx();
         //友盟初始化设置
         initUM();
@@ -67,12 +77,6 @@ public class KangApp extends BaseApp {
 
     //环信初始化设置
     private void initHx(){
-        // ============== fabric start
-        //		Fabric.with(this, new Crashlytics());
-        // ============== fabric end
-        applicationContext = this;
-        instance = this;
-
         //init demo helper
         DemoHelper.getInstance().init(applicationContext);
         //red packet code : 初始化红包SDK，开启日志输出开关

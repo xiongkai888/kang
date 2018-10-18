@@ -8,7 +8,6 @@ import android.widget.Button;
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.lanmei.kang.R;
@@ -39,7 +38,6 @@ public class ActivityOss extends Activity {
         conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
         conf.setMaxConcurrentRequest(5); // 最大并发请求书，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
-        OSSLog.enableLog();
         oss = new OSSClient(getApplicationContext(), OssUserInfo.endpoint, credentialProvider, conf);
 
         // 上传

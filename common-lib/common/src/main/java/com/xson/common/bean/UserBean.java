@@ -9,16 +9,16 @@ public class UserBean implements Serializable{
 
 
     /**
-     * id : 217
-     * username : u_000217
-     * nickname : 熊
+     * id : 202
+     * username : u_000202
+     * nickname : 大熊
      * realname :
-     * user_type : 0
+     * user_type : 1
      * user_type_fix : 0
-     * pic :
-     * email :
-     * password : 920ce4b9181213ca9897df7c8bd5d541
-     * hash : LiskzE
+     * pic : http://stdrimages.oss-cn-shenzhen.aliyuncs.com/lanmei/kang/img1/head-1763391191.jpg
+     * email : dfghh@qq.com
+     * password : 6b64dbfdfc7eda8a52e7660a4e81c9d8
+     * hash : WqQiOU
      * proxy : 0
      * pid : 0
      * rebate : 0.00
@@ -28,8 +28,8 @@ public class UserBean implements Serializable{
      * sex : 0
      * birth :
      * qq :
-     * reg_ip : 113.119.166.161
-     * reg_time : 2018-01-02 17:22:10
+     * reg_ip : 113.119.134.195
+     * reg_time : 2018-01-17 17:06:42
      * ip :
      * address :
      * time : 0
@@ -48,19 +48,23 @@ public class UserBean implements Serializable{
      * join_time : 0
      * distributor_time : 0
      * post : 0
-     * favour : 0
-     * fans : 0
-     * follow : 0
-     * friend : 0
-     * signature :
+     * favour : 4
+     * post_favour : -1
+     * goods_favour : 1
+     * fans : 15
+     * follow : 6
+     * friend : 4
+     * signature : 我们不一样！
      * month_expenditure : 0.00
      * year_expenditure : 0.00
-     * today_earnings : 0.00
-     * token : ag8gfreq1o7nlvl0bur4atkqc4
+     * today_earnings : 10000000.00
+     * token : ls4tensd2f8he6pfo7m0h93q77
      * talent_label :
      * distance_total : 0.00
      * water_area : 0
      * avatar_bg :
+     * menber_num : 1539228577B0100T6778
+     * money : 9996173.00
      */
 
     private String id;
@@ -103,6 +107,8 @@ public class UserBean implements Serializable{
     private String distributor_time;
     private String post;
     private String favour;
+    private String post_favour;
+    private String goods_favour;
     private String fans;
     private String follow;
     private String friend;
@@ -115,14 +121,7 @@ public class UserBean implements Serializable{
     private String distance_total;
     private String water_area;
     private String avatar_bg;
-    /**
-     * post_favour : 0
-     * goods_favour : 0
-     * money :
-     */
-
-    private String post_favour;
-    private String goods_favour;
+    private String menber_num;
     private String money;
 
     public String getId() {
@@ -445,6 +444,22 @@ public class UserBean implements Serializable{
         this.favour = favour;
     }
 
+    public String getPost_favour() {
+        return post_favour;
+    }
+
+    public void setPost_favour(String post_favour) {
+        this.post_favour = post_favour;
+    }
+
+    public String getGoods_favour() {
+        return goods_favour;
+    }
+
+    public void setGoods_favour(String goods_favour) {
+        this.goods_favour = goods_favour;
+    }
+
     public String getFans() {
         return fans;
     }
@@ -541,20 +556,12 @@ public class UserBean implements Serializable{
         this.avatar_bg = avatar_bg;
     }
 
-    public String getPost_favour() {
-        return post_favour;
+    public String getMenber_num() {
+        return menber_num;
     }
 
-    public void setPost_favour(String post_favour) {
-        this.post_favour = post_favour;
-    }
-
-    public String getGoods_favour() {
-        return goods_favour;
-    }
-
-    public void setGoods_favour(String goods_favour) {
-        this.goods_favour = goods_favour;
+    public void setMenber_num(String menber_num) {
+        this.menber_num = menber_num;
     }
 
     public String getMoney() {

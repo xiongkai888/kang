@@ -13,22 +13,31 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.data.volley.Response;
+import com.data.volley.error.VolleyError;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.BannerHolderView;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AlbumBean;
 import com.lanmei.kang.bean.ItemsBean;
 import com.lanmei.kang.bean.ItemsCompileBean;
-import com.lanmei.kang.bean.SystemSettingInfoBean;
-import com.lanmei.kang.loader.DataLoader;
+import com.lanmei.kang.bean.UserInfoBean;
+import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.webviewpage.PhotoBrowserActivity;
+import com.xson.common.api.AbstractApi;
+import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -170,6 +179,52 @@ public class CommonUtils {
             }
         }
         return "";
+    }
+
+
+
+    //获取用户信息
+    public static void loadUserInfo(final Context context, final UserInfoListener l) {
+        KangQiMeiApi api = new KangQiMeiApi("member/member");
+        api.addParams("uid", api.getUserId(context));
+        api.setMethod(AbstractApi.Method.GET);
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
+            @Override
+            public void onResponse(DataBean<UserInfoBean> response) {
+                if (context == null) {
+                    return;
+                }
+                UserInfoBean userInfoBean = response.data;
+                if (userInfoBean != null) {
+                    UserBean bean = CommonUtils.getUserBean(context);
+                    bean.setNickname(userInfoBean.getNickname());
+                    bean.setPic(userInfoBean.getPic());
+                    bean.setRealname(userInfoBean.getRealname());
+                    bean.setEmail(userInfoBean.getEmail());
+                    bean.setPhone(userInfoBean.getPhone());
+                    bean.setCustom(userInfoBean.getCustom());
+                    bean.setSignature(userInfoBean.getSignature());
+                    bean.setMoney(userInfoBean.getMoney());
+                    if (l != null) {
+                        l.userInfo(bean);
+                    }
+                    UserHelper.getInstance(context).saveBean(bean);
+                    EventBus.getDefault().post(new SetUserInfoEvent());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (l != null) {
+                    l.error(error.getMessage());
+                }
+            }
+        });
+    }
+
+    public interface UserInfoListener {
+        void userInfo(UserBean bean);
+        void error(String error);
     }
 
 
@@ -334,37 +389,6 @@ public class CommonUtils {
         return decs.substring(0, decs.length() - 1);
     }
 
-    /**
-     * 获取版本号
-     *
-     * @return
-     */
-    public static String getVersionCode() {
-        SystemSettingInfoBean settingInfoBean = DataLoader.getInstance().getSystemInfoBean();
-        if (settingInfoBean != null) {
-            SystemSettingInfoBean.AndroidUpdateBean updateBean = settingInfoBean.getAndroid_update();
-            if (updateBean != null) {
-                return updateBean.getVersion();
-            }
-        }
-        return "";
-    }
-
-    /**
-     * 获取版本号
-     *
-     * @return
-     */
-    public static String getUpdateAppUrl() {
-        SystemSettingInfoBean settingInfoBean = DataLoader.getInstance().getSystemInfoBean();
-        if (settingInfoBean != null) {
-            SystemSettingInfoBean.AndroidUpdateBean updateBean = settingInfoBean.getAndroid_update();
-            if (updateBean != null) {
-                return updateBean.getUrl();
-            }
-        }
-        return "";
-    }
 
     /**
      * 获取第一张图片地址

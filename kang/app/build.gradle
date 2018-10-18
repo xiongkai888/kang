@@ -76,33 +76,22 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //    compile 'com.sina.weibo.sdk:core:2.0.3:openDefaultRelease@aar'
     compile files('libs/umeng_social_api.jar')
     compile files('libs/umeng_social_net.jar')
     compile files('libs/SocialSDK_WeiXin_Full.jar')
-    //    compile files('libs/open_sdk_r5781.jar')
     compile files('libs/SocialSDK_QQ_Full.jar')
-    //日期选择
     compile files('libs/umeng_social_shareboard.jar')
-    //    provided files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/SocialSDK_Sina_Full.jar')
-    //    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
-    //九宫格
-    //    compile files('libs/aliyun-oss-sdk-android-2.3.0.jar')
-    //WebViewPage
+
     compile project(path: ':common')
     compile project(':wheel-date-picker')
     compile project(':oss-android-sdk')
     compile project(':easeui')
     compile project(':redpacketlibrary')
-    //    compile files('libs/hyphenatechat_3.3.2.jar')
-//    compile project(':Zxing')
-    //    provided files('../easeui/libs/BaiduLBS_Android.jar')
     compile files('libs/open_sdk_r5781.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     //完整版引入视频播放
     compile files('libs/xUtils-2.6.14.jar')
-    //    compile 'com.shuyu:GSYVideoPlayer:2.0.8'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
     compile 'com.android.support:appcompat-v7:26.+'
@@ -119,9 +108,6 @@ dependencies {
     //轮播图
     compile 'com.bigkoo:convenientbanner:2.0.5'
     // 扫一扫
-//    implementation 'com.google.zxing:core:3.2.1'
-//    implementation 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
-//    implementation 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
 //    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.5'
 
@@ -131,4 +117,7 @@ dependencies {
     implementation('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6') {
         exclude group: 'com.android.support'
     }
+    //LeakCanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

@@ -13,7 +13,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.WithdrawCardListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.WithdrawCardListBean;
-import com.lanmei.kang.ui.user.setting.fragment.WithdrawFragment;
+import com.lanmei.kang.event.CardEvent;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.api.AbstractApi;
@@ -26,6 +26,8 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.InjectView;
@@ -35,8 +37,6 @@ import butterknife.OnClick;
  * 选择银行卡
  */
 public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
-
-    public static String UNBOUND_SUCCEED = "UNBOUND_SUCCEED";//解绑成功
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
@@ -72,9 +72,9 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
         mAdapter.setChooseCardListener(new WithdrawCardListAdapter.ChooseCardListener() {
             @Override
             public void chooseCard(String cardName) {
-                Intent intent = new Intent(WithdrawFragment.CHOOSE_CARD);
-                intent.putExtra("cardName", cardName);
-                sendBroadcast(intent);
+                CardEvent event = new CardEvent(1);
+                event.setName(cardName);
+                EventBus.getDefault().post(event);
                 finish();
             }
 
@@ -109,7 +109,7 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
             @Override
             public void unBound() {
                 ajaxWithdrawCardList();
-                CommonUtils.notifyDoSomething(ChooseKaActivity.this,UNBOUND_SUCCEED);
+                EventBus.getDefault().post(new CardEvent(2));
                 alertDialog.cancel();
             }
         });

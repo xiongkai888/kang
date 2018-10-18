@@ -21,7 +21,6 @@ import java.util.concurrent.Future;
 /**
  * @author: zhouzhuo
  * Jun 20, 2015
- *
  */
 public class HttpdnsMini {
 
@@ -139,9 +138,7 @@ public class HttpdnsMini {
                     }
                 }
             } catch (Exception e) {
-                if (OSSLog.isEnableLog()) {
-                    e.printStackTrace();
-                }
+                e.printStackTrace();
             }
             if (!hasRetryed) {
                 hasRetryed = true;
@@ -155,7 +152,8 @@ public class HttpdnsMini {
     private static HttpdnsMini instance = new HttpdnsMini();
     private ExecutorService pool = Executors.newFixedThreadPool(MAX_THREAD_NUM);
 
-    private HttpdnsMini() {}
+    private HttpdnsMini() {
+    }
 
     public static HttpdnsMini getInstance() {
         return instance;
@@ -170,9 +168,7 @@ public class HttpdnsMini {
                 String result = future.get();
                 return result;
             } catch (Exception e) {
-                if (OSSLog.isEnableLog()) {
-                    e.printStackTrace();
-                }
+                e.printStackTrace();
             }
             return null;
         }

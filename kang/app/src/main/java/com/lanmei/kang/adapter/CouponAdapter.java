@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.lanmei.kang.loader.DataLoader;
 import com.lanmei.kang.ui.mine.fragment.CouponFragment;
-import com.xson.common.utils.StringUtils;
 
 /**
  * 课程：团体课程、私人课程、在线课程
@@ -22,12 +20,8 @@ public class CouponAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        String cid = DataLoader.getInstance().getCid("团体课程");
-        if (StringUtils.isEmpty(cid)){
-            cid = "12";
-        }
-        Fragment fragment = new CouponFragment();
-        bundle.putString("cid",cid);
+        CouponFragment fragment = new CouponFragment();
+        bundle.putString("cid","cid");
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -133,15 +133,6 @@
 
         <!-- 8888888888888888888888888 -->
 
-        <receiver android:name=".ui.ApkInstallBroadcast">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
         <!-- 微信Pay -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -212,16 +203,10 @@
             android:name=".ui.mine.activity.MembershipCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.user.setting.MyCourseActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.mine.activity.MyOrderActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.MyGoodsOrderActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.merchant.MerchantActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.PhysiotherapyActivity"
@@ -726,10 +711,6 @@
             android:name=".ui.details.IntroductionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.details.CourseDetailsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".webviewpage.PhotoBrowserActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -755,9 +736,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.PersonalCompileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.home.activity.HuoDongActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.SearchUserActivity"

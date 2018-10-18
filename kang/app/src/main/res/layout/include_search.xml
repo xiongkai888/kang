@@ -21,6 +21,6 @@
         android:padding="7dp"
         android:focusable="false"
         android:singleLine="true"
-        android:textSize="12sp" />
+        android:textSize="@dimen/txt_12sp" />
 
 </LinearLayout>

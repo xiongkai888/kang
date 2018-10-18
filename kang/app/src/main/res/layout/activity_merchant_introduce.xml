@@ -11,10 +11,9 @@
     <include layout="@layout/include_centertitletoolbar"/>
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_layout"
         android:background="@color/colorF4F4"
         android:scrollbars="none">
 
@@ -140,14 +139,12 @@
 
             </LinearLayout>
 
-
            <android.support.v7.widget.RecyclerView
                android:id="@+id/recyclerView"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
 
-
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

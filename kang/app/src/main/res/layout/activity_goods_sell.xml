@@ -17,7 +17,7 @@
         <TextView
             style="@style/mine_text"
             android:layout_marginLeft="@dimen/d_10dp"
-            android:text="输入会员"
+            android:text="会员编号"
             android:textColor="@color/color666" />
 
 
@@ -26,9 +26,10 @@
             style="@style/text"
             android:background="@null"
             android:gravity="right"
-            android:hint="请输入会员名称"
-            android:inputType="number"
-            android:maxLength="15" />
+            android:hint="@string/input_user_number"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="28" />
 
         <ImageView
             android:id="@+id/qr_code_iv"
@@ -69,6 +70,7 @@
 
 
         <TextView
+            android:id="@+id/submit_tv"
             android:layout_width="@dimen/d_100dp"
             android:layout_height="@dimen/d_40dp"
             android:background="@color/colorF5484A"

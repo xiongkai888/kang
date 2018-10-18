@@ -33,7 +33,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="30dp"
                     android:layout_marginTop="30dp"
-                    android:text="头        像：" />
+                    android:text="头\u3000\u3000像：" />
 
                 <com.xson.common.widget.CircleImageView
                     android:id="@+id/personal_icons_iv"
@@ -51,7 +51,7 @@
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="姓        名：" />
+                    android:text="姓\u3000\u3000名：" />
 
                 <TextView
                     android:id="@+id/nick_tv"
@@ -69,7 +69,7 @@
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="Q          Q：" />
+                    android:text="Q \u3000\u3000 Q：" />
 
                 <TextView
                     android:id="@+id/qq_tv"
@@ -87,7 +87,7 @@
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="邮        箱：" />
+                    android:text="邮\u3000\u3000箱：" />
 
                 <TextView
                     android:id="@+id/mail_tv"
@@ -105,7 +105,7 @@
 
                 <TextView
                     style="@style/text_weight"
-                    android:text="电        话：" />
+                    android:text="电\u3000\u3000话：" />
 
                 <TextView
                     android:id="@+id/phone_tv"
@@ -132,10 +132,11 @@
                 <TextView
                     android:id="@+id/address_tv"
                     style="@style/text"
-                    android:layout_toRightOf="@id/address"
                     android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/address"
                     android:drawablePadding="5dp"
                     android:drawableRight="@mipmap/icon_in"
+                    android:gravity="right"
                     android:lineSpacingMultiplier="1.3" />
 
 
@@ -147,19 +148,19 @@
                 android:background="@color/white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:orientation="horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
                     style="@style/text"
-                    android:layout_width="wrap_content"
                     android:text="个性签名：" />
 
                 <EditText
                     android:id="@+id/signature_et"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:background="@color/white"
+                    android:background="@null"
                     android:gravity="top"
                     android:hint="请输入个性签名"
                     android:maxLength="200"

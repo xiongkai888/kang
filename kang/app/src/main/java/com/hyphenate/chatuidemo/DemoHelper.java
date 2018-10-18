@@ -61,16 +61,13 @@ import com.hyphenate.util.EMLog;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.UserInfoBean;
-import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.loader.DataLoader;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1022,23 +1019,7 @@ public class DemoHelper {
 
 
     public void UpdateUserInfo() {
-        UserBean userBean = UserHelper.getInstance(appContext).getUserBean();
-        if (userBean != null) {
-            DataLoader.getInstance().loadUserInfo(appContext, new DataLoader.LoadUserInfoListener() {
-                @Override
-                public void succeed(UserBean bean) {
-                    if (bean != null) {
-                        UserHelper.getInstance(appContext).saveBean(bean);
-                        EventBus.getDefault().post(new SetUserInfoEvent());// 更新用户信息时通知更新头像和用户名
-                    }
-                }
-
-                @Override
-                public void failure(String error) {
-//                    UIHelper.ToastMessage(appContext, "获取个人信息时，" + error);
-                }
-            });
-        }
+            CommonUtils.loadUserInfo(appContext, null);
     }
 
 

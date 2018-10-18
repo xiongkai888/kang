@@ -8,28 +8,8 @@ import android.util.Log;
 public class OSSLog {
 
     private static final String TAG = "OSS-Android-SDK";
-    private static boolean enableLog;
+    public static boolean enableLog = true;
 
-    /**
-     * 打开log观察调试信息
-     */
-    public static void enableLog() {
-        enableLog = true;
-    }
-
-    /**
-     * 打开log观察调试信息
-     */
-    public static void disableLog() {
-        enableLog = false;
-    }
-
-    /**
-     * @return 是否打开了log
-     */
-    public static boolean isEnableLog() {
-        return enableLog;
-    }
 
     /**
      * info级别log

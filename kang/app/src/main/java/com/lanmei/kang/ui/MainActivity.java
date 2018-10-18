@@ -16,8 +16,8 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MainPagerAdapter;
 import com.lanmei.kang.event.LocationEvent;
 import com.lanmei.kang.event.LoginQuitEvent;
+import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.helper.TabHelper;
-import com.lanmei.kang.loader.DataLoader;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.util.BaiduLocation;
 import com.lanmei.kang.util.CommonUtils;
@@ -106,8 +106,13 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_LOCATION) {
-            initBaiDu();
+        switch (requestCode){
+            case PERMISSION_LOCATION:
+                initBaiDu();
+                break;
+            case CameraHelper.REQUEST_PERMISSIONS:
+
+                break;
         }
     }
 
@@ -123,7 +128,6 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DataLoader.getInstance().clear();
         EventBus.getDefault().unregister(this);
     }
 

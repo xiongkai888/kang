@@ -122,7 +122,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
                     callback.onProgress(OSSRequestTask.this.context.getRequest(), total, contentLength);
                 }
             }
-            if(source != null){
+            if (source != null) {
                 source.close();
             }
         }
@@ -207,7 +207,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
 
             request = requestBuilder.build();
 
-            if (OSSLog.isEnableLog()) {
+            if (OSSLog.enableLog) {
                 OSSLog.logD("request url: " + request.url());
                 Map<String, List<String>> headerMap = request.headers().toMultimap();
                 for (String key : headerMap.keySet()) {
@@ -221,7 +221,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             // send request
             response = call.execute();
 
-            if (OSSLog.isEnableLog()) {
+            if (OSSLog.enableLog) {
                 OSSLog.logD("response code: " + response.code() + " for url: " + request.url());
                 Map<String, List<String>> headerMap = response.headers().toMultimap();
                 for (String key : headerMap.keySet()) {
@@ -230,9 +230,7 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
             }
         } catch (Exception e) {
             OSSLog.logE("Encounter local execpiton: " + e.toString());
-            if (OSSLog.isEnableLog()) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
             exception = new ClientException(e.getMessage(), e);
         }
 
@@ -245,12 +243,12 @@ public class OSSRequestTask<T extends OSSResult> implements Callable<T> {
         } else if (exception == null) {
             try {
                 T result = responseParser.parse(response);
-                String url=request.url()+"";
+                String url = request.url() + "";
                 result.setUrl(url);
-                OSSLog.logD("图片上传：getCompletedCallback:" +context.getCompletedCallback());
+                OSSLog.logD("图片上传：getCompletedCallback:" + context.getCompletedCallback());
                 if (context.getCompletedCallback() != null) {
 
-                    OSSLog.logD("图片上传：" +url);
+                    OSSLog.logD("图片上传：" + url);
 
                     context.getCompletedCallback().onSuccess(context.getRequest(), result);
                 }

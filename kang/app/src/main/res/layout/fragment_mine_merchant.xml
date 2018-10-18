@@ -176,7 +176,7 @@
 
                 <TextView
                     style="@style/mine_text"
-                    android:text="@string/goods_sell" />
+                    android:text="销售商品" />
 
                 <ImageView style="@style/in_right_icon" />
 

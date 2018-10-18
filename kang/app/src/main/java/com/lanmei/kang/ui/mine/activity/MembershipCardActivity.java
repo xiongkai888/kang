@@ -53,10 +53,10 @@ public class MembershipCardActivity extends BaseActivity{
         new AsyncTask<Void, Void, Bitmap>() {//可能存在内存泄漏
             @Override
             protected Bitmap doInBackground(Void... params) {
-                int width = BGAQRCodeUtil.dp2px(MembershipCardActivity.this, 250);
-                int height = BGAQRCodeUtil.dp2px(MembershipCardActivity.this, 70);
-                int textSize = BGAQRCodeUtil.sp2px(MembershipCardActivity.this, 18);
-                return QRCodeEncoder.syncEncodeBarcode("8888 8888 888", width, height, textSize);
+                int width = BGAQRCodeUtil.dp2px(getContext(), 250);
+                int height = BGAQRCodeUtil.dp2px(getContext(), 70);
+                int textSize = BGAQRCodeUtil.sp2px(getContext(), 18);
+                return QRCodeEncoder.syncEncodeBarcode(CommonUtils.getUserBean(getContext()).getMenber_num(), width, height, textSize);
             }
 
             @Override

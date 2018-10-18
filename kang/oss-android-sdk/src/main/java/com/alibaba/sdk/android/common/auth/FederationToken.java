@@ -1,7 +1,6 @@
 package com.alibaba.sdk.android.common.auth;
 
 
-import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.common.utils.DateUtil;
 
 import java.text.ParseException;
@@ -11,8 +10,7 @@ import java.util.TimeZone;
 
 /**
  * @author zhouzhuo
- * Mar 26, 2015
- *
+ *         Mar 26, 2015
  */
 public class FederationToken {
     private String tempAk;
@@ -20,14 +18,16 @@ public class FederationToken {
     private String securityToken;
     private long expiration;
 
-    public FederationToken() {}
+    public FederationToken() {
+    }
 
     /**
      * 构造一个新的OSSFederationToken
-     * @param tempAK STS返回Token中的AccessKeyId
-     * @param tempSK STS返回Token中的AccessKeySecret
+     *
+     * @param tempAK        STS返回Token中的AccessKeyId
+     * @param tempSK        STS返回Token中的AccessKeySecret
      * @param securityToken STS返回Token中的SecurityToken
-     * @param expiration STS返回的Token的过期时间点，单位秒，为linux Epoch时间
+     * @param expiration    STS返回的Token的过期时间点，单位秒，为linux Epoch时间
      */
     public FederationToken(String tempAK, String tempSK, String securityToken, long expiration) {
         this.tempAk = tempAK;
@@ -38,9 +38,10 @@ public class FederationToken {
 
     /**
      * 构造一个新的OSSFederationToken
-     * @param tempAK STS返回Token中的AccessKeyId
-     * @param tempSK STS返回Token中的AccessKeySecret
-     * @param securityToken STS返回Token中的SecurityToken
+     *
+     * @param tempAK                STS返回Token中的AccessKeyId
+     * @param tempSK                STS返回Token中的AccessKeySecret
+     * @param securityToken         STS返回Token中的SecurityToken
      * @param expirationInGMTFormat STS返回的Token的过期时间点，是一个GMT格式字符串，即STS返回时的原时间字符串
      */
     public FederationToken(String tempAK, String tempSK, String securityToken, String expirationInGMTFormat) {
@@ -98,9 +99,7 @@ public class FederationToken {
             Date date = sdf.parse(expirationInGMTFormat);
             this.expiration = date.getTime() / 1000;
         } catch (ParseException e) {
-            if (OSSLog.isEnableLog()) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
             this.expiration = DateUtil.getFixedSkewedTimeMillis() / 1000 + 30;
         }
     }

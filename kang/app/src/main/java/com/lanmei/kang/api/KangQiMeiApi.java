@@ -13,6 +13,7 @@ public class KangQiMeiApi extends ApiV2 {
     public void setPath(String path) {
         this.path = path;
     }
+
     public KangQiMeiApi(){
     }
 

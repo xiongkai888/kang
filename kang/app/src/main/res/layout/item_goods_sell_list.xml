@@ -75,6 +75,7 @@
             android:textSize="@dimen/txt_12sp" />
 
         <TextView
+            android:id="@+id/delete_tv"
             style="@style/text12colorWhite"
             android:layout_marginRight="@dimen/d_5dp"
             android:background="@drawable/button_bg_red"

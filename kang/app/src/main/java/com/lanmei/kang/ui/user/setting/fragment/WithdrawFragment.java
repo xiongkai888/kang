@@ -1,8 +1,6 @@
 package com.lanmei.kang.ui.user.setting.fragment;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
@@ -10,7 +8,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.WithdrawCardListBean;
-import com.lanmei.kang.helper.ReceiverHelper;
+import com.lanmei.kang.event.CardEvent;
 import com.lanmei.kang.ui.user.setting.BoundKaActivity;
 import com.lanmei.kang.ui.user.setting.ChooseKaActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
@@ -23,13 +21,13 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
-
-import static com.lanmei.kang.ui.user.setting.ChooseKaActivity.UNBOUND_SUCCEED;
-
 
 /**
  * Created by Administrator on 2017/4/27.
@@ -38,13 +36,10 @@ import static com.lanmei.kang.ui.user.setting.ChooseKaActivity.UNBOUND_SUCCEED;
 
 public class WithdrawFragment extends BaseFragment {
 
-    public final static String CHOOSE_CARD = "CHOOSE_CARD";// 选择卡号广播
-
     @InjectView(R.id.card_tv)
     TextView mCardNameTv;
     @InjectView(R.id.balance_tv)
     TextView mBalanceTv;//余额
-    ReceiverHelper mReceiverHelper;
 
     @Override
     public int getContentViewId() {
@@ -60,27 +55,12 @@ public class WithdrawFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        // 选择卡号广播
-        mReceiverHelper =  new ReceiverHelper(context);
-        mReceiverHelper.addAction(CHOOSE_CARD);
-        mReceiverHelper.addAction(UNBOUND_SUCCEED);//解绑成功
-        mReceiverHelper.registerReceiver();
-        mReceiverHelper.setReceiveHelperListener(new ReceiverHelper.ReceiveHelperListener() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (CHOOSE_CARD.equals(action)) {
-                    String cardName = intent.getStringExtra("cardName");
-                    mCardNameTv.setText(cardName);
-                }else if (UNBOUND_SUCCEED.equals(action)){
-                    ajaxWithdraw();
-                }
-            }
-        });
-
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         UserBean bean = UserHelper.getInstance(context).getUserBean();
         if (bean != null) {
-//            mBalanceTv.setText(bean.getMoney());
+            mBalanceTv.setText(bean.getMoney());
         }
         ajaxWithdraw();
     }
@@ -88,29 +68,40 @@ public class WithdrawFragment extends BaseFragment {
     private void ajaxWithdraw() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.addParams("token",api.getToken(context));
+        api.addParams("token", api.getToken(context));
         api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override
             public void onResponse(NoPageListBean<WithdrawCardListBean> response) {
-                if (mCardNameTv == null){
+                if (mCardNameTv == null) {
                     return;
                 }
                 List<WithdrawCardListBean> list = response.data;
-                if (list != null && list.size()>0){
+                if (list != null && list.size() > 0) {
                     WithdrawCardListBean bean = list.get(0);
-                    if (bean != null){
+                    if (bean != null) {
                         mCardNameTv.setText(bean.getBanks_name());
                     }
-                }else {
-                    if (ClubActivity.no_bound_card){
+                } else {
+                    if (ClubActivity.no_bound_card) {
                         alertDialog();
                         return;
                     }
                 }
             }
         });
+    }
 
+    @Subscribe
+    public void cardEvent(CardEvent event){
+        switch (event.getType()){
+            case 1:
+                mCardNameTv.setText(event.getName());
+                break;
+            case 2:
+                ajaxWithdraw();
+                break;
+        }
     }
 
     private void alertDialog() {
@@ -136,13 +127,13 @@ public class WithdrawFragment extends BaseFragment {
     }
 
     @OnClick(R.id.ll_choose_ka)
-    public void showWithdrawKa(){//选择提现银行卡
+    public void showWithdrawKa() {//选择提现银行卡
         IntentUtil.startActivity(context, ChooseKaActivity.class);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mReceiverHelper.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

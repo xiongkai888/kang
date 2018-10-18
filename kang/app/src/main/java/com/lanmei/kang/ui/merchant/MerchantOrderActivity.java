@@ -14,7 +14,7 @@ import com.lanmei.kang.event.ScanEvent;
 import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.qrcode.Des;
 import com.lanmei.kang.qrcode.ScanActivity;
-import com.lanmei.kang.updateversion.JsonUtil;
+import com.lanmei.kang.util.JsonUtil;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;

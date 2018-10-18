@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.MerchantListBean;
@@ -50,6 +51,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
 
         @InjectView(R.id.ll_items)
         LinearLayout layout;
+        @InjectView(R.id.delete_tv)
+        TextView deleteTv;
 
         ViewHolder(View view) {
             super(view);
@@ -62,7 +65,12 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
             for (int i = 0; i < size; i++) {
                 addView(i, size);
             }
+            deleteTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
         }
 
         private void addView(int position, int size) {
@@ -72,6 +80,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<MerchantListBean> 
             }
             layout.addView(view);
         }
-
     }
+
+
+
 }

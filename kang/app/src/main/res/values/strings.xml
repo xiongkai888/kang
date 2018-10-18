@@ -143,7 +143,7 @@
     <string name="pay_failure">支付失败</string>
     <string name="pay_succeed">支付成功</string>
     <string name="s_regain">s后重新获取</string>
-    <string name="goods_sell">商品销售</string>
+    <string name="goods_sell">添加销售商品</string>
     <string name="merchant_data">商家资料</string>
     <string name="chu_ku">出库</string>
     <string name="ru_ku">入库</string>
@@ -199,4 +199,6 @@
     <string name="format_all_time">yyyy-MM-dd HH:mm:ss</string>
     <string name="format_time_no_second">yyyy-MM-dd HH:mm</string>
     <string name="format_time_year_month_day">yyyy-MM-dd</string>
+    <string name="input_user_number">请输入会员编号或扫描获取</string>
+    <string name="user_digits">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 </resources>

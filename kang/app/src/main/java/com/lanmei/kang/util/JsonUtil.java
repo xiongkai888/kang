@@ -1,4 +1,4 @@
-package com.lanmei.kang.updateversion;
+package com.lanmei.kang.util;
 
 import android.content.Context;
 

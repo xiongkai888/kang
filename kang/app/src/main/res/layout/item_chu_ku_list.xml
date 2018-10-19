@@ -16,8 +16,7 @@
 
         <TextView
             android:id="@+id/time_tv"
-            style="@style/text"
-            android:textColor="@color/color666" />
+            style="@style/text12color666" />
 
     </LinearLayout>
 
@@ -37,8 +36,7 @@
 
         <TextView
             android:id="@+id/number_tv"
-            style="@style/text"
-            android:textColor="@color/color666" />
+            style="@style/text14color666" />
 
     </LinearLayout>
 

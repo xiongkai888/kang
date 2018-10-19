@@ -71,8 +71,7 @@ public class ChuKuListAdapter extends SwipeRefreshAdapter<ChuKuListBean> {
             goodsnameTv.setText(String.format(context.getString(R.string.goodsname),bean.getGoodsname()));
             numberTv.setText(String.format(context.getString(R.string.number),bean.getNumber()));
             if (!StringUtils.isEmpty(bean.getAddtime())){
-                formatTime.setTime(bean.getAddtime());
-                timeTv.setText(formatTime.formatterTime());
+                timeTv.setText(formatTime.formatterTime(bean.getAddtime()));
             }
         }
     }

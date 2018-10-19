@@ -40,7 +40,7 @@ import cn.qqtheme.framework.picker.OptionPicker;
 /**
  * 出库(入库)
  */
-public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEditorActionListener{
+public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEditorActionListener {
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
@@ -104,9 +104,9 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
         return false;
     }
 
-    private void loadMerchantList(){
+    private void loadMerchantList() {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
-        api.addParams("user_type",1);
+        api.addParams("user_type", 1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
             @Override
             public void onResponse(NoPageListBean<UserBean> response) {
@@ -115,6 +115,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
                 }
                 list = response.data;
                 if (StringUtils.isEmpty(list)) {
+                    UIHelper.ToastMessage(getContext(),getString(R.string.no_merchant_list_data));
                     return;
                 }
                 initPicker(getListAtString(list));
@@ -124,8 +125,8 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
 
     //出库入库商品扫描成功时调用
     @Subscribe
-    public void chuKuGoodsInfoEvent(ChuKuGoodsInfoEvent event){
-        L.d(L.TAG,event.getBarcode());
+    public void chuKuGoodsInfoEvent(ChuKuGoodsInfoEvent event) {
+        L.d(L.TAG, event.getBarcode());
         String barcode = event.getBarcode();
         searchGoods(barcode);
         numberEt.setText(barcode);
@@ -134,20 +135,19 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
 
     private void searchGoods(String barcode) {
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
-        api.addParams("barcode",barcode);
+        api.addParams("barcode", barcode);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
                 List<MerchantTabGoodsBean> beanList = response.data;
-                if (StringUtils.isEmpty(beanList)){
+                if (StringUtils.isEmpty(beanList)) {
                     merchantTabGoodsBean = null;
-                    numTv.setText("");
                     priceEt.setText("");
                     unitEt.setText("");
-                    UIHelper.ToastMessage(getContext(),"不存在该商品");
+                    UIHelper.ToastMessage(getContext(), "不存在该商品");
                     return;
                 }
                 merchantTabGoodsBean = beanList.get(0);
@@ -185,14 +185,18 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_merchant://选择商家
-                if (picker != null){
+                if (StringUtils.isEmpty(list)) {
+                    loadMerchantList();
+                    return;
+                }
+                if (picker != null) {
                     picker.show();
                 }
                 break;
             case R.id.qr_code_iv://条形码扫描
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",1);//出库入库
-                bundle.putBoolean("isQR",true);//条形码
+                bundle.putInt("type", ScanActivity.CHUKU_RUKU_SCAN);//出库入库
+                bundle.putBoolean("isQR", true);//条形码
                 IntentUtil.startActivity(this, ScanActivity.class, bundle);
                 break;
             case R.id.submit_bt://提交
@@ -202,46 +206,46 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
     }
 
     private void loadGoods() {
-        if (isChuKu){
-            if (StringUtils.isEmpty(pid)){
-                UIHelper.ToastMessage(this,getString(R.string.choose_merchant));
+        if (isChuKu) {
+            if (StringUtils.isEmpty(pid)) {
+                UIHelper.ToastMessage(this, getString(R.string.choose_merchant));
                 return;
             }
         }
         String goodsid = CommonUtils.getStringByEditText(numberEt);
-        if (StringUtils.isEmpty(goodsid)){
-            UIHelper.ToastMessage(this,getString(R.string.input_serial_number));
+        if (StringUtils.isEmpty(goodsid)) {
+            UIHelper.ToastMessage(this, getString(R.string.input_serial_number));
             return;
         }
         String number = CommonUtils.getStringByEditText(numTv);
-        if (StringUtils.isEmpty(number)){
-            UIHelper.ToastMessage(this,getString(R.string.input_number));
+        if (StringUtils.isEmpty(number)) {
+            UIHelper.ToastMessage(this, getString(R.string.input_number));
             return;
         }
         String price = CommonUtils.getStringByEditText(priceEt);
-        if (isChuKu){
-            if (StringUtils.isEmpty(price)){
-                UIHelper.ToastMessage(this,getString(R.string.input_price));
+        if (isChuKu) {
+            if (StringUtils.isEmpty(price)) {
+                UIHelper.ToastMessage(this, getString(R.string.input_price));
                 return;
             }
         }
         String danwei = CommonUtils.getStringByEditText(unitEt);
-        if (StringUtils.isEmpty(danwei)){
-            UIHelper.ToastMessage(this,getString(R.string.input_unit));
+        if (StringUtils.isEmpty(danwei)) {
+            UIHelper.ToastMessage(this, getString(R.string.input_unit));
             return;
         }
-        KangQiMeiApi api = new KangQiMeiApi(isChuKu?"app/good_cstoreroom":"app/good_rstoreroom");
-        api.addParams("goodsid",goodsid).addParams("number",number).addParams("danwei",danwei);
-        if (isChuKu){
-            api.addParams("pid",pid).addParams("price",price);
+        KangQiMeiApi api = new KangQiMeiApi(isChuKu ? "app/good_cstoreroom" : "app/good_rstoreroom");
+        api.addParams("goodsid", goodsid).addParams("number", number).addParams("danwei", danwei);
+        if (isChuKu) {
+            api.addParams("pid", pid).addParams("price", price);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
-                UIHelper.ToastMessage(getContext(),response.getInfo());
+                UIHelper.ToastMessage(getContext(), response.getInfo());
                 EventBus.getDefault().post(new ChuKuEvent());
                 finish();
             }

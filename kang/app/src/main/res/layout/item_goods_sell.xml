@@ -39,10 +39,11 @@
                     android:id="@+id/number_et"
                     style="@style/text"
                     android:background="@null"
-                    android:hint="请输入编号或扫描获取"
+                    android:hint="@string/input_goods_number_or_scan"
                     android:gravity="right"
-                    android:inputType="number"
-                    android:maxLength="30" />
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLength="28" />
 
                 <ImageView
                     android:id="@+id/qr_code_iv"
@@ -65,9 +66,9 @@
                 <EditText
                     android:id="@+id/num_tv"
                     style="@style/text"
-                    android:layout_marginRight="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_15dp"
                     android:background="@null"
-                    android:hint="请输入数量"
+                    android:hint="@string/input_number"
                     android:gravity="right"
                     android:inputType="numberDecimal"
                     android:maxLength="10" />
@@ -85,9 +86,9 @@
                 <EditText
                     android:id="@+id/price_et"
                     style="@style/text"
-                    android:layout_marginRight="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_15dp"
                     android:background="@null"
-                    android:hint="请输入单价"
+                    android:hint="@string/input_unit_price"
                     android:inputType="numberDecimal"
                     android:gravity="right"
                     android:maxLength="11" />
@@ -106,9 +107,9 @@
                 <EditText
                     android:id="@+id/unit_et"
                     style="@style/text"
-                    android:layout_marginRight="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_15dp"
                     android:background="@null"
-                    android:hint="请输入单位"
+                    android:hint="@string/input_unit"
                     android:gravity="right"
                     android:maxLength="10" />
 

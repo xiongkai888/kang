@@ -85,6 +85,19 @@ public class FormatTime {
     /**
      * 默认时间格式：时间戳格式为“yyyy-MM-dd HH:mm:ss”
      */
+    public String formatterTime(String s) {
+        if (StringUtils.isEmpty(s)) {
+            s = CommonUtils.isZero;
+        }
+        this.time = Long.parseLong(s) * 1000;
+        calendar.setTimeInMillis(this.time);
+
+        date.setTime(time);
+        return format.format(date);
+    }
+    /**
+     * 默认时间格式：时间戳格式为“yyyy-MM-dd HH:mm:ss”
+     */
     public String formatterTime() {
         date.setTime(time);
         return format.format(date);

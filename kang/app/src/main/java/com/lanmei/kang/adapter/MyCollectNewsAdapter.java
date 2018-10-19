@@ -75,8 +75,7 @@ public class MyCollectNewsAdapter extends SwipeRefreshAdapter<CollectNewsBean> {
 
         public void setParameter(final CollectNewsBean bean){
             titleTv.setText(bean.getTitle());
-            time.setTime(bean.getAddtime());
-            timeTv.setText(time.formatterTime());
+            timeTv.setText(time.formatterTime(bean.getAddtime()));
             sudokuView.setListData(bean.getFile());
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override

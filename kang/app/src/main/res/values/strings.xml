@@ -204,4 +204,7 @@
     <string name="serve">服务</string>
     <string name="goods_number">共计%1$s件商品</string>
     <string name="price_sub">单价：￥%1$s</string>
+    <string name="no_merchant_list_data">无法获取商家列表...</string>
+    <string name="input_goods_number_or_scan">请输入编号或扫描获取</string>
+    <string name="input_unit_price">请输入单价(元)</string>
 </resources>

@@ -127,7 +127,7 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
         switch (item.getItemId()){
             case R.id.action_scan_qr_code:
                 Bundle bundle = new Bundle();
-                bundle.putInt("type",3);//商家订单
+                bundle.putInt("type",ScanActivity.MERCHANT_ORDER_SCAN);//商家订单
                 bundle.putBoolean("isQR",false);//二维码
                 IntentUtil.startActivity(this, ScanActivity.class, bundle);
                 break;

@@ -112,8 +112,7 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
             serviceItemTv.setText(String.format(context.getString(R.string.service_item), bean.getGoodsName()));
             numPeopleTv.setText(String.format(context.getString(R.string.people_num), bean.getGuest()));
             totalPriceTv.setText(String.format(context.getString(R.string.price), bean.getAmount()));
-            time.setTime(bean.getAddtime());
-            reserveTimeTv.setText(String.format(context.getString(R.string.reserve_time), time.formatterTime()));
+            reserveTimeTv.setText(String.format(context.getString(R.string.reserve_time), time.formatterTime(bean.getAddtime())));
             ImageHelper.load(context, bean.getFee_introduction(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             final String status = bean.getStatus();
             String payStatus = "";

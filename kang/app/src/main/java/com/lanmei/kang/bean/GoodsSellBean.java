@@ -10,6 +10,15 @@ public class GoodsSellBean {
     private double num;//数量
     private double price;//单价
     private String unit;//单位
+    private String gid;//商品id
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
+
+    public String getGid() {
+        return gid;
+    }
 
     public String getNumber() {
         return number;

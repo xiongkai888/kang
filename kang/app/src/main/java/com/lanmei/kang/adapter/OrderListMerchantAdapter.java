@@ -114,8 +114,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
             serviceItemTv.setText(String.format(context.getString(R.string.service_item), bean.getName()));
             numPeopleTv.setText(String.format(context.getString(R.string.people_num), bean.getGuest()));
             totalPriceTv.setText(String.format(context.getString(R.string.price), bean.getAmount()));
-            time.setTime(bean.getAddtime());
-            reserveTimeTv.setText(String.format(context.getString(R.string.reserve_time), time.formatterTime()));
+            reserveTimeTv.setText(String.format(context.getString(R.string.reserve_time), time.formatterTime(bean.getAddtime())));
             ImageHelper.load(context, bean.getPic(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             final String status = bean.getStatus();
             String payStatus = "";
@@ -230,7 +229,7 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
                         case "2":
                         case "3"://消费
                             Bundle bundle = new Bundle();
-                            bundle.putInt("type",2);//消费
+                            bundle.putInt("type",ScanActivity.XIAOFEI_SCAN);//消费
                             bundle.putBoolean("isQR",false);//二维码
                            IntentUtil.startActivity(context, ScanActivity.class,bundle);
                             break;

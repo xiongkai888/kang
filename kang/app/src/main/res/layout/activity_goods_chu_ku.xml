@@ -84,7 +84,7 @@
         <EditText
             android:id="@+id/num_tv"
             style="@style/text"
-            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginRight="@dimen/d_15dp"
             android:background="@null"
             android:hint="@string/input_number"
             android:gravity="right"
@@ -107,7 +107,7 @@
         <EditText
             android:id="@+id/price_et"
             style="@style/text"
-            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginRight="@dimen/d_15dp"
             android:background="@null"
             android:hint="@string/input_price"
             android:inputType="numberDecimal"
@@ -128,7 +128,7 @@
         <EditText
             android:id="@+id/unit_et"
             style="@style/text"
-            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginRight="@dimen/d_15dp"
             android:background="@null"
             android:hint="@string/input_unit"
             android:gravity="right"

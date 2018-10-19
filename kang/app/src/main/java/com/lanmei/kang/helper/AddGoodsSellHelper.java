@@ -1,16 +1,27 @@
 package com.lanmei.kang.helper;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsSellBean;
+import com.lanmei.kang.bean.MerchantTabGoodsBean;
+import com.lanmei.kang.qrcode.ScanActivity;
 import com.lanmei.kang.util.CommonUtils;
+import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SimpleTextWatcher;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.FormatTextView;
@@ -32,6 +43,7 @@ public class AddGoodsSellHelper {
     private LinearLayout root;
     private FormatTextView totalPriceTv;
     private List<GoodsSellBean> list;
+    private int scan_goods_position;//
 
     public List<GoodsSellBean> getList() {
         return list;
@@ -64,8 +76,14 @@ public class AddGoodsSellHelper {
         new ViewHolder(view, position);
     }
 
+    //二维码获取商品编号更新
+    public void updateData(String result){
+        list.get(scan_goods_position).setNumber(result);
+        searchGoods(result);
+        refresh();
+    }
 
-    public class ViewHolder {
+    public class ViewHolder implements TextView.OnEditorActionListener{
 
         @InjectView(R.id.subtract_iv)
         ImageView subtractIv;//删除
@@ -93,6 +111,21 @@ public class AddGoodsSellHelper {
             setParameter();
         }
 
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String key = CommonUtils.getStringByTextView(v);
+                if (StringUtils.isEmpty(key)) {
+                    UIHelper.ToastMessage(context, R.string.input_goods_number_or_scan);
+                    return false;
+                }
+                searchGoods(key);
+                scan_goods_position = position;
+                return true;
+            }
+            return false;
+        }
+
         public void setParameter() {
             subtractIv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,14 +142,22 @@ public class AddGoodsSellHelper {
             qrCodeIv.setOnClickListener(new View.OnClickListener() {//条形码
                 @Override
                 public void onClick(View v) {
-                    CommonUtils.developing(context);
+                    scan_goods_position = position;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", ScanActivity.SELL_GOODS_POSITION_SCAN);//(添加销售商品)扫描商品获取编号
+                    bundle.putBoolean("isQR",true);//条形码
+                    IntentUtil.startActivity(context, ScanActivity.class,bundle);
                 }
             });
             numberEt.setText(bean.getNumber());
-            numTv.setText(bean.getNum() + "");
-            priceEt.setText(bean.getPrice() + "");
+            if (bean.getNum() != 0){
+                numTv.setText(String.valueOf(bean.getNum()));
+            }
+            if (bean.getPrice() != 0){
+                priceEt.setText(String.valueOf(bean.getPrice()));
+            }
             unitEt.setText(bean.getUnit());
-
+            numberEt.setOnEditorActionListener(this);
             numberEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -150,6 +191,26 @@ public class AddGoodsSellHelper {
             });
         }
 
+    }
+
+    private void searchGoods(String barcode) {
+        KangQiMeiApi api = new KangQiMeiApi("app/good_list");
+        api.addParams("barcode", barcode);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
+                if (root == null) {
+                    return;
+                }
+                List<MerchantTabGoodsBean> beanList = response.data;
+                if (StringUtils.isEmpty(beanList)) {
+                    UIHelper.ToastMessage(context, "不存在该商品");
+                    return;
+                }
+                list.get(scan_goods_position).setGid(beanList.get(0).getId());
+                UIHelper.ToastMessage(context, "存在该商品");
+            }
+        });
     }
 
 

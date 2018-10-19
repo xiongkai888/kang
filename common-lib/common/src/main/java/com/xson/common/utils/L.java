@@ -17,6 +17,7 @@ public class L {
     public static boolean debug = true;
     public final static String TAG = "BeanRequest";
     public final static String p = "p";
+    public final static String cornet = ",";
 
     public static int v(String tag, String msg) {
         if (!debug || StringUtils.isEmpty(msg))

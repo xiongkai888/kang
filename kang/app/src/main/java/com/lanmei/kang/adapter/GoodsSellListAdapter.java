@@ -48,7 +48,7 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setParameter(bean);
+        viewHolder.setParameter(bean,position);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +83,11 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(GoodsSellListBean bean) {
+        public void setParameter(final GoodsSellListBean bean,final int position) {
             layout.removeAllViews();
 
             orderNoTv.setText(String.format(context.getString(R.string.order_no), bean.getOrder_no()));
-            time.setTime(bean.getAddtime());
-            timeTv.setText(time.formatterTime());
+            timeTv.setText(time.formatterTime(bean.getAddtime()));
             numTv.setText(String.format(context.getString(R.string.goods_number), String.valueOf(bean.getNum())));
             totalPriceTv.setTextValue(bean.getTotal_price());
 
@@ -103,7 +102,9 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             deleteTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (listener != null){
+                        listener.delete(bean.getId(),position);
+                    }
                 }
             });
         }
@@ -121,5 +122,14 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
         }
     }
 
+    private DeleteSellGoodsListener listener;
+
+    public void setDeleteSellGoodsListener(DeleteSellGoodsListener listener){
+        this.listener = listener;
+    }
+
+    public interface DeleteSellGoodsListener{
+        void delete(String id,int position);
+    }
 
 }

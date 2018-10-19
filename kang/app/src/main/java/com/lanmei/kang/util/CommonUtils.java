@@ -34,6 +34,7 @@ import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -238,7 +239,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(pic)) {
             return null;
         }
-        return Arrays.asList(pic.split(","));
+        return Arrays.asList(pic.split(L.cornet));
     }
 
     public static boolean isLogin(Context context) {
@@ -277,12 +278,6 @@ public class CommonUtils {
         intent.setClass(context, PhotoBrowserActivity.class);
         context.startActivity(intent);
     }
-
-    public static void notifyDoSomething(Context context, String action) {
-        Intent intent = new Intent(action);
-        context.sendBroadcast(intent);
-    }
-
 
     /**
      * 获取上传相册的图片本地地址
@@ -370,7 +365,7 @@ public class CommonUtils {
         }
         for (AlbumBean bean : list) {
             if (bean != null && !bean.isPicker()) {
-                pics += bean.getPic() + ",";
+                pics += bean.getPic() + L.cornet;
             }
         }
         return pics;
@@ -384,7 +379,7 @@ public class CommonUtils {
      */
     public static String getSubString(String decs) {
         if (StringUtils.isEmpty(decs)) {
-            return "";
+            return decs;
         }
         return decs.substring(0, decs.length() - 1);
     }
@@ -412,7 +407,7 @@ public class CommonUtils {
         StringBuffer buffer = new StringBuffer();
         int size = list.size();
         for (int i = 0; i < size; i++) {
-            buffer.append(((size - 1) != i) ? list.get(i) + "," : list.get(i));
+            buffer.append(((size - 1) != i) ? list.get(i) + L.cornet : list.get(i));
         }
         return buffer.toString();
     }

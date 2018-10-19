@@ -6,7 +6,6 @@ import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.OSSLog;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
@@ -33,7 +32,6 @@ public class ConfigurationTest extends AndroidTestCase {
     public void setUp() throws Exception {
         if (oss == null) {
             Thread.sleep(5 * 1000); // for logcat initialization
-            OSSLog.enableLog();
             oss = new OSSClient(getContext(), OSSTestConfig.ENDPOINT, OSSTestConfig.credentialProvider);
         }
     }

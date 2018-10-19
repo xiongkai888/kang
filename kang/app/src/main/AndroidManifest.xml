@@ -708,9 +708,6 @@
             android:name=".ui.details.OrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.details.IntroductionActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".webviewpage.PhotoBrowserActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -745,12 +742,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.user.setting.BoundKaActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.details.OrderParticularsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.LeavePublishActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.PersonalDataNCActivity"

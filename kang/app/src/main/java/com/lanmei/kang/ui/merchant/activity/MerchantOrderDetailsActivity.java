@@ -131,13 +131,10 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
         itemNameTv.setText(bean.getName());
         FormatTime time = new FormatTime(this);
         time.setApplyToTimeYearMonthDay();
-        time.setTime(bean.getStime());
-        timeTv.setText(time.formatterTime());
+        timeTv.setText(time.formatterTime(bean.getStime()));
         numTv.setText(bean.getGuest());
         orderNoTv.setText(bean.getPay_no());
-//        String sTime = time.formatterTimeNoSeconds();
-        time.setTime(bean.getAddtime());
-        orderTimeTv.setText(time.formatterTime());
+        orderTimeTv.setText(time.formatterTime(bean.getAddtime()));
         totalPriceTv.setText(String.format(getString(R.string.price),bean.getAmount()));
         order1.setVisibility(View.VISIBLE);//
         order2.setVisibility(View.VISIBLE);
@@ -256,7 +253,7 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
                     case "2":
                     case "3"://消费
                         Bundle bundle = new Bundle();
-                        bundle.putInt("type",2);//消费
+                        bundle.putInt("type",ScanActivity.XIAOFEI_SCAN);//消费
                         bundle.putBoolean("isQR",false);//二维码
                         IntentUtil.startActivity(getContext(), ScanActivity.class,bundle);
                         break;

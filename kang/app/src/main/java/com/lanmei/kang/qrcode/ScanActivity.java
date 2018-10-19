@@ -21,6 +21,7 @@ import com.google.zxing.qrcode.QRCodeReader;
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.ChuKuGoodsInfoEvent;
 import com.lanmei.kang.event.ScanEvent;
+import com.lanmei.kang.event.ScanSellGoodsEvent;
 import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.event.ScanUserEvent;
 import com.xson.common.app.BaseActivity;
@@ -43,14 +44,21 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
  */
 public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
-    private static final int CHOOSE_FROM_GALLAY = 1;
+    private static final int CHOOSE_FROM_GALLAY = 100;
+
+    public static final int CHUKU_RUKU_SCAN = 1;//添加出库入库时扫描的商品
+    public static final int XIAOFEI_SCAN = 2;//消费
+    public static final int MERCHANT_ORDER_SCAN = 3;//商家订单
+    public static final int USER_SCAN = 4;//(添加销售商品)扫描会员获取编号
+    public static final int SELL_GOODS_POSITION_SCAN = 5;//(添加销售商品)扫描商品获取编号
+
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
     @InjectView(R.id.zxingview)
     ZXingView mQRCodeView;
 
     private boolean isQR;//true为条形码扫描 false为二维码扫描
-    private int type;//1添加出库入库时扫描的商品、2消费、3商家订单、4扫描会员
+    private int type;//1、2、3、4
 
     @Override
     public int getContentViewId() {
@@ -91,17 +99,20 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     @Override
     public void onScanQRCodeSuccess(String result) {
         switch (type){
-            case 1://
+            case CHUKU_RUKU_SCAN://
                 EventBus.getDefault().post(new ChuKuGoodsInfoEvent(result));//ChuKuGoodsInfoEvent
                 break;
-            case 2://
+            case XIAOFEI_SCAN://
                 EventBus.getDefault().post(new ScanEvent(result));
                 break;
-            case 3://
+            case MERCHANT_ORDER_SCAN://
                 EventBus.getDefault().post(new ScanSucceedEvent());
                 break;
-            case 4://扫描会员
+            case USER_SCAN://(添加销售商品)扫描会员获取编号
                 EventBus.getDefault().post(new ScanUserEvent(result));
+                break;
+            case SELL_GOODS_POSITION_SCAN://(添加销售商品)扫描商品获取编号
+                EventBus.getDefault().post(new ScanSellGoodsEvent(result));
                 break;
         }
         vibrate();

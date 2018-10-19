@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 
 /**
- * 团体课程
+ * 优惠券
  */
 public class CouponTabAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
     private final Context context;

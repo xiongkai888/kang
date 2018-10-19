@@ -19,11 +19,9 @@ import java.util.List;
 
 public class AddressBookFriendsAdapter extends BaseAdapter{
 
-    private Context mContext;
     private List<ContactsBean> mList;
     private LayoutInflater inflater;
     public AddressBookFriendsAdapter(Context context, List<ContactsBean> list){
-        mContext = context;
         mList = list;
         inflater = LayoutInflater.from(context);
     }

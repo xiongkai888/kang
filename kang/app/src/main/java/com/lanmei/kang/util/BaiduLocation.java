@@ -18,15 +18,13 @@ import java.util.List;
 
 public class BaiduLocation {
 
-    private Context mContext;
     private LocationClient mLocationClient = null;
     private BDLocationListener myListener = new MyLocationListener();
     private WHbdLocationListener wHbdLocaionListener;
 
-    public BaiduLocation(Context mContext, WHbdLocationListener wHbdLocaionListener) {
-        this.mContext = mContext;
+    public BaiduLocation(Context context, WHbdLocationListener wHbdLocaionListener) {
         this.wHbdLocaionListener = wHbdLocaionListener;
-        mLocationClient = new LocationClient(mContext);     //声明LocationClient类
+        mLocationClient = new LocationClient(context);     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();

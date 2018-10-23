@@ -209,6 +209,11 @@ public class PublishDynamicActivity extends BaseActivity implements BGASortableN
     }
 
     @Override
+    public void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout, int fromPosition, int toPosition, ArrayList<String> models) {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mPhotoHelper.onActivityResult(requestCode, resultCode, data);

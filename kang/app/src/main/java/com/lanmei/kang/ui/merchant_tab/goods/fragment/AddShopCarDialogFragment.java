@@ -108,7 +108,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
         recyclerView.setAdapter(teacherFiltrateAdapter);
 
         inventory = Integer.valueOf(detailsBean.getInventory());
-        if (orderNum > inventory){
+        if (orderNum > inventory) {
             payNumEt.setText(String.valueOf(inventory));
         }
 
@@ -117,7 +117,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
             @Override
             public void onFiltrate(GoodsSpecificationsBean bean) {
                 inventory = Integer.valueOf(bean.getInventory());
-                if (orderNum > inventory){
+                if (orderNum > inventory) {
                     payNumEt.setText(String.valueOf(inventory));
                 }
                 priceTvTv.setText(String.format(getString(R.string.price), bean.getPrice()));
@@ -173,7 +173,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 break;
             case R.id.num_add_iv:
                 if (orderNum == inventory) {
-                    UIHelper.ToastMessage(getContext(),getString(R.string.understock));
+                    UIHelper.ToastMessage(getContext(), getString(R.string.understock));
                     return;
                 }
                 orderNum++;
@@ -197,7 +197,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", detailsBean);
         bundle.putInt("num", orderNum);
-        IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class,bundle);
+        IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
         dismiss();
     }
 

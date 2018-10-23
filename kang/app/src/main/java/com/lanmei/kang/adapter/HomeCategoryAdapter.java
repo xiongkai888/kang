@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.bean.HomeBean;
 import com.lanmei.kang.ui.home.activity.PhysiotherapyActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
-import com.xson.common.bean.HomeListBean;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
 
@@ -23,7 +23,7 @@ import butterknife.InjectView;
 /**
  * 首页分类
  */
-public class HomeCategoryAdapter extends SwipeRefreshAdapter<HomeListBean.CategoryBean> {
+public class HomeCategoryAdapter extends SwipeRefreshAdapter<HomeBean.CategoryBean> {
 
     public HomeCategoryAdapter(Context context) {
         super(context);
@@ -36,7 +36,7 @@ public class HomeCategoryAdapter extends SwipeRefreshAdapter<HomeListBean.Catego
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        final HomeListBean.CategoryBean bean = getItem(position);
+        final HomeBean.CategoryBean bean = getItem(position);
         if (bean == null){
             return;
         }

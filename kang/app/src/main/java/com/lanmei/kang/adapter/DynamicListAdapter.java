@@ -14,7 +14,6 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.event.DynamicLikedEvent;
-import com.lanmei.kang.helper.ShareHelper;
 import com.lanmei.kang.ui.dynamic.activity.DynamicDetailsActivity;
 import com.lanmei.kang.ui.dynamic.activity.DynamicFriendsActivity;
 import com.lanmei.kang.util.CommonUtils;
@@ -42,8 +41,7 @@ import butterknife.InjectView;
  */
 public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
 
-    FormatTime time;
-    ShareHelper shareHelper;
+    private FormatTime time;
 
     int who;//3:好友的动态
 
@@ -54,10 +52,6 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
 
     public void setType(int who){
         this.who = who;
-    }
-
-    public void setShare(ShareHelper shareHelper){
-        this.shareHelper = shareHelper;
     }
 
 
@@ -204,9 +198,7 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
                     if (!CommonUtils.isLogin(context)) {
                         return;
                     }
-                    if (!StringUtils.isEmpty(shareHelper)){
-                        shareHelper.share();
-                    }
+                    CommonUtils.developing(context);
                 }
             });
         }

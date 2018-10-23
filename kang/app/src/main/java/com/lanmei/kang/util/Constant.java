@@ -13,8 +13,5 @@ public class Constant {
 
     //支付宝回调
     public static final String ALIPAY_NOTIFY_URL = AbstractApi.API_URL + "payment/callback/_id/1";
-    public static final String GAO_DUAN = "高端游学";
-    public static final String SHANG_WU = "商务会议";
-    public static final String JU_HUI = "聚会联谊";
 
 }

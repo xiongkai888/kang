@@ -4,12 +4,14 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     useLibrary 'org.apache.http.legacy'
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
     defaultConfig {
         applicationId "com.lanmei.kang"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 22
-        versionName "2.0.4"
+        versionCode 23
+        versionName "2.0.5"
         buildConfigField "String", "API_URL", "\"http://120.79.56.96/api/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -28,6 +30,10 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:27.0.2'
     }
 
     lintOptions {
@@ -72,45 +78,43 @@ def buildTime() {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile files('libs/umeng_social_api.jar')
-    compile files('libs/umeng_social_net.jar')
-    compile files('libs/SocialSDK_WeiXin_Full.jar')
-    compile files('libs/SocialSDK_QQ_Full.jar')
-    compile files('libs/umeng_social_shareboard.jar')
-    compile files('libs/SocialSDK_Sina_Full.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    compile project(path: ':common')
-    compile project(':wheel-date-picker')
-    compile project(':oss-android-sdk')
-    compile project(':easeui')
-    compile project(':redpacketlibrary')
-    compile files('libs/open_sdk_r5781.jar')
-    compile files('libs/weiboSDKCore_3.1.4.jar')
-    //完整版引入视频播放
-    compile files('libs/xUtils-2.6.14.jar')
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
-    compile 'cn.bingoogolapple:bga-photopicker:1.2.3@aar'
-    compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
-    compile 'pub.devrel:easypermissions:0.2.1'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.parse:parse-android:1.13.1'
-    compile 'com.bm.photoview:library:1.4.1'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:26.+'
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/SocialSDK_WeiXin_Full.jar')
+    implementation files('libs/SocialSDK_QQ_Full.jar')
+    implementation files('libs/umeng_social_shareboard.jar')
+    implementation files('libs/SocialSDK_Sina_Full.jar')
+    implementation files('libs/open_sdk_r5781.jar')
+    implementation files('libs/weiboSDKCore_3.1.4.jar')
+    implementation files('libs/xUtils-2.6.14.jar')
+
+
+    implementation project(path: ':common')
+    implementation project(':wheel-date-picker')
+    implementation project(':oss-android-sdk')
+    implementation project(':easeui')
+    implementation project(':redpacketlibrary')
+
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.0.2'
+    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
+    implementation 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+    implementation 'pub.devrel:easypermissions:1.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.parse:parse-android:1.13.1'
+    implementation 'com.bm.photoview:library:1.4.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
     //轮播图
-    compile 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
     // 扫一扫
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
-//    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.5'
-
     //VerticalTabLayout
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
     //WheelPicker包括DatePicker、TimePicker、OptionPicker、AddressPicker、NumberPicker等，

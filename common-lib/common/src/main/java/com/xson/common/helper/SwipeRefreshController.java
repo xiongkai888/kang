@@ -136,8 +136,8 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
                  */
                 adapter.notifyDataSetChanged();
                 if (!mHasMore) {
-                    view.setMode(SmartSwipeRefreshLayout.Mode.NONE);
-                } else if (view.getMode() == SmartSwipeRefreshLayout.Mode.NONE) {
+                    view.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_DOWN);
+                } else if (view.getMode() == SmartSwipeRefreshLayout.Mode.ONLY_PULL_DOWN) {
                     view.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
                 }
                 if (!isCacheResult) {

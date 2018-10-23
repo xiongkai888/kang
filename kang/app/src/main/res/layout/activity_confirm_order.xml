@@ -37,23 +37,14 @@
 
                     <TextView
                         android:id="@+id/name_tv"
-                        style="@style/text"
-                        android:text="@string/app_name" />
+                        style="@style/text" />
 
-                    <TextView
-                        android:id="@+id/phone_tv"
-                        style="@style/text"
-                        android:layout_alignParentRight="true"
-                        android:gravity="right"
-                        android:layout_toRightOf="@+id/name_tv"
-                        android:text="15936363555" />
 
                     <TextView
                         android:layout_marginTop="@dimen/d_5dp"
                         android:layout_below="@id/name_tv"
                         android:id="@+id/address_tv"
-                        style="@style/text12color666"
-                        android:text="广东省广州市天河区" />
+                        style="@style/text12color666" />
 
                 </RelativeLayout>
 

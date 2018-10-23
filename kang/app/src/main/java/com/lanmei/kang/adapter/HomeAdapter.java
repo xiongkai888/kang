@@ -23,7 +23,7 @@ import butterknife.InjectView;
 /**
  * 商城（或定位）
  */
-public class HomeAdapter extends SwipeRefreshAdapter<HomeBean> {
+public class HomeAdapter extends SwipeRefreshAdapter<HomeBean.PlaceBean> {
 
     public HomeAdapter(Context context) {
         super(context);
@@ -38,14 +38,14 @@ public class HomeAdapter extends SwipeRefreshAdapter<HomeBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        final HomeBean bean = getItem(position);
+        final HomeBean.PlaceBean bean = getItem(position);
         if (bean == null) {
             return;
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.nameTv.setText(bean.getName());//商家名称
         viewHolder.priceTv.setText(String.format(context.getString(R.string.price), bean.getMoney()));//价格
-        viewHolder.distanceTv.setText(DoubleUtil.formatDistance(bean.getDistance()) + "  " + bean.getAddress());//商家地址
+        viewHolder.distanceTv.setText(DoubleUtil.formatDistance(context,String.valueOf(bean.getDistance())) + "  " + bean.getAddress());//商家地址
         viewHolder.labelTv.setText(bean.getArea());//商家地区
         ImageHelper.load(context, bean.getFee_introduction(), viewHolder.picIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

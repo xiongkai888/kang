@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.AddressListBean;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.AddAddressActivity;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
@@ -74,19 +75,15 @@ public class AddressListAdapter extends SwipeRefreshAdapter<AddressListBean> {
         }
 
         public void setParameter(final AddressListBean bean,final int position) {
-            nameTv.setText(bean.getName() + "\u3000\u3000" + bean.getPhone());
+            nameTv.setText(bean.getAccept_name() + "\u3000\u3000" + bean.getMobile());
             addressTv.setText(bean.getAddress());
-            if (StringUtils.isSame("1", bean.getDefaultX())) {
-                selectIv.setImageResource(R.mipmap.choose_on);
-                defaultTv.setText(R.string.is_default);
-            } else {
-                selectIv.setImageResource(R.mipmap.choose_off);
-                defaultTv.setText(R.string.set_default);
-            }
+            boolean d = StringUtils.isSame(CommonUtils.isOne, bean.getDefaultX());
+            selectIv.setImageResource(d?R.mipmap.choose_on:R.mipmap.choose_off);
+            defaultTv.setText(d?R.string.set_default:R.string.set_default);
             selectIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (l != null && StringUtils.isSame("0",bean.getDefaultX())) {
+                    if (l != null && StringUtils.isSame(CommonUtils.isZero,bean.getDefaultX())) {
                         l.setDefault(bean.getId(),position);
                     }
                 }

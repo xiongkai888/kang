@@ -119,7 +119,7 @@ public class MerchantIntroduceActivity extends BaseActivity {
 
         nameTv.setText(detailsBean.getName());
         businessTimeTv.setText(detailsBean.getStime() + " - " + detailsBean.getEtime());
-        distanceTv.setText(DoubleUtil.formatDistance(detailsBean.getDistance()) + "  " + detailsBean.getAddress());
+        distanceTv.setText(DoubleUtil.formatDistance(this,detailsBean.getDistance()) + "  " + detailsBean.getAddress());
         introduction = detailsBean.getPlace_introduction();
         phone = detailsBean.getTel();
         favoured = detailsBean.getFavoured();

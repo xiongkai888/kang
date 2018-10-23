@@ -34,7 +34,6 @@ import com.xson.common.utils.SysUtils;
 import com.xson.common.utils.UIBaseUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -57,12 +56,12 @@ public class DynamicDetailsActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     DynamicDetailsCommAdapter mAdapter;
     SwipeRefreshController<NoPageListBean<DynamicCommBean>> controller;
-    String uid;//用户id
-    String id;//动态（帖子）id
-    DynamicBean mbean;
-    boolean isSelf;//是不是自己的动态
+    private String uid;//用户id
+    private String id;//动态（帖子）id
+    private DynamicBean mbean;
+    private boolean isSelf;//是不是自己的动态
     private ShareHelper mShareHelper;
-    int who;
+    private int who;
 
     @Override
     public int getContentViewId() {
@@ -99,8 +98,7 @@ public class DynamicDetailsActivity extends BaseActivity {
     private void initSwipeRefreshLayout() {
 
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
 
         KangQiMeiApi api = new KangQiMeiApi("PostsReviews/index");
         api.addParams("posts_id",id);
@@ -111,7 +109,6 @@ public class DynamicDetailsActivity extends BaseActivity {
         controller = new SwipeRefreshController<NoPageListBean<DynamicCommBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
-        mAdapter.setShare(mShareHelper);
         mAdapter.setType(who);
     }
 

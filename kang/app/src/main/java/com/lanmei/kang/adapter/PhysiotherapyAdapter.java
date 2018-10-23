@@ -5,17 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.lanmei.kang.bean.HomeBean;
 import com.lanmei.kang.ui.home.fragment.PhysiotherapyFragment;
-import com.xson.common.bean.HomeListBean;
 
 /**
  * 理疗界面（中医、西医、中西、高端理疗）
  */
 public class PhysiotherapyAdapter extends FragmentPagerAdapter {
 
-    HomeListBean.CategoryBean bean;
+    HomeBean.CategoryBean bean;
 
-    public PhysiotherapyAdapter(FragmentManager fm, HomeListBean.CategoryBean bean) {
+    public PhysiotherapyAdapter(FragmentManager fm, HomeBean.CategoryBean bean) {
         super(fm);
         this.bean = bean;
     }

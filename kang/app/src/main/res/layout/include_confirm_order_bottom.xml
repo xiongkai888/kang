@@ -7,7 +7,7 @@
         android:id="@+id/price_tv"
         android:paddingBottom="@dimen/d_15dp"
         android:paddingTop="@dimen/d_15dp"
-        app:defaultValue="1221"
+        app:defaultValue="0"
         android:layout_marginLeft="@dimen/d_20dp"
         app:formatText="@string/total_cash"
         style="@style/text_weight" />
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorF5484A"
         android:gravity="center"
-        android:text="提交订单"
+        android:text="@string/submit_order"
         android:textColor="@color/white" />
 
 </LinearLayout>

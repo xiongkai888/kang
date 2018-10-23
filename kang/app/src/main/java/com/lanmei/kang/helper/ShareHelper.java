@@ -1,8 +1,10 @@
 package com.lanmei.kang.helper;
 
+import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 
 import com.lanmei.kang.R;
 import com.umeng.socialize.Config;
@@ -23,28 +25,20 @@ import com.xson.common.utils.UIHelper;
 public class ShareHelper {
 
     private UMShareAPI mShareAPI;
-    private Context context;
+    private Activity context;
     String shareUrl = "https://www.baidu.com/";
 
-    public ShareHelper(Context context) {
+    public ShareHelper(Activity context) {
         this.context = context;
         //分享初始化
         mShareAPI = UMShareAPI.get(context);
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(context, mPermissionList, 123);
+        }
     }
 
     public void share() {
-//        SystemSettingInfoBean  bean = DataLoader.getInstance().getSystemInfoBean();
-//        if (bean == null){
-//          return;
-//        }
-//        SystemSettingInfoBean.AndroidUpdateBean updateBean = bean.getAndroid_update();
-//        if (updateBean == null){
-//            return;
-//        }
-//        shareUrl = updateBean.getUrl();
-//        if (StringUtils.isEmpty(shareUrl)){
-//            return;
-//        }
         Config.isJumptoAppStore = true;//其中qq 微信会跳转到下载界面进行下载，其他应用会跳到应用商店进行下载
 
         UMImage thumb = new UMImage(context, R.mipmap.logo);//资源文件  SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,, SHARE_MEDIA.QZONE
@@ -53,10 +47,10 @@ public class ShareHelper {
         web.setThumb(thumb);  //缩略图
         web.setDescription(context.getString(R.string.app_name));//描述
 
-        ShareAction shareAction = new ShareAction((Activity) context);
+        ShareAction shareAction = new ShareAction(context);
 
         shareAction.withText("快来加入我们吧！")
-                .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE,SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
+                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
                 .withMedia(web)
                 .setCallback(umShareListener);
 
@@ -77,6 +71,7 @@ public class ShareHelper {
 
         @Override
         public void onResult(SHARE_MEDIA platform) {
+
             UIHelper.ToastMessage(context, " 分享成功啦!");
 
         }

@@ -73,7 +73,7 @@ public class PhysiotherapyTabAdapter extends SwipeRefreshAdapter<MerchantListBea
         public void setParameter(MerchantListBean bean){
             nameTv.setText(bean.getName());//商家名称
             priceTv.setText(String.format(context.getString(R.string.price),bean.getMoney()));//价格
-            distanceTv.setText(DoubleUtil.formatDistance(bean.getDistance()) + "  " + bean.getAddress());//商家地址
+            distanceTv.setText(DoubleUtil.formatDistance(context,bean.getDistance()) + "  " + bean.getAddress());//商家地址
             labelTv.setText(bean.getArea());//商家地区
             ImageHelper.load(context, bean.getFee_introduction(), picIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
         }

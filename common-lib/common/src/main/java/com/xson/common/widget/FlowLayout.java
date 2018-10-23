@@ -439,7 +439,7 @@ public class FlowLayout extends ViewGroup {
     public static class LayoutParams extends MarginLayoutParams {
         public boolean newLine = false;
         @ViewDebug.ExportedProperty(mapping = {
-                @ViewDebug.IntToString(from = Gravity.NO_GRAVITY, to = "NONE"),
+                @ViewDebug.IntToString(from = Gravity.NO_GRAVITY, to = "ONLY_PULL_DOWN"),
                 @ViewDebug.IntToString(from = Gravity.TOP, to = "TOP"),
                 @ViewDebug.IntToString(from = Gravity.BOTTOM, to = "BOTTOM"),
                 @ViewDebug.IntToString(from = Gravity.LEFT, to = "LEFT"),

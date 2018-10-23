@@ -1,5 +1,6 @@
 package com.lanmei.kang.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,12 +19,13 @@ import com.lanmei.kang.adapter.HomeCategoryAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.HomeBean;
 import com.lanmei.kang.event.LocationEvent;
+import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.home.activity.RecomMerchantListActivity;
 import com.lanmei.kang.ui.mine.activity.SearchUserActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
 import com.xson.common.app.BaseFragment;
-import com.xson.common.bean.HomeListBean;
+import com.xson.common.bean.DataBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
@@ -60,10 +62,17 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     ConvenientBanner banner;//轮播图
     HomeAdapter mAdapter;
     private boolean isFirst = true;
+    private MainActivity mainActivity;
 
     @Override
     public int getContentViewId() {
         return R.layout.fragment_home;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity)context;
     }
 
     @Override
@@ -129,7 +138,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        loadHome();
+        mainActivity.initPermission();
     }
 
 
@@ -137,9 +146,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         api.addParams("limit", 6);
         api.addParams("lon",  SharedAccount.getInstance(context).getLon());
         api.addParams("lat", SharedAccount.getInstance(context).getLat());
-        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<HomeListBean<HomeBean>>() {
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<HomeBean>>() {
             @Override
-            public void onResponse(HomeListBean<HomeBean> response) {
+            public void onResponse(DataBean<HomeBean> response) {
                 if (mCityTv == null) {
                     return;
                 }
@@ -157,19 +166,19 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         });
     }
 
-    private void setHome(HomeListBean<HomeBean> response) {
-        if (StringUtils.isEmpty(response)){
-            return;
-        }
-        mAdapter.setData(response.getDataList());
-        mAdapter.notifyDataSetChanged();
+    private void setHome(DataBean<HomeBean> response) {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
-
-        if (!StringUtils.isEmpty(response.getCategoryList())) {//首页分类列表
+        if (StringUtils.isEmpty(response)){
+            return;
+        }
+        HomeBean homeBean = response.data;
+        mAdapter.setData(homeBean.getPlace());
+        mAdapter.notifyDataSetChanged();
+        if (!StringUtils.isEmpty(homeBean.getCategory())) {//首页分类列表
             HomeCategoryAdapter adAdapter = new HomeCategoryAdapter(context);
-            adAdapter.setData(response.getCategoryList());
+            adAdapter.setData(homeBean.getCategory());
             recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
             recyclerView.setAdapter(adAdapter);
         }
@@ -177,10 +186,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (!isFirst){
             return;
         }
-        if (!StringUtils.isEmpty(response.getBannerList())) {
-            List<HomeListBean.BannerBean> bannerList = response.getBannerList();
+        if (!StringUtils.isEmpty(homeBean.getBanner())) {
+            List<HomeBean.BannerBean> bannerList = homeBean.getBanner();
             List<String> list = new ArrayList<>();
-            for (HomeListBean.BannerBean bean : bannerList) {
+            for (HomeBean.BannerBean bean : bannerList) {
                 list.add(bean.getPic());
             }
             CommonUtils.setBanner(banner, list, isFirst);//防止不断刷新，banner越滑越快

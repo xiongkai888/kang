@@ -207,4 +207,6 @@
     <string name="no_merchant_list_data">无法获取商家列表...</string>
     <string name="input_goods_number_or_scan">请输入编号或扫描获取</string>
     <string name="input_unit_price">请输入单价(元)</string>
+    <string name="submit_order">提交订单</string>
+
 </resources>

@@ -1,5 +1,9 @@
 package com.xson.common.utils;
 
+import android.content.Context;
+
+import com.xson.common.R;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -156,16 +160,16 @@ public class DoubleUtil implements Serializable {
      * @param valueStr
      * @return
      */
-    public static String formatDistance(String valueStr) {
+    public static String formatDistance(Context context,String valueStr) {
         double value = 0.00;
         if (!StringUtils.isEmpty(valueStr)){
             value = Double.valueOf(valueStr);
             if (value > 1000){
                 value = value/1000;
             }else {
-                return valueStr+"m";
+                return valueStr+context.getString(R.string.m);
             }
         }
-        return formatFloatNumber(value)+"km";
+        return formatFloatNumber(value)+context.getString(R.string.km);
     }
 }

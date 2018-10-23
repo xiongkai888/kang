@@ -17,7 +17,6 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.lanmei.kang.util.Constant;
-import com.squareup.leakcanary.LeakCanary;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.xson.common.app.BaseApp;
@@ -53,7 +52,7 @@ public class KangApp extends BaseApp {
         instance = this;
         L.debug = OSSLog.enableLog = true;
         if (L.debug) {
-            LeakCanary.install(this);//LeakCanary内存泄漏监控
+//            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
 
         initHx();

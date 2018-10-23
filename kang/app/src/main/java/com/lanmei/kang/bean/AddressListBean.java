@@ -1,5 +1,7 @@
 package com.lanmei.kang.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 
 /**
@@ -7,41 +9,46 @@ import java.io.Serializable;
  * 选择收货地址
  */
 
-public class AddressListBean implements Serializable{
+public class AddressListBean implements Serializable {
 
 
     /**
-     * id : 4
-     * name : b_15914369000
-     * phone : 15914369000
-     * addtime : null
-     * uptime : null
+     * id : 23
+     * uid : 202
+     * accept_name : 大熊
+     * zip : null
+     * telphone : null
+     * country : null
+     * province : 440000
+     * city : 440100
+     * area : 440106
+     * address : 广东省广州市天河区图图
+     * mobile : 15914369252
      * default : 1
-     * addr : 保护好环境基金
-     * userid : 206
-     * province : 110000
-     * city : 110100
-     * area : 110101
-     * uname : b_15914369000
-     * uphone : 15914369000
-     * address : 北京市市辖区东城区保护好环境基金
-     * defaultX : 1
+     * default1 : 1
      */
 
     private String id;
-    private String name;
-    private String phone;
-    private String addtime;
-    private String uptime;
-    private String addr;
-    private String userid;
+    private String uid;
+    private String accept_name;
+    private Object zip;
+    private Object telphone;
+    private Object country;
     private String province;
     private String city;
     private String area;
-    private String uname;
-    private String uphone;
     private String address;
+    private String mobile;
+    @JSONField(name = "default")
     private String defaultX;
+
+    public void setDefaultX(String defaultX) {
+        this.defaultX = defaultX;
+    }
+
+    public String getDefaultX() {
+        return defaultX;
+    }
 
     public String getId() {
         return id;
@@ -51,60 +58,44 @@ public class AddressListBean implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUid() {
+        return uid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getAccept_name() {
+        return accept_name;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAccept_name(String accept_name) {
+        this.accept_name = accept_name;
     }
 
-    public String getAddtime() {
-        return addtime;
+    public Object getZip() {
+        return zip;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setZip(Object zip) {
+        this.zip = zip;
     }
 
-    public String getUptime() {
-        return uptime;
+    public Object getTelphone() {
+        return telphone;
     }
 
-    public void setUptime(String uptime) {
-        this.uptime = uptime;
+    public void setTelphone(Object telphone) {
+        this.telphone = telphone;
     }
 
-    public String getDefaultX() {
-        return defaultX;
+    public Object getCountry() {
+        return country;
     }
 
-    public void setDefaultX(String defaultX) {
-        this.defaultX = defaultX;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setCountry(Object country) {
+        this.country = country;
     }
 
     public String getProvince() {
@@ -131,22 +122,6 @@ public class AddressListBean implements Serializable{
         this.area = area;
     }
 
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public String getUphone() {
-        return uphone;
-    }
-
-    public void setUphone(String uphone) {
-        this.uphone = uphone;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -155,4 +130,11 @@ public class AddressListBean implements Serializable{
         this.address = address;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }

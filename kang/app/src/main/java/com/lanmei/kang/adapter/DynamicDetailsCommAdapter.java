@@ -16,7 +16,6 @@ import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.bean.DynamicCommBean;
 import com.lanmei.kang.event.AttentionFriendEvent;
 import com.lanmei.kang.event.DynamicLikedEvent;
-import com.lanmei.kang.helper.ShareHelper;
 import com.lanmei.kang.ui.dynamic.activity.DynamicFriendsActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
@@ -47,7 +46,6 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
     private FormatTime time;
     private DynamicBean mBean;
     private boolean isSelf;//是否是自己的动态
-    ShareHelper shareHelper;
     int who;
 
     public DynamicDetailsCommAdapter(Context context, DynamicBean bean, boolean isSelf) {
@@ -55,10 +53,6 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
         time = new FormatTime(context);
         mBean = bean;
         this.isSelf = isSelf;
-    }
-
-    public void setShare(ShareHelper shareHelper){
-        this.shareHelper = shareHelper;
     }
 
     public void setType(int who){
@@ -220,7 +214,7 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
         viewHolder.llshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareHelper.share();
+                CommonUtils.developing(context);
             }
         });
 

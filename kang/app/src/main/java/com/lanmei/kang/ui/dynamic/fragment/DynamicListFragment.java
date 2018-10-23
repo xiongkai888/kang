@@ -1,7 +1,6 @@
 package com.lanmei.kang.ui.dynamic.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.lanmei.kang.R;
@@ -11,7 +10,6 @@ import com.lanmei.kang.bean.DynamicBean;
 import com.lanmei.kang.event.AttentionFriendEvent;
 import com.lanmei.kang.event.DynamicLikedEvent;
 import com.lanmei.kang.event.PublishDynamicEvent;
-import com.lanmei.kang.helper.ShareHelper;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
@@ -38,7 +36,6 @@ public class DynamicListFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     DynamicListAdapter mAdapter;
-    private ShareHelper mShareHelper;
     private SwipeRefreshController<NoPageListBean<DynamicBean>> controller;
 
 
@@ -50,8 +47,6 @@ public class DynamicListFragment extends BaseFragment {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
 
-        //分享初始化
-        mShareHelper = new ShareHelper(context);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -73,7 +68,6 @@ public class DynamicListFragment extends BaseFragment {
         controller = new SwipeRefreshController<NoPageListBean<DynamicBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
-        mAdapter.setShare(mShareHelper);
     }
 
 
@@ -135,16 +129,6 @@ public class DynamicListFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mShareHelper.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * 结果返回
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mShareHelper.onActivityResult(requestCode, resultCode, data);
     }
 }

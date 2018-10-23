@@ -26,7 +26,6 @@ import com.mugen.MugenCallbacks;
 import com.mugen.attachers.BaseAttacher;
 import com.xson.common.R;
 import com.xson.common.adapter.LoadMoreAdapter;
-import com.xson.common.utils.L;
 
 /**
  * @author Milk <249828165@qq.com>
@@ -49,7 +48,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
 
     public static enum Mode {
         ONLY_PULL_UP,//只上拉加载
-        NONE,//不上拉加载下一页
+        ONLY_PULL_DOWN,//只下拉刷新
         BOTH,//下拉刷新、上拉加载
         NO_PAGE//既不下拉刷新、也不上拉加载（不分页时候）
     }
@@ -82,7 +81,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         dividerHeight = a.getDimensionPixelOffset(1, 0);
         int colorControlActivated = a.getColor(2, 0);
         a.recycle();
-        L.d("colorControlActivated="+colorControlActivated);
         if (dividerHeight == 0 && divider != null) {
             dividerHeight = divider.getIntrinsicHeight();
         }
@@ -90,8 +88,8 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SmartSwipeRefreshLayout, defStyleAttr, defStyleRes);
         int leftDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerLeftMargin, 0);
         int rightDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerRightMargin, 0);
-        int topDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerTopMargin, 0);
-        int bottomDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerBottomMargin, 0);
+//        int topDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerTopMargin, 0);
+//        int bottomDividerMargin = a.getDimensionPixelOffset(R.styleable.SmartSwipeRefreshLayout_dividerBottomMargin, 0);
         a.recycle();
 
         inflate(context, R.layout.ssrl_swipe_refresh_layout, this);
@@ -111,8 +109,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     private void initRecyclerView() {
-//        if(recyclerView != null)return;
-        //mCollectionView can be a ListView, GridView, RecyclerView or any instance of AbsListView!
         attacher = Mugen.with(recyclerView, new MugenCallbacks() {
             @Override
             public void onLoadMore() {
@@ -146,7 +142,7 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
                     return true;
                 }
                 switch (mode) {
-                    case NONE://不加载下一页
+                    case ONLY_PULL_DOWN://只下拉刷新
                     case NO_PAGE://没有分页
                         return true;
                     case BOTH:
@@ -213,10 +209,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         return recyclerView;
     }
 
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-        return swipeRefreshLayout;
-    }
-
     private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -278,8 +270,6 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
     }
 
     private void hideEmptyLayout() {
-//        if (getAdapter() != null)
-//            getAdapter().hideEmptyView();
         if (emptyLayout != null) {
             emptyLayout.setVisibility(GONE);
         }
@@ -291,15 +281,12 @@ public class SmartSwipeRefreshLayout extends FrameLayout {
         showSwipeRefreshLayout();
         ensureEmptyLayout();
         emptyLayout.setVisibility(VISIBLE);
-//        if (getAdapter() != null)
-//            getAdapter().showEmptyView();
     }
 
     private void ensureErrorLayout() {
         if(errorLayout == null) {
             errorLayout = ((ViewStub)findViewById(R.id.ssrl___error_vs)).inflate();
             errorTextView = (TextView)errorLayout.findViewById(R.id.ssrl___error_tv);
-
             if(onTryLoadListener != null) {
                 View tryAgainButton = errorLayout.findViewById(R.id.ssrl___try_btn);
                 tryAgainButton.setOnClickListener(new OnClickListener() {

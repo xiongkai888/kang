@@ -8,8 +8,8 @@ import android.support.v7.app.ActionBar;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PhysiotherapyAdapter;
+import com.lanmei.kang.bean.HomeBean;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.bean.HomeListBean;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import butterknife.InjectView;
@@ -25,7 +25,7 @@ public class PhysiotherapyActivity extends BaseActivity{
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    HomeListBean.CategoryBean bean;
+    HomeBean.CategoryBean bean;
 
     @Override
     public int getContentViewId() {
@@ -36,7 +36,7 @@ public class PhysiotherapyActivity extends BaseActivity{
     public void initIntent(Intent intent) {
         super.initIntent(intent);
         Bundle bundle = intent.getBundleExtra("bundle");
-        bean = (HomeListBean.CategoryBean) bundle.getSerializable("bean");
+        bean = (HomeBean.CategoryBean) bundle.getSerializable("bean");
     }
 
     @Override

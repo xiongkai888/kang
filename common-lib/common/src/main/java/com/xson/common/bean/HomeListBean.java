@@ -38,8 +38,8 @@ public class HomeListBean<T> extends AbsListBean {
     public static class BannerBean {
 
         /**
-         * pic : http://stdrimages.img-cn-shenzhen.aliyuncs.com/170719/596e5cb0727a0.JPG
-         * link : p_102
+         * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180201/5a7275ea7ffa2.png
+         * link : p_178
          */
 
         private String pic;
@@ -70,10 +70,11 @@ public class HomeListBean<T> extends AbsListBean {
 
     public static class CategoryBean implements Serializable {
 
+
         /**
-         * id : 126
-         * name : 西药理疗
-         * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180102/5a4b2405e4587.jpg
+         * id : 125
+         * name : 中药理疗
+         * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180201/5a727575bb0a0.png
          */
 
         private String id;

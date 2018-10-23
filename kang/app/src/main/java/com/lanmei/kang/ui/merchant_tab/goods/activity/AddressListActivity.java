@@ -1,8 +1,8 @@
 package com.lanmei.kang.ui.merchant_tab.goods.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +11,7 @@ import com.lanmei.kang.adapter.AddressListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AddressListBean;
 import com.lanmei.kang.event.AddAddressEvent;
+import com.lanmei.kang.event.AddressListEvent;
 import com.lanmei.kang.event.AlterAddressEvent;
 import com.lanmei.kang.event.ChooseAddressEvent;
 import com.lanmei.kang.util.AKDialog;
@@ -19,7 +20,9 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
@@ -40,11 +43,22 @@ public class AddressListActivity extends BaseActivity {
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    AddressListAdapter mAdapter;
+    AddressListAdapter adapter;
+    private SwipeRefreshController<NoPageListBean<AddressListBean>> controller;
+    private List<AddressListBean> list;
 
     @Override
     public int getContentViewId() {
         return R.layout.activity_single_listview;
+    }
+
+    @Override
+    public void initIntent(Intent intent) {
+        super.initIntent(intent);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle != null){
+            list = (List<AddressListBean>)bundle.getSerializable("list");
+        }
     }
 
     @Override
@@ -58,13 +72,31 @@ public class AddressListActivity extends BaseActivity {
 
         EventBus.getDefault().register(this);
 
-        loadAddressList();
-        smartSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
+        smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
-        mAdapter = new AddressListAdapter(this);
-        smartSwipeRefreshLayout.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        mAdapter.setChooseAddressListener(new AddressListAdapter.ChooseAddressListener() {
+        adapter = new AddressListAdapter(this);
+        smartSwipeRefreshLayout.setAdapter(adapter);
+
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
+        api.addParams("uid",api.getUserId(this));
+//        api.addParams("uid",46);
+        api.addParams("operation",4);
+        controller = new SwipeRefreshController<NoPageListBean<AddressListBean>>(getContext(), smartSwipeRefreshLayout, api, adapter) {
+            @Override
+            public boolean onSuccessResponse(NoPageListBean<AddressListBean> response) {
+                list = response.data;
+                EventBus.getDefault().post(new AddressListEvent(response.data));
+                return super.onSuccessResponse(response);
+            }
+        };
+
+        if (StringUtils.isEmpty(list)){
+            controller.loadFirstPage();
+        }else {
+            adapter.setData(list);
+            adapter.notifyDataSetChanged();
+        }
+        adapter.setChooseAddressListener(new AddressListAdapter.ChooseAddressListener() {
             @Override
             public void choose(AddressListBean bean) {
                 EventBus.getDefault().post(new ChooseAddressEvent(bean));
@@ -81,21 +113,28 @@ public class AddressListActivity extends BaseActivity {
                 AKDialog.getAlertDialog(getContext(), getString(R.string.delete_this_address), new AKDialog.AlertDialogListener() {
                     @Override
                     public void yes() {
-                        KangQiMeiApi api = new KangQiMeiApi("app/address");
-                        api.addParams("userid",api.getUserId(getContext()));
-                        api.addParams("operation",3);
-                        api.addParams("id",id);
-                        HttpClient.newInstance(getContext()).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-                            @Override
-                            public void onResponse(BaseBean response) {
-                                mAdapter.getData().remove(position);
-                                mAdapter.notifyItemRemoved(position);
-                                mAdapter.notifyDataSetChanged();
-                                EventBus.getDefault().post(new AlterAddressEvent());//
-                            }
-                        });
+                        deleteAddress(id,position);
                     }
                 });
+            }
+        });
+    }
+
+    private void deleteAddress(String id,final int position) {
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
+        api.addParams("uid",api.getUserId(this));
+        api.addParams("operation",3);
+        api.addParams("id",id);
+        HttpClient.newInstance(getContext()).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()){
+                    return;
+                }
+                adapter.getData().remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyDataSetChanged();
+                EventBus.getDefault().post(new AlterAddressEvent());//
             }
         });
     }
@@ -103,34 +142,23 @@ public class AddressListActivity extends BaseActivity {
     //设为默认
     private void setAddressDefault(String id, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("useid",api.getUserId(this));
+        api.addParams("uid",api.getUserId(this));
         api.addParams("operation",2);
         api.addParams("id",id);
         api.addParams("default",1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
-                List<AddressListBean> list = mAdapter.getData();
+                if (isFinishing()){
+                    return;
+                }
+                List<AddressListBean> list = adapter.getData();
                 int size = list.size();
                 for (int i=0;i<size;i++){
                     list.get(i).setDefaultX("0");
                 }
                 list.get(position).setDefaultX("1");
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    private void loadAddressList() {
-        KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("useid",api.getUserId(this));
-        api.addParams("operation",4);
-        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AddressListBean>>() {
-            @Override
-            public void onResponse(NoPageListBean<AddressListBean> response) {
-                List<AddressListBean> list = response.data;
-                mAdapter.setData(list);
-                mAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -144,19 +172,15 @@ public class AddressListActivity extends BaseActivity {
     //添加地址的时候
     @Subscribe
     public void addAddressEvent(AddAddressEvent event) {
-        loadAddressList();
+       controller.loadFirstPage();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.action_add://添加
                 IntentUtil.startActivity(this, AddAddressActivity.class);
                 break;
-            //            case R.id.action_confirm://确定
-            //                UIHelper.ToastMessage(this,R.string.developing);
-            //                break;
         }
         return super.onOptionsItemSelected(item);
     }

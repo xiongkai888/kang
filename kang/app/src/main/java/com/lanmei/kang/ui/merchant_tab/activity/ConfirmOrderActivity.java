@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PayWayAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.AddressListBean;
 import com.lanmei.kang.bean.DistributionBean;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.bean.PayWayBean;
+import com.lanmei.kang.event.AddressListEvent;
+import com.lanmei.kang.event.ChooseAddressEvent;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.AddressListActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
@@ -25,8 +28,12 @@ import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.DoubleUtil;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.FormatTextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +53,6 @@ public class ConfirmOrderActivity extends BaseActivity {
     RecyclerView recyclerView;
     @InjectView(R.id.name_tv)
     TextView nameTv;
-    @InjectView(R.id.phone_tv)
-    TextView phoneTv;
     @InjectView(R.id.address_tv)
     TextView addressTv;
     @InjectView(R.id.items_icon_iv)
@@ -64,6 +69,8 @@ public class ConfirmOrderActivity extends BaseActivity {
     private int number;
     private List<DistributionBean> distributionBeanList;
     private OptionPicker picker;//
+    private AddressListBean addressBean;//地址信息
+    private List<AddressListBean> addressListBeans;
 
     @Override
     public int getContentViewId() {
@@ -82,6 +89,8 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -89,9 +98,8 @@ public class ConfirmOrderActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        PayWayAdapter adapter = new PayWayAdapter(this);
-        adapter.setData(getList());
-        recyclerView.setAdapter(adapter);
+
+        checkAddress();
 
         if (detailsBean == null) {
             return;
@@ -102,6 +110,8 @@ public class ConfirmOrderActivity extends BaseActivity {
         priceTv.setTextValue(DoubleUtil.mulToString(Double.valueOf(detailsBean.getPrice()), Double.valueOf(number)));
 
         loadDistribution();//配送方式
+        loadPayment();//支付方式
+        loadAddressList();
 
     }
 
@@ -118,6 +128,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         });
     }
 
+
     private List<String> toStringList() {
         List<String> list = new ArrayList<>();
         for (DistributionBean bean : distributionBeanList) {
@@ -126,8 +137,10 @@ public class ConfirmOrderActivity extends BaseActivity {
         return list;
     }
 
+    //配送列表
     private void loadDistribution() {
-        KangQiMeiApi api = new KangQiMeiApi("app/good_distribution_list");
+        KangQiMeiApi api = new KangQiMeiApi("app/distribution_list");
+        api.addParams("tablename", "distribution");
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<DistributionBean>>() {
             @Override
             public void onResponse(NoPageListBean<DistributionBean> response) {
@@ -143,16 +156,22 @@ public class ConfirmOrderActivity extends BaseActivity {
         });
     }
 
-    private List<PayWayBean> getList() {
-        List<PayWayBean> wayBeans = new ArrayList<>();
-        PayWayBean bean1 = new PayWayBean();
-        bean1.setC_name("支付宝");
-        PayWayBean bean2 = new PayWayBean();
-        bean2.setC_name("微信");
-        wayBeans.add(bean1);
-        wayBeans.add(bean2);
-        return wayBeans;
+    //支付方式
+    private void loadPayment() {
+        KangQiMeiApi api = new KangQiMeiApi("app/payment");
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<PayWayBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<PayWayBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                PayWayAdapter adapter = new PayWayAdapter(getContext());
+                adapter.setData(response.data);
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
+
 
     @OnClick({R.id.ll_address, R.id.submit_order_tv, R.id.ll_distribution, R.id.ll_billing_details})
     public void onViewClicked(View view) {
@@ -161,7 +180,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 IntentUtil.startActivity(this, AddressListActivity.class);
                 break;
             case R.id.submit_order_tv://提交订单
-                CommonUtils.developing(this);
+                submitOrder();
                 break;
             case R.id.ll_distribution://配送方式
                 if (picker != null) {
@@ -174,4 +193,80 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
+    private void submitOrder() {
+        if (StringUtils.isEmpty(addressBean)){
+            UIHelper.ToastMessage(this, R.string.choose_address);
+            return;
+        }
+
+    }
+
+    private void loadAddressList() {
+        KangQiMeiApi api = new KangQiMeiApi("app/address");
+        api.addParams("uid", api.getUserId(this));
+//        api.addParams("uid",46);
+        api.addParams("operation", 4);
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AddressListBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<AddressListBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                addressListBeans = response.data;
+                if (!StringUtils.isEmpty(addressListBeans)) {
+                    for (AddressListBean bean : addressListBeans) {
+                        if (!StringUtils.isEmpty(bean) && StringUtils.isSame(CommonUtils.isOne, bean.getDefaultX())) {
+                            chooseAddress(bean);
+                            return;
+                        }
+                    }
+                }
+                checkAddress();
+            }
+        });
+    }
+
+    private void chooseAddress(AddressListBean bean) {
+        addressBean = bean;
+        nameTv.setVisibility(View.VISIBLE);
+        nameTv.setText(addressBean.getAccept_name() + "\u3000\u3000" + addressBean.getMobile());
+        addressTv.setText(bean.getAddress());
+    }
+
+    //选择地址的时候调用
+    @Subscribe
+    public void chooseAddressEvent(ChooseAddressEvent event) {
+        chooseAddress(event.getBean());
+    }
+
+    //选择地址列表获取地址列表的时候调用
+    @Subscribe
+    public void addressListEvent(AddressListEvent event) {
+        addressListBeans = event.getList();
+        if (StringUtils.isEmpty(addressListBeans)) {
+            checkAddress();
+        } else {
+            if (!StringUtils.isEmpty(addressBean)) {
+                for (AddressListBean bean : addressListBeans) {
+                    if (StringUtils.isSame(bean.getId(), addressBean.getId())) {
+                        chooseAddress(bean);
+                        return;
+                    }
+                }
+                checkAddress();
+            }
+        }
+    }
+
+    private void checkAddress() {
+        addressBean = null;
+        nameTv.setVisibility(View.GONE);
+        addressTv.setText(R.string.choose_address);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

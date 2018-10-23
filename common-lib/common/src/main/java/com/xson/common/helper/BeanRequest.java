@@ -125,16 +125,12 @@ public class BeanRequest<T extends BaseBean> extends MultiPartRequest<T> {
             String jsonString = new String(data, "UTF-8");
             if(!mSuccessListener.isCacheResult)
                 L.d("BeanRequest", "Response=" + jsonString);
-
-//            File file = new File(Environment.getExternalStorageDirectory(), "json.txt");
-//            FileUtils.writeFileFromString(file , jsonString, false);
             BaseBean baseBean = JSON.parseObject(jsonString, BaseBean.class); // 有时候返回成功格式和失败格式不一样，导致解析失败，所以现在这里解析一下先
             if (baseBean != null && 0 == baseBean.getStatus()) {
                 return Response.error(new UserLevelError(baseBean.getInfo(), baseBean));
             }
             Type type = mSuccessListener.getType();
             T bean = JSON.parseObject(jsonString, type);
-//            L.d("xs", "bean=" + bean + ",type=" + type);
             //new api: status响应结果，1表示请求成功，0表示请求失败，2表示需登录但未登录或登录超时
             if(0 == bean.getStatus()) {
                 return Response.error(new UserLevelError(bean.getInfo(), bean));

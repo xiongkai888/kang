@@ -91,10 +91,10 @@ public class MerchantIntroduceActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         KangQiMeiApi api = new KangQiMeiApi("place/details");
-        api.addParams("id", api.getUserId(this));
-        api.addParams("uid", merchantId);
-        api.addParams("lat", SharedAccount.getInstance(this).getLat());
-        api.addParams("lon", SharedAccount.getInstance(this).getLon());
+        api.add("id", api.getUserId(this));
+        api.add("uid", merchantId);
+        api.add("lat", SharedAccount.getInstance(this).getLat());
+        api.add("lon", SharedAccount.getInstance(this).getLon());
 
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<MerchantDetailsBean>>() {
             @Override
@@ -192,10 +192,10 @@ public class MerchantIntroduceActivity extends BaseActivity {
 
     private void collect() {
         KangQiMeiApi api = new KangQiMeiApi("");
-        api.addParams("id", merchantId);
-        api.addParams("uid", api.getUserId(this));
+        api.add("id", merchantId);
+        api.add("uid", api.getUserId(this));
         if (StringUtils.isSame(favoured, CommonUtils.isOne)) {
-            api.addParams("del", favoured);
+            api.add("del", favoured);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

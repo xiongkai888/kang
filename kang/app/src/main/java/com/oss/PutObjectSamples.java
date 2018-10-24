@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Created by zhouzhuo on 12/3/15.
+ * Created by xkai on 12/3/15.
  */
 public class PutObjectSamples {
 
@@ -62,9 +62,8 @@ public class PutObjectSamples {
             Log.e("ErrorCode", e.getErrorCode());
             Log.e("HostId", e.getHostId());
             Log.e("RawMessage", e.getRawMessage());
-        }finally {
-            return url;
         }
+        return url;
     }
 
 

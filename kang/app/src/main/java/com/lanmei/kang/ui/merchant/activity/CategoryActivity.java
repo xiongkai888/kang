@@ -88,8 +88,8 @@ public class CategoryActivity extends BaseActivity {
 
     private void loadClass() {
         KangQiMeiApi api = new KangQiMeiApi("member/category");
-        api.addParams("mid",pid);
-        api.addParams("token",api.getToken(this));
+        api.add("mid",pid);
+        api.add("token",api.getToken(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<CategoryBean>>() {
             @Override
             public void onResponse(NoPageListBean<CategoryBean> response) {
@@ -140,10 +140,10 @@ public class CategoryActivity extends BaseActivity {
         }
         dialog.cancel();
         KangQiMeiApi api = new KangQiMeiApi("place/addClassify");
-        api.addParams("mid",pid);
-        api.addParams("name",code);
+        api.add("mid",pid);
+        api.add("name",code);
         if (type != 1){//编辑分类
-            api.addParams("id",id);
+            api.add("id",id);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

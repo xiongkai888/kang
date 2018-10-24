@@ -11,7 +11,6 @@ import android.webkit.WebView;
 public class ItemWebView extends WebView {
     public float oldY;
     private int t;
-    private float oldX;
 
     public ItemWebView(Context context) {
         super(context);
@@ -43,7 +42,7 @@ public class ItemWebView extends WebView {
             case MotionEvent.ACTION_DOWN:
                 getParent().getParent().requestDisallowInterceptTouchEvent(true);
                 oldY = ev.getY();
-                oldX = ev.getX();
+                float oldX = ev.getX();
                 break;
 
             case MotionEvent.ACTION_UP:

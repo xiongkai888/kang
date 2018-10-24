@@ -50,7 +50,7 @@ public class RobotsActivity extends BaseActivity {
 
 	public static final String TAG = RobotsActivity.class.getSimpleName();
 
-	private List<RobotUser> robotList = new ArrayList<RobotUser>();
+	private List<RobotUser> robotList = new ArrayList<>();
 	private RobotAdapter adapter;
 	private InputMethodManager inputMethodManager;
 	private View progressBar;
@@ -121,7 +121,7 @@ public class RobotsActivity extends BaseActivity {
 					public void run() {
 						progressBar.setVisibility(View.GONE);
 						swipeRefreshLayout.setRefreshing(false);
-						Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
+						Map<String, RobotUser> mMap = new HashMap<>();
 						for (EMContact item : value) {
 							RobotUser user = new RobotUser(item.getUsername());
 							user.setNick(item.getNick());

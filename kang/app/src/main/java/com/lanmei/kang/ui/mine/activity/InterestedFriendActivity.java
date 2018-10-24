@@ -66,9 +66,9 @@ public class InterestedFriendActivity extends BaseActivity {
     private void initSwipeRefreshLayout() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("friend/index");
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("type",2);//1、新朋友 2、感兴趣的
-        api.addParams("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
+        api.add("type",2);//1、新朋友 2、感兴趣的
+        api.add("token",api.getToken(this));
 
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<InterestedBean>>() {
             @Override

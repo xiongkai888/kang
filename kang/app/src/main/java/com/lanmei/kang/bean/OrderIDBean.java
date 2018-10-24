@@ -1,7 +1,7 @@
 package com.lanmei.kang.bean;
 
 /**
- * Created by Administrator on 2017/5/23.
+ * Created by xkai on 2017/5/23.
  */
 
 public class OrderIDBean {

@@ -193,7 +193,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                             try {
                                 if (soundPool != null)
                                     soundPool.stop(streamID);
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
                             }
                             if(!isHandsfreeState)
                                 closeSpeakerOn();
@@ -440,7 +440,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 while(monitor){
                     try {
                         Thread.sleep(1500);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }

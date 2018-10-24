@@ -82,7 +82,6 @@ public class ItemCompileActivity extends BaseActivity {
     TextView categoryTv;
     private MerchantItemsListBean bean;
     private boolean isAdd;
-    private String is_del;//是否下架0正常2下架
     private ItemsCompileAdapter adapter1;
     private ItemsCompileAdapter adapter2;
     private List<ItemsCompileBean> list1;//商品图片
@@ -195,22 +194,22 @@ public class ItemCompileActivity extends BaseActivity {
     private void loadCompile(int what) {
         KangQiMeiApi api = new KangQiMeiApi("member/editProduct");
         if (isAdd) {
-            api.addParams("mid",pid);//(编辑时可不传)
+            api.add("mid",pid);//(编辑时可不传)
         } else {
-            api.addParams("pid",bean.getId());//商品id(添加时不传)
+            api.add("pid",bean.getId());//商品id(添加时不传)
         }
-        api.addParams("category_id",categoryBean.getId());
-        api.addParams("name",name);
-        api.addParams("content",content);
-        api.addParams("sell_price",price);
-        api.addParams("is_del",what);
+        api.add("category_id",categoryBean.getId());
+        api.add("name",name);
+        api.add("content",content);
+        api.add("sell_price",price);
+        api.add("is_del",what);
         if (!StringUtils.isEmpty(successPath3)) {//
-            api.addParams("img",successPath3.get(0));
+            api.add("img",successPath3.get(0));
         } else {
-            api.addParams("file",getFileString());
+            api.add("file",getFileString());
         }
-        api.addParams("file",getFileString());
-        api.addParams("pic",getPicString());
+        api.add("file",getFileString());
+        api.add("pic",getPicString());
 
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -224,14 +223,14 @@ public class ItemCompileActivity extends BaseActivity {
 
     //商品图片
     private String getFileString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<ItemsCompileBean> beanList = adapter1.getData();
         if (!StringUtils.isEmpty(beanList)) {
             int size = beanList.size();
             for (int i = 0; i < size; i++) {
                 ItemsCompileBean bean = beanList.get(i);
                 if (!bean.isPicker() && !bean.isCover()) {//不是来自相册,也不是封面
-                    buffer.append(bean.getPic() + ",");
+                    buffer.append(bean.getPic()).append(L.cornet);
 
                 }
             }
@@ -239,7 +238,7 @@ public class ItemCompileActivity extends BaseActivity {
         if (!StringUtils.isEmpty(successPath1)) {
             int size = successPath1.size();
             for (int i = 0; i < size; i++) {
-                buffer.append(successPath1.get(i) + ",");
+                buffer.append(successPath1.get(i)).append(L.cornet);
             }
         }
         String file = buffer.toString();
@@ -251,21 +250,21 @@ public class ItemCompileActivity extends BaseActivity {
 
     //商品详情图片
     private String getPicString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<ItemsCompileBean> beanList = adapter2.getData();
         if (!StringUtils.isEmpty(beanList)) {
             int size = beanList.size();
             for (int i = 0; i < size; i++) {
                 ItemsCompileBean bean = beanList.get(i);
                 if (!bean.isPicker()) {//不是来自相册
-                    buffer.append(bean.getPic() + ",");
+                    buffer.append(bean.getPic()).append(L.cornet);
                 }
             }
         }
         if (!StringUtils.isEmpty(successPath2)) {
             int size = successPath2.size();
             for (int i = 0; i < size; i++) {
-                buffer.append(successPath2.get(i) + ",");
+                buffer.append(successPath2.get(i)).append(L.cornet);
             }
         }
 
@@ -367,7 +366,7 @@ public class ItemCompileActivity extends BaseActivity {
             actionbar.setTitle("添加新产品");
             mllView.setVisibility(View.GONE);
         } else {
-            is_del = bean.getIs_del();
+            String is_del = bean.getIs_del();
             if (!StringUtils.isSame(CommonUtils.isZero, is_del)) {//是否下架0正常2下架
 //                soldOutTv.setText("已下架");
                 mllView.setVisibility(View.GONE);
@@ -485,20 +484,19 @@ public class ItemCompileActivity extends BaseActivity {
         }
     }
 
-    private boolean isCover() {//要是没有封面就设置第一张为封面（添加产品的时候）
+    private void isCover() {//要是没有封面就设置第一张为封面（添加产品的时候）
         if (StringUtils.isEmpty(list1)) {
-            return false;
+            return;
         }
         int size = list1.size();
         for (int i = 0; i < size; i++) {
             ItemsCompileBean bean = list1.get(i);
             if (bean.isCover()) {
-                return true;
+                return;
             }
         }
         ItemsCompileBean bean = list1.get(0);
         bean.setCover(true);
-        return false;
     }
 
     private void initRecyclerView() {
@@ -591,8 +589,8 @@ public class ItemCompileActivity extends BaseActivity {
     //删除产品
     private void delProduct() {
         KangQiMeiApi api = new KangQiMeiApi("member/delProduct");
-        api.addParams("goods_id",bean.getId());
-        api.addParams("mid",pid);
+        api.add("goods_id",bean.getId());
+        api.add("mid",pid);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -607,8 +605,8 @@ public class ItemCompileActivity extends BaseActivity {
 
     private void loadClass() {
         KangQiMeiApi api = new KangQiMeiApi("member/category");
-        api.addParams("token",api.getToken(this));
-        api.addParams("mid",pid);
+        api.add("token",api.getToken(this));
+        api.add("mid",pid);
 
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<CategoryBean>>() {
             @Override

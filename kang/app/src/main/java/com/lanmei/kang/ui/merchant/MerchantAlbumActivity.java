@@ -219,10 +219,10 @@ public class MerchantAlbumActivity extends BaseActivity {
     private void updateAblum() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("place/update");
-        api.addParams("token", api.getToken(this));
-        api.addParams("uid", api.getUserId(this));
+        api.add("token", api.getToken(this));
+        api.add("uid", api.getUserId(this));
         String pics = CommonUtils.getAlbumsPics(mAlbumBeanlist) + successPath;
-        api.addParams("pics", pics);
+        api.add("pics", pics);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

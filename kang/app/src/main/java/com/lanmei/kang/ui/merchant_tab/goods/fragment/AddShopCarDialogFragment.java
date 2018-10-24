@@ -31,6 +31,8 @@ import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -124,6 +126,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
                 detailsBean.setPrice(bean.getPrice());
                 detailsBean.setSpecifications(bean.getSpecifications());
+                detailsBean.setGid(bean.getId());
             }
         });
     }
@@ -194,9 +197,19 @@ public class AddShopCarDialogFragment extends DialogFragment {
             UIHelper.ToastMessage(getContext(), "请选择商品 " + CommonUtils.getStringByTextView(specificationsNameTv));
             return;
         }
+        List<ShopCarBean> list = new ArrayList<>();
+        ShopCarBean bean = new ShopCarBean();
+        bean.setGid(detailsBean.getGid());
+        bean.setGoods_id(detailsBean.getId());
+        bean.setGoodsName(detailsBean.getGoodsname());
+        bean.setGoodsCount(orderNum);
+        bean.setGoodsImg(detailsBean.getCover());
+        bean.setSpecifications(detailsBean.getSpecifications());
+        bean.setSell_price(Double.parseDouble(detailsBean.getPrice()));
+        list.add(bean);
+
         Bundle bundle = new Bundle();
-        bundle.putSerializable("bean", detailsBean);
-        bundle.putInt("num", orderNum);
+        bundle.putSerializable("list", (Serializable)list);
         IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
         dismiss();
     }
@@ -214,6 +227,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
         shopCarBean.setGoodsImg(detailsBean.getCover());
         shopCarBean.setGoodsCount(orderNum);
         shopCarBean.setSpecifications(detailsBean.getSpecifications());
+        shopCarBean.setGid(detailsBean.getGid());
         DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
         dismiss();
     }

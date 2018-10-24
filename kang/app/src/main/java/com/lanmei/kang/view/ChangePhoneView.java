@@ -103,9 +103,9 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
     private void loadUnBoundCar() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.addParams("token",api.getToken(getContext()));
-        api.addParams("del",1);//表示删除
-        api.addParams("id",type);
+        api.add("token",api.getToken(getContext()));
+        api.add("del",1);//表示删除
+        api.add("id",type);
         api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -124,8 +124,8 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
     private void ajaxChangePhone() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/update");
-        api.addParams("token",api.getToken(context));
-        api.addParams("phone",mPhone);
+        api.add("token",api.getToken(context));
+        api.add("phone",mPhone);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -143,8 +143,8 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
         codeStr = RandomUtil.generateNumberString(6);//随机生成的六位验证码
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("public/send_sms");
-        api.addParams("phone",mPhone);
-        api.addParams("code",codeStr);
+        api.add("phone",mPhone);
+        api.add("code",codeStr);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

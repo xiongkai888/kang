@@ -1,9 +1,5 @@
 package com.lanmei.kang.helper;
 
-/**
- * Created by xkai on 2018/9/12.
- */
-
 import android.os.AsyncTask;
 
 import com.alibaba.fastjson.JSON;
@@ -21,7 +17,7 @@ public class AddressAsyncTask extends AsyncTask<String, Integer, ArrayList<Provi
 
     @Override
     protected ArrayList<Province> doInBackground(String... params) {
-        ArrayList<Province> data = new ArrayList<Province>();
+        ArrayList<Province> data = new ArrayList<>();
         String json = AssetsUtils.getStringFromAssert(KangApp.applicationContext, "city.json");
         data.addAll(JSON.parseArray(json, Province.class));
         return data;

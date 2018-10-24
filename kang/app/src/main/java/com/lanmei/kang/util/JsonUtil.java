@@ -80,7 +80,7 @@ public class JsonUtil {
 	 */
 	public static JSONObject getJsonDataFromAssets(Context context,String jsonFileName) throws Exception{
 		JSONObject mJsonObj = null;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		InputStream is = context.getAssets().open(jsonFileName);
 		int len = -1;
 		byte[] buf = new byte[1024];

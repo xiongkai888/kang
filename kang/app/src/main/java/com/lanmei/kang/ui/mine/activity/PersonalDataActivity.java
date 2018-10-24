@@ -165,18 +165,18 @@ public class PersonalDataActivity extends BaseActivity {
         final String signature = CommonUtils.getStringByEditText(mSignatureEt);//
 
         KangQiMeiApi api = new KangQiMeiApi("member/update");
-        api.addParams("uid",api.getUserId(this));
+        api.add("uid",api.getUserId(this));
         if (StringUtils.isEmpty(headUrl)){
-            api.addParams("pic",pic);
+            api.add("pic",pic);
         }else {
-            api.addParams("pic",headUrl);
+            api.add("pic",headUrl);
         }
-        api.addParams("nickname",name);
-        api.addParams("qq",qq);
-        api.addParams("email",email);
-        api.addParams("phone",phone);
-        api.addParams("address",address);
-        api.addParams("signature",signature);
+        api.add("nickname",name);
+        api.add("qq",qq);
+        api.add("email",email);
+        api.add("phone",phone);
+        api.add("address",address);
+        api.add("signature",signature);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

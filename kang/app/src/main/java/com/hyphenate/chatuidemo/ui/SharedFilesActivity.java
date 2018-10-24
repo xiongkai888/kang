@@ -129,11 +129,7 @@ public class SharedFilesActivity extends BaseActivity {
                         if(isRefresh)
                             fileList.clear();
                         fileList.addAll(value);
-                        if(value.size() == pageSize){
-                            hasMoreData = true;
-                        }else{
-                            hasMoreData = false;
-                        }
+                        hasMoreData = value.size() == pageSize;
                         if(adapter == null){
                             adapter = new FilesAdapter(SharedFilesActivity.this, 1, fileList);
                             listView.setAdapter(adapter);

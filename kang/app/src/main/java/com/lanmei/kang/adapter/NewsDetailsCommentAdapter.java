@@ -138,11 +138,11 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
                     return;
                 }
                 KangQiMeiApi api = new KangQiMeiApi("post/do_favour");
-                api.addParams("uid",api.getUserId(context));
-                api.addParams("token",api.getToken(context));
-                api.addParams("id",detailsBean.getId());
+                api.add("uid",api.getUserId(context));
+                api.add("token",api.getToken(context));
+                api.add("id",detailsBean.getId());
                 if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isOne)) {
-                    api.addParams("del",detailsBean.getFavoured());
+                    api.add("del",detailsBean.getFavoured());
                 }
                 HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                     @Override

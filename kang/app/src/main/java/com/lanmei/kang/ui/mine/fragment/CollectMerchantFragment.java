@@ -52,9 +52,9 @@ public class CollectMerchantFragment extends BaseFragment {
 
 
         KangQiMeiApi api = new KangQiMeiApi("place/favour");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("lat",SharedAccount.getInstance(context).getLat());
-        api.addParams("lon",SharedAccount.getInstance(context).getLon());
+        api.add("uid",api.getUserId(context));
+        api.add("lat",SharedAccount.getInstance(context).getLat());
+        api.add("lon",SharedAccount.getInstance(context).getLon());
 
         mAdapter = new MyCollectMerchantAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);

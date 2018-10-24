@@ -17,7 +17,7 @@ import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 
 
 /**
- * Created by zhouzhuo on 12/3/15.
+ * Created by xkai on 12/3/15.
  */
 public class ManageObjectSamples {
 
@@ -165,7 +165,7 @@ public class ManageObjectSamples {
 
     private boolean asyncDel;
     /**异步删除*/
-    public boolean asyncDeleteObject(String key) {
+    public void asyncDeleteObject(String key) {
         // 创建删除请求
         DeleteObjectRequest delete = new DeleteObjectRequest(testBucket, key);
         // 异步删除
@@ -196,18 +196,17 @@ public class ManageObjectSamples {
 
         });
         deleteTask.waitUntilFinished();
-        return asyncDel;
     }
-    /**同步删除*/
-    private boolean syncDel;
+
     public boolean syncDeleteObject(String key) throws ClientException, ServiceException {
         // 同步删除该copy文件
-        syncDel=false;
+        /*同步删除*/
+        boolean syncDel = false;
         DeleteObjectRequest delete = new DeleteObjectRequest(testBucket, key);
         DeleteObjectResult deleteResult = oss.deleteObject(delete);
         if (deleteResult.getStatusCode() == 204) {
             Log.d("同步删除", "Success："+deleteResult.getUrl());
-            syncDel=true;
+            syncDel =true;
         }
         return syncDel;
     }

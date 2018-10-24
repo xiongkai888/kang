@@ -45,7 +45,6 @@ public class GoodsSellListActivity extends BaseActivity {
     TextView timeTv;
     private SwipeRefreshController<NoPageListBean<GoodsSellListBean>> controller;
     private DateTimePicker picker;
-    private FormatTime time;
     private KangQiMeiApi api;
     private GoodsSellListAdapter adapter;
 
@@ -72,7 +71,7 @@ public class GoodsSellListActivity extends BaseActivity {
 
     private void initPicker() {
         picker = new DateTimePicker(this, DateTimePicker.YEAR_MONTH, DateTimePicker.NONE);
-        time = new FormatTime(this);
+        FormatTime time = new FormatTime(this);
         int year = time.getYear();
         int month = time.getMonth();
         picker.setDateRangeStart(2017, 1);
@@ -84,8 +83,8 @@ public class GoodsSellListActivity extends BaseActivity {
             public void onDateTimePicked(String year, String month, String hour, String minute) {
                 timeTv.setText(String.format(getString(R.string.year_month), year, month));
                 int days = CommonUtils.getMonthDays(Integer.valueOf(year), Integer.valueOf(month));
-                api.addParams("starttime", year + "-" + month + "-" + 1);
-                api.addParams("endtime", year + "-" + month + "-" + days);
+                api.add("starttime", year + "-" + month + "-" + 1);
+                api.add("endtime", year + "-" + month + "-" + days);
                 controller.loadFirstPage();
             }
         });
@@ -94,7 +93,7 @@ public class GoodsSellListActivity extends BaseActivity {
 
     private void initSwipeRefreshLayout() {
         api = new KangQiMeiApi("app/goods_sale_list");
-        api.addParams("sellerid", api.getUserId(this));
+        api.add("sellerid", api.getUserId(this));
         adapter = new GoodsSellListAdapter(this);
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(adapter);
@@ -117,7 +116,7 @@ public class GoodsSellListActivity extends BaseActivity {
     //根据id删除销售商品
     public void deleteSellGoods(String id, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("app/goods_sale_list");
-        api.addParams("id", id).addParams("uid", api.getUserId(this)).addParams("is_del", 1);
+        api.add("id", id).add("uid", api.getUserId(this)).add("is_del", 1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

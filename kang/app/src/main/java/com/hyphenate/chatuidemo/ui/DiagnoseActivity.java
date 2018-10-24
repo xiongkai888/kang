@@ -45,7 +45,7 @@ public class DiagnoseActivity extends BaseActivity implements OnClickListener {
 		String strVersion = "";
 		try {
 			strVersion = getVersionName();
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 		if (!TextUtils.isEmpty(strVersion))
 			currentVersion.setText("V" + strVersion);

@@ -48,7 +48,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.list);
 		EaseSidebar sidebar = (EaseSidebar) findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
-		contactList = new ArrayList<EaseUser>();
+		contactList = new ArrayList<>();
 		// get contactlist
 		getContactList();
 		// set adapter

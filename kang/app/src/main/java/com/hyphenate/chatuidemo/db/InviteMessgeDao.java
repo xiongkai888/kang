@@ -44,8 +44,8 @@ public class InviteMessgeDao {
 	 * @param message
 	 * @return  return cursor of the message
 	 */
-	public Integer saveMessage(InviteMessage message){
-		return DemoDBManager.getInstance().saveMessage(message);
+	public void saveMessage(InviteMessage message){
+		DemoDBManager.getInstance().saveMessage(message);
 	}
 	
 	/**

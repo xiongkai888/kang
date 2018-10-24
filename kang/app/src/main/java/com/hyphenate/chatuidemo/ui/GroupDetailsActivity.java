@@ -182,10 +182,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	boolean isCurrentOwner(EMGroup group) {
 		String owner = group.getOwner();
-		if (owner == null || owner.isEmpty()) {
-			return false;
-		}
-		return owner.equals(EMClient.getInstance().getCurrentUser());
+		return !(owner == null || owner.isEmpty()) && owner.equals(EMClient.getInstance().getCurrentUser());
 	}
 
 	boolean isCurrentAdmin(EMGroup group) {
@@ -238,12 +235,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	}
 
 	boolean isCanAddMember(EMGroup group) {
-		if (group.isMemberAllowToInvite() ||
+		return group.isMemberAllowToInvite() ||
 				isAdmin(EMClient.getInstance().getCurrentUser()) ||
-				isCurrentOwner(group)) {
-			return true;
-		}
-		return false;
+				isCurrentOwner(group);
 	}
 
 	@Override
@@ -697,7 +691,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		progressDialog.setMessage("processing...");
 		progressDialog.show();
 //		final ArrayList list = (ArrayList) Arrays.asList(groupId);
-		final List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<>();
 		list.add(groupId);
 		new Thread(new Runnable() {
             @Override
@@ -846,12 +840,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 										EMClient.getInstance().groupManager().unblockUser(groupId, operationUserId);
 										break;
 									case R.id.menu_item_mute:
-										List<String> muteMembers = new ArrayList<String>();
+										List<String> muteMembers = new ArrayList<>();
 										muteMembers.add(operationUserId);
 										EMClient.getInstance().groupManager().muteGroupMembers(groupId, muteMembers, 20 * 60 * 1000);
 										break;
 									case R.id.menu_item_unmute:
-										List<String> list = new ArrayList<String>();
+										List<String> list = new ArrayList<>();
 										list.add(operationUserId);
 										EMClient.getInstance().groupManager().unMuteGroupMembers(groupId, list);
 										break;
@@ -1067,7 +1061,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 						boolean[] normalVisibilities = {
 								false,      //R.id.menu_item_transfer_owner,
-								isCurrentOwner(group) ? true : false,       //R.id.menu_item_add_admin,
+								isCurrentOwner(group),       //R.id.menu_item_add_admin,
 								false,      //R.id.menu_item_rm_admin,
 								true,       //R.id.menu_item_remove_member,
 								true,       //R.id.menu_item_add_to_blacklist,
@@ -1089,7 +1083,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 						boolean[] muteListVisibilities = {
 								false,      //R.id.menu_item_transfer_owner,
-								isCurrentOwner(group) ? true : false,       //R.id.menu_item_add_admin,
+								isCurrentOwner(group),       //R.id.menu_item_add_admin,
 								false,      //R.id.menu_item_rm_admin,
 								true,       //R.id.menu_item_remove_member,
 								true,       //R.id.menu_item_add_to_blacklist,

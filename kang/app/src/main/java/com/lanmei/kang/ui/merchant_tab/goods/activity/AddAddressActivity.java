@@ -223,17 +223,17 @@ public class AddAddressActivity extends BaseActivity {
 
     private void httpAddress(String name, String phone, String detailAddress) {
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("operation", isAdd ? 1 : 2);//1|2|3|4=>添加|修改|删除|列表
-        api.addParams("id", isAdd ? "" : bean.getId());
+        api.add("uid", api.getUserId(this));
+        api.add("operation", isAdd ? 1 : 2);//1|2|3|4=>添加|修改|删除|列表
+        api.add("id", isAdd ? "" : bean.getId());
 
-        api.addParams("accept_name", name);
-        api.addParams("mobile", phone);
-        api.addParams("address", detailAddress);
-        api.addParams("province", provinceId);
-        api.addParams("city", cityId);
-        api.addParams("area", areaId);
-        api.addParams("default", isDefault);
+        api.add("accept_name", name);
+        api.add("mobile", phone);
+        api.add("address", detailAddress);
+        api.add("province", provinceId);
+        api.add("city", cityId);
+        api.add("area", areaId);
+        api.add("default", isDefault);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

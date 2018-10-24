@@ -68,6 +68,9 @@ public class PayWayAdapter extends SwipeRefreshAdapter<PayWayBean> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (listener != null){
+                        listener.payId(bean.getId());
+                    }
                     if (bean.isChoose()){
                         return;
                     }
@@ -77,6 +80,16 @@ public class PayWayAdapter extends SwipeRefreshAdapter<PayWayBean> {
                 }
             });
         }
+    }
+
+    public PayWayListener listener;
+
+    public interface PayWayListener{
+        void payId(String id);
+    }
+
+    public void setPayWayListener(PayWayListener listener){
+        this.listener = listener;
     }
 
 }

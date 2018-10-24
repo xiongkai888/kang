@@ -3,103 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorF4F4"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/pay_no_tv"
-                style="@style/text14colorBlack"
-                android:text="订单号：1212121212"
-                android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/pay_no_tv"
+            style="@style/text14colorBlack"
+            android:textColor="@color/black" />
 
 
-            <TextView
-                android:id="@+id/pay_status_tv"
-                style="@style/text14color666"
-                android:layout_width="0dp"
-                android:layout_marginLeft="2dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/doned"
-                android:textColor="@color/colorAccent" />
-
-        </LinearLayout>
-
-        <TextView style="@style/line_H1dp_CD" />
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/d_10dp">
-
-            <ImageView
-                android:id="@+id/items_icon_iv"
-                android:layout_width="@dimen/d_100dp"
-                android:layout_height="@dimen/d_100dp"
-                android:layout_marginRight="@dimen/d_10dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/default_pic" />
-
-            <TextView
-                android:id="@+id/title_tv"
-                style="@style/text"
-                android:layout_toRightOf="@id/items_icon_iv"
-                android:text="我们不一样" />
-
-            <TextView
-                style="@style/text"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:visibility="visible"
-                android:gravity="right"
-                android:text="@string/goods_price_num" />
-
-        </RelativeLayout>
-
-        <TextView style="@style/line_H1dp_CD" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_vertical|right"
-            android:orientation="horizontal">
-
-
-            <TextView
-                style="@style/text14colorBlack"
-                android:layout_marginLeft="15dp"
-                android:text="共1件商品" />
-
-            <com.xson.common.widget.FormatTextView
-                android:id="@+id/total_price_tv"
-                style="@style/text"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/d_20dp"
-                android:layout_marginRight="5dp"
-                app:defaultValue="0"
-                app:formatText="@string/total_price_sub" />
-
-        </LinearLayout>
-
-
-        <include layout="@layout/include_item_order_bottom" />
+        <TextView
+            android:id="@+id/pay_status_tv"
+            style="@style/text14color666"
+            android:layout_width="0dp"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/doned"
+            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
+
+    <TextView style="@style/line_H1dp_CD" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView style="@style/line_H1dp_CD" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/num_tv"
+            style="@style/text14colorBlack"
+            android:layout_marginLeft="15dp"
+            android:text="共1件商品" />
+
+        <com.xson.common.widget.FormatTextView
+            android:id="@+id/total_price_tv"
+            style="@style/text"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/d_20dp"
+            android:layout_marginRight="5dp"
+            app:defaultValue="0"
+            app:formatText="@string/total_price_sub" />
+
+    </LinearLayout>
+
+    <include layout="@layout/include_item_order_bottom" />
+
 </LinearLayout>

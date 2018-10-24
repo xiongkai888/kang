@@ -15,7 +15,7 @@ import com.hyphenate.easeui.widget.EaseTitleBar;
 import com.hyphenate.exceptions.HyphenateException;
 
 /**
- * Created by wei on 2016/12/6.
+ * Created by xkai on 2016/12/6.
  */
 
 public class OfflinePushSettingsActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener{

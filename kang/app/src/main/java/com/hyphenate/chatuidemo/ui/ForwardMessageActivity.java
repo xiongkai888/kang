@@ -43,7 +43,7 @@ public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
                         return;
                     try {
                         ChatActivity.activityInstance.finish();
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                     Intent intent = new Intent(ForwardMessageActivity.this, ChatActivity.class);
                     // it is single chat

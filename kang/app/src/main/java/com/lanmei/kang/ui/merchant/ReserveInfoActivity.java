@@ -127,24 +127,21 @@ public class ReserveInfoActivity extends BaseActivity {
     }
 
     public boolean isSelect() {
-        if (type == 6 || type == 7 || type == 1) {
-            return true;
-        }
-        return false;
+        return type == 6 || type == 7 || type == 1;
     }
 
     private void ajaxBalancePay() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("reservation/save");
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("mid",bean.getMid());
-        api.addParams("items_id",bean.getId());
-        api.addParams("guest",orderNum);
+        api.add("uid",api.getUserId(this));
+        api.add("mid",bean.getMid());
+        api.add("items_id",bean.getId());
+        api.add("guest",orderNum);
         long time = System.currentTimeMillis();
-        api.addParams("stime",time);
-        api.addParams("etime",time);
-        api.addParams("pay_type",type);
-        api.addParams("token",api.getToken(this));
+        api.add("stime",time);
+        api.add("etime",time);
+        api.add("pay_type",type);
+        api.add("token",api.getToken(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<OrderIDBean>>() {
             @Override
             public void onResponse(DataBean<OrderIDBean> response) {
@@ -161,9 +158,9 @@ public class ReserveInfoActivity extends BaseActivity {
 
     private void loadPayMent(String order_id) {
         KangQiMeiApi api = new KangQiMeiApi("payment/pay");
-        api.addParams("order_id",order_id);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("order_id",order_id);
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient httpClient = HttpClient.newInstance(this);
         if (type == 1) {//支付宝支付

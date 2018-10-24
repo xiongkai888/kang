@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.model.GetBucketACLResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 
 /**
- * Created by LK on 15/12/19.
+ * Created by xkai on 15/12/19.
  */
 public class ManageBucketSamples {
     private OSS oss;

@@ -138,7 +138,7 @@ public class MerchantTimePicker extends WheelPicker {
             minuteTextView.setText(minuteLabel);
         }
         layout.addView(minuteTextView);
-        final ArrayList<String> hours = new ArrayList<String>();
+        final ArrayList<String> hours = new ArrayList<>();
         if (mode == HOUR) {
             for (int i = 1; i <= 12; i++) {
                 hours.add(DateUtils.fillZero(i));
@@ -149,7 +149,7 @@ public class MerchantTimePicker extends WheelPicker {
             }
         }
         hourView.setItems(hours, selectedHour);
-        final ArrayList<String> minutes = new ArrayList<String>();
+        final ArrayList<String> minutes = new ArrayList<>();
         minutes.add(DateUtils.fillZero(0));
         minutes.add(DateUtils.fillZero(30));
         minuteView.setItems(minutes, selectedMinute);

@@ -95,9 +95,9 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
     private void ajaxMerchant(String key) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
-        api.addParams("lat", SharedAccount.getInstance(this).getLat());
-        api.addParams("lon", SharedAccount.getInstance(this).getLon());
-        api.addParams("keyword", key);
+        api.add("lat", SharedAccount.getInstance(this).getLat());
+        api.add("lon", SharedAccount.getInstance(this).getLon());
+        api.add("keyword", key);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantListBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantListBean> response) {
@@ -111,9 +111,9 @@ public class SearchUserActivity extends BaseActivity implements TextView.OnEdito
     //搜索用户
     private void ajaxSearchUser(String key) {
         KangQiMeiApi api = new KangQiMeiApi("member/search");
-        api.addParams("keyword", key);
-        api.addParams("token", api.getToken(this));
-        api.addParams("uid", api.getUserId(this));
+        api.add("keyword", key);
+        api.add("token", api.getToken(this));
+        api.add("uid", api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<SearchUserBean>>() {
             @Override
             public void onResponse(NoPageListBean<SearchUserBean> response) {

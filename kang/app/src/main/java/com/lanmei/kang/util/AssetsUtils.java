@@ -144,7 +144,7 @@ public class AssetsUtils {
                 	makeDirs = false;
                 }else{
                 	File folder = new File(getFolderName);
-                	makeDirs = (folder.exists() && folder.isDirectory()) ? true : folder.mkdirs();
+                	makeDirs = (folder.exists() && folder.isDirectory()) || folder.mkdirs();
                 }
                 if(makeDirs){
                 	o = new FileOutputStream(file,false);

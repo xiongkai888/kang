@@ -173,9 +173,9 @@ public class MineMerchantFragment extends BaseFragment {
             return;
         }
         KangQiMeiApi api = new KangQiMeiApi("member/update");
-        api.addParams("token", api.getToken(context));
-        api.addParams("uid", api.getUserId(context));
-        api.addParams("pic", headUrl);
+        api.add("token", api.getToken(context));
+        api.add("uid", api.getUserId(context));
+        api.add("pic", headUrl);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

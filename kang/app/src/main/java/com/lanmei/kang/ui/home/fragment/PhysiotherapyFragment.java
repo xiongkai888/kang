@@ -26,7 +26,6 @@ public class PhysiotherapyFragment extends BaseFragment {
     SmartSwipeRefreshLayout refreshLayout;
 
     PhysiotherapyTabAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -39,14 +38,14 @@ public class PhysiotherapyFragment extends BaseFragment {
         refreshLayout.initWithLinearLayout();
         refreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
-        api.addParams("lat",SharedAccount.getInstance(context).getLat());
-        api.addParams("lon",SharedAccount.getInstance(context).getLon());
-        api.addParams("cid",bundle.getString("cid"));
-        api.addParams("order",bundle.getString("order"));
+        api.add("lat",SharedAccount.getInstance(context).getLat());
+        api.add("lon",SharedAccount.getInstance(context).getLon());
+        api.add("cid",bundle.getString("cid"));
+        api.add("order",bundle.getString("order"));
 
         mAdapter = new PhysiotherapyTabAdapter(context);
         refreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(context, refreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<MerchantListBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(context, refreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

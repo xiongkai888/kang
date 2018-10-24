@@ -15,7 +15,7 @@ import com.alibaba.sdk.android.oss.model.ResumableUploadResult;
 import java.io.File;
 
 /**
- * Created by zhouzhuo on 12/3/15.
+ * Created by xkai on 12/3/15.
  */
 public class ResuambleUploadSamples {
 

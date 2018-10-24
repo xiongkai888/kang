@@ -187,7 +187,7 @@ public class CommonUtils {
     //获取用户信息
     public static void loadUserInfo(final Context context, final UserInfoListener l) {
         KangQiMeiApi api = new KangQiMeiApi("member/member");
-        api.addParams("uid", api.getUserId(context));
+        api.add("uid", api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
             @Override
@@ -304,11 +304,8 @@ public class CommonUtils {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
+        return activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
     /**
@@ -359,16 +356,16 @@ public class CommonUtils {
      */
     public static String getAlbumsPics(List<AlbumBean> list) {
 
-        String pics = "";
+        StringBuffer buffer = new StringBuffer();
         if (list == null || list.size() == 0) {
-            return pics;
+            return buffer.toString();
         }
         for (AlbumBean bean : list) {
             if (bean != null && !bean.isPicker()) {
-                pics += bean.getPic() + L.cornet;
+                buffer.append(bean.getPic()).append(L.cornet);
             }
         }
-        return pics;
+        return buffer.toString();
     }
 
     /**
@@ -404,7 +401,7 @@ public class CommonUtils {
         if (StringUtils.isEmpty(list)) {
             return "";
         }
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int size = list.size();
         for (int i = 0; i < size; i++) {
             buffer.append(((size - 1) != i) ? list.get(i) + L.cornet : list.get(i));

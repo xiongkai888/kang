@@ -23,11 +23,7 @@ import java.util.List;
  */
 public class SplashActivity extends AppCompatActivity{
 
-    private ViewPager vp;
-    private GuideViewPagerAdapter adapter;
-    private List<View> views;
     private ImageView mSkipIv;//立即体验
-    private ImageView mLaunchIv;//启动图片
     int[] guide = new int[]{R.mipmap.guidance1, R.mipmap.guidance2, R.mipmap.guidance3};
 
     @Override
@@ -40,7 +36,7 @@ public class SplashActivity extends AppCompatActivity{
         if (!isFirstLogin){//第一次进入该应用
             initViewPager();
         }else {
-            mLaunchIv = (ImageView)findViewById(R.id.launch_iv);
+            ImageView mLaunchIv = (ImageView) findViewById(R.id.launch_iv);
             mLaunchIv.setVisibility(View.VISIBLE);
             // 如果不是第一次启动app，则正常显示启动屏
             new Handler().postDelayed(new Runnable() {
@@ -60,7 +56,7 @@ public class SplashActivity extends AppCompatActivity{
     }
 
     private void initViewPager() {
-        vp = (ViewPager) findViewById(R.id.vp_guide);
+        ViewPager vp = (ViewPager) findViewById(R.id.vp_guide);
         mSkipIv = (ImageView) findViewById(R.id.skip_tv);
         mSkipIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +86,7 @@ public class SplashActivity extends AppCompatActivity{
             }
         });
         // 初始化引导页视图列表
-        views = new ArrayList<View>();
+        List<View> views = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.guid_view, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
@@ -99,7 +95,7 @@ public class SplashActivity extends AppCompatActivity{
         }
         vp = (ViewPager) findViewById(R.id.vp_guide);
         // 初始化adapter
-        adapter = new GuideViewPagerAdapter(views);
+        GuideViewPagerAdapter adapter = new GuideViewPagerAdapter(views);
         vp.setAdapter(adapter);
     }
 }

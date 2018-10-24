@@ -28,7 +28,6 @@ public class NewFriendsActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
 
     NewFriendsAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<NewFriendsBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -53,13 +52,13 @@ public class NewFriendsActivity extends BaseActivity {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
 
         KangQiMeiApi api = new KangQiMeiApi("friend/index");
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("type",1);//1、新朋友 2、感兴趣的
-        api.addParams("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
+        api.add("type",1);//1、新朋友 2、感兴趣的
+        api.add("token",api.getToken(this));
 
         mAdapter = new NewFriendsAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<NewFriendsBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<NewFriendsBean>> controller = new SwipeRefreshController<NoPageListBean<NewFriendsBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

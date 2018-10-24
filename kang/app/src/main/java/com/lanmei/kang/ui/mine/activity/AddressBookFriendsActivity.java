@@ -91,7 +91,6 @@ public class AddressBookFriendsActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        /**得到手机通讯录联系人信息**/
         showContacts();
         //        /**得到手机SIM卡联系人人信息**/
         //        getSIMContacts();

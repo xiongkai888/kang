@@ -104,9 +104,9 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
     private void isAddFriends(final InterestedBean bean) {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("friend/add");
-        api.addParams("mid", bean.getId());
-        api.addParams("uid", api.getUserId(context));
-        api.addParams("token", api.getToken(context));
+        api.add("mid", bean.getId());
+        api.add("uid", api.getUserId(context));
+        api.add("token", api.getToken(context));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -124,9 +124,9 @@ public class InterestedAdapter extends SwipeRefreshAdapter<InterestedBean> {
 
     private void isFollow(final InterestedBean bean) {
         KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("mid",bean.getId());
-        api.addParams("token",api.getToken(context));
+        api.add("uid",api.getUserId(context));
+        api.add("mid",bean.getId());
+        api.add("token",api.getToken(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

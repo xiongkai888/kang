@@ -56,7 +56,6 @@ public class DynamicDetailsActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     DynamicDetailsCommAdapter mAdapter;
     SwipeRefreshController<NoPageListBean<DynamicCommBean>> controller;
-    private String uid;//用户id
     private String id;//动态（帖子）id
     private DynamicBean mbean;
     private boolean isSelf;//是不是自己的动态
@@ -89,7 +88,7 @@ public class DynamicDetailsActivity extends BaseActivity {
         mbean = (DynamicBean) bundle.getSerializable("bean");
         who = bundle.getInt("who");
         if (mbean != null) {
-            uid = mbean.getUid();
+            String uid = mbean.getUid();
             id = mbean.getId();
             isSelf = StringUtils.isSame(uid, CommonUtils.getUserId(this));
         }
@@ -101,8 +100,8 @@ public class DynamicDetailsActivity extends BaseActivity {
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
 
         KangQiMeiApi api = new KangQiMeiApi("PostsReviews/index");
-        api.addParams("posts_id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("posts_id",id);
+        api.add("uid",api.getUserId(this));
         api.setMethod(AbstractApi.Method.GET);
         mAdapter = new DynamicDetailsCommAdapter(this, mbean, isSelf);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
@@ -176,9 +175,9 @@ public class DynamicDetailsActivity extends BaseActivity {
     private void loadDeleteActivity() {//删除动态
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("posts/del");
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
 
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -213,9 +212,9 @@ public class DynamicDetailsActivity extends BaseActivity {
         }
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("PostsReviews/add");
-        api.addParams("content",content);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("posts_id",id);
+        api.add("content",content);
+        api.add("uid",api.getUserId(this));
+        api.add("posts_id",id);
         api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

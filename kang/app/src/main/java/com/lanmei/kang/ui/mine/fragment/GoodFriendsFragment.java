@@ -64,8 +64,8 @@ public class GoodFriendsFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         KangQiMeiApi api = new KangQiMeiApi("friend/index");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("token",api.getToken(context));
+        api.add("uid",api.getUserId(context));
+        api.add("token",api.getToken(context));
 
         mAdapter = new GoodFriendsSubAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);

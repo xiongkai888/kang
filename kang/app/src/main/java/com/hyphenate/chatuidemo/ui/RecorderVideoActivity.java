@@ -410,7 +410,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 				mCamera.release();
 				mCamera = null;
 			}
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 	}
 

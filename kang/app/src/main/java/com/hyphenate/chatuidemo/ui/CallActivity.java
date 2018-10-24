@@ -80,7 +80,7 @@ public class CallActivity extends BaseActivity {
                 // set the user-defined extension field
                 message.setAttribute("em_apns_ext", true);
                 
-                message.setAttribute("is_voice_call", callType == 0 ? true : false);
+                message.setAttribute("is_voice_call", callType == 0);
                 
                 message.setMessageStatusCallback(new EMCallBack(){
 
@@ -243,7 +243,7 @@ public class CallActivity extends BaseActivity {
             case MSG_CALL_RELEASE_HANDLER:
                 try {
                     EMClient.getInstance().callManager().endCall();
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
                 handler.removeCallbacks(timeoutHangup);
                 handler.removeMessages(MSG_CALL_MAKE_VIDEO);

@@ -50,7 +50,7 @@ public class CollectItemsFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         KangQiMeiApi api = new KangQiMeiApi("member/favour");
-        api.addParams("uid",api.getUserId(context));
+        api.add("uid",api.getUserId(context));
         mAdapter = new MyCollectItemsAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<MerchantDetailsBean.GoodsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

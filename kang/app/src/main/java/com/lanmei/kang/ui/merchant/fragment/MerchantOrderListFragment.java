@@ -55,11 +55,11 @@ public class MerchantOrderListFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         KangQiMeiApi api = new KangQiMeiApi("Reservation/sellerOrder");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("token",UserHelper.getInstance(context).getToken());
+        api.add("uid",api.getUserId(context));
+        api.add("token",UserHelper.getInstance(context).getToken());
         Bundle bundle = getArguments();
         if (bundle != null) {
-            api.addParams("status",bundle.getString("status"));
+            api.add("status",bundle.getString("status"));
         }
         mAdapter = new OrderListMerchantAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
@@ -73,8 +73,8 @@ public class MerchantOrderListFragment extends BaseFragment {
 
     private void ajaxDelOrder(String id) {//删除订单
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id",id);
-        api.addParams("token",api.getToken(context));
+        api.add("id",id);
+        api.add("token",api.getToken(context));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -90,15 +90,15 @@ public class MerchantOrderListFragment extends BaseFragment {
     private void ajaxCancelOrder(String id,String status) {//取消订单
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("reservation/save");
-        api.addParams("status",status);//1、下单 2、确认订单 3、取消订单 4、作废 5、完成
-        api.addParams("token",api.getToken(context));
+        api.add("status",status);//1、下单 2、确认订单 3、取消订单 4、作废 5、完成
+        api.add("token",api.getToken(context));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (context == null){
                     return;
                 }
-                UIHelper.ToastMessage(context,response.getInfo().toString());
+                UIHelper.ToastMessage(context, response.getInfo());
             }
         });
     }

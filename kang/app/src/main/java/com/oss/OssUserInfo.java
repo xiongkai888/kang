@@ -2,7 +2,7 @@ package com.oss;
 
 
 /**
- * Created by Administrator on 2017/1/13.
+ * Created by xkai on 2017/1/13.
  */
 
 public class OssUserInfo {

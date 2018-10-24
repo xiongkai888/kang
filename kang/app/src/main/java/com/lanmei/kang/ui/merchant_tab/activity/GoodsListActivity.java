@@ -30,8 +30,6 @@ public class GoodsListActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     private MerchantTabClassifyBean bean;
 
-    private SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller;
-
 
     @Override
     public int getContentViewId() {
@@ -61,10 +59,10 @@ public class GoodsListActivity extends BaseActivity {
         actionbar.setTitle(bean.getClassname());
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(this, 2));
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
-        api.addParams("id", bean.getId());
+        api.add("id", bean.getId());
         GoodsListAdapter adapter = new GoodsListAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+        SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
     }

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by zhouzhuo on 12/3/15.
+ * Created by xkai on 12/3/15.
  */
 public class GetObjectSamples {
 

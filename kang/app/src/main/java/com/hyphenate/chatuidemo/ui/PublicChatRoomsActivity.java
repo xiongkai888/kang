@@ -84,7 +84,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.list);
 		TextView title = (TextView) findViewById(R.id.tv_title);
 		title.setText(getResources().getString(R.string.chat_room));
-		chatRoomList = new ArrayList<EMChatRoom>();
+		chatRoomList = new ArrayList<>();
 		
 		View footView = getLayoutInflater().inflate(R.layout.em_listview_footer_view, listView, false);
         footLoadingLayout = (LinearLayout) footView.findViewById(R.id.loading_layout);
@@ -239,7 +239,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
 				});
 			}
 		}
-	};
+	}
 
 	private void loadAndShowData(){
 		new Thread(new Runnable() {
@@ -346,7 +346,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
 					results.values = chatRoomList;
 					results.count = chatRoomList.size();
 				}else{
-					List<EMChatRoom> roomss = new ArrayList<EMChatRoom>();
+					List<EMChatRoom> roomss = new ArrayList<>();
 					for(EMChatRoom chatRoom : chatRoomList){
 						if(chatRoom.getName().contains(constraint)){
 							roomss.add(chatRoom);

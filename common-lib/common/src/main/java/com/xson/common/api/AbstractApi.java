@@ -47,7 +47,7 @@ public abstract class AbstractApi {
         this.p = page;
     }
 
-    public AbstractApi addParams(String key, Object value) {
+    public AbstractApi add(String key, Object value) {
         paramsHashMap.put(key, value);
         return this;
     }

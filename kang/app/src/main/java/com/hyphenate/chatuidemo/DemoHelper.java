@@ -226,7 +226,7 @@ public class DemoHelper {
             String[] wh = resolution.split("x");
             if (wh.length == 2) {
                 try {
-                    EMClient.getInstance().callManager().getCallOptions().setVideoResolution(new Integer(wh[0]).intValue(), new Integer(wh[1]).intValue());
+                    EMClient.getInstance().callManager().getCallOptions().setVideoResolution(Integer.parseInt(wh[0]), Integer.parseInt(wh[1]));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -327,7 +327,7 @@ public class DemoHelper {
         String[] wh = resolution.split("x");
         if (wh.length == 2) {
             try {
-                EMClient.getInstance().callManager().getCallOptions().setVideoResolution(new Integer(wh[0]).intValue(), new Integer(wh[1]).intValue());
+                EMClient.getInstance().callManager().getCallOptions().setVideoResolution(Integer.parseInt(wh[0]), Integer.parseInt(wh[1]));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -393,11 +393,7 @@ public class DemoHelper {
                         notNotifyIds = demoModel.getDisabledGroups();
                     }
 
-                    if (notNotifyIds == null || !notNotifyIds.contains(chatUsename)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return notNotifyIds == null || !notNotifyIds.contains(chatUsename);
                 }
             }
         });
@@ -500,9 +496,9 @@ public class DemoHelper {
      * set global listener
      */
     protected void setGlobalListeners() {
-        syncGroupsListeners = new ArrayList<DataSyncListener>();
-        syncContactsListeners = new ArrayList<DataSyncListener>();
-        syncBlackListListeners = new ArrayList<DataSyncListener>();
+        syncGroupsListeners = new ArrayList<>();
+        syncContactsListeners = new ArrayList<>();
+        syncBlackListListeners = new ArrayList<>();
 
         isGroupsSyncedWithServer = demoModel.isGroupsSynced();
         isContactsSyncedWithServer = demoModel.isContactSynced();
@@ -820,7 +816,7 @@ public class DemoHelper {
         public void onContactAdded(String username) {
             // save contact
             Map<String, EaseUser> localUsers = getContactList();
-            Map<String, EaseUser> toAddUsers = new HashMap<String, EaseUser>();
+            Map<String, EaseUser> toAddUsers = new HashMap<>();
             EaseUser user = new EaseUser(username);
 
             if (!localUsers.containsKey(username)) {
@@ -988,7 +984,7 @@ public class DemoHelper {
         }
         KangQiMeiApi api = new KangQiMeiApi("member/member");
         String uid = username.substring(2, username.length());
-        api.addParams("uid",uid);
+        api.add("uid",uid);
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(appContext).request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
             @Override
@@ -1186,7 +1182,7 @@ public class DemoHelper {
 
         // return a empty non-null object to avoid app crash
         if (contactList == null) {
-            return new Hashtable<String, EaseUser>();
+            return new Hashtable<>();
         }
 
         return contactList;
@@ -1232,7 +1228,7 @@ public class DemoHelper {
         for (EaseUser u : contactInfoList) {
             contactList.put(u.getUsername(), u);
         }
-        ArrayList<EaseUser> mList = new ArrayList<EaseUser>();
+        ArrayList<EaseUser> mList = new ArrayList<>();
         mList.addAll(contactList.values());
         demoModel.saveContactList(mList);
     }
@@ -1385,7 +1381,7 @@ public class DemoHelper {
                         return;
                     }
 
-                    Map<String, EaseUser> userlist = new HashMap<String, EaseUser>();
+                    Map<String, EaseUser> userlist = new HashMap<>();
                     for (String username : usernames) {
                         EaseUser user = new EaseUser(username);
                         EaseCommonUtils.setUserInitialLetter(user);
@@ -1396,7 +1392,7 @@ public class DemoHelper {
                     getContactList().putAll(userlist);
                     // save the contact list to database
                     UserDao dao = new UserDao(appContext);
-                    List<EaseUser> users = new ArrayList<EaseUser>(userlist.values());
+                    List<EaseUser> users = new ArrayList<>(userlist.values());
                     dao.saveContactList(users);
 
                     demoModel.setContactSynced(true);

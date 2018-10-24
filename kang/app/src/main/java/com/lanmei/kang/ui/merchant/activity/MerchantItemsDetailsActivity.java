@@ -166,10 +166,10 @@ public class MerchantItemsDetailsActivity extends BaseActivity {
     //收藏项目（服务）
     private void collectItem() {
         KangQiMeiApi api = new KangQiMeiApi("member/do_favour");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",bean.getId());
+        api.add("uid",api.getUserId(this));
         if (StringUtils.isSame(bean.getGood_favoured(), CommonUtils.isOne)) {
-            api.addParams("del",bean.getGood_favoured());
+            api.add("del",bean.getGood_favoured());
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

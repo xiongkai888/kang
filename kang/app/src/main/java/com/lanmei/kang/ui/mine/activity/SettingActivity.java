@@ -165,7 +165,7 @@ public class SettingActivity extends BaseActivity {
     private void loadHelpInfo() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("Index/news");
-        api.addParams("title","帮助信息");
+        api.add("title","帮助信息");
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<HelpInfoBean>>() {
             @Override
             public void onResponse(NoPageListBean<HelpInfoBean> response) {

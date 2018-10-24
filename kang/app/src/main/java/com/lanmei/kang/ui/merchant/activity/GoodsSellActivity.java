@@ -110,7 +110,7 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
     //搜索会员
     private void searchUsers(String result) {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
-        api.addParams("menber_num", result).addParams("user_type", 0);
+        api.add("menber_num", result).add("user_type", 0);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
             @Override
             public void onResponse(NoPageListBean<UserBean> response) {
@@ -176,24 +176,24 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
         } else if (perfect == 2) {
             return;
         }
-        String goodsid = "";
-        String price = "";
-        String num = "";
-        String danwei = "";
+        StringBuilder goodsid = new StringBuilder();
+        StringBuilder price = new StringBuilder();
+        StringBuilder num = new StringBuilder();
+        StringBuilder danwei = new StringBuilder();
 
         int size = list.size();
         for (int i = 0; i < size; i++) {
             String cornet = ((size - 1 != i) ? L.cornet : "");
             GoodsSellBean bean = list.get(i);
-            goodsid += bean.getGid() + cornet;
-            price += bean.getPrice() + cornet;
-            num += bean.getNum() + cornet;
-            danwei += bean.getUnit() + cornet;
+            goodsid.append(bean.getGid()).append(cornet);
+            price.append(bean.getPrice()).append(cornet);
+            num.append(bean.getNum()).append(cornet);
+            danwei.append(bean.getUnit()).append(cornet);
         }
 
         KangQiMeiApi api = new KangQiMeiApi("app/goods_sale");
-        api.addParams("uid", api.getUserId(this)).addParams("sellerid", userBean.getId())
-                .addParams("goodsid", goodsid).addParams("price", price).addParams("num", num).addParams("danwei", danwei);
+        api.add("uid", api.getUserId(this)).add("sellerid", userBean.getId())
+                .add("goodsid", goodsid.toString()).add("price", price.toString()).add("num", num.toString()).add("danwei", danwei.toString());
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

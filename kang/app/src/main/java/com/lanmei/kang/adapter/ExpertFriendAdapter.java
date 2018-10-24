@@ -68,7 +68,7 @@ public class ExpertFriendAdapter extends SwipeRefreshAdapter<InterestedBean> {
                 public void onClick(View v) {
                     HttpClient httpClient = HttpClient.newInstance(context);
                     KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
-                    api.addParams("mid",bean.getId());
+                    api.add("mid",bean.getId());
                     httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                         @Override
                         public void onResponse(BaseBean response) {

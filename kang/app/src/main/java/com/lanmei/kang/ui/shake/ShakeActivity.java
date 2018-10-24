@@ -34,11 +34,9 @@ public class ShakeActivity extends Activity {
     private RelativeLayout mImgDn;
     private RelativeLayout mTitle;
 
-    private SlidingDrawer mDrawer;
     private Button mDrawerBtn;
-    private int durationTime = 500;
     private SoundPool sndPool;
-    private HashMap<Integer, Integer> soundPoolMap = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Integer> soundPoolMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,7 @@ public class ShakeActivity extends Activity {
         mImgDn = (RelativeLayout) findViewById(R.id.shakeImgDown);
         mTitle = (RelativeLayout) findViewById(R.id.shake_title_bar);
 
-        mDrawer = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+        SlidingDrawer mDrawer = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
         mDrawerBtn = (Button) findViewById(R.id.handle);
         mDrawer.setOnDrawerOpenListener(new OnDrawerOpenListener() {
             public void onDrawerOpened() {
@@ -123,6 +121,7 @@ public class ShakeActivity extends Activity {
     public void startAnim() {   //定义摇一摇动画动画
         AnimationSet animup = new AnimationSet(true);
         TranslateAnimation mytranslateanimup0 = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, -0.5f);
+        int durationTime = 500;
         mytranslateanimup0.setDuration(durationTime);
         TranslateAnimation mytranslateanimup1 = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, +0.5f);
         mytranslateanimup1.setDuration(durationTime);

@@ -67,7 +67,7 @@ public class MerchantItemsActivity extends BaseActivity {
         controller = new SwipeRefreshController<NoPageListBean<MerchantItemsListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         KangQiMeiApi infoApi = new KangQiMeiApi("place/index");
-        infoApi.addParams("uid",api.getUserId(this));
+        infoApi.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(infoApi, new BeanRequest.SuccessListener<DataBean<MerchantInfoBean>>() {
             @Override
             public void onResponse(DataBean<MerchantInfoBean> response) {
@@ -79,7 +79,7 @@ public class MerchantItemsActivity extends BaseActivity {
                     return;
                 }
                 pid = bean.getId();
-                api.addParams("pid",pid);
+                api.add("pid",pid);
                 mAdapter.setPid(pid);
                 controller.loadFirstPage();
 

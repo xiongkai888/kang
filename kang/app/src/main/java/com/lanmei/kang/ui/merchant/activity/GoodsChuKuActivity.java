@@ -106,7 +106,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
 
     private void loadMerchantList() {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
-        api.addParams("user_type", 1);
+        api.add("user_type", 1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
             @Override
             public void onResponse(NoPageListBean<UserBean> response) {
@@ -135,7 +135,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
 
     private void searchGoods(String barcode) {
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
-        api.addParams("barcode", barcode);
+        api.add("barcode", barcode);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
@@ -235,9 +235,9 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
             return;
         }
         KangQiMeiApi api = new KangQiMeiApi(isChuKu ? "app/good_cstoreroom" : "app/good_rstoreroom");
-        api.addParams("goodsid", goodsid).addParams("number", number).addParams("danwei", danwei);
+        api.add("goodsid", goodsid).add("number", number).add("danwei", danwei);
         if (isChuKu) {
-            api.addParams("pid", pid).addParams("price", price);
+            api.add("pid", pid).add("price", price);
         }
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

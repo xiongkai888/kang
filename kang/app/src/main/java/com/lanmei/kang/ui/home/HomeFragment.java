@@ -125,8 +125,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Subscribe
     public void locationEvent(LocationEvent event){
         mCityTv.setText(event.getCity());
-        api.addParams("lon",event.getLongitude());
-        api.addParams("lat",event.getLatitude());
+        api.add("lon",event.getLongitude());
+        api.add("lat",event.getLatitude());
         loadHome();
     }
 
@@ -143,9 +143,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
 
     private void loadHome() {
-        api.addParams("limit", 6);
-        api.addParams("lon",  SharedAccount.getInstance(context).getLon());
-        api.addParams("lat", SharedAccount.getInstance(context).getLat());
+        api.add("limit", 6);
+        api.add("lon",  SharedAccount.getInstance(context).getLon());
+        api.add("lat", SharedAccount.getInstance(context).getLat());
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<HomeBean>>() {
             @Override
             public void onResponse(DataBean<HomeBean> response) {

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/5/24.
+ * Created by xkai on 2017/5/24.
  */
 
 public class DynamicBean implements Serializable{

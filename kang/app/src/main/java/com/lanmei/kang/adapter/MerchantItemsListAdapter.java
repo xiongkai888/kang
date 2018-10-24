@@ -27,12 +27,11 @@ import butterknife.InjectView;
 public class MerchantItemsListAdapter extends SwipeRefreshAdapter<MerchantItemsListBean> {
 
 
-    private FormatTime time;
     private String pid;
 
     public MerchantItemsListAdapter(Context context) {
         super(context);
-        time = new FormatTime(context);
+        FormatTime time = new FormatTime(context);
     }
 
     public void setPid(String pid){

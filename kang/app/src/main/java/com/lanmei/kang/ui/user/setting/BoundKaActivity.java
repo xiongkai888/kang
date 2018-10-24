@@ -78,10 +78,10 @@ public class BoundKaActivity extends BaseActivity {
             return;
         }
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.addParams("token",api.getToken(this));
-        api.addParams("banks_name",mKa);
-        api.addParams("banks_no",kaHao);
-        api.addParams("realname",name);
+        api.add("token",api.getToken(this));
+        api.add("banks_name",mKa);
+        api.add("banks_no",kaHao);
+        api.add("realname",name);
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

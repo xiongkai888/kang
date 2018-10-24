@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,7 +23,8 @@ import java.util.Map;
  */
 
 public class AlipayHelper {
-    private static final int SDK_PAY_FLAG = 1;
+
+    private final int SDK_PAY_FLAG = 1;
     private String data;
     private Context mContext;
 
@@ -34,10 +36,11 @@ public class AlipayHelper {
     public void setPayParam(String data) {
         this.data = data;
     }
+
     // 支付
     public void payNow() {
-        if (StringUtils.isEmpty(data)){
-            Toast.makeText(mContext, mContext.getString(R.string.pay_failure)+",订单数据为空", Toast.LENGTH_SHORT).show();
+        if (StringUtils.isEmpty(data)) {
+            Toast.makeText(mContext, mContext.getString(R.string.pay_failure) + ",订单数据为空", Toast.LENGTH_SHORT).show();
             return;
         }
         Runnable payRunnable = new Runnable() {
@@ -46,8 +49,6 @@ public class AlipayHelper {
             public void run() {
                 PayTask alipay = new PayTask((Activity) mContext);
                 Map<String, String> result = alipay.payV2(data, true);
-                //                Log.i("msp", result.toString());
-
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = result;
@@ -64,11 +65,10 @@ public class AlipayHelper {
             switch (msg.what) {
                 case SDK_PAY_FLAG:
                     PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                    /**
-                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                     */
+                    //对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                     String resultStatus = payResult.getResultStatus();
+                    L.d(L.TAG, resultInfo);
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(mContext, R.string.pay_succeed, Toast.LENGTH_SHORT).show();

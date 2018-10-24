@@ -30,7 +30,6 @@ public class NewsListFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     NewsItemAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<NewsCategoryListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -51,10 +50,10 @@ public class NewsListFragment extends BaseFragment {
 
         Bundle bundle = getArguments();
         KangQiMeiApi api = new KangQiMeiApi("post/index");
-        api.addParams("cid",bundle.getString("cid"));
+        api.add("cid",bundle.getString("cid"));
         mAdapter = new NewsItemAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<NewsCategoryListBean>> controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

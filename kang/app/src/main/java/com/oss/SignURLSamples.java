@@ -13,7 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by zhouzhuo on 12/3/15.
+ * Created by xkai on 12/3/15.
  */
 public class SignURLSamples {
 

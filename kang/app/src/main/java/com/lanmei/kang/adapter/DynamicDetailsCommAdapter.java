@@ -251,8 +251,8 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
                     return;
                 }
                 KangQiMeiApi api = new KangQiMeiApi("posts/like");
-                api.addParams("uid",api.getUserId(context));
-                api.addParams("id",mBean.getId());
+                api.add("uid",api.getUserId(context));
+                api.add("id",mBean.getId());
                 HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                     @Override
                     public void onResponse(BaseBean response) {
@@ -278,9 +278,9 @@ public class DynamicDetailsCommAdapter extends SwipeRefreshAdapter<DynamicCommBe
 
     private void isFollow() {
         KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("token",api.getToken(context));
-        api.addParams("mid",mBean.getUid());
+        api.add("uid",api.getUserId(context));
+        api.add("token",api.getToken(context));
+        api.add("mid",mBean.getUid());
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

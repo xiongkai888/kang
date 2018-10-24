@@ -108,7 +108,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
         RelativeLayout changeChatRoomDescriptionLayout = (RelativeLayout) findViewById(R.id.rl_change_chatroom_detail);
 
 		// adapter data list
-		List<String> ownerAdminList = new ArrayList<String>();
+		List<String> ownerAdminList = new ArrayList<>();
 		ownerAdminList.add(room.getOwner());
 		ownerAdminList.addAll(room.getAdminList());
 		ownerAdminAdapter = new OwnerAdminAdapter(this, R.layout.em_grid_owner, ownerAdminList);
@@ -117,7 +117,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
 		// normal member list & black list && mute list
 		// most show 500 members, most show 500 mute members, most show 500 black list
-		List<String> memberMuteBlockList = new ArrayList<String>();
+		List<String> memberMuteBlockList = new ArrayList<>();
 		memberMuteBlockList.addAll(room.getMemberList());
 		membersAdapter = new MemberAdapter(this, R.layout.em_grid_owner, memberMuteBlockList);
 		EaseExpandGridView userGridView = (EaseExpandGridView) findViewById(R.id.gridview);
@@ -144,10 +144,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
 	boolean isCurrentOwner(EMChatRoom room) {
 		String owner = room.getOwner();
-		if (owner == null || owner.isEmpty()) {
-			return false;
-		}
-		return owner.equals(EMClient.getInstance().getCurrentUser());
+		return !(owner == null || owner.isEmpty()) && owner.equals(EMClient.getInstance().getCurrentUser());
 	}
 
 	boolean isCurrentAdmin(EMChatRoom room) {
@@ -637,30 +634,30 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 										EMClient.getInstance().chatroomManager().removeChatRoomAdmin(roomId, operationUserId);
 										break;
                                     case R.id.menu_item_remove_member: {
-                                            List<String> list = new ArrayList<String>();
+                                            List<String> list = new ArrayList<>();
                                             list.add(operationUserId);
                                             EMClient.getInstance().chatroomManager().removeChatRoomMembers(roomId, list);
                                         }
                                         break;
 									case R.id.menu_item_add_to_blacklist: {
-											List<String> list = new ArrayList<String>();
+											List<String> list = new ArrayList<>();
 											list.add(operationUserId);
 											EMClient.getInstance().chatroomManager().blockChatroomMembers(roomId, list);
 										}
 										break;
 									case R.id.menu_item_remove_from_blacklist: {
-											List<String> list1 = new ArrayList<String>();
+											List<String> list1 = new ArrayList<>();
 											list1.add(operationUserId);
 											EMClient.getInstance().chatroomManager().unblockChatRoomMembers(roomId, list1);
 										}
 										break;
 									case R.id.menu_item_mute:
-										List<String> muteMembers = new ArrayList<String>();
+										List<String> muteMembers = new ArrayList<>();
 										muteMembers.add(operationUserId);
 										EMClient.getInstance().chatroomManager().muteChatRoomMembers(roomId, muteMembers, 20 * 60 * 1000);
 										break;
 									case R.id.menu_item_unmute:
-										List<String> list = new ArrayList<String>();
+										List<String> list = new ArrayList<>();
 										list.add(operationUserId);
 										EMClient.getInstance().chatroomManager().unMuteChatRoomMembers(roomId, list);
 										break;
@@ -755,7 +752,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
                     boolean[] normalVisibilities = {
                             false,      //R.id.menu_item_transfer_owner,
-                            isCurrentOwner(room) ? true : false,       //R.id.menu_item_add_admin,
+                            isCurrentOwner(room),       //R.id.menu_item_add_admin,
                             false,      //R.id.menu_item_rm_admin,
                             true,       //R.id.menu_item_remove_member,
                             true,       //R.id.menu_item_add_to_blacklist,
@@ -777,7 +774,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
                     boolean[] muteListVisibilities = {
                             false,      //R.id.menu_item_transfer_owner,
-                            isCurrentOwner(room) ? true : false,       //R.id.menu_item_add_admin,
+							isCurrentOwner(room),       //R.id.menu_item_add_admin,
                             false,      //R.id.menu_item_rm_admin,
                             true,       //R.id.menu_item_remove_member,
                             true,       //R.id.menu_item_add_to_blacklist,
@@ -879,7 +876,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
                     public void run() {
                         final StringBuilder sb = new StringBuilder();
                         for (String mute : mutes) {
-                            sb.append(mute + " ");
+                            sb.append(mute).append(" ");
                         }
                         Toast.makeText(ChatRoomDetailsActivity.this, "onMuteListAdded: " + sb.toString(), Toast.LENGTH_SHORT).show();
                     }
@@ -893,7 +890,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			if (chatRoomId.equals(ChatRoomDetailsActivity.this.roomId)) {
 				final StringBuilder sb = new StringBuilder();
 				for (String mute : mutes) {
-					sb.append(mute + " ");
+					sb.append(mute).append(" ");
 				}
                 runOnUiThread(new Runnable() {
                     @Override

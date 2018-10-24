@@ -36,7 +36,7 @@ import java.util.Set;
 public abstract class PermissionsResultAction {
 
   private static final String TAG = PermissionsResultAction.class.getSimpleName();
-  private final Set<String> mPermissions = new HashSet<String>(1);
+  private final Set<String> mPermissions = new HashSet<>(1);
   private Looper mLooper = Looper.getMainLooper();
 
   /**

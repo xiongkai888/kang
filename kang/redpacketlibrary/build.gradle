@@ -52,5 +52,6 @@ dependencies {
     //compile 'com.hyphenate.redpacket:redpacket-wallet:3.4.4'
     compile project(':easeui')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/alipaySdk-20170407.jar')
+//    compile files('libs/alipaySdk-20170407.jar')
+    implementation files('libs/alipaySdk-20180601.jar')
 }

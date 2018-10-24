@@ -29,12 +29,9 @@ import com.lanmei.kang.R;
  */
 
 public class PhotoBrowserActivity extends Activity implements View.OnClickListener {
-    private ImageView crossIv;
     private ViewPager mPager;
     private ImageView centerIv;
     private TextView photoOrderTv;
-    private boolean isHide;//是否隐藏显示的图片数量 false为不隐藏，true为隐藏
-    private TextView saveTv;
     private String curImageUrl = "";
     private String[] imageUrls = new String[]{};
 
@@ -50,7 +47,7 @@ public class PhotoBrowserActivity extends Activity implements View.OnClickListen
         Intent intent = getIntent();
         imageUrls = intent.getStringArrayExtra("imageUrls");
         curImageUrl = intent.getStringExtra("curImageUrl");
-        isHide = intent.getBooleanExtra("hide",false);
+        boolean isHide = intent.getBooleanExtra("hide", false);
         initialedPositions = new int[imageUrls.length];
         initInitialedPositions();
 
@@ -58,10 +55,10 @@ public class PhotoBrowserActivity extends Activity implements View.OnClickListen
         if (isHide){
             photoOrderTv.setVisibility(View.GONE);
         }
-        saveTv = (TextView) findViewById(R.id.saveTv);
+        TextView saveTv = (TextView) findViewById(R.id.saveTv);
         saveTv.setOnClickListener(this);
         centerIv = (ImageView) findViewById(R.id.centerIv);
-        crossIv = (ImageView) findViewById(R.id.crossIv);
+        ImageView crossIv = (ImageView) findViewById(R.id.crossIv);
         crossIv.setOnClickListener(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);

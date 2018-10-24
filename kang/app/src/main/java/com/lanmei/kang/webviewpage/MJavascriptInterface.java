@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by Administrator on 2017/2/10.
+ * Created by xkai on 2017/2/10.
  */
 
 public class MJavascriptInterface {

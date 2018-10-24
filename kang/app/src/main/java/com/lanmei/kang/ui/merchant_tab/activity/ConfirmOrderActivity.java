@@ -6,27 +6,35 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.data.volley.Response;
+import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.PayWayAdapter;
+import com.lanmei.kang.alipay.AlipayHelper;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AddressListBean;
 import com.lanmei.kang.bean.DistributionBean;
-import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.lanmei.kang.bean.PayWayBean;
+import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.event.AddressListEvent;
 import com.lanmei.kang.event.ChooseAddressEvent;
+import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.helper.WXPayHelper;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.AddressListActivity;
+import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarBean;
+import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.DoubleUtil;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -55,22 +63,19 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView nameTv;
     @InjectView(R.id.address_tv)
     TextView addressTv;
-    @InjectView(R.id.items_icon_iv)
-    ImageView itemsIconIv;
-    @InjectView(R.id.title_tv)
-    TextView titleTv;
-    @InjectView(R.id.price_num_tv)
-    TextView priceNumTv;
     @InjectView(R.id.distribution_tv)
     TextView distributionTv;
     @InjectView(R.id.price_tv)
     FormatTextView priceTv;
-    private GoodsDetailsBean detailsBean;
-    private int number;
-    private List<DistributionBean> distributionBeanList;
+    @InjectView(R.id.recyclerViewShop)
+    RecyclerView recyclerViewShop;//商品列表
+    private List<ShopCarBean> list;//提交的商品列表
+    private List<DistributionBean> distributionBeanList;//配送列表
     private OptionPicker picker;//
     private AddressListBean addressBean;//地址信息
     private List<AddressListBean> addressListBeans;
+    private int type;
+    private String distributionID;//配送id
 
     @Override
     public int getContentViewId() {
@@ -82,8 +87,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         super.initIntent(intent);
         Bundle bundle = intent.getBundleExtra("bundle");
         if (bundle != null) {
-            detailsBean = (GoodsDetailsBean) bundle.getSerializable("bean");
-            number = bundle.getInt("num");
+            list = (List<ShopCarBean>) bundle.getSerializable("list");
         }
     }
 
@@ -101,18 +105,31 @@ public class ConfirmOrderActivity extends BaseActivity {
 
         checkAddress();
 
-        if (detailsBean == null) {
+        if (StringUtils.isEmpty(list)) {
+            UIHelper.ToastMessage(this, "获取商品异常");
+            finish();
             return;
         }
-        ImageHelper.load(this, detailsBean.getCover(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-        titleTv.setText(detailsBean.getGoodsname());
-        priceNumTv.setText(String.format(getString(R.string.goods_price_and_num), detailsBean.getPrice(), String.valueOf(number)));
-        priceTv.setTextValue(DoubleUtil.mulToString(Double.valueOf(detailsBean.getPrice()), Double.valueOf(number)));
+
+        priceTv.setTextValue(getPrice());
+        ConfirmOrderAdapter adapter = new ConfirmOrderAdapter(this);
+        adapter.setData(list);
+        recyclerViewShop.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewShop.setNestedScrollingEnabled(false);
+        recyclerViewShop.setAdapter(adapter);
 
         loadDistribution();//配送方式
         loadPayment();//支付方式
         loadAddressList();
 
+    }
+
+    private String getPrice() {
+        double price = 0;
+        for (ShopCarBean bean : list) {
+            price += DoubleUtil.mul(bean.getSell_price(), (double) bean.getGoodsCount());
+        }
+        return DoubleUtil.formatFloatNumber(price);
     }
 
     private void initPicker() {
@@ -123,6 +140,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
+                distributionID = distributionBeanList.get(index).getId();
                 distributionTv.setText(item);
             }
         });
@@ -140,7 +158,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     //配送列表
     private void loadDistribution() {
         KangQiMeiApi api = new KangQiMeiApi("app/distribution_list");
-        api.addParams("tablename", "distribution");
+        api.add("tablename", "distribution");
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<DistributionBean>>() {
             @Override
             public void onResponse(NoPageListBean<DistributionBean> response) {
@@ -168,6 +186,12 @@ public class ConfirmOrderActivity extends BaseActivity {
                 PayWayAdapter adapter = new PayWayAdapter(getContext());
                 adapter.setData(response.data);
                 recyclerView.setAdapter(adapter);
+                adapter.setPayWayListener(new PayWayAdapter.PayWayListener() {
+                    @Override
+                    public void payId(String id) {
+                        type = Integer.valueOf(id);
+                    }
+                });
             }
         });
     }
@@ -175,6 +199,9 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @OnClick({R.id.ll_address, R.id.submit_order_tv, R.id.ll_distribution, R.id.ll_billing_details})
     public void onViewClicked(View view) {
+        if (StringUtils.isEmpty(list)) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_address:
                 IntentUtil.startActivity(this, AddressListActivity.class);
@@ -194,18 +221,104 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void submitOrder() {
-        if (StringUtils.isEmpty(addressBean)){
+        if (StringUtils.isEmpty(addressBean)) {
             UIHelper.ToastMessage(this, R.string.choose_address);
             return;
         }
+        if (StringUtils.isEmpty(distributionID)) {
+            UIHelper.ToastMessage(this, "请选择配送方式");
+            return;
+        }
+        if (StringUtils.isEmpty(type)) {
+            UIHelper.ToastMessage(this, "请选择支付方式");
+            return;
+        }
+        StringBuilder goodsidBuilder = new StringBuilder();
+        StringBuilder goodsnameBuilder = new StringBuilder();
+        StringBuilder numBuilder = new StringBuilder();
+        StringBuilder gidBuilder = new StringBuilder();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            ShopCarBean bean = list.get(i);
+            goodsidBuilder.append(bean.getGoods_id()).append(((size-1)!=i)? L.cornet:"");
+            goodsnameBuilder.append(bean.getGoodsName()).append(((size-1)!=i)? L.cornet:"");
+            numBuilder.append(String.valueOf(bean.getGoodsCount())).append(((size-1)!=i)? L.cornet:"");
+            gidBuilder.append(!StringUtils.isEmpty(bean.getGid())?bean.getGid():CommonUtils.isZero).append(((size-1)!=i)? L.cornet:"");
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/createorder");
+        api.add("pay_type", type).add("uid", api.getUserId(this)).add("goodsid", goodsidBuilder.toString())
+                .add("goodsname", goodsnameBuilder.toString()).add("num", numBuilder.toString()).add("username", addressBean.getAccept_name())
+                .add("phone", addressBean.getMobile()).add("address", addressBean.getAddress()).add("dis_type", distributionID).add("gid", gidBuilder.toString());
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<Integer>>() {
+            @Override
+            public void onResponse(DataBean<Integer> response) {
+                if (isFinishing()){
+                    return;
+                }
+                loadPayMent(response.data);
+            }
+        });
 
+    }
+
+
+    private void loadPayMent(int order_id) {
+        KangQiMeiApi api = new KangQiMeiApi("app/pay");
+        api.add("order_id",order_id).add("uid",api.getUserId(this)).add("id",order_id);
+        HttpClient httpClient = HttpClient.newInstance(this);
+        if (type == 1) {//支付宝支付
+            httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {
+                @Override
+                public void onResponse(DataBean<String> response) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    AlipayHelper alipayHelper = new AlipayHelper(getContext());
+                    alipayHelper.setPayParam(response.data);
+                    alipayHelper.payNow();
+                }
+            });
+        } else if (type == 7) {//微信支付
+            httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<WeiXinBean>>() {
+                @Override
+                public void onResponse(DataBean<WeiXinBean> response) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    WeiXinBean bean = response.data;
+                    WXPayHelper payHelper = new WXPayHelper(getContext());
+                    payHelper.setPayParam(bean);
+                    payHelper.orderNow();
+                }
+            });
+        } else if (type == 6) {//余额
+            httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+                @Override
+                public void onResponse(BaseBean response) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    UIHelper.ToastMessage(getContext(), response.getInfo());
+                    IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
+                    finish();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (isFinishing()) {
+                        return;
+                    }
+                    UIHelper.ToastMessage(getContext(), error.getMessage());
+                }
+            });
+        }
     }
 
     private void loadAddressList() {
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("uid", api.getUserId(this));
-//        api.addParams("uid",46);
-        api.addParams("operation", 4);
+        api.add("uid", api.getUserId(this));
+//        api.add("uid",46);
+        api.add("operation", 4);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AddressListBean>>() {
             @Override
             public void onResponse(NoPageListBean<AddressListBean> response) {
@@ -233,10 +346,16 @@ public class ConfirmOrderActivity extends BaseActivity {
         addressTv.setText(bean.getAddress());
     }
 
-    //选择地址的时候调用
+    //支付宝微信支付成功调用
     @Subscribe
     public void chooseAddressEvent(ChooseAddressEvent event) {
         chooseAddress(event.getBean());
+    }
+    //选择地址的时候调用
+    @Subscribe
+    public void paySucceedEvent(PaySucceedEvent event) {
+        IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
+        finish();
     }
 
     //选择地址列表获取地址列表的时候调用
@@ -269,4 +388,5 @@ public class ConfirmOrderActivity extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }

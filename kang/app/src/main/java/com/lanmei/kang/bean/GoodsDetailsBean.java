@@ -79,6 +79,17 @@ public class GoodsDetailsBean implements Serializable{
     private String status;
     private String shoucang;
     private String classid;
+
+    public String getGid() {
+        return gid;
+    }
+
+    private String gid;//规格id
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
+
     private List<String> imgs;
 
     public String getId() {
@@ -351,5 +362,46 @@ public class GoodsDetailsBean implements Serializable{
 
     public void setImgs(List<String> imgs) {
         this.imgs = imgs;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsDetailsBean{" +
+                "id='" + id + '\'' +
+                ", uid='" + uid + '\'' +
+                ", addtime='" + addtime + '\'' +
+                ", uptime='" + uptime + '\'' +
+                ", goodsname='" + goodsname + '\'' +
+                ", type='" + type + '\'' +
+                ", price='" + price + '\'' +
+                ", up_time='" + up_time + '\'' +
+                ", down_time='" + down_time + '\'' +
+                ", inventory='" + inventory + '\'' +
+                ", is_del='" + is_del + '\'' +
+                ", order_by='" + order_by + '\'' +
+                ", cover='" + cover + '\'' +
+                ", state='" + state + '\'' +
+                ", userid='" + userid + '\'' +
+                ", content='" + content + '\'' +
+                ", hot='" + hot + '\'' +
+                ", vipprice='" + vipprice + '\'' +
+                ", sales='" + sales + '\'' +
+                ", promotion='" + promotion + '\'' +
+                ", spot='" + spot + '\'' +
+                ", vgoods='" + vgoods + '\'' +
+                ", comments='" + comments + '\'' +
+                ", model='" + model + '\'' +
+                ", specifications='" + specifications + '\'' +
+                ", specificationsname='" + specificationsname + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", business_price='" + business_price + '\'' +
+                ", sale_price='" + sale_price + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", status='" + status + '\'' +
+                ", shoucang='" + shoucang + '\'' +
+                ", classid='" + classid + '\'' +
+                ", gid='" + gid + '\'' +
+                ", imgs=" + imgs +
+                '}';
     }
 }

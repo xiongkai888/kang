@@ -1,37 +1,8 @@
 package com.oss.upload;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.MenuItem;
-import android.widget.Button;
 
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
-import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
-import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
-import com.lanmei.kang.R;
-import com.oss.ManageOssUpload;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.utils.L;
-import com.xson.common.widget.CenterTitleToolbar;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class Activity_pic_upload extends BaseActivity{
 

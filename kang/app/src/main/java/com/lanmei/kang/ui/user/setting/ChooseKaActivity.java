@@ -119,7 +119,7 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
     private void ajaxWithdrawCardList() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.addParams("token",api.getToken(this));
+        api.add("token",api.getToken(this));
         api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override

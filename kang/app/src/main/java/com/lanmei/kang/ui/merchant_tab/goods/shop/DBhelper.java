@@ -16,7 +16,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static String TAG = "DBhelper";
 
     private static String dbName = "kang.db";
-    private static int dbVersion = 3;
+    private static int dbVersion = 4;
     public static DBhelper dBhelper;
 
     public static DBhelper newInstance(Context context) {

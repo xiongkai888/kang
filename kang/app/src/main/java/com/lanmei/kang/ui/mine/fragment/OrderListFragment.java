@@ -47,9 +47,9 @@ public class OrderListFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         String status = getArguments().getString("status");
         KangQiMeiApi api = new KangQiMeiApi("Reservation/index");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("token",api.getToken(context));
-        api.addParams("status",status);//0全部1待付款2已付款3未消费4已完成
+        api.add("uid",api.getUserId(context));
+        api.add("token",api.getToken(context));
+        api.add("status",status);//0全部1待付款2已付款3未消费4已完成
         OrderListAdapter adapter = new OrderListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<OrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {

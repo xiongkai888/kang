@@ -78,9 +78,9 @@ public class NewsDetailsActivity extends BaseActivity {
 
         KangQiMeiApi api = new KangQiMeiApi("post/reviews");
         api.setMethod(AbstractApi.Method.GET);
-        api.addParams("id",getIntent().getStringExtra("value"));
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("id",getIntent().getStringExtra("value"));
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
 
         mAdapter = new NewsDetailsCommentAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
@@ -98,9 +98,9 @@ public class NewsDetailsActivity extends BaseActivity {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("post/details");
         api.setMethod(AbstractApi.Method.GET);
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<NewsDetailsBean>>() {
             @Override
             public void onResponse(DataBean<NewsDetailsBean> response) {
@@ -155,9 +155,9 @@ public class NewsDetailsActivity extends BaseActivity {
         }
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("post/do_reviews");
-        api.addParams("content",content);
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("content",content);
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

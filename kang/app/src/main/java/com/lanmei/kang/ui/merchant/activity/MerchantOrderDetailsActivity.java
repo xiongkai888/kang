@@ -107,7 +107,7 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
 
     private void loadOrderDetails(){
         KangQiMeiApi api = new KangQiMeiApi("Reservation/sellerDetail");
-        api.addParams("id",id);
+        api.add("id",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<OrderListMerchantBean>>() {
             @Override
             public void onResponse(DataBean<OrderListMerchantBean> response) {
@@ -280,9 +280,9 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
     //3拒绝退款和7同意退款
     private void agreeRefund(OrderListMerchantBean bean, String type) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/save");
-        api.addParams("id",bean.getId());
-        api.addParams("status",type);
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",bean.getId());
+        api.add("status",type);
+        api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -299,8 +299,8 @@ public class MerchantOrderDetailsActivity extends BaseActivity {
     //删除订单
     private void orderDel(OrderListMerchantBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",bean.getId());
+        api.add("uid",api.getUserId(this));
         api.setMethod(AbstractApi.Method.GET);
 
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {

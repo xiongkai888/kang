@@ -24,7 +24,6 @@ public class FriendsFriendsFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     FriendsFriendsAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<GoodFriendsBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -47,12 +46,12 @@ public class FriendsFriendsFragment extends BaseFragment {
             uid = bundle.getString("uid");
         }
         KangQiMeiApi api = new KangQiMeiApi("friend/index");
-        api.addParams("uid",uid);
-        api.addParams("mid",api.getUserId(context));
+        api.add("uid",uid);
+        api.add("mid",api.getUserId(context));
 
         mAdapter = new FriendsFriendsAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<GoodFriendsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<GoodFriendsBean>> controller = new SwipeRefreshController<NoPageListBean<GoodFriendsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

@@ -101,7 +101,7 @@ public class ParseManager {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg0 != null) {
-					List<EaseUser> mList = new ArrayList<EaseUser>();
+					List<EaseUser> mList = new ArrayList<>();
 					for (ParseObject pObject : arg0) {
 					    EaseUser user = new EaseUser(pObject.getString(CONFIG_USERNAME));
 						ParseFile parseFile = pObject.getParseFile(CONFIG_AVATAR);

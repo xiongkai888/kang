@@ -78,9 +78,9 @@ public class AddressListActivity extends BaseActivity {
         smartSwipeRefreshLayout.setAdapter(adapter);
 
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("uid",api.getUserId(this));
-//        api.addParams("uid",46);
-        api.addParams("operation",4);
+        api.add("uid",api.getUserId(this));
+//        api.add("uid",46);
+        api.add("operation",4);
         controller = new SwipeRefreshController<NoPageListBean<AddressListBean>>(getContext(), smartSwipeRefreshLayout, api, adapter) {
             @Override
             public boolean onSuccessResponse(NoPageListBean<AddressListBean> response) {
@@ -122,9 +122,9 @@ public class AddressListActivity extends BaseActivity {
 
     private void deleteAddress(String id,final int position) {
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("operation",3);
-        api.addParams("id",id);
+        api.add("uid",api.getUserId(this));
+        api.add("operation",3);
+        api.add("id",id);
         HttpClient.newInstance(getContext()).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -142,10 +142,10 @@ public class AddressListActivity extends BaseActivity {
     //设为默认
     private void setAddressDefault(String id, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("app/address");
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("operation",2);
-        api.addParams("id",id);
-        api.addParams("default",1);
+        api.add("uid",api.getUserId(this));
+        api.add("operation",2);
+        api.add("id",id);
+        api.add("default",1);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

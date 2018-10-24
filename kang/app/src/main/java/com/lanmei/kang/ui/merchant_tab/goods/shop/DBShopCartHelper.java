@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/9/2.
+ * Created by xkai on 2016/9/2.
  */
 
 public class DBShopCartHelper {
@@ -31,6 +31,7 @@ public class DBShopCartHelper {
     public static final String Cart_user_id = "uid";
     public static final String Cart_goods_record_id = "goods_record_id";
     public static final String Cart_goodsid = "goodsid";
+    public static final String Cart_gid = "gid";
     public static final String Cart_goodsStore = "goodsStore";
     public static final String Cart_goodsName = "goodsName";
     public static final String Cart_goodsImg = "goodsImg";
@@ -49,6 +50,7 @@ public class DBShopCartHelper {
             Cart_goodsStore + " TEXT, " +
             Cart_goodsName + " TEXT, " +
             Cart_goodsImg + " TEXT, " +
+            Cart_gid + " TEXT, " +
             Cart_goodsPrice + " REAL, " +
             Cart_goodsParams + " TEXT, " +
             Cart_goodsSpecifications + " TEXT, " +
@@ -92,6 +94,7 @@ public class DBShopCartHelper {
                 cartGoods.setGoods_id(c.getString(c.getColumnIndex(Cart_goodsid)));
                 cartGoods.setSell_price(c.getDouble(c.getColumnIndex(Cart_goodsPrice)));
                 cartGoods.setSpecifications(c.getString(c.getColumnIndex(Cart_goodsSpecifications)));
+                cartGoods.setGid(c.getString(c.getColumnIndex(Cart_gid)));
                 shopCarBeanList.add(cartGoods);
             }
         }
@@ -109,7 +112,7 @@ public class DBShopCartHelper {
 
 
     //加入购物车（将数据插入数据库）
-    public long insertGoods(ShopCarBean bean) {
+    public void insertGoods(ShopCarBean bean) {
         String selection = Cart_user_id + " = " + uid;
         Cursor c = db.query(Cart, null, selection, null, null, null, null);
         if (c.getCount() > 0) {
@@ -117,7 +120,7 @@ public class DBShopCartHelper {
                 if (StringUtils.isSame(c.getString(c.getColumnIndex(Cart_goodsid)), bean.getGoods_id()) && StringUtils.isSame(c.getString(c.getColumnIndex(Cart_goodsSpecifications)), bean.getSpecifications())) {//已经插入的商品（根据id判断）
                     updateGoods(bean.getGoods_id(), c.getInt(c.getColumnIndex(Cart_goodsCount)) + bean.getGoodsCount(), bean.getGoodsImg(), bean.getGoodsName(), bean.getSell_price(), bean.getSpecifications());
                     UIHelper.ToastMessage(context, "加入购物车成功!");
-                    return 0;
+                    return;
                 }
             }
         }
@@ -130,13 +133,13 @@ public class DBShopCartHelper {
         values.put(Cart_goodsPrice, bean.getSell_price());
         values.put(Cart_goodsCount, bean.getGoodsCount());
         values.put(Cart_goodsSpecifications, bean.getSpecifications());
+        values.put(Cart_gid, bean.getGid());
         long insC = db.insert(Cart, Cart_goodsid, values);
         L.d(DBhelper.TAG, ":加入购物车:id" + bean.getGoods_id() + "---insC:" + insC);
         if (insC > 0) {
             UIHelper.ToastMessage(context, "加入购物车成功!!");
             EventBus.getDefault().post(new ShowShopCountEvent());
         }
-        return insC;
     }
 
     public void deleteDatabase() {

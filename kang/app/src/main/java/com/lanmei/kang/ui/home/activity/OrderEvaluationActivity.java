@@ -74,10 +74,10 @@ public class OrderEvaluationActivity extends BaseActivity {
     private void ajaxEvaluation(String content) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("PlaceReviews/add");
-        api.addParams("content",content);
-        api.addParams("token",api.getToken(this));
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("order_id",order_id);
+        api.add("content",content);
+        api.add("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
+        api.add("order_id",order_id);
         api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

@@ -83,8 +83,8 @@ public class FriendsFriendsAdapter extends SwipeRefreshAdapter<GoodFriendsBean> 
 
     private void isFollow(final GoodFriendsBean bean) {
         KangQiMeiApi api = new KangQiMeiApi("member_follow/follow");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("mid",bean.getId());
+        api.add("uid",api.getUserId(context));
+        api.add("mid",bean.getId());
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

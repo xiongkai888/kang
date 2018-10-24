@@ -35,7 +35,6 @@ public class MerchantTabFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     private MerchantTabAdapter adapter;
-    private SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -46,10 +45,10 @@ public class MerchantTabFragment extends BaseFragment {
     protected void initAllMembersView(Bundle savedInstanceState) {
         smartSwipeRefreshLayout.initGridLinearLayout(2, 0);
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");//热销产品
-        api.addParams("hot",1);
+        api.add("hot",1);
         adapter = new MerchantTabAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+        SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
         adapter.notifyDataSetChanged();
@@ -63,7 +62,7 @@ public class MerchantTabFragment extends BaseFragment {
     //用户端-商家tab  轮播图
     private void loadAd(final int type) {
         KangQiMeiApi api = new KangQiMeiApi("app/index_img");
-        api.addParams("type",type);//1是头部轮播，2是推荐图(即热门活动)
+        api.add("type",type);//1是头部轮播，2是推荐图(即热门活动)
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<AdBean>>() {
             @Override
             public void onResponse(NoPageListBean<AdBean> response) {
@@ -85,7 +84,7 @@ public class MerchantTabFragment extends BaseFragment {
     //用户端-商家tab  产品分类
     private void loadGoodsClassify() {
         KangQiMeiApi api = new KangQiMeiApi("app/good_type");
-        api.addParams("type",2);//分类值(1总分类|2推荐分类)
+        api.add("type",2);//分类值(1总分类|2推荐分类)
         HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabClassifyBean> response) {

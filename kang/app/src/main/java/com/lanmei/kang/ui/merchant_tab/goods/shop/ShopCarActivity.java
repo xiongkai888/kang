@@ -15,9 +15,11 @@ import android.widget.RelativeLayout;
 import com.lanmei.kang.R;
 import com.lanmei.kang.core.IPresenter;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.ui.merchant_tab.activity.ConfirmOrderActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
@@ -28,6 +30,7 @@ import com.xson.common.widget.FormatTextView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -120,7 +123,7 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         toolbar.setOnMenuItemClickListener(this);
         L.d("ShopCarActivity", "initShopCart");
         style = 1;
-        balanceBt.setText(R.string.balance);
+        balanceBt.setText(String.format(getString(R.string.balance),CommonUtils.getUserBean(this).getMoney()));
     }
 
     @Override
@@ -173,30 +176,9 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
     public void onClick() {
         delecteList = mPresenter.getSeletctedCarList();
         if (style == 1) {//1去付款，2删除
-            CommonUtils.developing(this);
-//            if (StringUtils.isEmpty(delecteList)) {
-//                UIHelper.ToastMessage(this, "请选择要付款的商品");
-//                return;
-//            }
-//            GoodsDetailsBean bean = new GoodsDetailsBean();
-//            List<GoodsDetailsBean> productsBeanList = new ArrayList<>();
-//            int orderNum = 0;
-//            for (ShopCarBean carBean : delecteList) {
-//                GoodsDetailsBean productsBean = new GoodsDetailsBean();
-//                productsBean.setId(carBean.getGoods_id());
-//                productsBean.setGoodsname(carBean.getGoodsName());
-//                productsBean.setProducts_img(carBean.getGoodsImg());
-//                productsBean.setSell_price(carBean.getSell_price() + "");
-//                productsBean.setCount(carBean.getGoodsCount());
-//                orderNum += carBean.getGoodsCount();
-//                productsBeanList.add(productsBean);
-//            }
-//            bean.setProducts(productsBeanList);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("bean", bean);
-//            bundle.putInt("num", orderNum);
-//            IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
-            //            UIHelper.ToastMessage(this,"去付款");
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("list", (Serializable)delecteList);
+            IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
         } else {
             if (StringUtils.isEmpty(delecteList)) {
                 UIHelper.ToastMessage(this, "请选择要删除的商品");

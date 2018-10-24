@@ -173,7 +173,7 @@ public class ImageCache {
 							// bitmap
 							// to a SoftReference set for possible use with
 							// inBitmap later
-							mReusableBitmaps.add(new SoftReference<Bitmap>(
+							mReusableBitmaps.add(new SoftReference<>(
 									oldValue.getBitmap()));
 						}
 					}
@@ -473,10 +473,7 @@ public class ImageCache {
 	 */
 	@TargetApi(VERSION_CODES.GINGERBREAD)
 	public static boolean isExternalStorageRemovable() {
-		if (Utils.hasGingerbread()) {
-			return Environment.isExternalStorageRemovable();
-		}
-		return true;
+		return !Utils.hasGingerbread() || Environment.isExternalStorageRemovable();
 	}
 
 	/**

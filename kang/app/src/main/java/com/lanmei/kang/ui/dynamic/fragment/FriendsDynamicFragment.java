@@ -59,8 +59,8 @@ public class FriendsDynamicFragment extends BaseFragment {
             uid = bundle.getString("uid");
         }
         KangQiMeiApi api = new KangQiMeiApi("");
-        api.addParams("uid",uid);
-        api.addParams("id",api.getUserId(context));
+        api.add("uid",uid);
+        api.add("id",api.getUserId(context));
         mAdapter = new DynamicListAdapter(context);
         mAdapter.setType(3);
         smartSwipeRefreshLayout.setAdapter(mAdapter);

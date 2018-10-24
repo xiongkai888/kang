@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2016/12/8.
+ * Created by xkai on 2016/12/8.
  */
 
 public class FormatTime {

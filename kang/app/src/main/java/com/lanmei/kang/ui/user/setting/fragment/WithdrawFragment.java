@@ -68,7 +68,7 @@ public class WithdrawFragment extends BaseFragment {
     private void ajaxWithdraw() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.addParams("token", api.getToken(context));
+        api.add("token", api.getToken(context));
         api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override
@@ -85,7 +85,6 @@ public class WithdrawFragment extends BaseFragment {
                 } else {
                     if (ClubActivity.no_bound_card) {
                         alertDialog();
-                        return;
                     }
                 }
             }

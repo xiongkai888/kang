@@ -37,7 +37,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"></style>
+    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar" />
 
     <!-- 字体大小和颜色 -->
     <style name="text_match">
@@ -305,7 +305,7 @@
     </style>
 
 
-    <style name="h_weight" parent="text_weight"></style>
+    <style name="h_weight" parent="text_weight" />
 
     <style name="setting_text" parent="h_weight">
         <item name="android:textColor">@color/color666</item>

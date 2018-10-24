@@ -195,7 +195,7 @@ public class AddGoodsSellHelper {
 
     private void searchGoods(String barcode) {
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
-        api.addParams("barcode", barcode);
+        api.add("barcode", barcode);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {

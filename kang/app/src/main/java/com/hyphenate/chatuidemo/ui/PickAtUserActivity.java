@@ -69,7 +69,7 @@ public class PickAtUserActivity extends BaseActivity{
 
     void updateList() {
         List<String> members = group.getMembers();
-        List<EaseUser> userList = new ArrayList<EaseUser>();
+        List<EaseUser> userList = new ArrayList<>();
         members.addAll(group.getAdminList());
         members.add(group.getOwner());
         for(String username : members){

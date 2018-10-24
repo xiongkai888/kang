@@ -25,7 +25,6 @@ public class CouponFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     CouponTabAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<NewsCategoryListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -42,10 +41,10 @@ public class CouponFragment extends BaseFragment {
         Bundle bundle = getArguments();
         String cid = bundle.getString("cid");
         KangQiMeiApi api = new KangQiMeiApi("post/index");
-        api.addParams("cid",cid);
+        api.add("cid",cid);
         mAdapter = new CouponTabAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(getContext(), smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<NewsCategoryListBean>> controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(getContext(), smartSwipeRefreshLayout, api, mAdapter) {
         };
         mAdapter.notifyDataSetChanged();
     }

@@ -235,8 +235,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     //取消订单
     private void orderCancel(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/cancel");
-        api.addParams("id", bean.getId());
-        api.addParams("uid", api.getUserId(context));
+        api.add("id", bean.getId());
+        api.add("uid", api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -252,8 +252,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     //申请退款
     private void orderRefund(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/refund");
-        api.addParams("id", bean.getId());
-        api.addParams("uid", api.getUserId(context));
+        api.add("id", bean.getId());
+        api.add("uid", api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -269,8 +269,8 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
     //删除订单
     private void orderDel(final OrderListBean bean, final int position) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id", bean.getId());
-        api.addParams("uid", api.getUserId(context));
+        api.add("id", bean.getId());
+        api.add("uid", api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

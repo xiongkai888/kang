@@ -64,7 +64,7 @@ public class DemoDBManager {
      */
     synchronized public Map<String, EaseUser> getContactList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Map<String, EaseUser> users = new Hashtable<String, EaseUser>();
+        Map<String, EaseUser> users = new Hashtable<>();
         if (db.isOpen()) {
             Cursor cursor = db.rawQuery("select * from " + UserDao.TABLE_NAME /* + " desc" */, null);
             while (cursor.moveToNext()) {
@@ -165,7 +165,7 @@ public class DemoDBManager {
         String[] array = strVal.split("$");
         
         if(array.length > 0){
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             Collections.addAll(list, array);
             return list;
         }
@@ -220,7 +220,7 @@ public class DemoDBManager {
      */
     synchronized public List<InviteMessage> getMessagesList(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<InviteMessage> msgs = new ArrayList<InviteMessage>();
+        List<InviteMessage> msgs = new ArrayList<>();
         if(db.isOpen()){
             Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " desc",null);
             while(cursor.moveToNext()){
@@ -338,7 +338,7 @@ public class DemoDBManager {
 		if (db.isOpen()) {
 			Cursor cursor = db.rawQuery("select * from " + UserDao.ROBOT_TABLE_NAME, null);
 			if(cursor.getCount()>0){
-				users = new Hashtable<String, RobotUser>();
+				users = new Hashtable<>();
 			}
             while (cursor.moveToNext()) {
 				String username = cursor.getString(cursor.getColumnIndex(UserDao.ROBOT_COLUMN_NAME_ID));

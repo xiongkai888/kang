@@ -1,10 +1,12 @@
 package com.lanmei.kang.ui.merchant_tab.goods.shop;
 
+import java.io.Serializable;
+
 /**
  * Created by xkai on 2018/1/20.
  */
 
-public class ShopCarBean {
+public class ShopCarBean implements Serializable{
 
     private static final long serialVersionUID = 3479351215101942907L;
 
@@ -14,7 +16,16 @@ public class ShopCarBean {
     private String uid;
     private int goodsCount;
     private String goods_id;
+    private String gid;//规格id
     private double sell_price;//价格
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
+
+    public String getGid() {
+        return gid;
+    }
 
     private boolean isSelect = false;
 

@@ -20,7 +20,7 @@ public class RandomUtil {
      * @return 随机字符串
      */
     public static String generateString(int length) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             sb.append(allChar.charAt(random.nextInt(allChar.length())));
@@ -35,7 +35,7 @@ public class RandomUtil {
      * @return 随机字符串
      */
     public static String generateNumberString(int length) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             sb.append(numberChar.charAt(random.nextInt(numberChar.length())));
@@ -51,7 +51,7 @@ public class RandomUtil {
      * @return 随机字符串
      */
     public static String generateMixString(int length) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             sb.append(allChar.charAt(random.nextInt(letterChar.length())));
@@ -89,7 +89,7 @@ public class RandomUtil {
      * @return 纯0字符串
      */
     public static String generateZeroString(int length) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             sb.append('0');
         }
@@ -106,7 +106,7 @@ public class RandomUtil {
      * @return 定长的字符串
      */
     public static String toFixdLengthString(long num, int fixdlenth) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String strNum = String.valueOf(num);
         if (fixdlenth - strNum.length() >= 0) {
             sb.append(generateZeroString(fixdlenth - strNum.length()));
@@ -128,7 +128,7 @@ public class RandomUtil {
      * @return 定长的字符串
      */
     public static String toFixdLengthString(int num, int fixdlenth) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String strNum = String.valueOf(num);
         if (fixdlenth - strNum.length() >= 0) {
             sb.append(generateZeroString(fixdlenth - strNum.length()));

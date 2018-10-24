@@ -137,10 +137,10 @@ public class PublishDynamicActivity extends BaseActivity implements BGASortableN
 
     private void ajaxHttp(List<String> successPath) {
         KangQiMeiApi api = new KangQiMeiApi("Posts/add");
-        api.addParams("title",title);
-        api.addParams("city",CommonUtils.getStringByTextView(mLocationTv));
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("file",CommonUtils.toArray(successPath));
+        api.add("title",title);
+        api.add("city",CommonUtils.getStringByTextView(mLocationTv));
+        api.add("uid",api.getUserId(this));
+        api.add("file",CommonUtils.toArray(successPath));
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
@@ -206,11 +206,6 @@ public class PublishDynamicActivity extends BaseActivity implements BGASortableN
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         mPhotoHelper.onClickNinePhotoItem(sortableNinePhotoLayout, view, position, model, models);
-    }
-
-    @Override
-    public void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout, int fromPosition, int toPosition, ArrayList<String> models) {
-
     }
 
     @Override

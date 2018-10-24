@@ -13,16 +13,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
-import com.lanmei.kang.R;
 import com.hyphenate.chatuidemo.utils.PreferenceManager;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
+import com.lanmei.kang.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by linan on 16/11/29.
+ * Created by xkai on 16/11/29.
  */
 public class CallOptionActivity extends BaseActivity implements View.OnClickListener {
 
@@ -42,8 +42,8 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    EMClient.getInstance().callManager().getCallOptions().setMinVideoKbps(new Integer(s.toString()).intValue());
-                    PreferenceManager.getInstance().setCallMinVideoKbps(new Integer(s.toString()).intValue());
+                    EMClient.getInstance().callManager().getCallOptions().setMinVideoKbps(Integer.parseInt(s.toString()));
+                    PreferenceManager.getInstance().setCallMinVideoKbps(Integer.parseInt(s.toString()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -61,8 +61,8 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    EMClient.getInstance().callManager().getCallOptions().setMaxVideoKbps(new Integer(s.toString()).intValue());
-                    PreferenceManager.getInstance().setCallMaxVideoKbps(new Integer(s.toString()).intValue());
+                    EMClient.getInstance().callManager().getCallOptions().setMaxVideoKbps(Integer.parseInt(s.toString()));
+                    PreferenceManager.getInstance().setCallMaxVideoKbps(Integer.parseInt(s.toString()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -80,8 +80,8 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    EMClient.getInstance().callManager().getCallOptions().setMaxVideoFrameRate(new Integer(s.toString()).intValue());
-                    PreferenceManager.getInstance().setCallMaxFrameRate(new Integer(s.toString()).intValue());
+                    EMClient.getInstance().callManager().getCallOptions().setMaxVideoFrameRate(Integer.parseInt(s.toString()));
+                    PreferenceManager.getInstance().setCallMaxFrameRate(Integer.parseInt(s.toString()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -93,9 +93,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
         // audio sample rate
         initAudioSampleRateSpinner(R.id.spinner_audio_sample_rate);
 
-        /**
-         * Back camera and front camera share the same API: EMCallOptions.setVideoResolution(w, h);
-         */
+        //Back camera and front camera share the same API: EMCallOptions.setVideoResolution(w, h);
         initCameraResolutionSpinner(Camera.CameraInfo.CAMERA_FACING_BACK, R.id.spinner_video_resolution_back);
         initCameraResolutionSpinner(Camera.CameraInfo.CAMERA_FACING_FRONT, R.id.spinner_video_resolution_front);
 
@@ -129,7 +127,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
             Camera.Parameters parameters = mCameraDevice.getParameters();
 
             final List<Camera.Size> sizes = parameters.getSupportedPreviewSizes();
-            List<String> strSizes = new ArrayList<String>();
+            List<String> strSizes = new ArrayList<>();
             strSizes.add("Not Set");
 
             for (Camera.Size size : sizes) {
@@ -137,7 +135,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
                 strSizes.add(str);
             }
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strSizes);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, strSizes);
             adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             final Spinner spinnerVideoResolution = (Spinner) findViewById(spinnerId);
             spinnerVideoResolution.setAdapter(adapter);
@@ -178,7 +176,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     AtomicBoolean disable = (AtomicBoolean)spinnerVideoResolution.getTag();
-                    if (disable.get() == true) {
+                    if (disable.get()) {
                         disable.set(false);
                         return;
                     }
@@ -234,7 +232,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
     }
 
     void initAudioSampleRateSpinner(int spinnerId) {
-        final List<String> sampleRateList = new ArrayList<String>();
+        final List<String> sampleRateList = new ArrayList<>();
         sampleRateList.add("Not set");
         sampleRateList.add("8000Hz");
         sampleRateList.add("11025Hz");
@@ -242,7 +240,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
         sampleRateList.add("16000Hz");
         sampleRateList.add("44100Hz");
         sampleRateList.add("48000Hz");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sampleRateList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sampleRateList);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         Spinner spinnerAudioSampleRate = (Spinner) findViewById(spinnerId);
         spinnerAudioSampleRate.setAdapter(adapter);
@@ -258,7 +256,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
                  if (audioSampleRate != null) {
                      try {
                          String data = audioSampleRate.substring(0, audioSampleRate.length() - 2);
-                         int hz = new Integer(data).intValue();
+                         int hz = Integer.parseInt(data);
                          EMClient.getInstance().callManager().getCallOptions().setAudioSampleRate(hz);
                          PreferenceManager.getInstance().setCallAudioSampleRate(hz);
                      } catch (Exception e) {

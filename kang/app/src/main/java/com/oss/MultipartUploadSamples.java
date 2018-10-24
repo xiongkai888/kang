@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhouzhuo on 12/4/15.
+ * Created by xkai on 12/4/15.
  */
 public class MultipartUploadSamples {
     private OSS oss;
@@ -55,7 +55,7 @@ public class MultipartUploadSamples {
         long fileLength = uploadFile.length();
 
         long uploadedLength = 0;
-        List<PartETag> partETags = new ArrayList<PartETag>();
+        List<PartETag> partETags = new ArrayList<>();
         while (uploadedLength < fileLength) {
             int partLength = (int)Math.min(partSize, fileLength - uploadedLength);
             byte[] partData = IOUtils.readStreamAsBytesArray(input, partLength);

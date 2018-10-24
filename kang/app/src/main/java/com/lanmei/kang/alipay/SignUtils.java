@@ -35,7 +35,7 @@ public class SignUtils {
 
 			byte[] signed = signature.sign();
 
-			return new String(Base64.encode(signed));
+			return Base64.encode(signed);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("xs", e.getMessage(), e);

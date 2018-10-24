@@ -80,7 +80,7 @@ public class AlbumOtherActivity extends BaseActivity {
     private void initSwipeRefreshLayout(String uid) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("talent/album");
-        api.addParams("uid",api.getUserId(this));
+        api.add("uid",api.getUserId(this));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<AlbumBean>>() {
             @Override
             public void onResponse(NoPageListBean<AlbumBean> response) {

@@ -167,8 +167,8 @@ public class DynamicListAdapter extends SwipeRefreshAdapter<DynamicBean> {
                         return;
                     }
                     KangQiMeiApi api = new KangQiMeiApi("posts/like");
-                    api.addParams("uid",api.getUserId(context));
-                    api.addParams("id",bean.getId());
+                    api.add("uid",api.getUserId(context));
+                    api.add("id",bean.getId());
                     HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                         @Override
                         public void onResponse(BaseBean response) {

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodsOrderListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.bean.OrderListBean;
+import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -23,7 +23,6 @@ public class GoodsOrderListFragment extends BaseFragment {
 
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-    private SwipeRefreshController<NoPageListBean<OrderListBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -41,17 +40,14 @@ public class GoodsOrderListFragment extends BaseFragment {
 
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
-        String status = getArguments().getString("status");
         KangQiMeiApi api = new KangQiMeiApi("app/order_list");
-        api.addParams("uid",api.getUserId(context));
-        api.addParams("token",api.getToken(context));
-        api.addParams("status",status);//0全部1待付款2已付款3未消费4已完成
+        api.add("uid",api.getUserId(context));
+        api.add("state",getArguments().getInt("state"));//0全部1待付款2已付款3未消费4已完成
         GoodsOrderListAdapter adapter = new GoodsOrderListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        controller = new SwipeRefreshController<NoPageListBean<OrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+        SwipeRefreshController<NoPageListBean<GoodsOrderListBean>> controller = new SwipeRefreshController<NoPageListBean<GoodsOrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };
-        adapter.notifyDataSetChanged();
-//        controller.loadFirstPage();
+        controller.loadFirstPage();
     }
 
 //    @Subscribe

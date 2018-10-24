@@ -317,7 +317,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                                 if (soundPool != null)
                                     soundPool.stop(streamID);
                                 EMLog.d("EMCallManager", "soundPool stop ACCEPTED");
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
                             }
                             openSpeakerOn();
                             ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
@@ -663,7 +663,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                     });
                     try {
                         Thread.sleep(1500);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }

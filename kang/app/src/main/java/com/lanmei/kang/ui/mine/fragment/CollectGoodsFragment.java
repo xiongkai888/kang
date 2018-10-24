@@ -47,7 +47,7 @@ public class CollectGoodsFragment extends BaseFragment {
 
     private void initSwipeRefreshLayout() {
         KangQiMeiApi api = new KangQiMeiApi("app/collection_list");
-        api.addParams("userid",api.getUserId(context));
+        api.add("userid",api.getUserId(context));
         GoodsListAdapter adapter = new GoodsListAdapter(context);
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(context, 2));
         smartSwipeRefreshLayout.setAdapter(adapter);

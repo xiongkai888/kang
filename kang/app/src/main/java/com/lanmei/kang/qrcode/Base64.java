@@ -441,7 +441,6 @@ public class Base64 {
                                 (input[p++] & 0xff);
                         tailLen = 0;
                     }
-                    ;
                     break;
 
                 case 2:

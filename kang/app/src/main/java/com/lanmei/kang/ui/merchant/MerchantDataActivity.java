@@ -90,7 +90,7 @@ public class MerchantDataActivity extends BaseActivity implements Toolbar.OnMenu
     MerchantInfoBean bean;
     private void loadData(){
         KangQiMeiApi api = new KangQiMeiApi("place/index");
-        api.addParams("uid",api.getUserId(this));
+        api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<MerchantInfoBean>>() {
             @Override
             public void onResponse(DataBean<MerchantInfoBean> response) {
@@ -239,21 +239,21 @@ public class MerchantDataActivity extends BaseActivity implements Toolbar.OnMenu
     private void updateMerchantData(String name,String stime,String etime,String address,String phone,String placeIntroduction) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("place/update");
-        api.addParams("token",api.getToken(this));
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("name",name);
-        api.addParams("stime",stime);
-        api.addParams("etime",etime);
-        api.addParams("place_address",address);
-        api.addParams("tel",phone);
-        api.addParams("place_introduction",placeIntroduction);
+        api.add("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
+        api.add("name",name);
+        api.add("stime",stime);
+        api.add("etime",etime);
+        api.add("place_address",address);
+        api.add("tel",phone);
+        api.add("place_introduction",placeIntroduction);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
                 if (isFinishing()) {
                     return;
                 }
-                UIHelper.ToastMessage(MerchantDataActivity.this, response.getInfo().toString());
+                UIHelper.ToastMessage(MerchantDataActivity.this, response.getInfo());
                 isTurning = false;
 //                DemoHelper.getInstance().UpdateUserInfo();
             }

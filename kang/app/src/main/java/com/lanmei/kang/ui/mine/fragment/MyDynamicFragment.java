@@ -64,11 +64,11 @@ public class MyDynamicFragment extends BaseFragment {
         mAdapter = new DynamicListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         KangQiMeiApi api = new KangQiMeiApi("posts/index");
-        api.addParams("id",api.getUserId(context));
+        api.add("id",api.getUserId(context));
         if (com.xson.common.utils.StringUtils.isSame(status, CommonUtils.isZero)) {
-            api.addParams("uid",api.getUserId(context));
+            api.add("uid",api.getUserId(context));
         } else {
-            api.addParams("type",status);
+            api.add("type",status);
         }
         api.setMethod(AbstractApi.Method.GET);
         controller = new SwipeRefreshController<NoPageListBean<DynamicBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

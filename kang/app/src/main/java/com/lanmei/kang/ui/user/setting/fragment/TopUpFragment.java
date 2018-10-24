@@ -42,7 +42,6 @@ public class TopUpFragment extends BaseFragment {
     @InjectView(R.id.money_tv)
     TextView mMoneyTv;//当前余额
     TopUpAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<RechargeResultBean>> controller;
 
 
     @Override
@@ -67,13 +66,13 @@ public class TopUpFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         KangQiMeiApi api = new KangQiMeiApi("member/money_log");
-        api.addParams("type",2);
-        api.addParams("token",api.getToken(context));
-        api.addParams("uid",api.getUserId(context));
+        api.add("type",2);
+        api.add("token",api.getToken(context));
+        api.add("uid",api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         mAdapter = new TopUpAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<RechargeResultBean>> controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
 
@@ -91,7 +90,7 @@ public class TopUpFragment extends BaseFragment {
     private void ajaxUserInfo() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/member");
-        api.addParams("token",api.getToken(context));
+        api.add("token",api.getToken(context));
         api.setMethod(AbstractApi.Method.GET);
         httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override

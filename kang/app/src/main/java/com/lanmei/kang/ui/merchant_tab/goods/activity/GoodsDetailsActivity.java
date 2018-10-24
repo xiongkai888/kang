@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.data.volley.Response;
+import com.data.volley.error.VolleyError;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsCollectBean;
@@ -100,7 +102,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private void loadGoodsDetails() {
         KangQiMeiApi api = new KangQiMeiApi("app/goodsdetail");
-        api.addParams("id",id);
+        api.add("id",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<GoodsDetailsBean>>() {
             @Override
             public void onResponse(DataBean<GoodsDetailsBean> response) {
@@ -199,22 +201,27 @@ public class GoodsDetailsActivity extends BaseActivity {
     //修改收藏
     private void loadCollect(final boolean isClick) {
         KangQiMeiApi api = new KangQiMeiApi(isClick?"app/collection":"app/collection_type");
-        api.addParams("userid",api.getUserId(this)).addParams("goodsid",id);
+        api.add("userid",api.getUserId(this)).add("goodsid",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<GoodsCollectBean>>() {
             @Override
             public void onResponse(NoPageListBean<GoodsCollectBean> response) {
                 if (isFinishing()) {
                     return;
                 }
-                if (isClick){
+                if (isClick) {
                     isCollect = !isCollect;
                     EventBus.getDefault().post(new CollectGoodsEvent());
-                    UIHelper.ToastMessage(getContext(),response.getInfo());
-                }else {
+                    UIHelper.ToastMessage(getContext(), response.getInfo());
+                } else {
                     isCollect = !StringUtils.isEmpty(response.data);
                 }
-                collectIv.setImageResource(isCollect?R.mipmap.goods_collect_on:R.mipmap.goods_collect_off);
-                collectTv.setText(isCollect?getString(R.string.collected):getString(R.string.collect));
+                collectIv.setImageResource(isCollect ? R.mipmap.goods_collect_on : R.mipmap.goods_collect_off);
+                collectTv.setText(isCollect ? getString(R.string.collected) : getString(R.string.collect));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
     }
@@ -224,7 +231,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private void loadSpecifications(){
         KangQiMeiApi api = new KangQiMeiApi("app/good_specifications");
-        api.addParams("gid",id);
+        api.add("gid",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<GoodsSpecificationsBean>>() {
             @Override
             public void onResponse(NoPageListBean<GoodsSpecificationsBean> response) {

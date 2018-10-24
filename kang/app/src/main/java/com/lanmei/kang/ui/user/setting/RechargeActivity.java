@@ -142,9 +142,9 @@ public class RechargeActivity extends BaseActivity {
     private void ajaxPay() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("member/recharge");
-        api.addParams("token",api.getToken(this));
-        api.addParams("money",rechargeMoney);
-        api.addParams("pay_type",type);
+        api.add("token",api.getToken(this));
+        api.add("money",rechargeMoney);
+        api.add("pay_type",type);
         if (type == 1) {//支付宝充值
 //            UIHelper.ToastMessage(this,R.string.developing);
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {

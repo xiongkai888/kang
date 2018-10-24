@@ -16,17 +16,16 @@ import java.util.Map;
 public class DemoModel {
     UserDao dao = null;
     protected Context context = null;
-    protected Map<Key,Object> valueCache = new HashMap<Key,Object>();
+    protected Map<Key,Object> valueCache = new HashMap<>();
     
     public DemoModel(Context ctx){
         context = ctx;
         PreferenceManager.init(context);
     }
     
-    public boolean saveContactList(List<EaseUser> contactList) {
+    public void saveContactList(List<EaseUser> contactList) {
         UserDao dao = new UserDao(context);
         dao.saveContactList(contactList);
-        return true;
     }
 
     public Map<String, EaseUser> getContactList() {
@@ -132,7 +131,7 @@ public class DemoModel {
             dao = new UserDao(context);
         }
         
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.addAll(groups);
         for(int i = 0; i < list.size(); i++){
             if(EaseAtMessageHelper.get().getAtMeGroups().contains(list.get(i))){

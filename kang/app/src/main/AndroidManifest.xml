@@ -79,86 +79,19 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <!-- 新浪微博 -->
-
-        <activity
-            android:name=".WBShareActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- <service -->
-        <!-- android:name="com.sina.weibo.sdk.net.DownloadService" -->
-        <!-- android:exported="false" /> -->
-        <service
-            android:name=".updateversion.UpdateVersionService"
-            android:exported="false" />
-
-        <!-- <activity -->
-        <!-- android:name="com.umeng.socialize.media.WBShareCallBackActivity" -->
-        <!-- android:configChanges="keyboardHidden|orientation" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
-        <!-- android:exported="false" -->
-        <!-- android:screenOrientation="portrait" > -->
-        <!-- </activity> -->
-
-
-        <!-- <activity -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" -->
-        <!-- android:launchMode="singleTask" -->
-        <!-- android:name="com.sina.weibo.sdk.share.WbShareTransActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" /> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-
-
-        <!-- </activity> -->
-
-
-        <!-- <service -->
-        <!-- android:name="com.sina.weibo.sdk.net.DownloadService" -->
-        <!-- android:exported="false"></service> -->
-
-
-        <!-- 8888888888888888888888888 -->
 
         <!-- 微信Pay -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+
+        <!--微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:label="@string/app_name" />
-
-        <!-- QQ、QQ空间 -->
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="tencent1106162164" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.tencent.connect.common.AssistActivity"
+            android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 启动页 -->
@@ -235,7 +168,7 @@
         <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".search.SearchGoodsActivity"
             android:screenOrientation="portrait" />

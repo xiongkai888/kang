@@ -159,7 +159,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
             return null;
         }
         // DecodeHintType 和EncodeHintType
-        Hashtable<DecodeHintType, String> hints = new Hashtable<DecodeHintType, String>();
+        Hashtable<DecodeHintType, String> hints = new Hashtable<>();
         hints.put(DecodeHintType.CHARACTER_SET, "utf-8"); // 设置二维码内容的编码
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true; // 先获取原大小

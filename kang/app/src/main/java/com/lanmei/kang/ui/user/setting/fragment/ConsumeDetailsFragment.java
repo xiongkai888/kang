@@ -28,7 +28,6 @@ public class ConsumeDetailsFragment extends BaseFragment {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
 
     TopUpAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<RechargeResultBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -51,12 +50,12 @@ public class ConsumeDetailsFragment extends BaseFragment {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         KangQiMeiApi api = new KangQiMeiApi("member/money_log");
-        api.addParams("token",api.getToken(context));
-        api.addParams("uid",api.getUserId(context));
+        api.add("token",api.getToken(context));
+        api.add("uid",api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         mAdapter = new TopUpAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<RechargeResultBean>> controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

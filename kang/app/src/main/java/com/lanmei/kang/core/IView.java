@@ -1,7 +1,7 @@
 package com.lanmei.kang.core;
 
 /**
- * Created by XKAI on 2017/5/11.
+ * Created by xkai on 2017/5/11.
  */
 
 public interface IView  {

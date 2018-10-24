@@ -117,8 +117,8 @@ public class OrderDetailsActivity extends BaseActivity {
 
     private void loadOrderDetails(String id) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/detail");
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<OrderDetailsBean>>() {
             @Override
             public void onResponse(DataBean<OrderDetailsBean> response) {
@@ -299,13 +299,13 @@ public class OrderDetailsActivity extends BaseActivity {
         des3Code = RandomUtil.generateMixString(11);
         L.d("des3Code",des3Code);
         KangQiMeiApi api = new KangQiMeiApi("Reservation/consume");
-        api.addParams("code",des3Code);
-        api.addParams("id",id);
+        api.add("code",des3Code);
+        api.add("id",id);
 
         long time = System.currentTimeMillis();
-        api.addParams("time",time);
-        api.addParams("token",api.getToken(this));
-        api.addParams("uid",api.getUserId(this));
+        api.add("time",time);
+        api.add("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
 
         final JSONObject json = new JSONObject();
         json.put("code",des3Code);
@@ -326,8 +326,8 @@ public class OrderDetailsActivity extends BaseActivity {
     //取消订单
     private void orderCancel() {
         KangQiMeiApi api = new KangQiMeiApi("reservation/cancel");
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -344,8 +344,8 @@ public class OrderDetailsActivity extends BaseActivity {
     //申请退款
     private void orderRefund() {
         KangQiMeiApi api = new KangQiMeiApi("reservation/refund");
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -362,8 +362,8 @@ public class OrderDetailsActivity extends BaseActivity {
     //删除订单
     private void orderDel() {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id",id);
-        api.addParams("uid",api.getUserId(this));
+        api.add("id",id);
+        api.add("uid",api.getUserId(this));
         api.setMethod(AbstractApi.Method.GET);
 
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
@@ -382,10 +382,10 @@ public class OrderDetailsActivity extends BaseActivity {
 
     private void pay() {
         KangQiMeiApi api = new KangQiMeiApi("reservation/save");
-        api.addParams("id",id);
-        api.addParams("pay_type",type);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("id",id);
+        api.add("pay_type",type);
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -406,9 +406,9 @@ public class OrderDetailsActivity extends BaseActivity {
     private void loadPayMent() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("payment/pay");
-        api.addParams("order_id",id);
-        api.addParams("uid",api.getUserId(this));
-        api.addParams("token",api.getToken(this));
+        api.add("order_id",id);
+        api.add("uid",api.getUserId(this));
+        api.add("token",api.getToken(this));
         api.setMethod(AbstractApi.Method.GET);
         if (type == 1) {//支付宝支付
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {

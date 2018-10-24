@@ -511,7 +511,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 					return;
 				}
 				boolean result = f.renameTo(temp);
-				if (result == false) {
+				if (!result) {
 					return;
 				}
 				Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);

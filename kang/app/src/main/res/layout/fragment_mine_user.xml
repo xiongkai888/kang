@@ -92,7 +92,7 @@
 
                 <TextView
                     style="@style/mine_text"
-                    android:text="我的商品订单" />
+                    android:text="@string/my_goods_order" />
 
                 <ImageView style="@style/in_right_icon" />
 

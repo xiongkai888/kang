@@ -17,7 +17,7 @@ import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
 
 
 /**
- * Created by Administrator on 2016/9/14.
+ * Created by xkai on 2016/9/14.
  */
 
 public class ManageOssUpload {

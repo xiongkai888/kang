@@ -68,7 +68,7 @@ public class WithdrawCardListAdapter extends SwipeRefreshAdapter<WithdrawCardLis
             cardNum = cardNum.substring(length-4,length);
             viewHolder.mCardNumTv.setText(cardNum);
         }else {
-            viewHolder.mCardNumTv.setText(0000);
+            viewHolder.mCardNumTv.setText(0);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -137,8 +137,6 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
     }
 
 
-    private String pwd;
-
     @OnClick(R.id.bt_register)
     public void showRegister() {
 //        UIHelper.ToastMessage(this,R.string.developing);
@@ -164,7 +162,7 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
             UIHelper.ToastMessage(this,R.string.input_code);
             return;
         }
-        pwd = CommonUtils.getStringByEditText(mEdPwd);//
+        String pwd = CommonUtils.getStringByEditText(mEdPwd);
         if (StringUtils.isEmpty(pwd) || pwd.length() < 6) {
             UIHelper.ToastMessage(this,R.string.input_password_count);
             return;
@@ -192,8 +190,8 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
     //找回密码或修改密码
     private void retrieveOrResetPwd(final String mobile, String pwd, String code, HttpClient httpClient) {
         KangQiMeiApi api = new KangQiMeiApi("public/resetPwd");
-        api.addParams("phone",mobile);
-        api.addParams("password",pwd);
+        api.add("phone",mobile);
+        api.add("password",pwd);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -209,10 +207,10 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
     //注册
     private void register(String nickName,final String mobile, String pwd, String code,HttpClient httpClient) {
         KangQiMeiApi api = new KangQiMeiApi("public/regist");
-        api.addParams("phone",mobile);
-        api.addParams("password",pwd);
-        api.addParams("repassword",pwd);
-        api.addParams("nickname",nickName);
+        api.add("phone",mobile);
+        api.add("password",pwd);
+        api.add("repassword",pwd);
+        api.add("nickname",nickName);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -230,8 +228,8 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
         HttpClient httpClient = HttpClient.newInstance(this);
 
         KangQiMeiApi api = new KangQiMeiApi("public/send_sms");
-        api.addParams("phone",mobile);
-        api.addParams("code",codeStr);
+        api.add("phone",mobile);
+        api.add("code",codeStr);
 
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override

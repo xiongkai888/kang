@@ -31,10 +31,8 @@ public abstract class EditTextWatcher implements TextWatcher {
             tem = Integer.parseInt(s.toString());
         } catch (NumberFormatException err) {
             err.printStackTrace();
-        } finally {
-            return tem;
         }
-
+        return tem;
     }
 
     public static float StringToFloat(CharSequence s) {
@@ -46,11 +44,10 @@ public abstract class EditTextWatcher implements TextWatcher {
             tem = parseFloat(s.toString());
         } catch (NumberFormatException err) {
             err.printStackTrace();
-        } finally {
-            return tem;
         }
-
+        return tem;
     }
+
     public static double StringToDouble(CharSequence s) {
         double tem = 0;
         if (TextUtils.isEmpty(s))
@@ -60,9 +57,8 @@ public abstract class EditTextWatcher implements TextWatcher {
             tem = Double.parseDouble(s.toString());
         } catch (NumberFormatException err) {
             err.printStackTrace();
-        } finally {
-            return tem;
         }
+        return tem;
 
     }
 

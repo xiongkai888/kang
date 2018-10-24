@@ -81,7 +81,7 @@ public class GoodsClassifyActivity extends BaseActivity {
             adapter.notifyDataSetChanged();
             return;
         }
-        api.addParams("classid", classifyList.get(position).getId());
+        api.add("classid", classifyList.get(position).getId());
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
@@ -98,7 +98,7 @@ public class GoodsClassifyActivity extends BaseActivity {
     //用户端-商家tab  产品分类
     private void loadGoodsClassify() {
         KangQiMeiApi api = new KangQiMeiApi("app/good_type");
-        api.addParams("type",1);
+        api.add("type",1);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabClassifyBean>>() {
             @Override
             public void onResponse(NoPageListBean<MerchantTabClassifyBean> response) {

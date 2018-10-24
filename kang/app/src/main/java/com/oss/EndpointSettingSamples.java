@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhouzhuo on 6/6/16.
+ * Created by xkai on 6/6/16.
  */
 public class EndpointSettingSamples {
 

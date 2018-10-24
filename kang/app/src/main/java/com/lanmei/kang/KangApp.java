@@ -17,20 +17,18 @@ import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.lanmei.kang.util.Constant;
-import com.umeng.socialize.Config;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.xson.common.app.BaseApp;
 import com.xson.common.utils.L;
 
 /**
- * Created by Administrator on 2017/5/5.
+ * Created by xkai on 2017/5/5.
  */
 
 public class KangApp extends BaseApp {
     public static Context applicationContext;
     private static KangApp instance;
-    // login user name
-    public final String PREF_USERNAME = "username";
 
     public static final String HX_USER_Head="u_";
 
@@ -41,7 +39,6 @@ public class KangApp extends BaseApp {
 
     @Override
     public void onCreate() {
-//        MultiDex.install(this);
         SDKInitializer.initialize(this);//百度地图
         super.onCreate();
     }
@@ -50,7 +47,7 @@ public class KangApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = true;
+        L.debug = OSSLog.enableLog = false;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
@@ -71,7 +68,7 @@ public class KangApp extends BaseApp {
 //
 //        PlatformConfig.setQQZone(Constant.QQ_APP_ID, Constant.QQ_APP_SECRET);
 
-        Config.DEBUG = true;//筛选内容umeng_tool
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
     //环信初始化设置

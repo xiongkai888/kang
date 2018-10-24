@@ -3,8 +3,13 @@ package com.lanmei.kang.ui.merchant_tab.goods.fragment;
 import android.os.Bundle;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.adapter.GoodsCommentAdapter;
+import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.GoodsCommentBean;
 import com.lanmei.kang.bean.GoodsDetailsBean;
 import com.xson.common.app.BaseFragment;
+import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
@@ -20,8 +25,7 @@ public class GoodsCommentFragment extends BaseFragment {
     GoodsDetailsBean bean;//商品信息bean
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-//    GoodsCommentAdapter mAdapter;
-//    private SwipeRefreshController<NoPageListBean<GoodsCommentBean>> controller;
+    private SwipeRefreshController<NoPageListBean<GoodsCommentBean>> controller;
 
     @Override
     public int getContentViewId() {
@@ -34,27 +38,20 @@ public class GoodsCommentFragment extends BaseFragment {
         if (!StringUtils.isEmpty(bundle)) {
             bean = (GoodsDetailsBean) bundle.getSerializable("bean");
         }
-        if (bean == null){
-            return;
-        }
+//        if (bean == null){
+//            return;
+//        }
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
 
-//        GoodsCommentsApi api = new GoodsCommentsApi();
-//        api.proid = bean.getId();
-//        mAdapter = new GoodsCommentAdapter(context);
-//        smartSwipeRefreshLayout.setAdapter(mAdapter);
-//        controller = new SwipeRefreshController<NoPageListBean<GoodsCommentBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
-//        };
-//        controller.setIsFirstPageListener(new SwipeRefreshController.IsFirstPageListener() {
-//            @Override
-//            public void isFirst() {
-//                if (mAdapter != null) {
-//                    EventBus.getDefault().post(new OnlyCommentEvent(mAdapter.getData()));
-//                }
-//            }
-//        });
+        KangQiMeiApi api = new KangQiMeiApi("");
+        GoodsCommentAdapter adapter = new GoodsCommentAdapter(context);
+        smartSwipeRefreshLayout.setAdapter(adapter);
+        controller = new SwipeRefreshController<NoPageListBean<GoodsCommentBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+        };
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
 //        controller.loadFirstPage();
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -279,10 +279,10 @@ public class LoginActivity extends BaseActivity {
     protected void otherTypeLogin(String loginType, String openid, String userName, final String userImgUrl) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("public/login");
-        api.addParams("open_type",loginType);
-        api.addParams("open_id",openid);
-        api.addParams("nickname",userName);
-        api.addParams("pic",userImgUrl);
+        api.add("open_type",loginType);
+        api.add("open_id",openid);
+        api.add("nickname",userName);
+        api.add("pic",userImgUrl);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {
@@ -373,8 +373,8 @@ public class LoginActivity extends BaseActivity {
         }
         mProgressHUD.show();
         KangQiMeiApi api = new KangQiMeiApi("public/login");
-        api.addParams("phone",phone);
-        api.addParams("password",pwd);
+        api.add("phone",phone);
+        api.add("password",pwd);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
             @Override
             public void onResponse(DataBean<UserBean> response) {

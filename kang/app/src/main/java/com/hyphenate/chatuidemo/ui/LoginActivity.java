@@ -216,7 +216,6 @@ public class LoginActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		if (autoLogin) {
-			return;
 		}
 	}
 }

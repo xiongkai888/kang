@@ -23,7 +23,6 @@ import butterknife.InjectView;
 public class RecomMerchantListActivity extends BaseActivity {
 
     PhysiotherapyTabAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<MerchantListBean>> controller;
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
     @InjectView(R.id.pull_refresh_rv)
@@ -53,13 +52,13 @@ public class RecomMerchantListActivity extends BaseActivity {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
-        api.addParams("lat",SharedAccount.getInstance(this).getLat());
-        api.addParams("lon",SharedAccount.getInstance(this).getLon());
-        api.addParams("more",1);
+        api.add("lat",SharedAccount.getInstance(this).getLat());
+        api.add("lon",SharedAccount.getInstance(this).getLon());
+        api.add("more",1);
 
         mAdapter = new PhysiotherapyTabAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<MerchantListBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

@@ -81,9 +81,9 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
             }
             KangQiMeiApi api = new KangQiMeiApi("Reservation/service");
 
-            api.addParams("id",json.getString("id"));
-            api.addParams("code",json.getString("code"));
-            api.addParams("time",json.getString("time"));
+            api.add("id",json.getString("id"));
+            api.add("code",json.getString("code"));
+            api.add("time",json.getString("time"));
 
             HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
                 @Override

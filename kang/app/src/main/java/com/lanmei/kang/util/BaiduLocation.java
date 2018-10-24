@@ -13,18 +13,18 @@ import java.util.List;
 
 
 /**
- * Created by Administrator on 2016/9/12.
+ * Created by xkai on 2016/9/12.
  */
 
 public class BaiduLocation {
 
     private LocationClient mLocationClient = null;
-    private BDLocationListener myListener = new MyLocationListener();
     private WHbdLocationListener wHbdLocaionListener;
 
     public BaiduLocation(Context context, WHbdLocationListener wHbdLocaionListener) {
         this.wHbdLocaionListener = wHbdLocaionListener;
         mLocationClient = new LocationClient(context);     //声明LocationClient类
+        BDLocationListener myListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();
@@ -55,7 +55,7 @@ public class BaiduLocation {
         @Override
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
-            StringBuffer sb = new StringBuffer(256);
+            StringBuilder sb = new StringBuilder(256);
             sb.append("time : ");
             sb.append(location.getTime());
             sb.append("\nerror code : ");
@@ -123,7 +123,7 @@ public class BaiduLocation {
                 sb.append(list.size());
                 for (Poi p : list) {
                     sb.append("\npoi= : ");
-                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
+                    sb.append(p.getId()).append(" ").append(p.getName()).append(p.getRank());
                 }
             }
             L.d("BaiduLocation", "Latitude:" + location.getLatitude() + "---Longitude:" + location.getLongitude() + sb.toString());

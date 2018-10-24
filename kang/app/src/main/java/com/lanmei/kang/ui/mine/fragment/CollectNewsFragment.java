@@ -53,8 +53,8 @@ public class CollectNewsFragment extends BaseFragment {
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
         KangQiMeiApi api = new KangQiMeiApi("post/favour");
-        api.addParams("token",api.getToken(context));
-        api.addParams("uid",api.getUserId(context));
+        api.add("token",api.getToken(context));
+        api.add("uid",api.getUserId(context));
         mAdapter = new MyCollectNewsAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<CollectNewsBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {

@@ -56,7 +56,7 @@ public class SearchGoodsActivity extends BaseActivity implements TextView.OnEdit
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (StringUtils.isEmpty(String.valueOf(s))){
-                    api.addParams("goodsname", "");
+                    api.add("goodsname", "");
                     mAdapter.setData(goodsBeanList);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -106,7 +106,7 @@ public class SearchGoodsActivity extends BaseActivity implements TextView.OnEdit
     }
 
     private void loadSearchGoods(String keyword) {
-        api.addParams("goodsname", keyword);
+        api.add("goodsname", keyword);
         controller.loadFirstPage();
     }
 

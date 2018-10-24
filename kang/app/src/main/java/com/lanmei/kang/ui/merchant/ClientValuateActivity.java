@@ -29,7 +29,6 @@ public class ClientValuateActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
 
     ClientValuateAdapter mAdapter;
-    private SwipeRefreshController<NoPageListBean<ClientValuateBean>> controller;
 
 
     @Override
@@ -56,11 +55,11 @@ public class ClientValuateActivity extends BaseActivity {
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
 
         KangQiMeiApi api = new KangQiMeiApi("PlaceReviews/index");
-        api.addParams("mid",api.getUserId(this));
+        api.add("mid",api.getUserId(this));
 
         mAdapter = new ClientValuateAdapter(this);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
-        controller = new SwipeRefreshController<NoPageListBean<ClientValuateBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
+        SwipeRefreshController<NoPageListBean<ClientValuateBean>> controller = new SwipeRefreshController<NoPageListBean<ClientValuateBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
         };
         controller.loadFirstPage();
     }

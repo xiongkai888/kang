@@ -37,14 +37,13 @@ public class UserProfileManager {
 	public UserProfileManager() {
 	}
 
-	public synchronized boolean init(Context context) {
+	public synchronized void init(Context context) {
 		if (sdkInited) {
-			return true;
+			return;
 		}
 		ParseManager.getInstance().onInit(context);
-		syncContactInfosListeners = new ArrayList<DataSyncListener>();
+		syncContactInfosListeners = new ArrayList<>();
 		sdkInited = true;
-		return true;
 	}
 
 	public void addSyncContactInfoListener(DataSyncListener listener) {

@@ -453,13 +453,14 @@ public class MainActivity extends BaseActivity {
     private LocalBroadcastManager broadcastManager;
 
     private int getExceptionMessageId(String exceptionType) {
-         if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
-             return R.string.connect_conflict;
-         } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
-             return R.string.em_user_remove;
-         } else if (exceptionType.equals(Constant.ACCOUNT_FORBIDDEN)) {
-             return R.string.user_forbidden;
-         }
+		switch (exceptionType) {
+			case Constant.ACCOUNT_CONFLICT:
+				return R.string.connect_conflict;
+			case Constant.ACCOUNT_REMOVED:
+				return R.string.em_user_remove;
+			case Constant.ACCOUNT_FORBIDDEN:
+				return R.string.user_forbidden;
+		}
          return R.string.Network_error;
     }
 	/**

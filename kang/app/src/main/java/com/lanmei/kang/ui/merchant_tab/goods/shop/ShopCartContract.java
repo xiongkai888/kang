@@ -13,24 +13,24 @@ public class ShopCartContract {
 
     public interface View extends IView {
 
-        public void initShopCart(List<ShopCarBean> list);
+        void initShopCart(List<ShopCarBean> list);
 
 
         /**
          * 显示无数据
          */
-        public void showEmpty();
+        void showEmpty();
 
         /**
          * 刷新购物车
          */
-        public void refreshShopCart();
+        void refreshShopCart();
 
         /**
          * 总计
          * @param sum
          */
-        public void summation(double sum, boolean selectedAll);
+        void summation(double sum, boolean selectedAll);
 
     }
 

@@ -257,9 +257,9 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
     //3拒绝退款和7同意退款
     private void agreeRefund(OrderListMerchantBean bean, String type) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/save");
-        api.addParams("id",bean.getId());
-        api.addParams("status",type);
-        api.addParams("uid",api.getUserId(context));
+        api.add("id",bean.getId());
+        api.add("status",type);
+        api.add("uid",api.getUserId(context));
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -275,8 +275,8 @@ public class OrderListMerchantAdapter extends SwipeRefreshAdapter<OrderListMerch
     //删除订单
     private void orderDel(OrderListMerchantBean bean) {
         KangQiMeiApi api = new KangQiMeiApi("reservation/del");
-        api.addParams("id",bean.getId());
-        api.addParams("uid",api.getUserId(context));
+        api.add("id",bean.getId());
+        api.add("uid",api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
 
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {

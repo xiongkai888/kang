@@ -97,7 +97,7 @@ public class AlbumActivity extends BaseActivity {
     private void initSwipeRefreshLayout(final boolean isUpdate) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("talent/album");
-        api.addParams("uid", api.getUserId(this));
+        api.add("uid", api.getUserId(this));
         httpClient.request(api, new BeanRequest.SuccessListener<NoPageListBean<AlbumBean>>() {
             @Override
             public void onResponse(NoPageListBean<AlbumBean> response) {
@@ -228,10 +228,10 @@ public class AlbumActivity extends BaseActivity {
     private void ajaxDeleteAlbum(String idStr) {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("talent/album");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("token", UserHelper.getInstance(this).getToken());
-        api.addParams("act", -1);
-        api.addParams("id", idStr.substring(0, idStr.length() - 1));
+        api.add("uid", api.getUserId(this));
+        api.add("token", UserHelper.getInstance(this).getToken());
+        api.add("act", -1);
+        api.add("id", idStr.substring(0, idStr.length() - 1));
         httpClient.request(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -248,10 +248,10 @@ public class AlbumActivity extends BaseActivity {
     private void ajaxUploadingHttp() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("talent/album");
-        api.addParams("uid", api.getUserId(this));
-        api.addParams("token", api.getToken(this));
-        api.addParams("act", 1);
-        api.addParams("pic", successPath);
+        api.add("uid", api.getUserId(this));
+        api.add("token", api.getToken(this));
+        api.add("act", 1);
+        api.add("pic", successPath);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

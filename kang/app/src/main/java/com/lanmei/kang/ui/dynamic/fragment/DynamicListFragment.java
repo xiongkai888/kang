@@ -60,8 +60,8 @@ public class DynamicListFragment extends BaseFragment {
         Bundle bundle = getArguments();
         String type = bundle.getString("type");
         KangQiMeiApi api = new KangQiMeiApi("posts/index");
-        api.addParams("type",type);
-        api.addParams("id",api.getUserId(context));
+        api.add("type",type);
+        api.add("id",api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
         mAdapter = new DynamicListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);

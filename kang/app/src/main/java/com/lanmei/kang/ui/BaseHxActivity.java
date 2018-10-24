@@ -40,7 +40,7 @@ import com.xson.common.app.BaseActivity;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/8/29.
+ * Created by xkai on 2017/8/29.
  */
 
 public abstract class BaseHxActivity extends BaseActivity {
@@ -88,7 +88,7 @@ public abstract class BaseHxActivity extends BaseActivity {
                     intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                     intent.setData(Uri.parse("package:" + packageName));
                     startActivity(intent);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         }
@@ -173,13 +173,13 @@ public abstract class BaseHxActivity extends BaseActivity {
         if (exceptionBuilder != null) {
             exceptionBuilder.create().dismiss();
             exceptionBuilder = null;
-            isExceptionDialogShow = false;
+            boolean isExceptionDialogShow = false;
         }
         unregisterBroadcastReceiver();
 
         try {
             unregisterReceiver(internalDebugReceiver);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
     }
@@ -382,19 +382,19 @@ public abstract class BaseHxActivity extends BaseActivity {
     private InviteMessgeDao inviteMessgeDao;
 
     private android.app.AlertDialog.Builder exceptionBuilder;
-    private boolean isExceptionDialogShow = false;
     private BroadcastReceiver internalDebugReceiver;
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
 
     private int getExceptionMessageId(String exceptionType) {
-        if (exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
-            return R.string.connect_conflict;
-        } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
-            return R.string.em_user_remove;
-        } else if (exceptionType.equals(Constant.ACCOUNT_FORBIDDEN)) {
-            return R.string.user_forbidden;
+        switch (exceptionType) {
+            case Constant.ACCOUNT_CONFLICT:
+                return R.string.connect_conflict;
+            case Constant.ACCOUNT_REMOVED:
+                return R.string.em_user_remove;
+            case Constant.ACCOUNT_FORBIDDEN:
+                return R.string.user_forbidden;
         }
         return R.string.Network_error;
     }

@@ -16,6 +16,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.lanmei.kang.update.UpdateAppConfig;
 import com.lanmei.kang.util.Constant;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -47,11 +48,11 @@ public class KangApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }
-
+        UpdateAppConfig.initUpdateApp(this);//app版本更新
         initHx();
         //友盟初始化设置
         initUM();

@@ -35,7 +35,7 @@ import butterknife.InjectView;
 
 
 /**
- * 订单列表
+ * 我的项目订单列表
  */
 public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
@@ -136,7 +136,7 @@ public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
                     //                    order2.setText(context.getString(R.string.contact_merchant));
                     if (StringUtils.isSame(CommonUtils.isZero, bean.getIs_reviews())) {//为评价
 //                        order3.setVisibility(View.VISIBLE);
-                        order3.setText(context.getString(R.string.evaluate));//晒单评价
+                        order3.setText(context.getString(R.string.bask_in_a_single_comment));//晒单评价
                     } else {
                         order3.setVisibility(View.GONE);
                     }

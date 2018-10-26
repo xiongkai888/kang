@@ -35,6 +35,31 @@
         <TextView style="@style/line_H10dp_bottom" />
 
         <LinearLayout
+            android:id="@+id/ll_team"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/m_data" />
+
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="我的团队" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_m_data"
             style="@style/ll_no_border"
             android:paddingLeft="5dp">
@@ -77,7 +102,7 @@
 
                 <TextView
                     style="@style/mine_text"
-                    android:text="订单" />
+                    android:text="@string/order" />
 
                 <ImageView style="@style/in_right_icon" />
 
@@ -235,31 +260,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_m_setting"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/icon_setting" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="设置" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_m_center"
             style="@style/ll_no_border"
             android:paddingLeft="5dp">
@@ -302,7 +302,7 @@
 
                 <TextView
                     style="@style/mine_text"
-                    android:text="我的订单" />
+                    android:text="@string/my_order" />
 
                 <ImageView style="@style/in_right_icon" />
 
@@ -310,10 +310,33 @@
 
         </LinearLayout>
 
-        <TextView style="@style/line_H1dp_CD" />
+        <LinearLayout
+            android:id="@+id/ll_m_setting"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/icon_setting" />
+
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/set" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
-
-
 
 </ScrollView>

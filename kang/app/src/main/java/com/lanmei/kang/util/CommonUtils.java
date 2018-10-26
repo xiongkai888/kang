@@ -88,6 +88,13 @@ public class CommonUtils {
         return bean.getUser_type();
     }
 
+    //获取用户类型
+    public static boolean isUser(Context context) {
+        return !StringUtils.isSame(getUserType(context),CommonUtils.isOne);
+    }
+
+
+
     /**
      * List<AlbumBean> 传化未String[]
      *

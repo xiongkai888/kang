@@ -165,6 +165,26 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_tgid"
+                style="@style/text_match"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/text_lg_v"
+                    android:src="@mipmap/icon_phone" />
+
+
+                <EditText
+                    android:id="@+id/tgid_et"
+                    style="@style/login_et_bottom"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_15dp"
+                    android:hint="请输入推荐者的推广ID或手机号码" />
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/bt_register"

@@ -44,7 +44,7 @@ import butterknife.OnClick;
 
 
 /**
- * 订单详情
+ * 我的项目  订单详情
  */
 public class OrderDetailsActivity extends BaseActivity {
 
@@ -173,7 +173,7 @@ public class OrderDetailsActivity extends BaseActivity {
                 //                    order2.setText(context.getString(R.string.contact_merchant));
                 if (StringUtils.isSame(CommonUtils.isZero, bean.getIs_reviews())) {//为评价
 //                        order3.setVisibility(View.VISIBLE);
-                    order3.setText(getString(R.string.evaluate));//晒单评价
+                    order3.setText(getString(R.string.bask_in_a_single_comment));//晒单评价
                 } else {
                     order3.setVisibility(View.GONE);
                 }

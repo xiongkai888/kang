@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <include layout="@layout/include_address" />
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+
+                style="@style/ll_bottom">
+
+                <TextView
+                    android:id="@+id/order_no_tv"
+                    style="@style/text_weight"
+                    android:layout_marginBottom="@dimen/d_10dp"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:layout_marginTop="@dimen/d_10dp"
+                    android:text="@string/order_no" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    android:id="@+id/courier_tv"
+                    style="@style/mine_text"
+                    android:text="物流单号：" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="商品总数：" />
+
+                <TextView
+                    android:id="@+id/num_tv"
+                    style="@style/text"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                style="@style/ll_bottom"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="运费：" />
+
+                <TextView
+                    android:id="@+id/fee_tv"
+                    style="@style/text14colorFD"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_no_border"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:lineSpacingMultiplier="1.3"
+                    android:text="订单总价：" />
+
+                <TextView
+                    style="@style/text14colorFD"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="@string/price_sub" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                style="@style/ll_bottom"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:lineSpacingMultiplier="1.3"
+                    android:text="商品金额：" />
+
+                <TextView
+                    android:id="@+id/goods_price_tv"
+                    style="@style/text14colorFD"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_no_border"
+                android:layout_marginLeft="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:lineSpacingMultiplier="1.3"
+                    android:text="订单总价：" />
+
+                <TextView
+                    android:id="@+id/total_price_tv"
+                    style="@style/text14colorFD"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <LinearLayout
+                style="@style/ll_no_border"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingRight="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="付款方式" />
+
+
+                <TextView
+                    android:id="@+id/pay_way_tv"
+                    style="@style/text" />
+
+            </LinearLayout>
+
+
+            <TextView style="@style/line_H10dp_on" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/include_item_order_bottom" />
+
+</LinearLayout>

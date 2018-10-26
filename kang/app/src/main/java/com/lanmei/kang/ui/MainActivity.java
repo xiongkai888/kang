@@ -21,8 +21,8 @@ import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.helper.TabHelper;
 import com.lanmei.kang.ui.login.LoginActivity;
+import com.lanmei.kang.update.UpdateAppConfig;
 import com.lanmei.kang.util.BaiduLocation;
-import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
 import com.xson.common.utils.ImageUtils;
 import com.xson.common.utils.IntentUtil;
@@ -60,15 +60,12 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        UpdateAppConfig.requestStoragePermission(this);
+
 
         tabHelper = new TabHelper(this, mTabLayout, R.color.colorPrimaryDark);
-        if (!StringUtils.isSame(CommonUtils.getUserType(this), CommonUtils.isOne)) {//0用户
-            tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.location_on, R.mipmap.location_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
-            mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), 5);
-        } else {//1商家
-            tabHelper.setParameter(getTitleListM(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
-            mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), 4);
-        }
+        tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.location_on, R.mipmap.location_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
+        mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         tabHelper.setupTabIcons();
         initViewPager();
         initPermission();//百度定位
@@ -98,10 +95,10 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_LOCATION);
-            }else {
+            } else {
                 initBaiDu();
             }
-        }else {
+        } else {
             initBaiDu();
         }
     }
@@ -115,15 +112,15 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         switch (requestCode) {
             case CameraHelper.CHOOSE_FROM_GALLAY:
                 EventBus.getDefault().post(new ActivityResultEvent(requestCode, ImageUtils.getImageFileFromPickerResult(this, data)));
-                L.d(L.TAG,"MainActivity.onActivityResult 0");
+                L.d(L.TAG, "MainActivity.onActivityResult 0");
                 break;
             case CameraHelper.CHOOSE_FROM_CAMERA:
                 //注意小米拍照后data 为null
-                L.d(L.TAG,"MainActivity.onActivityResult 1");
+                L.d(L.TAG, "MainActivity.onActivityResult 1");
                 EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
                 break;
             case CameraHelper.RESULT_FROM_CROP:
-                L.d(L.TAG,"MainActivity.onActivityResult 2");
+                L.d(L.TAG, "MainActivity.onActivityResult 2");
                 EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
                 break;
         }
@@ -132,7 +129,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case PERMISSION_LOCATION:
                 initBaiDu();
                 break;
@@ -141,7 +138,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
 
     public void initViewPager() {
         mViewPager.setAdapter(mainPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(4);
         mTabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
@@ -196,16 +193,6 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         List<String> titles = new ArrayList<>();
         titles.add(getString(R.string.mall));
         titles.add(getString(R.string.nearby));
-        titles.add(getString(R.string.news));
-        titles.add(getString(R.string.dynamic));
-        titles.add(getString(R.string.mine));
-        return titles;
-    }
-
-    //商家
-    private List<String> getTitleListM() {
-        List<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.merchant));
         titles.add(getString(R.string.news));
         titles.add(getString(R.string.dynamic));
         titles.add(getString(R.string.mine));

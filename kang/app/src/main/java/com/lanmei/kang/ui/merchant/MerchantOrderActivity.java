@@ -20,7 +20,6 @@ import com.xson.common.bean.BaseBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.L;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
@@ -56,7 +55,7 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle("订单");
+        actionbar.setTitle(R.string.order);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mAdapter = new MerchantOrderAdapter(getSupportFragmentManager());
@@ -73,8 +72,8 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
         String result = event.getResult();
         try {
             Des des = new Des();
-            L.d("onScanQRCodeSuccess", "加密后的数据=" + result);
-            L.d("onScanQRCodeSuccess", "解码后=" + des.decode(result));
+//            L.d("onScanQRCodeSuccess", "加密后的数据=" + result);
+//            L.d("onScanQRCodeSuccess", "解码后=" + des.decode(result));
             JSONObject json = JsonUtil.stringToJson(des.decode(result));
             if (json == null){
                 return;
@@ -96,7 +95,7 @@ public class MerchantOrderActivity extends BaseActivity implements TabLayout.OnT
         } catch (Exception e) {
             e.printStackTrace();
             UIHelper.ToastMessage(this,"消费失败");
-            L.d("onScanQRCodeSuccess", "异常=" + e.getMessage());
+//            L.d("onScanQRCodeSuccess", "异常=" + e.getMessage());
         }
     }
 

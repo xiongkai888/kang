@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.SetUserInfoEvent;
+import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
 import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
@@ -64,13 +65,16 @@ public class MineUserFragment extends BaseFragment {
         setUser(UserHelper.getInstance(context).getUserBean());//初始化用户信息
     }
 
-    @OnClick({R.id.ll_goods_order,R.id.ll_membership_card,R.id.head_iv, R.id.ll_my_order, R.id.ll_my_personal, R.id.ll_my_coupon, R.id.ll_my_collect,R.id.ll_my_account,
+    @OnClick({R.id.ll_team,R.id.ll_goods_order,R.id.ll_membership_card,R.id.head_iv, R.id.ll_my_order, R.id.ll_my_personal, R.id.ll_my_coupon, R.id.ll_my_collect,R.id.ll_my_account,
             R.id.ll_my_friend, R.id.ll_my_dynamic, R.id.ll_online, R.id.ll_setting, R.id.ll_vibrator})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;
         }
         switch (view.getId()) {
+            case R.id.ll_team://我的团队
+                IntentUtil.startActivity(context, MyTeamActivity.class);
+                break;
             case R.id.ll_membership_card://我的会员卡
                 IntentUtil.startActivity(context, MembershipCardActivity.class);
                 break;

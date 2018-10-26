@@ -17,6 +17,8 @@ import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.ui.login.RegisterActivity;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.DBShopCartHelper;
+import com.lanmei.kang.update.UpdateAppConfig;
+import com.lanmei.kang.update.UpdateEvent;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
@@ -29,6 +31,7 @@ import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -62,6 +65,8 @@ public class SettingActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.setting);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
+
+        EventBus.getDefault().register(this);
 
         try {
             mCleanCacheTv.setText(DataCleanManager.getCacheSize(getCacheDir()));
@@ -156,7 +161,7 @@ public class SettingActivity extends BaseActivity {
                 RegisterActivity.startActivity(this, RegisterActivity.RESET_PWD_STYLE);
                 break;
             case R.id.ll_versions://版本信息
-                UIHelper.ToastMessage(this, R.string.developing);
+                UpdateAppConfig.requestStoragePermission(this);
                 break;
         }
 
@@ -195,4 +200,13 @@ public class SettingActivity extends BaseActivity {
 
     }
 
+    @Subscribe
+    public void updateEvent(UpdateEvent event) {
+        UIHelper.ToastMessage(this, event.getContent());
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

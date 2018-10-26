@@ -106,7 +106,10 @@ public class MerchantTabFragment extends BaseFragment {
                 IntentUtil.startActivity(context, SearchGoodsActivity.class);
                 break;
             case R.id.message_iv://消息
-                CommonUtils.developing(context);
+                if (!CommonUtils.isLogin(context)){
+                    return;
+                }
+                IntentUtil.startActivity(context, com.hyphenate.chatuidemo.ui.MainActivity.class);
                 break;
         }
     }

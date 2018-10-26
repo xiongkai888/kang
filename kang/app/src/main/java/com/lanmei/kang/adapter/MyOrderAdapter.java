@@ -10,7 +10,7 @@ import com.lanmei.kang.R;
 import com.lanmei.kang.ui.mine.fragment.OrderListFragment;
 
 /**
- * 我的订单
+ * 我的项目订单
  */
 public class MyOrderAdapter extends FragmentPagerAdapter {
 

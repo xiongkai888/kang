@@ -653,6 +653,9 @@
             android:name=".ui.merchant.activity.MerchantOrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.merchant.activity.MyTeamActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.user.setting.RechargeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -738,6 +741,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant_tab.activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.merchant_tab.activity.OrderDetailsGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant_tab.goods.activity.GoodsDetailsActivity"

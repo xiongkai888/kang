@@ -121,4 +121,8 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     implementation files('libs/umeng-common-1.5.3.jar')
+
+    //版本更新
+    implementation 'com.github.yjfnypeu:UpdatePlugin:2.5.1'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
 }

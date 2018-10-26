@@ -56,6 +56,10 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
     ImageView mIvshowPwd;
     @InjectView(R.id.et_code)
     EditText mEdCode;
+    @InjectView(R.id.tgid_et)
+    EditText tgidEt;
+    @InjectView(R.id.ll_tgid)
+    LinearLayout llTgid;
     @InjectView(R.id.ll_name)
     LinearLayout mllName;
 
@@ -87,10 +91,12 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
         }else if (type == FORGOT_PWD_STYLE){
             setMenu(R.string.submit);
             mToolbar.setTitle("找回密码");
+            llTgid.setVisibility(View.GONE);
             mllName.setVisibility(View.INVISIBLE);
         }else if (RESET_PWD_STYLE == type){//设置密码
             mToolbar.setTitle("修改密码");
             mButton.setText(R.string.submit);
+            llTgid.setVisibility(View.GONE);
             mllName.setVisibility(View.INVISIBLE);
         }
         mToolbar.setNavigationIcon(R.mipmap.back_g);
@@ -211,6 +217,7 @@ public class RegisterActivity extends BaseActivity implements CodeCountDownTimer
         api.add("password",pwd);
         api.add("repassword",pwd);
         api.add("nickname",nickName);
+        api.add("tgid",CommonUtils.getStringByEditText(tgidEt));
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

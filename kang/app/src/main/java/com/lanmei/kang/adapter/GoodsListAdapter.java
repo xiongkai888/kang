@@ -68,7 +68,7 @@ public class GoodsListAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> 
         }
 
         public void setParameter(MerchantTabGoodsBean bean) {
-            ImageHelper.load(context, bean.getImgs(), image, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            ImageHelper.load(context, bean.getCover(), image, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             contentTv.setText(bean.getGoodsname());
             moneyTv.setText(String.format(context.getString(R.string.price), bean.getPrice()));
             sellNumTv.setText(String.format(context.getString(R.string.have_sales), bean.getSales()));

@@ -104,6 +104,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
         return false;
     }
 
+    //获取商家列表
     private void loadMerchantList() {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
         api.add("user_type", 1);

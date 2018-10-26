@@ -1,5 +1,6 @@
 package com.lanmei.kang.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * 商品订单列表
  */
 
-public class GoodsOrderListBean {
+public class GoodsOrderListBean implements Serializable{
 
     /**
      * id : 774
@@ -253,7 +254,7 @@ public class GoodsOrderListBean {
         this.goods = goods;
     }
 
-    public static class GoodsBean {
+    public static class GoodsBean implements Serializable{
         /**
          * goodsid : 25
          * price : 888.00

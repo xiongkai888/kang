@@ -16,6 +16,6 @@
     <TextView
         android:id="@+id/name_tv"
         android:layout_marginTop="@dimen/d_5dp"
-        android:text="中医理疗"
+        android:lines="1"
         style="@style/text" />
 </LinearLayout>

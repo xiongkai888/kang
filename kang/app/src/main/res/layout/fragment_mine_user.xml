@@ -32,6 +32,33 @@
                 android:textSize="@dimen/txt_18sp" />
         </LinearLayout>
 
+        <TextView style="@style/line_H10dp_on" />
+
+        <LinearLayout
+            android:id="@+id/ll_team"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_friend" />
+
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="我的团队" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_membership_card"
             style="@style/ll_no_border"
@@ -77,6 +104,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_goods_order"
             style="@style/ll_no_border"
@@ -84,7 +112,7 @@
 
             <ImageView
                 style="@style/text"
-                android:src="@mipmap/mine_order" />
+                android:src="@mipmap/mine_friend" />
 
             <LinearLayout
                 style="@style/ll_bottom"
@@ -290,7 +318,6 @@
         <LinearLayout
             android:id="@+id/ll_setting"
             style="@style/ll_no_border"
-            android:layout_marginBottom="@dimen/d_10dp"
             android:paddingLeft="5dp">
 
             <ImageView
@@ -303,13 +330,15 @@
 
                 <TextView
                     style="@style/mine_text"
-                    android:text="设置" />
+                    android:text="@string/set" />
 
                 <ImageView style="@style/in_right_icon" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
 

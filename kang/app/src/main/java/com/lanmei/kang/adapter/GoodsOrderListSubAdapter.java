@@ -39,8 +39,25 @@ public class GoodsOrderListSubAdapter extends SwipeRefreshAdapter<GoodsOrderList
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null){
+                    listener.onClick();
+                }
+            }
+        });
     }
 
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener{
+        void onClick();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -283,6 +283,9 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="Toolbar.member_information" parent="Toolbar.TitleText">
+        <item name="android:textColor">@color/white</item>
+    </style>
     <!--背景白色，有底部边框-->
     <style name="ll_bottom" parent="text_match">
         <item name="android:background">@drawable/border_bottom_white</item>

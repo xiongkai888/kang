@@ -117,9 +117,9 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
 
     private void setParameter() {
         nameTv.setText(bean.getGoodsname());
-        priceTv.setText(String.format(context.getString(R.string.price), bean.getPrice()));
+        priceTv.setText(String.format(context.getString(R.string.price), bean.getSale_price()));
         payNumTv.setText(String.format(context.getString(R.string.pay_num), bean.getSales()));
-        salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getSale_price()));
+        salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getBusiness_price()));
     }
 
     private void initTabView() {

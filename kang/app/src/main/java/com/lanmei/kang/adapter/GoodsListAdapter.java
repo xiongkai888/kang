@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
@@ -70,7 +71,7 @@ public class GoodsListAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> 
         public void setParameter(MerchantTabGoodsBean bean) {
             ImageHelper.load(context, bean.getCover(), image, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             contentTv.setText(bean.getGoodsname());
-            moneyTv.setText(String.format(context.getString(R.string.price), bean.getPrice()));
+            moneyTv.setText(String.format(context.getString(R.string.price), CommonUtils.isUser(context)?bean.getSale_price():bean.getBusiness_price()));
             sellNumTv.setText(String.format(context.getString(R.string.have_sales), bean.getSales()));
         }
     }

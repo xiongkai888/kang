@@ -29,8 +29,6 @@
                     <TextView
                         android:id="@+id/name_tv"
                         style="@style/text"
-                        android:ellipsize="end"
-                        android:maxLines="2"
                         android:padding="@dimen/d_10dp"
                         android:text="道具黑色" />
 

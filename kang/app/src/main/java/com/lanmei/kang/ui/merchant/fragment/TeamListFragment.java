@@ -26,7 +26,7 @@ public class TeamListFragment extends BaseFragment {
 
     @Override
     public int getContentViewId() {
-        return R.layout.listview_no_divider;
+        return R.layout.fragment_single_listview;
     }
 
 

@@ -31,6 +31,7 @@ public class StringUtils {
         }
         return true;
     }
+
     /**
      * 判断一个对象是否为空；
      */
@@ -39,45 +40,27 @@ public class StringUtils {
     }
 
     public final static boolean isEmpty(String[] array) {
-        if (array == null || array.length == 0)
-            return true;
-        else
-            return false;
+        return (array == null || array.length == 0);
     }
 
     public final static boolean isEmpty(int[] array) {
-        if (array == null || array.length == 0)
-            return true;
-        else
-            return false;
+        return (array == null || array.length == 0);
     }
 
     public final static boolean isEmpty(StringBuffer sb) {
-        if (sb == null || sb.length() == 0)
-            return true;
-        else
-            return false;
+        return (sb == null || sb.length() == 0);
     }
 
     public final static boolean isEmpty(List list) {
-        if (list == null || list.size() == 0)
-            return true;
-        else
-            return false;
+        return (list == null || list.size() == 0);
     }
 
     public final static boolean isEmpty(Set set) {
-        if (set == null || set.size() == 0)
-            return true;
-        else
-            return false;
+        return (set == null || set.size() == 0);
     }
 
     public final static boolean isEmpty(Map map) {
-        if (map == null || map.size() == 0)
-            return true;
-        else
-            return false;
+        return (map == null || map.size() == 0);
     }
 
     /**
@@ -92,6 +75,7 @@ public class StringUtils {
             return false;
         }
     }
+
     /**
      * 字符串转整数
      *
@@ -163,6 +147,7 @@ public class StringUtils {
 
         return true;
     }
+
     /**
      * 判断变量的值是否为double类型
      */
@@ -179,16 +164,19 @@ public class StringUtils {
 
     /**
      * num为实数，n为要保留的小数位数。
+     *
      * @param num
      * @param n
      * @return
      */
-    public static double round(double num,int n){
-        return Math.round(num*Math.pow(10,n))/Math.pow(10,n);
+    public static double round(double num, int n) {
+        return Math.round(num * Math.pow(10, n)) / Math.pow(10, n);
     }
-    public static double round(int num,int n){
-        return Math.round(1.0*num*Math.pow(10,n))/Math.pow(10,n);
+
+    public static double round(int num, int n) {
+        return Math.round(1.0 * num * Math.pow(10, n)) / Math.pow(10, n);
     }
+
     /**
      * 对象转整数
      *
@@ -294,10 +282,11 @@ public class StringUtils {
 
     /**
      * 判定输入汉字
+     *
      * @param c
      * @return
      */
-    public  final static boolean isChinese(char c) {
+    public final static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
                 || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
@@ -313,16 +302,17 @@ public class StringUtils {
     /**
      * 根据UnicodeBlock方法判断中文标点符号
      * 中文的标点符号主要存在于以下5个UnicodeBlock中，
-
-     U2000-General Punctuation (百分号，千分号，单引号，双引号等)
-
-     U3000-CJK Symbols and Punctuation ( 顿号，句号，书名号，〸，〹，〺 等；PS: 后面三个字符你知道什么意思吗？ : )    )
-
-     UFF00-Halfwidth and Fullwidth Forms ( 大于，小于，等于，括号，感叹号，加，减，冒号，分号等等)
-
-     UFE30-CJK Compatibility Forms  (主要是给竖写方式使用的括号，以及间断线﹉，波浪线﹌等)
-
-     UFE10-Vertical Forms (主要是一些竖着写的标点符号，    等等)
+     * <p>
+     * U2000-General Punctuation (百分号，千分号，单引号，双引号等)
+     * <p>
+     * U3000-CJK Symbols and Punctuation ( 顿号，句号，书名号，〸，〹，〺 等；PS: 后面三个字符你知道什么意思吗？ : )    )
+     * <p>
+     * UFF00-Halfwidth and Fullwidth Forms ( 大于，小于，等于，括号，感叹号，加，减，冒号，分号等等)
+     * <p>
+     * UFE30-CJK Compatibility Forms  (主要是给竖写方式使用的括号，以及间断线﹉，波浪线﹌等)
+     * <p>
+     * UFE10-Vertical Forms (主要是一些竖着写的标点符号，    等等)
+     *
      * @param c
      * @return
      */
@@ -340,10 +330,11 @@ public class StringUtils {
 
     /**
      * 判定输入汉字
+     *
      * @param c
      * @return
      */
-    public  final static boolean isChineseWithoutPunctuation(char c) {
+    public final static boolean isChineseWithoutPunctuation(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
                 || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
@@ -355,12 +346,13 @@ public class StringUtils {
 
     /**
      * Returns a string containing the tokens joined by delimiters.
+     *
      * @param tokens an array objects to be joined.
      */
     public static String join(CharSequence delimiter, int[] tokens) {
         StringBuilder sb = new StringBuilder();
         boolean firstTime = true;
-        for (int token: tokens) {
+        for (int token : tokens) {
             if (firstTime) {
                 firstTime = false;
             } else {
@@ -373,7 +365,7 @@ public class StringUtils {
 
     public static String join(CharSequence delimiter, CharSequence[] tokens) {
         StringBuilder sb = new StringBuilder();
-        for (CharSequence token: tokens) {
+        for (CharSequence token : tokens) {
             if (sb.length() > 0) {
                 sb.append(delimiter);
             }
@@ -382,37 +374,7 @@ public class StringUtils {
         return sb.toString();
     }
 
-    /**
-     * 用空格拆分字符串
-     * @param text
-     * @param blockSize
-     * @return
-     */
-    public static String divide(String text, int blockSize) {
-        return divide(text, blockSize, "  ");
-    }
 
-    /**
-     * 用一段字符来分隔另一段字符串
-     * @param text
-     * @param blockSize
-     * @param splitChar
-     * @return
-     */
-    public static String divide(String text, int blockSize, String splitChar) {
-        StringBuilder sb = new StringBuilder();
-        for(int size = text.length(), i = 0; i < size; i++) {
-            if(i > 0 && i % blockSize == 0) {
-                sb.append(splitChar);
-            }
-            sb.append(text.charAt(i));
-        }
-        return sb.toString();
-    }
-
-    public static String trimNull(String text) {
-        return text == null ? "" : text;
-    }
 
     /**
      * 判断手机格式是否正确

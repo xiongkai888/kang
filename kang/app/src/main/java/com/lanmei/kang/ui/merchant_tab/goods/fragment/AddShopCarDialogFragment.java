@@ -95,7 +95,11 @@ public class AddShopCarDialogFragment extends DialogFragment {
     public void setParameter() {
         nameTv.setText(detailsBean.getGoodsname());
         ImageHelper.load(getContext(), detailsBean.getCover(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-        priceTvTv.setText(String.format(getString(R.string.price), detailsBean.getPrice()));
+
+        String sale_price = StringUtils.isEmpty(detailsBean.getSale_price())?CommonUtils.isZero:detailsBean.getSale_price();
+        String business_price = StringUtils.isEmpty(detailsBean.getBusiness_price())?CommonUtils.isZero:detailsBean.getBusiness_price();
+
+        priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.isUser(getContext())?sale_price:business_price));
         numTv.setText(String.format(getString(R.string.inventory), detailsBean.getInventory()));
         payNumEt.setFocusable(false);
 
@@ -122,9 +126,12 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 if (orderNum > inventory) {
                     payNumEt.setText(String.valueOf(inventory));
                 }
-                priceTvTv.setText(String.format(getString(R.string.price), bean.getPrice()));
+                String  sale_price = StringUtils.isEmpty(bean.getSale_price())?CommonUtils.isZero:bean.getSale_price();
+                String business_price = StringUtils.isEmpty(bean.getBusiness_price())?CommonUtils.isZero:bean.getBusiness_price();
+
+                priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.isUser(getContext())?sale_price:business_price));
                 numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
-                detailsBean.setPrice(bean.getPrice());
+                detailsBean.setPrice(CommonUtils.isUser(getContext())?sale_price:business_price);
                 detailsBean.setSpecifications(bean.getSpecifications());
                 detailsBean.setGid(bean.getId());
             }

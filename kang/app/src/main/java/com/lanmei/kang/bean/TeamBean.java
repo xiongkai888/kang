@@ -1,10 +1,12 @@
 package com.lanmei.kang.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by xkai on 2018/10/26.
  */
 
-public class TeamBean {
+public class TeamBean implements Serializable{
 
 
     /**
@@ -13,6 +15,7 @@ public class TeamBean {
      * phone : 13502641232
      * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180119/5a61bf79bb762.jpg
      * reg_time : 1970-01-01 08:00
+     * address": null
      * user_type : 会员
      */
 
@@ -21,7 +24,16 @@ public class TeamBean {
     private String phone;
     private String pic;
     private String reg_time;
+    private String address;
     private String user_type;
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     public String getNickname() {
         return nickname;

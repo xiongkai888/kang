@@ -710,6 +710,9 @@
             android:name=".ui.merchant.activity.ItemCompileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.merchant.activity.MemberInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.shake.ShakeActivity"
             android:screenOrientation="portrait" />
         <activity

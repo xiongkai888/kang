@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <com.xson.common.widget.CenterTitleToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d_50dp"
+            app:titleTextAppearance="@style/Toolbar.member_information" />
+
+    </LinearLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/text_match"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.xson.common.widget.CircleImageView
+                    android:id="@+id/pic_iv"
+                    android:layout_width="@dimen/d_100dp"
+                    android:layout_height="@dimen/d_100dp"
+                    android:layout_marginTop="@dimen/d_20dp"
+                    android:src="@mipmap/default_pic" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/text"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_18sp" />
+            </LinearLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

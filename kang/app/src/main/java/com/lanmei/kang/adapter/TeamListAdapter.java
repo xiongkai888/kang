@@ -1,6 +1,7 @@
 package com.lanmei.kang.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.TeamBean;
+import com.lanmei.kang.ui.merchant.activity.MemberInformationActivity;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,12 +39,20 @@ public class TeamListAdapter extends SwipeRefreshAdapter<TeamBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        TeamBean bean = getItem(position);
-        if (bean == null){
+        final TeamBean bean = getItem(position);
+        if (bean == null) {
             return;
         }
-        ViewHolder viewHolder = (ViewHolder)holder;
+        ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean", bean);
+                IntentUtil.startActivity(context, MemberInformationActivity.class,bundle);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -50,18 +61,15 @@ public class TeamListAdapter extends SwipeRefreshAdapter<TeamBean> {
         ImageView picIv;
         @InjectView(R.id.nickname_tv)
         TextView nicknameTv;
-        @InjectView(R.id.reg_time_tv)
-        TextView regTimeTv;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(TeamBean bean){
-            ImageHelper.load(context,bean.getPic(),picIv,null,true,R.mipmap.default_pic,R.mipmap.default_pic);
-            nicknameTv.setText("会员名："+bean.getNickname());
-            regTimeTv.setText("注册时间："+bean.getReg_time());
+        public void setParameter(TeamBean bean) {
+            ImageHelper.load(context, bean.getPic(), picIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            nicknameTv.setText(bean.getNickname());
 //            regTimeTv.setText("注册时间："+time.formatterTime(bean.getReg_time()));
         }
     }

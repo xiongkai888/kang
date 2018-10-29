@@ -32,6 +32,14 @@ public class GoodsSpecificationsBean {
     private String specifications;
 
     private boolean isSelect;
+    /**
+     * oemid : null
+     * business_price : null
+     * sale_price : null
+     */
+
+    private String business_price;
+    private String sale_price;
 
     public boolean isSelect() {
         return isSelect;
@@ -118,5 +126,21 @@ public class GoodsSpecificationsBean {
 
     public void setSpecifications(String specifications) {
         this.specifications = specifications;
+    }
+
+    public String getBusiness_price() {
+        return business_price;
+    }
+
+    public void setBusiness_price(String business_price) {
+        this.business_price = business_price;
+    }
+
+    public String getSale_price() {
+        return sale_price;
+    }
+
+    public void setSale_price(String sale_price) {
+        this.sale_price = sale_price;
     }
 }

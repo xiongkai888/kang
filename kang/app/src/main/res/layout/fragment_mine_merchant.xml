@@ -111,6 +111,29 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_goods_order"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/m_order" />
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/my_goods_order" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_m_album"
             style="@style/ll_no_border"
             android:paddingLeft="5dp">

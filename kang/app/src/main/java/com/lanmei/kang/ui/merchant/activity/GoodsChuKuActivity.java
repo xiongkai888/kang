@@ -153,7 +153,7 @@ public class GoodsChuKuActivity extends BaseActivity implements TextView.OnEdito
                 }
                 merchantTabGoodsBean = beanList.get(0);
                 numTv.setText(merchantTabGoodsBean.getInventory());
-                priceEt.setText(merchantTabGoodsBean.getPrice());
+                priceEt.setText(CommonUtils.isUser(getContext())?merchantTabGoodsBean.getSale_price():merchantTabGoodsBean.getBusiness_price());
             }
         });
     }

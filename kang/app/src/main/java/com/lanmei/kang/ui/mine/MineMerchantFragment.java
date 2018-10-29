@@ -18,6 +18,7 @@ import com.lanmei.kang.ui.merchant.activity.GoodsSellListActivity;
 import com.lanmei.kang.ui.merchant.activity.MerchantItemsActivity;
 import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.AlbumActivity;
+import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
@@ -124,7 +125,7 @@ public class MineMerchantFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.ll_team,R.id.ll_m_sell, R.id.ll_m_chuku, R.id.ll_m_ruku, R.id.head_iv, R.id.ll_m_data, R.id.ll_m_order, R.id.ll_m_album, R.id.ll_m_services, R.id.ll_m_evaluate, R.id.ll_m_setting, R.id.ll_m_center, R.id.ll_mime_order})
+    @OnClick({R.id.ll_team,R.id.ll_goods_order,R.id.ll_m_sell, R.id.ll_m_chuku, R.id.ll_m_ruku, R.id.head_iv, R.id.ll_m_data, R.id.ll_m_order, R.id.ll_m_album, R.id.ll_m_services, R.id.ll_m_evaluate, R.id.ll_m_setting, R.id.ll_m_center, R.id.ll_mime_order})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;
@@ -147,6 +148,9 @@ public class MineMerchantFragment extends BaseFragment {
                 break;
             case R.id.ll_m_order://订单
                 IntentUtil.startActivity(context, MerchantOrderActivity.class);
+                break;
+            case R.id.ll_goods_order://我的商品订单
+                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
             case R.id.ll_m_album://相册
                 IntentUtil.startActivity(context, AlbumActivity.class);

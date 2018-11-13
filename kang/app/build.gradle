@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 24
-        versionName "2.0.6"
+        versionName "2.0.7"
         buildConfigField "String", "API_URL", "\"http://120.79.56.96/api/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -125,4 +125,6 @@ dependencies {
     //版本更新
     implementation 'com.github.yjfnypeu:UpdatePlugin:2.5.1'
     implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
+    //pdf
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }

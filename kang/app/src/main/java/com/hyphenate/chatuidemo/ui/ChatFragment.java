@@ -33,7 +33,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
-import com.lanmei.kang.R;
 import com.hyphenate.chatuidemo.domain.EmojiconExampleGroupData;
 import com.hyphenate.chatuidemo.domain.RobotUser;
 import com.hyphenate.chatuidemo.widget.ChatRowVoiceCall;
@@ -45,6 +44,12 @@ import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
+import com.lanmei.kang.R;
+import com.lanmei.kang.event.UserBeanEvent;
+import com.xson.common.utils.UIHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,6 +98,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     protected void setUpView() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         setChatFragmentHelper(this);
         if (chatType == Constant.CHATTYPE_SINGLE) { 
             Map<String,RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
@@ -150,7 +159,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //聊天室暂时不支持红包功能
         //red packet code : 注册红包菜单选项
         if (chatType != Constant.CHATTYPE_CHATROOM) {
-            inputMenu.registerExtendMenuItem(R.string.attach_red_packet, R.drawable.em_chat_red_packet_selector, ITEM_RED_PACKET, extendMenuItemClickListener);
+//            inputMenu.registerExtendMenuItem(R.string.attach_red_packet, R.drawable.em_chat_red_packet_selector, ITEM_RED_PACKET, extendMenuItemClickListener);
         }
         //end of red packet code
     }
@@ -454,5 +463,43 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         super.onDestroy();
         //调用该方法可防止红包SDK引起的内存泄漏
         RPRedPacketUtil.getInstance().detachView();
+        EventBus.getDefault().unregister(this);
     }
+
+
+    private boolean i;
+    private boolean o;
+
+    @Subscribe
+    public void userBeanEvent(UserBeanEvent event) {
+        if (chatType != Constant.CHATTYPE_SINGLE) {
+            o = true;
+            if (!i) {
+                messageList.refresh();
+                handler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
+                i = true;
+            }
+        }else {
+            if (!o){
+                super.setUpView();
+                o = true;
+                UIHelper.ToastMessage(getContext(),o+"");
+            }
+
+        }
+    }
+
+    public static final long HEART_BEAT_RATE = 2000;//
+
+
+    private Runnable heartBeatRunnable = new Runnable() {//
+        @Override
+        public void run() {
+            if (o) {
+                messageList.refresh();
+                o = false;
+                handler.postDelayed(this, HEART_BEAT_RATE);
+            }
+        }
+    };
 }

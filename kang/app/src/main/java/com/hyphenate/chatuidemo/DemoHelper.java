@@ -39,7 +39,6 @@ import com.hyphenate.chatuidemo.domain.RobotUser;
 import com.hyphenate.chatuidemo.parse.UserProfileManager;
 import com.hyphenate.chatuidemo.receiver.CallReceiver;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
-import com.hyphenate.chatuidemo.ui.ConversationListFragment;
 import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.hyphenate.chatuidemo.ui.VideoCallActivity;
 import com.hyphenate.chatuidemo.ui.VoiceCallActivity;
@@ -61,6 +60,7 @@ import com.hyphenate.util.EMLog;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.UserInfoBean;
+import com.lanmei.kang.event.UserBeanEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.DataBean;
@@ -68,6 +68,8 @@ import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -938,84 +940,77 @@ public class DemoHelper {
             user = new EaseUser(username);
             EaseCommonUtils.setUserInitialLetter(user);
         }
-        if (userBeanMap.containsKey(username)){
+        if (userBeanMap.containsKey(username)) {
             UserInfoBean userBean = getUserBeanForUid(username);
             if (userBean != null) {
                 user.setNickname(userBean.getNickname());
                 user.setNick(userBean.getNickname());
                 user.setAvatar(userBean.getPic());
             }
-        }else {
+        } else {
 //            Log.d("username",username+"加载资料");
-            getUserBean(username,false,null);
+            getUserBean(username, null);
         }
         return user;
     }
 
-    public Map<String,UserInfoBean> userBeanMap = new HashMap<>();//
-    public Map<String,String> userIdMap = new HashMap<>();//
+    public Map<String, UserInfoBean> userBeanMap = new HashMap<>();//
+    public Map<String, String> userIdMap = new HashMap<>();//
 
-    public UserInfoBean getUserBeanForUid(String username){
+    public UserInfoBean getUserBeanForUid(String username) {
         return userBeanMap.get(username);
     }
-    public boolean isContainsKey(String username){
+
+    public boolean isContainsKey(String username) {
         return userBeanMap.containsKey(username);
     }
 
+    private UserBeanEvent event = new UserBeanEvent();
+
     /**
-     *
-     * @param username  u_  +  uid
-     * @param isUpDate  已经有的是否更新  true为需要更新
+     * @param username u_  +  uid
      * @param l
      */
-    public void getUserBean(final String username,boolean isUpDate,final UserInfoListener l) {
-        if (userBeanMap.containsKey(username) && !isUpDate){
-            if (l != null){
+    public void getUserBean(final String username, final UserInfoListener l) {
+        if (userBeanMap.containsKey(username)) {
+            if (l != null) {
                 l.succeed(getUserBeanForUid(username));
             }
             return;
         }
-        if (!isUpDate){
-            if (userIdMap.containsKey(username)){
-                return;//只加载一次
-            }else {
-                userIdMap.put(username,username);
-            }
+        if (userIdMap.containsKey(username)) {
+            return;//只加载一次
+        } else {
+            userIdMap.put(username, username);
         }
         KangQiMeiApi api = new KangQiMeiApi("member/member");
         String uid = username.substring(2, username.length());
-        api.add("uid",uid);
+        api.add("uid", uid);
         api.setMethod(AbstractApi.Method.GET);
         HttpClient.newInstance(appContext).request(api, new BeanRequest.SuccessListener<DataBean<UserInfoBean>>() {
             @Override
             public void onResponse(DataBean<UserInfoBean> response) {
-                if (!userBeanMap.containsKey(username)){
-                    userBeanMap.put(username,response.data);
-                    notifyRefreshConversationList(username);
-                }else {
-                    userBeanMap.remove(username);
-                    userBeanMap.put(username,response.data);
+                if (response.data == null){
+                    return;
                 }
-                if (l != null){
+                userBeanMap.put(username, response.data);
+//                notifyRefreshConversationList(username);
+                userIdMap.remove(username);
+                EventBus.getDefault().post(event);
+                if (l != null) {
                     l.succeed(response.data);
                 }
             }
         });
     }
 
-    public interface UserInfoListener{
+    public interface UserInfoListener {
         void succeed(UserInfoBean bean);
-    }
-
-    public void notifyRefreshConversationList(String username){
-        Intent intent = new Intent(ConversationListFragment.REFRESH_CONVERSATIONLIST);
-        intent.putExtra("username",username);
-        appContext.sendBroadcast(intent);
     }
 
 
     public void UpdateUserInfo() {
-            CommonUtils.loadUserInfo(appContext, null);
+        CommonUtils.loadUserInfo(appContext, null);
     }
 
 

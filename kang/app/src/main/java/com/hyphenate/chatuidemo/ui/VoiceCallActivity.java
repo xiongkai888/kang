@@ -115,7 +115,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 ImageHelper.load(this,bean.getPic(),headCard,null,true,R.drawable.em_default_avatar,R.drawable.em_default_avatar);
             }
         }else {
-            DemoHelper.getInstance().getUserBean(username, false, new DemoHelper.UserInfoListener() {
+            DemoHelper.getInstance().getUserBean(username, new DemoHelper.UserInfoListener() {
                 @Override
                 public void succeed(UserInfoBean bean) {
                     if (bean != null){

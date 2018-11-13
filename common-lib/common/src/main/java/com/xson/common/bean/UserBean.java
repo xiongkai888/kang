@@ -65,6 +65,7 @@ public class UserBean implements Serializable{
      * avatar_bg :
      * menber_num : 1539228577B0100T6778
      * money : 9996173.00
+     * files_img : http:\/\/qkmimages.img-cn-shenzhen.aliyuncs.com\/Uploads\/imgs\/20181113\/1542095148494.pdf
      */
 
     private String id;
@@ -123,6 +124,15 @@ public class UserBean implements Serializable{
     private String avatar_bg;
     private String menber_num;
     private String money;
+    private String files_img;
+
+    public void setFiles_img(String files_img) {
+        this.files_img = files_img;
+    }
+
+    public String getFiles_img() {
+        return files_img;
+    }
 
     public String getId() {
         return id;

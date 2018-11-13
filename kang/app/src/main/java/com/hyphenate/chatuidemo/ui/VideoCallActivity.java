@@ -181,7 +181,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 nickTextView.setText(bean.getNickname());
             }
         }else {
-            DemoHelper.getInstance().getUserBean(username, false, new DemoHelper.UserInfoListener() {
+            DemoHelper.getInstance().getUserBean(username, new DemoHelper.UserInfoListener() {
                 @Override
                 public void succeed(UserInfoBean bean) {
                     if (bean != null){

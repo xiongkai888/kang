@@ -162,7 +162,7 @@
     <string name="graphic_details">图文详情</string>
     <string name="shop">购物车</string>
     <string name="my_item_order">我的项目订单</string>
-    <string name="my_goods_order">我的商品订单</string>
+    <string name="my_goods_order">我的订单</string>
     <string name="goods_price_num">￥1221\nx1</string>
     <string name="goods_price_and_num">￥%1$s\nx%2$s</string>
     <string name="my_coupon">我的优惠卷</string>
@@ -213,8 +213,11 @@
     <string name="bask_in_a_single_comment">晒单评价</string>
     <string name="order">订单</string>
     <string name="courier_no">物流单号：%1$s</string>
+    <string name="page_pdf">%1$s / %2$s</string>
     <string name="payed">已支付</string>
     <string name="complete_transaction">交易完成</string>
     <string name="my_team">我的团队</string>
+    <string name="my_dynamic">我的动态</string>
+    <string name="health_report">健康报告</string>
 
 </resources>

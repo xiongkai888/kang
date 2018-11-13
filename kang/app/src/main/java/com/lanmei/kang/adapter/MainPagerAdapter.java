@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.kang.ui.dynamic.DynamicFragment;
-import com.lanmei.kang.ui.home.HomeFragment;
 import com.lanmei.kang.ui.merchant_tab.MerchantTabFragment;
 import com.lanmei.kang.ui.mine.MineFragment;
 import com.lanmei.kang.ui.news.NewsFragment;
@@ -25,13 +24,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new MerchantTabFragment();
+//            case 1:
+//                return new HomeFragment();
             case 1:
-                return new HomeFragment();
-            case 2:
                 return new NewsFragment();
-            case 3:
+            case 2:
                 return new DynamicFragment();
-            case 4:
+            case 3:
                 return new MineFragment();
         }
         return null;
@@ -39,7 +38,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 4;
     }
 
 }

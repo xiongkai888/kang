@@ -47,7 +47,6 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     ViewPager mViewPager;
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
-    TabHelper tabHelper;
 
     private MainPagerAdapter mainPagerAdapter;
 
@@ -62,9 +61,9 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         EventBus.getDefault().register(this);
         UpdateAppConfig.requestStoragePermission(this);
 
-
-        tabHelper = new TabHelper(this, mTabLayout, R.color.colorPrimaryDark);
-        tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.location_on, R.mipmap.location_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
+        TabHelper  tabHelper = new TabHelper(this, mTabLayout, R.color.colorPrimaryDark);
+//        tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.location_on, R.mipmap.location_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
+        tabHelper.setParameter(getTitleListU(), new int[]{R.mipmap.home_on, R.mipmap.home_off, R.mipmap.news_on, R.mipmap.news_off, R.mipmap.dynamic_on, R.mipmap.dynamic_off, R.mipmap.mine_on, R.mipmap.mine_off});
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         tabHelper.setupTabIcons();
         initViewPager();
@@ -138,7 +137,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
 
     public void initViewPager() {
         mViewPager.setAdapter(mainPagerAdapter);
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(3);
         mTabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
@@ -192,7 +191,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
     private List<String> getTitleListU() {
         List<String> titles = new ArrayList<>();
         titles.add(getString(R.string.mall));
-        titles.add(getString(R.string.nearby));
+//        titles.add(getString(R.string.nearby));
         titles.add(getString(R.string.news));
         titles.add(getString(R.string.dynamic));
         titles.add(getString(R.string.mine));

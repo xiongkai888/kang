@@ -1,20 +1,13 @@
 package com.hyphenate.chatuidemo.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.UserInfoBean;
-
-import static com.hyphenate.chatuidemo.ui.ConversationListFragment.REFRESH_CONVERSATIONLIST;
 
 /**
  * chat activity，EaseChatFragment was used
@@ -29,10 +22,6 @@ public class ChatActivity extends BaseActivity{
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.em_activity_chat);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(REFRESH_CONVERSATIONLIST); //刷新环信会话列表广播
-        registerReceiver(mReceiver, filter);
 
         activityInstance = this;
         //get user id or group id
@@ -49,7 +38,6 @@ public class ChatActivity extends BaseActivity{
     protected void onDestroy() {
         super.onDestroy();
         activityInstance = null;
-        unregisterReceiver(mReceiver);
     }
     
     @Override
@@ -82,21 +70,5 @@ public class ChatActivity extends BaseActivity{
         @NonNull int[] grantResults) {
         PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
     }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            String userName = intent.getStringExtra("username");
-            if (REFRESH_CONVERSATIONLIST.equals(action)) {
-                if (DemoHelper.getInstance().userBeanMap.containsKey(userName)){
-                    UserInfoBean bean = DemoHelper.getInstance().userBeanMap.get(userName);
-                    if (bean != null){
-                        chatFragment.setTitlebar(bean.getNickname());
-                    }
-                }
-            }
-        }
-    };
 
 }

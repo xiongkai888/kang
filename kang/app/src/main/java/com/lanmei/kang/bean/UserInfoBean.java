@@ -30,6 +30,15 @@ public class UserInfoBean implements Serializable{
     private String custom;
     private String signature;
     private String money;
+    private String files_img;
+
+    public void setFiles_img(String files_img) {
+        this.files_img = files_img;
+    }
+
+    public String getFiles_img() {
+        return files_img;
+    }
 
     public String getId() {
         return id;

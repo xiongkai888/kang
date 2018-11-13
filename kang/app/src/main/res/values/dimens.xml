@@ -40,6 +40,7 @@
     <dimen name="d_180dp">180dp</dimen>
 
     <dimen name="tabLayout_h">50dp</dimen>
+    <dimen name="toolbar_h">50dp</dimen>
 
     <!--关注、加好友按钮的最小宽度-->
     <dimen name="attention_minWidth">65dp</dimen>

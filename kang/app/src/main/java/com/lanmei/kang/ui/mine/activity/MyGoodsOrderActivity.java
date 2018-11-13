@@ -40,7 +40,6 @@ public class MyGoodsOrderActivity extends BaseActivity{
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         mViewPager.setAdapter(new MyGoodsOrderAdapter(getSupportFragmentManager(),this));
-        mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 
     }

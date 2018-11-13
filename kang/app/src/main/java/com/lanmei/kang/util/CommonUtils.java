@@ -213,6 +213,7 @@ public class CommonUtils {
                     bean.setCustom(userInfoBean.getCustom());
                     bean.setSignature(userInfoBean.getSignature());
                     bean.setMoney(userInfoBean.getMoney());
+                    bean.setFiles_img(userInfoBean.getFiles_img());
                     if (l != null) {
                         l.userInfo(bean);
                     }

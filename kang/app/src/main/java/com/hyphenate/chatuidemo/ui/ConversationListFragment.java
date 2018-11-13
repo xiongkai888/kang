@@ -1,9 +1,6 @@
 package com.hyphenate.chatuidemo.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,11 +25,13 @@ import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.NetUtils;
 import com.lanmei.kang.R;
+import com.lanmei.kang.event.UserBeanEvent;
+
+import org.greenrobot.eventbus.Subscribe;
 
 public class ConversationListFragment extends EaseConversationListFragment {
 
     private TextView errorText;
-    public static String REFRESH_CONVERSATIONLIST = "REFRESH_CONVERSATIONLIST";//刷新环信会话列表广播或设置titilebar
 
     @Override
     protected void initView() {
@@ -44,9 +43,6 @@ public class ConversationListFragment extends EaseConversationListFragment {
                 hideTitleBar();
             }
         }
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(REFRESH_CONVERSATIONLIST); //刷新环信会话列表广播
-        getContext().registerReceiver(mReceiver, filter);
         View errorView = (LinearLayout) View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
@@ -163,20 +159,28 @@ public class ConversationListFragment extends EaseConversationListFragment {
 
 
 
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private boolean i;
+    private boolean o;
+
+    @Subscribe
+    public void userBeanEvent(UserBeanEvent event){
+        o = true;
+        if (!i) {
+            refresh();
+            query.postDelayed(heartBeatRunnable, ChatFragment.HEART_BEAT_RATE);
+            i = true;
+        }
+    }
+
+    private Runnable heartBeatRunnable = new Runnable() {//心跳包请求位置信息
         @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (REFRESH_CONVERSATIONLIST.equals(action)) {
-                conversationListView.refresh();
+        public void run() {
+            if (o) {
+                refresh();
+                o = false;
+                query.postDelayed(this, ChatFragment.HEART_BEAT_RATE);
             }
         }
     };
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getContext().unregisterReceiver(mReceiver);//注销广播
-    }
 }

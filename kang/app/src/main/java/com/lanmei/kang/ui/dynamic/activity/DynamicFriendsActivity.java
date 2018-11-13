@@ -76,26 +76,18 @@ public class DynamicFriendsActivity extends BaseActivity {
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("");
-        actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
+        actionbar.setHomeAsUpIndicator(R.mipmap.back_w);
 
-//        if (StringUtils.isEmpty(uid)) {
-//            return;
-//        }
-//        PersonalApi api = new PersonalApi();
-//        api.uid = uid;
-//        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-//            @Override
-//            public void onResponse(BaseBean response) {
-//
-//            }
-//        });
-        DemoHelper.getInstance().getUserBean(KangApp.HX_USER_Head + uid, false, new DemoHelper.UserInfoListener() {
+        DemoHelper.getInstance().getUserBean(KangApp.HX_USER_Head + uid, new DemoHelper.UserInfoListener() {
             @Override
             public void succeed(UserInfoBean bean) {
                 if (isFinishing()) {
                     return;
                 }
-                setUserInfo(bean);
+                if (bean != null){
+                    setUserInfo(bean);
+                }
+
             }
         });
         setData();

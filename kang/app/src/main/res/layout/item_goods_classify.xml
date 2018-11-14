@@ -21,7 +21,7 @@
             style="@style/text12colorBlack"
             android:layout_marginTop="@dimen/d_2dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:paddingLeft="@dimen/d_5dp"
             android:paddingRight="@dimen/d_5dp"
             android:paddingTop="@dimen/d_5dp" />

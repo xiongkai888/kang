@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">康其美</string>
+    <string name="app_name">大美e家</string>
     <string name="news">资讯</string>
     <string name="input_phone_number">请输入手机号</string>
     <string name="not_mobile_format">手机号码格式不正确</string>
@@ -199,7 +199,6 @@
     <string name="format_time_no_second">yyyy-MM-dd HH:mm</string>
     <string name="format_time_year_month_day">yyyy-MM-dd</string>
     <string name="input_user_number">请输入会员编号或扫描获取</string>
-    <string name="user_digits">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="goods">商品</string>
     <string name="serve">服务</string>
     <string name="goods_number">共计%1$s件商品</string>

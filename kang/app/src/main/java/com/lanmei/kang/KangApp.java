@@ -33,11 +33,6 @@ public class KangApp extends BaseApp {
 
     public static final String HX_USER_Head="u_";
 
-    /**
-     * nickname for current user, the nickname instead of ID be shown when user receive notification from APNs
-     */
-    public static String currentUserNick = "";
-
     @Override
     public void onCreate() {
         SDKInitializer.initialize(this);//百度地图

@@ -15,10 +15,10 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
+import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -34,8 +34,8 @@ public class GoodsClassifyActivity extends BaseActivity {
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     GoodsClassifyAdapter adapter;
     private List<MerchantTabClassifyBean> classifyList;//分类列表
+    SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller;
     private KangQiMeiApi api;
-    private HashMap<Integer,List<MerchantTabGoodsBean>>  hashMap;
 
 
     @Override
@@ -45,13 +45,13 @@ public class GoodsClassifyActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        hashMap = new HashMap<>();
 
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(this, 2));
         api = new KangQiMeiApi("app/good_list");
         adapter = new GoodsClassifyAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
+        controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {
+        };
         loadGoodsClassify();
     }
 
@@ -76,23 +76,8 @@ public class GoodsClassifyActivity extends BaseActivity {
     }
 
     private void refresh(final int position) {
-        if (hashMap.containsKey(position)){
-            adapter.setData(hashMap.get(position));
-            adapter.notifyDataSetChanged();
-            return;
-        }
         api.add("classid", classifyList.get(position).getId());
-        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
-            @Override
-            public void onResponse(NoPageListBean<MerchantTabGoodsBean> response) {
-                if (adapter == null){
-                    return;
-                }
-                hashMap.put(position,response.data);
-                adapter.setData(response.data);
-                adapter.notifyDataSetChanged();
-            }
-        });
+        controller.loadFirstPage();
     }
 
     //用户端-商家tab  产品分类

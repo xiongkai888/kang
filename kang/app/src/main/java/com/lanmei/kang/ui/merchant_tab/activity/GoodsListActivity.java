@@ -59,7 +59,7 @@ public class GoodsListActivity extends BaseActivity {
         actionbar.setTitle(bean.getClassname());
         smartSwipeRefreshLayout.setLayoutManager(new GridLayoutManager(this, 2));
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
-        api.add("id", bean.getId());
+        api.add("classid", bean.getId());
         GoodsListAdapter adapter = new GoodsListAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
         SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(this, smartSwipeRefreshLayout, api, adapter) {

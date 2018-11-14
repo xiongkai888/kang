@@ -31,12 +31,10 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-
 import com.hyphenate.chatuidemo.DemoHelper;
-import com.lanmei.kang.R;
 import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.lanmei.kang.KangApp;
+import com.lanmei.kang.R;
 
 /**
  * Login screen
@@ -162,7 +160,7 @@ public class LoginActivity extends BaseActivity {
 
 			    // update current user's display name for APNs
 				boolean updatenick = EMClient.getInstance().pushManager().updatePushNickname(
-						KangApp.currentUserNick.trim());
+						DemoHelper.getInstance().getCurrentUsernName());
 				if (!updatenick) {
 					Log.e("LoginActivity", "update current user nick fail");
 				}

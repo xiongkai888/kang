@@ -58,78 +58,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_my_order"
-            style="@style/ll_no_border"
-            android:visibility="gone"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/mine_order" />
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/my_item_order" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_goods_order"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/mine_friend" />
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/my_goods_order" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_team"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/mine_order" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="我的团队" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_my_personal"
             style="@style/ll_no_border"
             android:paddingLeft="5dp">
@@ -145,6 +73,29 @@
                 <TextView
                     style="@style/mine_text"
                     android:text="我的资料" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_health_report"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_dynamic" />
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/health_report" />
 
                 <ImageView style="@style/in_right_icon" />
 
@@ -174,6 +125,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_my_collect"
@@ -220,6 +172,79 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_my_order"
+            style="@style/ll_no_border"
+            android:visibility="gone"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_order" />
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/my_item_order" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_goods_order"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_order" />
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="@string/my_goods_order" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_team"
+            style="@style/ll_no_border"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/mine_membership_card" />
+
+
+            <LinearLayout
+                style="@style/ll_bottom"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    style="@style/mine_text"
+                    android:text="我的团队" />
+
+                <ImageView style="@style/in_right_icon" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <TextView style="@style/line_H10dp_on" />
 
@@ -269,28 +294,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_health_report"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/mine_dynamic" />
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/health_report" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_vibrator"

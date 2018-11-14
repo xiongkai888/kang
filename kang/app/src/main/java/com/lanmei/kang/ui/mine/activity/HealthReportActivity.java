@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -17,6 +18,7 @@ import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.util.WebViewPhotoBrowserUtil;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.UserBean;
 import com.xson.common.utils.L;
@@ -38,7 +40,7 @@ import okhttp3.Response;
 /**
  * 健康报告
  */
-public class HealthReportActivity extends BaseActivity implements OnPageChangeListener, OnLoadCompleteListener, OnDrawListener ,OnPageErrorListener{
+public class HealthReportActivity extends BaseActivity implements OnPageChangeListener, OnLoadCompleteListener, OnDrawListener, OnPageErrorListener {
 
     @InjectView(R.id.pdfView)
     PDFView pdfView;
@@ -48,6 +50,8 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
     TextView toolbarNameTv;
     @InjectView(R.id.menu_tv)
     TextView menuTv;
+    @InjectView(R.id.web_view)
+    WebView webView;
 
     @Override
     public int getContentViewId() {
@@ -56,7 +60,7 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-         toolbarNameTv.setText(R.string.health_report);
+        toolbarNameTv.setText(R.string.health_report);
 
         okHttpClient = new OkHttpClient();
         CommonUtils.loadUserInfo(KangApp.applicationContext, new CommonUtils.UserInfoListener() {
@@ -69,14 +73,23 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
                 if (StringUtils.isEmpty(url)) {
                     return;
                 }
-                String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-                File file = new File(SDPath, url.substring(url.lastIndexOf("/") + 1));
-                if (file.exists()){
-                    displayFromFile(file);
-                    L.d("h_bl", "file.exists()");
-                    return;
+                if (url.endsWith("pdf")) {
+                    pdfView.setVisibility(View.VISIBLE);
+                    webView.setVisibility(View.GONE);
+                    String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    File file = new File(SDPath, url.substring(url.lastIndexOf("/") + 1));
+                    if (file.exists()) {
+                        displayFromFile(file);
+                        L.d("h_bl", "file.exists()");
+                        return;
+                    }
+                    load();
+                } else {
+                    webView.setVisibility(View.VISIBLE);
+                    pdfView.setVisibility(View.GONE);
+                    WebViewPhotoBrowserUtil.loadUrl(url, webView);
                 }
-                load();
+
             }
 
             @Override
@@ -149,7 +162,7 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        menuTv.setText(String.format(getString(R.string.page_pdf),String.valueOf(page+1),String.valueOf(pageCount)));
+        menuTv.setText(String.format(getString(R.string.page_pdf), String.valueOf(page + 1), String.valueOf(pageCount)));
     }
 
     /**
@@ -172,14 +185,14 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.arg1==100){
+            if (msg.arg1 == 100) {
                 displayFromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath(), url.substring(url.lastIndexOf("/") + 1)));
             }
         }
     };
 
     private void displayFromFile(File file) {
-        L.d("h_bl",file.getAbsolutePath());
+        L.d("h_bl", file.getAbsolutePath());
         pdfView.fromFile(file)   //设置pdf文件地址
                 .defaultPage(0)
                 .onPageChange(this)
@@ -192,6 +205,6 @@ public class HealthReportActivity extends BaseActivity implements OnPageChangeLi
 
     @Override
     public void onPageError(int page, Throwable t) {
-        L.d("h_bl", "Cannot load page :" + (page+1));
+        L.d("h_bl", "Cannot load page :" + (page + 1));
     }
 }

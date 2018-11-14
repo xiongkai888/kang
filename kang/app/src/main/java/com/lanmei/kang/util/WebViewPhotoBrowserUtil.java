@@ -30,20 +30,6 @@ public class WebViewPhotoBrowserUtil {
         String[] imageUrls = StringUtils.returnImageUrlsFromHtml(content);
         loadHtml(content,webView);
         if (imageUrls != null){
-//            int size = imageUrls.length;
-//            for (int  i = 0;i<size;i++){
-//                if (imageUrls[i].endsWith(".gif")){
-//                    Log.d("imageUrls",i+":"+imageUrls[i]);
-//                    UIHelper.ToastMessage(context,imageUrls[i]);
-//                }
-//            }
-//            WebSettings webSettings = webView.getSettings();
-//                        webSettings.setJavaScriptEnabled(true);
-//                        webSettings.setDefaultFixedFontSize(13);
-//                        webSettings.setDefaultTextEncodingName("UTF-8");
-//                        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-//                        webSettings.setSupportZoom(true);
-//                        webSettings.setSaveFormData(false);
             webView.addJavascriptInterface(new MJavascriptInterface(context,imageUrls), "imagelistener");
             webView.setWebViewClient(new MyWebViewClient());
         }

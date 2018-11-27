@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.NewsCategoryListBean;
 import com.lanmei.kang.ui.news.activity.NewsDetailsActivity;
+import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
 import com.lanmei.kang.widget.MyGridView;
 import com.xson.common.adapter.SwipeRefreshAdapter;
@@ -52,7 +53,9 @@ public class CollectAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context,NewsDetailsActivity.class);
+                if (CommonUtils.isLogin(context)){
+                    IntentUtil.startActivity(context,NewsDetailsActivity.class,bean.getId());
+                }
             }
         });
         time.setTime(bean.getAddtime());

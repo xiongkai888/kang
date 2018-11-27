@@ -6,8 +6,17 @@ import android.support.v4.view.ViewPager;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.NewsTabAdapter;
+import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.NewsTabBean;
+import com.lanmei.kang.search.SearchNewsActivity;
 import com.xson.common.app.BaseFragment;
-import com.xson.common.utils.UIHelper;
+import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
+import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
+
+import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -24,8 +33,6 @@ public class NewsFragment extends BaseFragment {
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
 
-    NewsTabAdapter mTabAdapter;
-
     @Override
     public int getContentViewId() {
         return R.layout.fragment_news;
@@ -33,14 +40,33 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        mTabAdapter = new NewsTabAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(mTabAdapter);
+
+        KangQiMeiApi api = new KangQiMeiApi("post/category");
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<NoPageListBean<NewsTabBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<NewsTabBean> response) {
+                if (mTabLayout == null){
+                    return;
+                }
+                initTabLayout(response.data);
+            }
+        });
+    }
+
+    private void initTabLayout(List<NewsTabBean> list){
+        if (StringUtils.isEmpty(list)){
+            return;
+        }
+        NewsTabAdapter tabAdapter = new NewsTabAdapter(getChildFragmentManager());
+        tabAdapter.setList(list);
+        mViewPager.setAdapter(tabAdapter);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
 
     @OnClick(R.id.ll_search)
     public void onViewClicked() {//搜索
-        UIHelper.ToastMessage(context, R.string.developing);
+        IntentUtil.startActivity(context, SearchNewsActivity.class);
     }
 }

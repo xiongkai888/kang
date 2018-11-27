@@ -5,7 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.lanmei.kang.bean.NewsTabBean;
 import com.lanmei.kang.ui.news.fragment.NewsListFragment;
+import com.xson.common.utils.StringUtils;
+
+import java.util.List;
 
 /**
  * Created by xkai on 2017/4/25.
@@ -13,6 +17,11 @@ import com.lanmei.kang.ui.news.fragment.NewsListFragment;
 
 public class NewsTabAdapter extends FragmentStatePagerAdapter {
 
+    List<NewsTabBean> list;
+
+    public void setList(List<NewsTabBean> list) {
+        this.list = list;
+    }
 
     public NewsTabAdapter(FragmentManager fm) {
         super(fm);
@@ -23,17 +32,7 @@ public class NewsTabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         NewsListFragment  fragment = new NewsListFragment();
         Bundle bundle = new Bundle();
-        switch (position){
-            case 0:
-                bundle.putString("cid","11");
-                break;
-            case 1:
-                bundle.putString("cid","12");
-                break;
-            case 2:
-                bundle.putString("cid","13");
-                break;
-        }
+        bundle.putString("cid",list.get(position).getId());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -41,21 +40,12 @@ public class NewsTabAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return StringUtils.isEmpty(list)?0:list.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "热门资讯";
-            case 1:
-                return "健康资讯";
-            case 2:
-                return "中医资讯";
-        }
-
-        return null;
+        return list.get(position).getName();
     }
 
 }

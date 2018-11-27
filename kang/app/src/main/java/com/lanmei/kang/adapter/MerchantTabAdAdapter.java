@@ -27,23 +27,23 @@ public class MerchantTabAdAdapter implements Holder<AdBean> {
     @Override
     public View createView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_banner_img, null);
-        ButterKnife.inject(this,view);
+        ButterKnife.inject(this, view);
         return view;
     }
 
     @Override
     public void UpdateUI(final Context context, final int position, final AdBean data) {
-        if (data == null){
+        if (data == null) {
             return;
         }
-        ImageHelper.load(context,data.getPic(),bannerImg,null,true,R.mipmap.default_pic,R.mipmap.default_pic);
+        ImageHelper.load(context, data.getPic(), bannerImg, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
         bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StringUtils.isEmpty(data.getUrl())){
+                if (StringUtils.isEmpty(data.getUrl()) || !data.getUrl().startsWith("http")) {
                     return;
                 }
-                context.startActivity(new  Intent(Intent.ACTION_VIEW, Uri.parse("https://"+data.getUrl())));
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getUrl())));
             }
         });
     }

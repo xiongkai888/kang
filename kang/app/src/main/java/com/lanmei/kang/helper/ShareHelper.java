@@ -15,7 +15,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
-import com.xson.common.utils.UIHelper;
 
 /**
  * Created by xkai on 2017/8/10.
@@ -71,19 +70,17 @@ public class ShareHelper {
 
         @Override
         public void onResult(SHARE_MEDIA platform) {
-
-            UIHelper.ToastMessage(context, " 分享成功啦!");
-
+//            UIHelper.ToastMessage(context, " 分享成功啦!");
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            UIHelper.ToastMessage(context, " 分享失败啦!");
+//            UIHelper.ToastMessage(context, " 分享失败啦!");
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            UIHelper.ToastMessage(context, " 分享取消啦!");
+//            UIHelper.ToastMessage(context, " 分享取消啦!");
         }
     };
 

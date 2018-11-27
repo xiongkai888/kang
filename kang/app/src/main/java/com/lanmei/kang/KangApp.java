@@ -31,7 +31,7 @@ public class KangApp extends BaseApp {
     public static Context applicationContext;
     private static KangApp instance;
 
-    public static final String HX_USER_Head="u_";
+    public static final String HX_USER_Head = "u_";
 
     @Override
     public void onCreate() {
@@ -63,12 +63,13 @@ public class KangApp extends BaseApp {
 //                Constant.SINA_APP_SECRET,Constant.SINA_NOTIFY_URL);
 //
 //        PlatformConfig.setQQZone(Constant.QQ_APP_ID, Constant.QQ_APP_SECRET);
+        UMConfigure.setLogEnabled(L.debug);//如果查看初始化过程中的LOG，一定要在调用初始化方法前将LOG开关打开。
 
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
     //环信初始化设置
-    private void initHx(){
+    private void initHx() {
         //init demo helper
         DemoHelper.getInstance().init(applicationContext);
         //red packet code : 初始化红包SDK，开启日志输出开关

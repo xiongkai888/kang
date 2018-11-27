@@ -50,7 +50,9 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
+                if (CommonUtils.isLogin(context)){
+                    IntentUtil.startActivity(context,NewsDetailsActivity.class,bean.getId());
+                }
             }
         });
     }
@@ -83,7 +85,9 @@ public class NewsItemAdapter extends SwipeRefreshAdapter<NewsCategoryListBean> {
             sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
                 @Override
                 public void onClick(int positionSub) {
-                    IntentUtil.startActivity(context, NewsDetailsActivity.class, bean.getId());
+                    if (CommonUtils.isLogin(context)){
+                        IntentUtil.startActivity(context,NewsDetailsActivity.class,bean.getId());
+                    }
                 }
 
                 @Override

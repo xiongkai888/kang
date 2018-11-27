@@ -10,8 +10,8 @@ android {
         applicationId "com.lanmei.kang"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 25
-        versionName "2.0.8"
+        versionCode 30
+        versionName "2.1.3"
         buildConfigField "String", "API_URL", "\"http://120.79.56.96/api/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -20,6 +20,7 @@ android {
 
     }
     buildTypes {
+
         release {
             //混淆
             minifyEnabled false
@@ -28,6 +29,12 @@ android {
             // 移除无用的resource文件
             shrinkResources false
 
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,14 +49,7 @@ android {
 
 
     signingConfigs {
-
         debug {
-            keyAlias 'kang'
-            keyPassword 'lanmei888'
-            storeFile file('kang.keystore.jks')
-            storePassword 'lanmei888'
-        }
-        release {
             keyAlias 'kang'
             keyPassword 'lanmei888'
             storeFile file('kang.keystore.jks')

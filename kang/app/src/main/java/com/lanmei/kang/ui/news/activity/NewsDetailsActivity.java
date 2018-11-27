@@ -101,13 +101,18 @@ public class NewsDetailsActivity extends BaseActivity {
         api.add("id",id);
         api.add("uid",api.getUserId(this));
         api.add("token",api.getToken(this));
-        httpClient.request(api, new BeanRequest.SuccessListener<DataBean<NewsDetailsBean>>() {
+        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<NewsDetailsBean>>() {
             @Override
             public void onResponse(DataBean<NewsDetailsBean> response) {
                 if (isFinishing()) {
                     return;
                 }
                 NewsDetailsBean bean = response.data;
+                if (bean == null){
+                    UIHelper.ToastMessage(getContext(),"无法获取资讯详情");
+                    finish();
+                    return;
+                }
                 EventBus.getDefault().post(new NewsCommEvent(bean.getId(),bean.getReviews()));//设置资讯列表的评论数
                 mAdapter.setNewsDetailsBean(bean);
             }

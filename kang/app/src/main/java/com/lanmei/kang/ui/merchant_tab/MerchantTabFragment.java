@@ -49,6 +49,11 @@ public class MerchantTabFragment extends BaseFragment {
         adapter = new MerchantTabAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
         SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>> controller = new SwipeRefreshController<NoPageListBean<MerchantTabGoodsBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+            @Override
+            public boolean onSuccessResponse(NoPageListBean<MerchantTabGoodsBean> response) {
+                loadAd(1);
+                return super.onSuccessResponse(response);
+            }
         };
         controller.loadFirstPage();
         adapter.notifyDataSetChanged();

@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.NumBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
@@ -14,14 +17,15 @@ import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
 import com.lanmei.kang.ui.mine.activity.MyDynamicActivity;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
-import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
-import com.lanmei.kang.ui.shake.ShakeActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
+import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
@@ -31,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -45,6 +50,27 @@ public class MineUserFragment extends BaseFragment {
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
     TextView userNameTv;
+
+    @InjectView(R.id.m1_num_tv)
+    TextView m1NumTv;
+    @InjectView(R.id.m2_num_tv)
+    TextView m2NumTv;
+    @InjectView(R.id.m3_num_tv)
+    TextView m3NumTv;
+    @InjectView(R.id.m4_num_tv)
+    TextView m4NumTv;
+    @InjectView(R.id.yu_e)
+    TextView yuE;
+    @InjectView(R.id.you_hui_juan)
+    TextView youHuiJuan;
+    @InjectView(R.id.guan_zhu)
+    TextView guanZhu;
+    @InjectView(R.id.zixun_shou_cang)
+    TextView zixunShouCang;
+    @InjectView(R.id.wode_dongtai)
+    TextView wodeDongtai;
+    @InjectView(R.id.wode_haoyou)
+    TextView wodeHaoyou;
 
     public static MineUserFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,55 +92,63 @@ public class MineUserFragment extends BaseFragment {
         setUser(UserHelper.getInstance(context).getUserBean());//初始化用户信息
     }
 
-    @OnClick({R.id.ll_health_report,R.id.ll_team,R.id.ll_goods_order,R.id.ll_membership_card,R.id.head_iv, R.id.ll_my_order, R.id.ll_my_personal, R.id.ll_my_coupon, R.id.ll_my_collect,R.id.ll_my_account,
-            R.id.ll_my_friend, R.id.ll_my_dynamic, R.id.ll_online, R.id.ll_setting, R.id.ll_vibrator})
+
+    @OnClick({R.id.ll_data, R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;
         }
         switch (view.getId()) {
-            case R.id.ll_team://我的团队
-                IntentUtil.startActivity(context, MyTeamActivity.class);
+            case R.id.m1:
+                IntentUtil.startActivity(context, 1,MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_membership_card://我的会员卡
-                IntentUtil.startActivity(context, MembershipCardActivity.class);
+            case R.id.m2:
+                IntentUtil.startActivity(context, 2,MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_my_order://我的项目订单
-                IntentUtil.startActivity(context, MyOrderActivity.class);
+            case R.id.m3:
+                IntentUtil.startActivity(context, 3,MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_goods_order://我的商品订单
-                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
+            case R.id.m4:
+                IntentUtil.startActivity(context, 0,MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_my_personal://我的资料
-            case R.id.head_iv://头像
-                IntentUtil.startActivity(context, PersonalDataActivity.class);
+            case R.id.yu_e:
+//                CommonUtils.developing(context);
                 break;
-            case R.id.ll_my_coupon://我的优惠卷
+            case R.id.you_hui_juan://优惠券
                 IntentUtil.startActivity(context, CouponActivity.class);
                 break;
-            case R.id.ll_my_collect://我的收藏
-                IntentUtil.startActivity(context, MyCollectActivity.class);
+            case R.id.m5://我的会员卡
+                IntentUtil.startActivity(context, MembershipCardActivity.class);
                 break;
-            case R.id.ll_my_friend://我的好友
-                IntentUtil.startActivity(context, GoodFriendsActivity.class);
-                break;
-            case R.id.ll_my_account://我的账号
+            case R.id.m6://我的钱包
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
-            case R.id.ll_my_dynamic://我的动态
+            case R.id.guan_zhu:
+//                CommonUtils.developing(context);
+                break;
+            case R.id.zixun_shou_cang://资讯收藏
+                IntentUtil.startActivity(context, MyCollectActivity.class);
+                break;
+            case R.id.wode_dongtai://我的动态
                 IntentUtil.startActivity(context, MyDynamicActivity.class);
                 break;
-            case R.id.ll_online://在线咨询
-                IntentUtil.startActivity(context, com.hyphenate.chatuidemo.ui.MainActivity.class);
+            case R.id.wode_haoyou://我的好友
+                IntentUtil.startActivity(context, GoodFriendsActivity.class);
                 break;
-            case R.id.ll_setting://设置
+            case R.id.m7://健康报告
+                IntentUtil.startActivity(context, HealthReportActivity.class);
+                break;
+            case R.id.m8://我的团队
+                IntentUtil.startActivity(context, MyTeamActivity.class);
+                break;
+            case R.id.m9://在线客服
+                IntentUtil.startActivity(context, MainActivity.class);
+                break;
+            case R.id.m10://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
-            case R.id.ll_vibrator://摇一摇测试
-                IntentUtil.startActivity(context, ShakeActivity.class);
-                break;
-            case R.id.ll_health_report://健康报告
-                IntentUtil.startActivity(context, HealthReportActivity.class);
+            case R.id.ll_data:
+                IntentUtil.startActivity(context, PersonalDataActivity.class);
                 break;
         }
     }
@@ -138,6 +172,54 @@ public class MineUserFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!UserHelper.getInstance(context).hasLogin()) {
+            return;
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/allcount");
+        api.add("uid",api.getUserId(context));
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<NumBean>>() {
+            @Override
+            public void onResponse(DataBean<NumBean> response) {
+                if (wodeHaoyou == null){
+                    return;
+                }
+                NumBean bean = response.data;
+                if (bean == null){
+                    return;
+                }
+                setNum(m1NumTv,bean.getObligation());
+                setNum(m2NumTv,bean.getReceiver());
+                setNum(m3NumTv,bean.getAssess());
+
+                yuE.setText(String.format(getString(R.string.mine_money),bean.getMoney()));
+                youHuiJuan.setText(String.format(getString(R.string.mine_voucher),bean.getVoucher()+""));
+                guanZhu.setText(String.format(getString(R.string.mine_goods_favour),bean.getGoods_favour()+""));
+
+                zixunShouCang.setText(String.format(getString(R.string.mine_post_favour),bean.getPost_favour()+""));
+                wodeDongtai.setText(String.format(getString(R.string.mine_posts_favour),bean.getPosts_favour()+""));
+                wodeHaoyou.setText(String.format(getString(R.string.mine_friend),bean.getFriend()+""));
+            }
+        });
+    }
+
+    private void setNum(TextView textView,int num){
+        if (num == 0){
+            textView.setVisibility(View.GONE);
+        }else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(num+"");
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
 }

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/text_match"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/message_iv"
+            style="@style/text"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:src="@mipmap/zixunxq_info" />
+
+        <LinearLayout
+            android:id="@+id/ll_data"
+            style="@style/h_match_parent_no"
+            android:layout_below="@id/message_iv"
+            android:layout_margin="@dimen/d_10dp"
+            android:gravity="center_vertical">
+
+            <com.xson.common.widget.CircleImageView
+                android:id="@+id/head_iv"
+                android:layout_width="@dimen/d_80dp"
+                android:layout_height="@dimen/d_80dp"
+                android:src="@mipmap/default_pic" />
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                style="@style/text_weight"
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_18sp" />
+
+            <ImageView
+                style="@style/text"
+                android:src="@mipmap/in_right" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <RelativeLayout
+            android:id="@+id/m1"
+            style="@style/text_weight"
+            android:gravity="center">
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/text"
+                    android:src="@mipmap/m1" />
+
+                <TextView
+                    style="@style/text14color333"
+                    android:layout_marginTop="@dimen/d_3dp"
+                    android:text="@string/wait_pay" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/m1_num_tv"
+                style="@style/text10colorWhite"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d_20dp"
+                android:background="@drawable/order_num"
+                android:gravity="center"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/m2"
+            style="@style/text_weight"
+            android:gravity="center">
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/text"
+                    android:src="@mipmap/m2" />
+
+                <TextView
+                    style="@style/text14color333"
+                    android:layout_marginTop="@dimen/d_3dp"
+                    android:text="@string/wait_receiving" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/m2_num_tv"
+                style="@style/text10colorWhite"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d_20dp"
+                android:background="@drawable/order_num"
+                android:gravity="center"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/m3"
+            style="@style/text_weight"
+            android:gravity="center">
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/text"
+                    android:src="@mipmap/m3" />
+
+                <TextView
+                    style="@style/text14color333"
+                    android:layout_marginTop="@dimen/d_3dp"
+                    android:text="待评价" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/m3_num_tv"
+                style="@style/text10colorWhite"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d_20dp"
+                android:background="@drawable/order_num"
+                android:gravity="center"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/m4"
+            style="@style/text_weight"
+            android:gravity="center">
+
+            <LinearLayout
+                style="@style/match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/text"
+                    android:src="@mipmap/m3" />
+
+                <TextView
+                    style="@style/text14color333"
+                    android:layout_marginTop="@dimen/d_3dp"
+                    android:text="@string/my_order" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/m4_num_tv"
+                style="@style/text10colorWhite"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d_20dp"
+                android:background="@drawable/order_num"
+                android:gravity="center"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <TextView
+            android:id="@+id/yu_e"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n余额"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/you_hui_juan"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n优惠券"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/m5"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m5"
+            android:gravity="center_horizontal"
+            android:text="会员卡"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/m6"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m6"
+            android:gravity="center_horizontal"
+            android:text="我的钱包"
+            android:textColor="@color/color333" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <TextView
+            android:id="@+id/guan_zhu"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n商品关注"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/zixun_shou_cang"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n资讯收藏"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/wode_dongtai"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n我的动态"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/wode_haoyou"
+            style="@style/text_weight"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="0\n\n我的好友"
+            android:textColor="@color/color333" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/h_match_parent"
+        android:layout_marginTop="@dimen/d_10dp"
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:paddingBottom="@dimen/d_5dp"
+        android:paddingTop="@dimen/d_5dp">
+
+        <TextView
+            android:id="@+id/m7"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m7"
+            android:gravity="center_horizontal"
+            android:text="健康报告"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/m8"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m8"
+            android:gravity="center_horizontal"
+            android:text="我的团队"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/m9"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m9"
+            android:gravity="center_horizontal"
+            android:text="在线客服"
+            android:textColor="@color/color333" />
+
+        <TextView
+            android:id="@+id/m10"
+            style="@style/text_weight"
+            android:drawablePadding="@dimen/d_3dp"
+            android:drawableTop="@mipmap/m10"
+            android:gravity="center_horizontal"
+            android:text="设置"
+            android:textColor="@color/color333" />
+
+    </LinearLayout>
+
+</LinearLayout>

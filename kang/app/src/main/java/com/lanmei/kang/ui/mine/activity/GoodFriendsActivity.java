@@ -37,7 +37,7 @@ public class GoodFriendsActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        CommonUtils.setCompoundDrawables(this,menuTv,R.mipmap.dr_haoyou2,2);
+        CommonUtils.setCompoundDrawables(this,menuTv,R.mipmap.dr_haoyou2,0,2);
         initViewPager();
     }
 

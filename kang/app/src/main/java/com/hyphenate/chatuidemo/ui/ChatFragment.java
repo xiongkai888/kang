@@ -46,7 +46,6 @@ import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.lanmei.kang.R;
 import com.lanmei.kang.event.UserBeanEvent;
-import com.xson.common.utils.UIHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -483,7 +482,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             if (!o){
                 super.setUpView();
                 o = true;
-                UIHelper.ToastMessage(getContext(),o+"");
+//                UIHelper.ToastMessage(getContext(),o+"");
             }
 
         }

@@ -24,7 +24,11 @@
 
                 <LinearLayout style="@style/v_match_parent">
 
-                    <include layout="@layout/goods_details_ad" />
+                    <com.bigkoo.convenientbanner.ConvenientBanner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        app:canLoop="true" />
 
                     <TextView
                         android:id="@+id/name_tv"
@@ -69,6 +73,7 @@
                     <LinearLayout
                         android:id="@+id/ll_choose_parameter"
                         style="@style/ll_no_border"
+                        android:visibility="gone"
                         android:padding="@dimen/d_10dp">
 
                         <TextView
@@ -83,7 +88,7 @@
                     </LinearLayout>
 
 
-                    <TextView style="@style/line_H10dp_on" />
+                    <!--<TextView style="@style/line_H10dp_on" />-->
 
                     <LinearLayout
                         style="@style/ll_bottom"

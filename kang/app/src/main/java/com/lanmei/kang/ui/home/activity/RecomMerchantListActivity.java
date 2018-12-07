@@ -12,7 +12,6 @@ import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.widget.CenterTitleToolbar;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
@@ -50,7 +49,6 @@ public class RecomMerchantListActivity extends BaseActivity {
 
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
         KangQiMeiApi api = new KangQiMeiApi("place/Placelist");
         api.add("lat",SharedAccount.getInstance(this).getLat());
         api.add("lon",SharedAccount.getInstance(this).getLon());

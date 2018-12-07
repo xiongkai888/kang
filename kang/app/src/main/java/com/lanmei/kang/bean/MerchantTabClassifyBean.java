@@ -37,6 +37,16 @@ public class MerchantTabClassifyBean implements Serializable{
     private String img;
     private String type;
 
+    private boolean isSelect;
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
     public String getId() {
         return id;
     }

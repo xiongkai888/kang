@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/v_match_parent_no"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        style="@style/ll_bottom"
+        android:layout_height="@dimen/d_50dp">
+
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/text"
+            android:src="@mipmap/back_g" />
+
+        <include layout="@layout/include_search" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_by"
+        style="@style/ll_bottom">
+
+        <RelativeLayout
+            android:id="@+id/by_rl"
+            style="@style/text_weight">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/by_tv"
+                    style="@style/text"
+                    android:drawablePadding="@dimen/d_2dp"
+                    android:drawableRight="@mipmap/o_down"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/d_10dp"
+                    android:paddingTop="@dimen/d_10dp"
+                    android:text="@string/all" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <TextView style="@style/line_V1dp_CD" />
+
+        <RelativeLayout
+            android:id="@+id/time_rl"
+            style="@style/text_weight">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    style="@style/text"
+                    android:drawablePadding="@dimen/d_2dp"
+                    android:drawableRight="@mipmap/o_bothway"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/d_10dp"
+                    android:paddingTop="@dimen/d_10dp"
+                    android:text="数量" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/ll_bottom"
+        android:background="@color/colorF4F4"
+        android:paddingBottom="@dimen/d_10dp"
+        android:paddingTop="@dimen/d_10dp">
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_weight="2"
+            android:layout_width="@dimen/d_0dp"
+            android:gravity="center"
+            android:text="商品编号" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_weight="3"
+            android:layout_width="@dimen/d_0dp"
+            android:gravity="center"
+            android:text="商品名称" />
+
+        <TextView
+            style="@style/text12colorBlack"
+            android:layout_weight="2"
+            android:layout_width="@dimen/d_0dp"
+            android:gravity="center"
+            android:text="库存" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/line_H1dp_CD" />
+
+    <include layout="@layout/fragment_single_listview" />
+
+</LinearLayout>

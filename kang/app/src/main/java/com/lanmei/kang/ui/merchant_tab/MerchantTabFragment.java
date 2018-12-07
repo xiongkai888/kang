@@ -59,7 +59,6 @@ public class MerchantTabFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
 
         loadGoodsClassify();
-        loadAd(1);
         loadAd(2);
     }
 

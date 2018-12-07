@@ -42,6 +42,8 @@ public class MyGoodsOrderActivity extends BaseActivity{
         mViewPager.setAdapter(new MyGoodsOrderAdapter(getSupportFragmentManager(),this));
         mTabLayout.setupWithViewPager(mViewPager);
 
+        mViewPager.setCurrentItem(getIntent().getIntExtra("type",0));
+
     }
 
 }

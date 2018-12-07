@@ -540,17 +540,24 @@ public class CommonUtils {
         }
     }
 
-
     /**
      * @param context
      * @param textView
      * @param drawableId 本地图片资源
+     * @param colorId    textView的颜色id
      * @param position   图片在文字的位置  0左、1上、2右、3下
      */
-    public static void setCompoundDrawables(Context context, TextView textView, int drawableId, int position) {
-        Drawable img = context.getResources().getDrawable(drawableId);
-// 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        textView.setCompoundDrawables(position == 0 ? img : null, position == 1 ? img : null, position == 2 ? img : null, position == 3 ? img : null); //设置右图标
+    public static void setCompoundDrawables(Context context, TextView textView, int drawableId, int colorId, int position) {
+        if (colorId > 0) {
+            textView.setTextColor(context.getResources().getColor(colorId));
+        }
+        if (drawableId > 0) {
+            Drawable img = context.getResources().getDrawable(drawableId);
+            // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+            img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+            textView.setCompoundDrawables(position == 0 ? img : null, position == 1 ? img : null, position == 2 ? img : null, position == 3 ? img : null); //设置右图标
+        } else {//清除文字周围的图片
+            textView.setCompoundDrawables(null, null, null, null);
+        }
     }
 }

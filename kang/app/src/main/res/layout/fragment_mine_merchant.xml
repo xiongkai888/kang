@@ -10,381 +10,96 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/text_match"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+        <include layout="@layout/include_mine" />
 
-            <com.xson.common.widget.CircleImageView
-                android:id="@+id/head_iv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="@dimen/d_20dp"
-                android:src="@mipmap/default_pic" />
+        <LinearLayout
+            style="@style/h_match_parent"
+            android:paddingBottom="@dimen/d_5dp"
+            android:paddingTop="@dimen/d_5dp">
 
             <TextView
-                android:id="@+id/user_name_tv"
-                style="@style/text"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/txt_18sp" />
+                android:id="@+id/m07"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m19"
+                android:gravity="center_horizontal"
+                android:text="@string/chu_ku"
+                android:textColor="@color/color333" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/m08"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m15"
+                android:gravity="center_horizontal"
+                android:text="@string/ru_ku"
+                android:textColor="@color/color333" />
 
-        <TextView style="@style/line_H10dp_bottom" />
+            <TextView
+                android:id="@+id/m09"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m12"
+                android:gravity="center_horizontal"
+                android:text="@string/goods_sell_sub"
+                android:textColor="@color/color333" />
 
-        <LinearLayout
-            android:id="@+id/ll_team"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_data" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="我的团队" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_data"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_data" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/merchant_data" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/m010"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m14"
+                android:gravity="center_horizontal"
+                android:text="@string/evaluate"
+                android:textColor="@color/color333" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_m_order"
-            style="@style/ll_no_border"
-            android:visibility="gone"
-            android:paddingLeft="5dp">
+            style="@style/h_match_parent"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_5dp"
+            android:paddingTop="@dimen/d_5dp">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                style="@style/text"
-                android:src="@mipmap/m_order" />
+            <TextView
+                android:id="@+id/m17"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m13"
+                android:gravity="center_horizontal"
+                android:text="@string/ablum"
+                android:textColor="@color/color333" />
 
+            <TextView
+                android:id="@+id/m18"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m18"
+                android:gravity="center_horizontal"
+                android:text="@string/help"
+                android:textColor="@color/color333" />
 
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/m19"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m20"
+                android:gravity="center_horizontal"
+                android:text="@string/inventory_sub"
+                android:textColor="@color/color333" />
 
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/order" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_goods_order"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_order" />
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/my_goods_order" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/m20"
+                style="@style/text_weight"
+                android:drawablePadding="@dimen/d_3dp"
+                android:drawableTop="@mipmap/m10"
+                android:gravity="center_horizontal"
+                android:visibility="visible"
+                android:text="@string/set"
+                android:textColor="@color/color333" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_album"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_album" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="相册" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_chuku"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_ku_chu" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="出库" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_ruku"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_ku_ru" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="入库" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_sell"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_goods_sell" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="销售商品" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_services"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_services" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="服务项目" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_evaluate"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_evaluate" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="评价" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_center"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_center" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="个人中心" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_health_report"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_services" />
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/health_report" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_mime_order"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/m_order" />
-
-
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/my_order" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_m_setting"
-            style="@style/ll_no_border"
-            android:paddingLeft="5dp">
-
-            <ImageView
-                style="@style/text"
-                android:src="@mipmap/icon_setting" />
-
-
-            <LinearLayout
-                style="@style/h_match_parent_no"
-                android:layout_marginLeft="5dp">
-
-
-                <TextView
-                    style="@style/mine_text"
-                    android:text="@string/set" />
-
-                <ImageView style="@style/in_right_icon" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView style="@style/line_H10dp_on" />
 
     </LinearLayout>
 

@@ -36,7 +36,7 @@ public class MyDynamicActivity extends BaseActivity {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        CommonUtils.setCompoundDrawables(this,menuTv,R.mipmap.details_write,2);
+        CommonUtils.setCompoundDrawables(this,menuTv,R.mipmap.details_write,0,2);
         mViewPager.setAdapter(new MyDynamicAllAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
     }

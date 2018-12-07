@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ll_bottom"
-    android:layout_height="180dp"
+    android:layout_height="220dp"
     android:background="@color/colorEEE"
     android:orientation="vertical">
-
 
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/banner"

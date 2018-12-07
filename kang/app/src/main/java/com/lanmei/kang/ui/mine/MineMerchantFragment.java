@@ -4,28 +4,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.NumBean;
 import com.lanmei.kang.event.ActivityResultEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
-import com.lanmei.kang.ui.merchant.MerchantOrderActivity;
 import com.lanmei.kang.ui.merchant.activity.ChuKuListActivity;
 import com.lanmei.kang.ui.merchant.activity.GoodsSellListActivity;
-import com.lanmei.kang.ui.merchant.activity.MerchantItemsActivity;
 import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.AlbumActivity;
+import com.lanmei.kang.ui.mine.activity.CouponActivity;
+import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
 import com.lanmei.kang.ui.mine.activity.HealthReportActivity;
+import com.lanmei.kang.ui.mine.activity.InventoryListActivity;
+import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
+import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
+import com.lanmei.kang.ui.mine.activity.MyDynamicActivity;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
-import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
-import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
+import com.lanmei.kang.ui.user.setting.ClubActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.BaseBean;
+import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
@@ -41,6 +47,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -55,6 +62,46 @@ public class MineMerchantFragment extends BaseFragment {
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
     TextView userNameTv;
+    @InjectView(R.id.m1_num_tv)
+    TextView m1NumTv;
+    @InjectView(R.id.m2_num_tv)
+    TextView m2NumTv;
+    @InjectView(R.id.m3_num_tv)
+    TextView m3NumTv;
+    @InjectView(R.id.m4_num_tv)
+    TextView m4NumTv;
+    @InjectView(R.id.yu_e)
+    TextView yuE;
+    @InjectView(R.id.you_hui_juan)
+    TextView youHuiJuan;
+    @InjectView(R.id.guan_zhu)
+    TextView guanZhu;
+    @InjectView(R.id.zixun_shou_cang)
+    TextView zixunShouCang;
+    @InjectView(R.id.wode_dongtai)
+    TextView wodeDongtai;
+    @InjectView(R.id.wode_haoyou)
+    TextView wodeHaoyou;
+    @InjectView(R.id.m10)
+    TextView m10;
+    @InjectView(R.id.m07)
+    TextView m07;
+    @InjectView(R.id.m08)
+    TextView m08;
+    @InjectView(R.id.m09)
+    TextView m09;
+    @InjectView(R.id.m010)
+    TextView m010;
+    @InjectView(R.id.m17)
+    TextView m17;
+    @InjectView(R.id.m18)
+    TextView m18;
+    @InjectView(R.id.m19)
+    TextView m19;
+    @InjectView(R.id.m20)
+    TextView m20;
+
+    boolean isHeadquarters;//是不是总部账号
 
     private CameraHelper cameraHelper;
 
@@ -85,6 +132,8 @@ public class MineMerchantFragment extends BaseFragment {
                 ajaxUploadingHead(url);
             }
         });
+        m10.setText(R.string.merchant_data);
+        CommonUtils.setCompoundDrawables(context,m10,R.mipmap.m11,0,1);
 
         setUser(UserHelper.getInstance(context).getUserBean());//初始化用户信息
     }
@@ -101,9 +150,38 @@ public class MineMerchantFragment extends BaseFragment {
             headIv.setImageResource(R.mipmap.default_pic);
             return;
         }
+        isHeadquarters = StringUtils.isSame(userBean.getId(),"888");
+//        isHeadquarters = true;
+        setHeadquarters();
         userNameTv.setText(userBean.getNickname());
         ImageHelper.load(context, userBean.getPic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
     }
+
+    private void setHeadquarters(){
+        if (!isHeadquarters){
+            m07.setText(R.string.goods_sell_sub);
+            CommonUtils.setCompoundDrawables(context,m07,R.mipmap.m12,0,1);
+
+            m08.setText(R.string.ablum);
+            CommonUtils.setCompoundDrawables(context,m08,R.mipmap.m13,0,1);
+
+            m09.setText(R.string.evaluate);
+            CommonUtils.setCompoundDrawables(context,m09,R.mipmap.m14,0,1);
+
+            m010.setText(R.string.help);
+            CommonUtils.setCompoundDrawables(context,m010,R.mipmap.m18,0,1);
+
+            m17.setText(R.string.inventory_sub);
+            CommonUtils.setCompoundDrawables(context,m17,R.mipmap.m20,0,1);
+
+            m18.setText(R.string.set);
+            CommonUtils.setCompoundDrawables(context,m18,R.mipmap.m10,0,1);
+
+            m19.setVisibility(View.INVISIBLE);
+            m20.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     //在我的上家界面修改头像时
     @Subscribe
@@ -111,71 +189,126 @@ public class MineMerchantFragment extends BaseFragment {
         switch (event.getType()) {
             case CameraHelper.CHOOSE_FROM_GALLAY:
                 cameraHelper.startActionCrop(event.getData());
-                L.d(L.TAG,"MineMerchantFragment.ActivityResultEvent 0");
+                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 0");
                 break;
             case CameraHelper.CHOOSE_FROM_CAMERA:
                 //注意小米拍照后data 为null
                 cameraHelper.startActionCrop(cameraHelper.getTempImage().getPath());
-                L.d(L.TAG,"MineMerchantFragment.ActivityResultEvent 1");
+                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 1");
                 break;
             case CameraHelper.RESULT_FROM_CROP:
                 cameraHelper.uploadNewPhoto(headIv);//
                 cameraHelper.execute();
-                L.d(L.TAG,"MineMerchantFragment.ActivityResultEvent 2");
+                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 2");
                 break;
         }
     }
 
-    @OnClick({R.id.ll_health_report,R.id.ll_team,R.id.ll_goods_order,R.id.ll_m_sell, R.id.ll_m_chuku, R.id.ll_m_ruku, R.id.head_iv, R.id.ll_m_data, R.id.ll_m_order, R.id.ll_m_album, R.id.ll_m_services, R.id.ll_m_evaluate, R.id.ll_m_setting, R.id.ll_m_center, R.id.ll_mime_order})
+    @OnClick({R.id.head_iv,R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10, R.id.m07, R.id.m08, R.id.m09, R.id.m010, R.id.m17, R.id.m18, R.id.m19})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;
         }
         switch (view.getId()) {
-            case R.id.ll_team://我的团队
-                IntentUtil.startActivity(context, MyTeamActivity.class);
-                break;
-            case R.id.ll_m_sell://商品销售
-                IntentUtil.startActivity(context, GoodsSellListActivity.class);
-                break;
-            case R.id.ll_m_chuku://出库
-                IntentUtil.startActivity(context, ChuKuListActivity.class, CommonUtils.isZero);
-                break;
-            case R.id.ll_m_ruku://入库
-                IntentUtil.startActivity(context, ChuKuListActivity.class, CommonUtils.isOne);
-                break;
-            case R.id.ll_m_data://商家资料
-                IntentUtil.startActivity(context, MerchantDataActivity.class);
-                break;
-            case R.id.ll_m_order://订单
-                IntentUtil.startActivity(context, MerchantOrderActivity.class);
-                break;
-            case R.id.ll_goods_order://我的商品订单
+            case R.id.m1:
                 IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_m_album://相册
-                IntentUtil.startActivity(context, AlbumActivity.class);
+            case R.id.m2:
+                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_m_services://服务项目MerchantItemsActivity
-                IntentUtil.startActivity(context, MerchantItemsActivity.class);
+            case R.id.m3:
+                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_m_evaluate://评论
-                IntentUtil.startActivity(context, ClientValuateActivity.class);
+            case R.id.m4:
+                IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
-            case R.id.ll_m_setting://设置
+            case R.id.yu_e:
+//                CommonUtils.developing(context);
+                break;
+            case R.id.you_hui_juan://优惠券
+                IntentUtil.startActivity(context, CouponActivity.class);
+                break;
+            case R.id.m5://我的会员卡
+                IntentUtil.startActivity(context, MembershipCardActivity.class);
+                break;
+            case R.id.m6://我的钱包
+                IntentUtil.startActivity(context, ClubActivity.class);
+                break;
+            case R.id.guan_zhu:
+//                CommonUtils.developing(context);
+                break;
+            case R.id.zixun_shou_cang://资讯收藏
+                IntentUtil.startActivity(context, MyCollectActivity.class);
+                break;
+            case R.id.wode_dongtai://我的动态
+                IntentUtil.startActivity(context, MyDynamicActivity.class);
+                break;
+            case R.id.wode_haoyou://我的好友
+                IntentUtil.startActivity(context, GoodFriendsActivity.class);
+                break;
+            case R.id.m7://健康报告
+                IntentUtil.startActivity(context, HealthReportActivity.class);
+                break;
+            case R.id.m8://我的团队
+                IntentUtil.startActivity(context, MyTeamActivity.class);
+                break;
+            case R.id.m9://在线客服
+                IntentUtil.startActivity(context, MainActivity.class);
+                break;
+            case R.id.m10://商家资料
+                IntentUtil.startActivity(context, MerchantDataActivity.class);
+//                IntentUtil.startActivity(context, SettingActivity.class);
+                break;
+            case R.id.m07://出库(商品销售)
+                if (isHeadquarters){
+                    IntentUtil.startActivity(context, ChuKuListActivity.class, CommonUtils.isZero);
+                }else {
+                    IntentUtil.startActivity(context, GoodsSellListActivity.class);
+                }
+                break;
+            case R.id.m08://入库(相册)
+                if (isHeadquarters){
+                    IntentUtil.startActivity(context, ChuKuListActivity.class, CommonUtils.isOne);
+                }else {
+                    IntentUtil.startActivity(context, AlbumActivity.class);
+                }
+                break;
+            case R.id.m09://商品销售(评价)
+                if (isHeadquarters){
+                    IntentUtil.startActivity(context, GoodsSellListActivity.class);
+                }else {
+                    IntentUtil.startActivity(context, ClientValuateActivity.class);
+                }
+                break;
+            case R.id.m010://评价(帮助)
+                if (isHeadquarters){
+                    IntentUtil.startActivity(context, ClientValuateActivity.class);
+                }else {
+                    CommonUtils.developing(context);
+                }
+                break;
+            case R.id.m17://相册(库存)
+                if (isHeadquarters){
+                    IntentUtil.startActivity(context, AlbumActivity.class);
+                }else {
+                    IntentUtil.startActivity(context, InventoryListActivity.class);
+                }
+                break;
+            case R.id.m18://帮助（设置）
+                if (isHeadquarters){
+                    CommonUtils.developing(context);
+                }else {
+                    IntentUtil.startActivity(context, SettingActivity.class);
+                }
+                break;
+            case R.id.m19://库存
+                IntentUtil.startActivity(context, InventoryListActivity.class);
+                break;
+            case R.id.m20://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
-            case R.id.ll_m_center://个人中心
-                IntentUtil.startActivity(context, PersonalDataActivity.class);
-                break;
-            case R.id.ll_mime_order://我的订单
-                IntentUtil.startActivity(context, MyOrderActivity.class);
-                break;
-            case R.id.head_iv://点击头像选择上传头像
+            case R.id.head_iv://
                 cameraHelper.showDialog();
-                break;
-            case R.id.ll_health_report://健康报告
-                IntentUtil.startActivity(context,HealthReportActivity.class);
                 break;
         }
     }
@@ -205,4 +338,54 @@ public class MineMerchantFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!UserHelper.getInstance(context).hasLogin()) {
+            return;
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/allcount");
+        api.add("uid",api.getUserId(context));
+        HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<DataBean<NumBean>>() {
+            @Override
+            public void onResponse(DataBean<NumBean> response) {
+                if (wodeHaoyou == null){
+                    return;
+                }
+                NumBean bean = response.data;
+                if (bean == null){
+                    return;
+                }
+                setNum(m1NumTv,bean.getObligation());
+                setNum(m2NumTv,bean.getReceiver());
+                setNum(m3NumTv,bean.getAssess());
+
+                yuE.setText(String.format(getString(R.string.mine_money),bean.getMoney()));
+                youHuiJuan.setText(String.format(getString(R.string.mine_voucher),bean.getVoucher()+""));
+                guanZhu.setText(String.format(getString(R.string.mine_goods_favour),bean.getGoods_favour()+""));
+
+                zixunShouCang.setText(String.format(getString(R.string.mine_post_favour),bean.getPost_favour()+""));
+                wodeDongtai.setText(String.format(getString(R.string.mine_posts_favour),bean.getPosts_favour()+""));
+                wodeHaoyou.setText(String.format(getString(R.string.mine_friend),bean.getFriend()+""));
+
+            }
+        });
+    }
+
+    private void setNum(TextView textView,int num){
+        if (num == 0){
+            textView.setVisibility(View.GONE);
+        }else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(num+"");
+        }
+    }
+
 }

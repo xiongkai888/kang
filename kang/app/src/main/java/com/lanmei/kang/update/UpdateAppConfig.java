@@ -4,10 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 
-import com.lanmei.kang.util.CommonUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xson.common.utils.L;
-import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -37,9 +35,9 @@ public class UpdateAppConfig {
 
 
     public static void initUpdateApp(final Context context) {
-        String url = "http://120.79.56.96/api/app/appupdate";
+        String url = "http://120.79.56.96/api/index/siteinfo";
         Map<String, String> params = new HashMap<>();
-        params.put("type","android");
+        params.put("type", "android");
 //        params.put("key","yxg");
         UpdateConfig.getConfig()
                 // 必填：数据更新接口,url与checkEntity两种方式任选一种填写
@@ -54,15 +52,9 @@ public class UpdateAppConfig {
                          */
                         L.d("AppUpdateConfig", "response = " + response);
                         JSONObject object = new JSONObject(response);
-                        if (object.getInt("code") == 1) {
-                            String data = object.getString("data");
-                            try {
-                                object = new JSONObject(data);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-
+                        if (object.getInt("status") == 1) {
+                            object = object.getJSONObject("data");
+                            object = object.getJSONObject("android_update");
                         } else {
                             return null;
                         }
@@ -77,7 +69,7 @@ public class UpdateAppConfig {
                         // 此apk包的更新内容
                         update.setUpdateContent(object.optString("description"));
                         // 此apk包是否为强制更新
-                        update.setForced(StringUtils.isSame(object.optString("force"), CommonUtils.isOne));
+                        update.setForced(object.optBoolean("share_qr"));
                         // 是否显示忽略此次版本更新按钮
                         update.setIgnore(false);
                         return update;

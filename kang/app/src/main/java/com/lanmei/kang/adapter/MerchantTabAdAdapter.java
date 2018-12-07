@@ -3,6 +3,7 @@ package com.lanmei.kang.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +11,12 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.AdBean;
+import com.lanmei.kang.bean.MerchantTabClassifyBean;
+import com.lanmei.kang.ui.merchant_tab.activity.GoodsListActivity;
+import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
+import com.lanmei.kang.ui.news.activity.NewsDetailsActivity;
 import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 
 import butterknife.ButterKnife;
@@ -40,10 +46,33 @@ public class MerchantTabAdAdapter implements Holder<AdBean> {
         bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StringUtils.isEmpty(data.getUrl()) || !data.getUrl().startsWith("http")) {
+                String link = data.getLink();
+                if (StringUtils.isEmpty(link)) {
                     return;
                 }
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getUrl())));
+                if (link.startsWith("http")) {
+                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+                } else if (link.startsWith("c")) {
+                    String[] strings = link.split("_");
+                    if (!StringUtils.isEmpty(strings) && strings.length == 2) {
+                        Bundle bundle = new Bundle();
+                        MerchantTabClassifyBean bean = new MerchantTabClassifyBean();
+                        bean.setId(strings[1]);
+                        bean.setClassname("商品列表");
+                        bundle.putSerializable("bean", bean);
+                        IntentUtil.startActivity(context, GoodsListActivity.class, bundle);
+                    }
+                } else if (link.startsWith("g")) {
+                    String[] strings = link.split("_");
+                    if (!StringUtils.isEmpty(strings) && strings.length == 2) {
+                        IntentUtil.startActivity(context, GoodsDetailsActivity.class,strings[1]);
+                    }
+                } else if (link.startsWith("p")) {
+                    String[] strings = link.split("_");
+                    if (!StringUtils.isEmpty(strings) && strings.length == 2) {
+                        IntentUtil.startActivity(context, NewsDetailsActivity.class,strings[1]);
+                    }
+                }
             }
         });
     }

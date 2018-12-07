@@ -83,7 +83,7 @@
     <string name="search_merchant">搜索商家</string>
     <string name="is_add_friend">确定要添加其为好友?</string>
     <string name="all">全部</string>
-    <string name="wait_pay">待支付</string>
+    <string name="wait_pay">待付款</string>
     <string name="wait_receiving">待收货</string>
     <string name="no_consumption">未消费</string>
     <string name="doned">已完成</string>
@@ -106,6 +106,7 @@
     <string name="yuan">%1$s元</string>
     <string name="balance">余额：%1$s</string>
     <string name="inventory">库存：%1$s</string>
+    <string name="inventory_sub">库存</string>
     <string name="help">帮助</string>
     <string name="news_details">资讯详情</string>
     <string name="balance_insufficient">余额不足</string>
@@ -143,6 +144,7 @@
     <string name="pay_succeed">支付成功</string>
     <string name="s_regain">s后重新获取</string>
     <string name="goods_sell">添加销售商品</string>
+    <string name="goods_sell_sub">商品销售</string>
     <string name="merchant_data">商家资料</string>
     <string name="chu_ku">出库</string>
     <string name="ru_ku">入库</string>
@@ -183,6 +185,7 @@
     <string name="choose_area">请选择项所在区域</string>
     <string name="delete_this_address">确定要删除该地址？</string>
     <string name="search_goods">搜索商品</string>
+    <string name="search_news">搜索资讯</string>
     <string name="input_serial_number">请输入编号或扫描获取</string>
     <string name="input_number">请输入数量</string>
     <string name="input_unit">请输入单位</string>
@@ -218,5 +221,11 @@
     <string name="my_team">我的团队</string>
     <string name="my_dynamic">我的动态</string>
     <string name="health_report">健康报告</string>
+    <string name="mine_money">%1$s\n\n余额</string>
+    <string name="mine_voucher">%1$s\n\n优惠券</string>
+    <string name="mine_goods_favour">%1$s\n\n商品关注</string>
+    <string name="mine_post_favour">%1$s\n\n资讯收藏</string>
+    <string name="mine_posts_favour">%1$s\n\n我的动态</string>
+    <string name="mine_friend">%1$s\n\n我的好友</string>
 
 </resources>

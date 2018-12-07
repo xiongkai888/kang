@@ -167,10 +167,16 @@
             android:name=".ui.mine.activity.InterestedFriendActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.InventoryListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.CouponActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".search.SearchGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".search.SearchNewsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.news.activity.NewsDetailsActivity"
@@ -521,7 +527,7 @@
                 <!-- 必须，用于接收消息 -->
                 <action android:name="com.huawei.android.push.intent.RECEIVE" />
             </intent-filter>
-            />
+
             <meta-data
                 android:name="CS_cloud_ablitity"
                 android:value="successRateAnalytics" />
@@ -645,9 +651,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.user.setting.BoundKaActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.PersonalDataNCActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AlbumOtherActivity"

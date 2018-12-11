@@ -1,11 +1,15 @@
 package com.lanmei.kang.qrcode;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -26,6 +30,7 @@ import com.lanmei.kang.event.ScanSucceedEvent;
 import com.lanmei.kang.event.ScanUserEvent;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.ImageUtils;
+import com.xson.common.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -135,6 +140,49 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     protected void onStart() {
         super.onStart();
 
+        //        checkSelfPermission 检测有没有 权限
+//        PackageManager.PERMISSION_GRANTED 有权限
+//        PackageManager.PERMISSION_DENIED  拒绝权限
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            //权限发生了改变 true  //  false 小米
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
+                ActivityCompat.requestPermissions(ScanActivity.this,new String[]{Manifest.permission.CAMERA},1);
+            }else {
+                ActivityCompat.requestPermissions(ScanActivity.this,new String[]{Manifest.permission.CAMERA},1);
+
+            }
+        }else{
+            camear();
+        }
+
+    }
+
+
+    /**
+     *
+     * @param requestCode
+     * @param permissions 请求的权限
+     * @param grantResults 请求权限返回的结果
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1){
+            // camear 权限回调
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                // 表示用户授权
+//                Toast.makeText(this, " user Permission" , Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"onRequestPermissionsResultonRequestPermissionsResultonRequestPermissionsResultonRequestPermissionsResult");
+                camear();
+            } else {
+                //用户拒绝权限
+                Toast.makeText(this, "用户拒绝相机权限" , Toast.LENGTH_SHORT).show();
+                L.d(L.TAG,"用户拒绝相机权限");
+            }
+        }
+    }
+
+    private void camear() {
         mQRCodeView.startCamera(); // 打开后置摄像头开始预览，但是并未开始识别
 //        mZXingView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT); // 打开前置摄像头开始预览，但是并未开始识别
         mQRCodeView.startSpotAndShowRect(); // 显示扫描框，并且延迟0.5秒后开始识别

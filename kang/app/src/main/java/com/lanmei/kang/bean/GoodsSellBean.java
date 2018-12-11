@@ -11,6 +11,15 @@ public class GoodsSellBean {
     private double price;//单价
     private String unit;//单位
     private String gid;//商品id
+    private MerchantTabGoodsBean bean;
+
+    public void setBean(MerchantTabGoodsBean bean) {
+        this.bean = bean;
+    }
+
+    public MerchantTabGoodsBean getBean() {
+        return bean;
+    }
 
     public void setGid(String gid) {
         this.gid = gid;

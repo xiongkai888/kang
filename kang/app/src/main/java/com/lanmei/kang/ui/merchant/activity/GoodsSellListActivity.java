@@ -102,11 +102,11 @@ public class GoodsSellListActivity extends BaseActivity {
         controller.loadFirstPage();
         adapter.setDeleteSellGoodsListener(new GoodsSellListAdapter.DeleteSellGoodsListener() {
             @Override
-            public void delete(final String id, final int position) {
+            public void delete(final String id, final int position,final  String uid) {
                 AKDialog.getAlertDialog(getContext(), "确认要删除？", new AKDialog.AlertDialogListener() {
                     @Override
                     public void yes() {
-                        deleteSellGoods(id, position);
+                        deleteSellGoods(id, position,uid);
                     }
                 });
             }
@@ -114,9 +114,11 @@ public class GoodsSellListActivity extends BaseActivity {
     }
 
     //根据id删除销售商品
-    public void deleteSellGoods(String id, final int position) {
+    public void deleteSellGoods(String id, final int position,String uid) {
         KangQiMeiApi api = new KangQiMeiApi("app/goods_sale_list");
-        api.add("id", id).add("uid", api.getUserId(this)).add("is_del", 1);
+        api.add("id", id)//订单id
+                .add("uid", uid).add("is_del", 1)//下单人id
+                .add("sellerid",api.getUserId(this));//商家id
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

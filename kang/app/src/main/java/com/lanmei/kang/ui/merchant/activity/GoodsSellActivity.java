@@ -120,11 +120,12 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
                 List<UserBean> beanList = response.data;
                 if (StringUtils.isEmpty(beanList)) {
                     userBean = null;
+                    numberEt.setText("");
                     UIHelper.ToastMessage(getContext(), "不存在该会员");
                     return;
                 }
                 userBean = beanList.get(0);
-                UIHelper.ToastMessage(getContext(), "存在该会员");
+                UIHelper.ToastMessage(getContext(), "会员身份核实成功");
             }
         });
     }
@@ -192,8 +193,12 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
         }
 
         KangQiMeiApi api = new KangQiMeiApi("app/goods_sale");
-        api.add("uid", api.getUserId(this)).add("sellerid", userBean.getId())
-                .add("goodsid", goodsid.toString()).add("price", price.toString()).add("num", num.toString()).add("danwei", danwei.toString());
+        api.add("uid", userBean.getId())
+                .add("sellerid", api.getUserId(this))
+                .add("goodsid", goodsid.toString())
+                .add("price", price.toString())
+                .add("num", num.toString())
+                .add("danwei", danwei.toString());
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {

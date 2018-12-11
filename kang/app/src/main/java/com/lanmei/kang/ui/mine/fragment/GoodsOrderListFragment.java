@@ -8,8 +8,12 @@ import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.event.OrderOperationEvent;
 import com.xson.common.app.BaseFragment;
+import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,15 +53,39 @@ public class GoodsOrderListFragment extends BaseFragment {
         api.add("uid", api.getUserId(context));
         api.add("state", getArguments().getInt("state"));//0全部1待付款2已付款3未消费4已完成
         GoodsOrderListAdapter adapter = new GoodsOrderListAdapter(context);
+        adapter.setOrderAlterListener(new GoodsOrderListAdapter.OrderAlterListener() {
+            @Override
+            public void affirm(String status, String oid) {
+                statusAffirm(status, oid);
+            }
+        });
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<GoodsOrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
     }
 
+    //修改订单状态
+    private void statusAffirm(String status, String oid) {
+        KangQiMeiApi api = new KangQiMeiApi("app/status_save");
+        api.add("id",oid);
+        api.add("uid",api.getUserId(context));
+        api.add("status",status);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (controller != null){
+//                    controller.loadFirstPage();
+                    UIHelper.ToastMessage(context,response.getInfo());
+                    EventBus.getDefault().post(new OrderOperationEvent());
+                }
+            }
+        });
+    }
+
     @Subscribe
     public void orderOperationEvent(OrderOperationEvent event) {
-        controller.loadFirstPage();
+        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
     }
 
     @Override

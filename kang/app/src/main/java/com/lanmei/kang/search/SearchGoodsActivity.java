@@ -107,6 +107,7 @@ public class SearchGoodsActivity extends BaseActivity implements TextView.OnEdit
 
     private void loadSearchGoods(String keyword) {
         api.add("goodsname", keyword);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
         controller.loadFirstPage();
     }
 

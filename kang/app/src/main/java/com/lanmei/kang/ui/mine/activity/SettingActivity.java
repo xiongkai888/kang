@@ -104,7 +104,7 @@ public class SettingActivity extends BaseActivity {
                         // show login screen
                         EventBus.getDefault().post(new SetUserInfoEvent());
                         EventBus.getDefault().post(new LoginQuitEvent());//
-                        Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
                         IntentUtil.startActivity(getContext(), LoginActivity.class);
                         DBShopCartHelper.dbGoodsCartManager = null;//不同用户登录uid重新赋值
                         onBackPressed();

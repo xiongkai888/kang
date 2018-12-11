@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:scrollbars="none">
 
-    <include layout="@layout/include_mine" />
+    <include
+        android:layout_marginBottom="@dimen/d_10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/include_mine" />
 
 </ScrollView>

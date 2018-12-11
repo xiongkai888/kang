@@ -12,6 +12,9 @@
 
         <include layout="@layout/include_mine" />
 
+        <TextView
+            style="@style/line_H10dp_on" />
+
         <LinearLayout
             style="@style/h_match_parent"
             android:paddingBottom="@dimen/d_5dp"
@@ -55,9 +58,11 @@
 
         </LinearLayout>
 
+        <TextView
+            style="@style/line_H10dp_on" />
+
         <LinearLayout
             style="@style/h_match_parent"
-            android:layout_marginTop="@dimen/d_10dp"
             android:layout_marginBottom="@dimen/d_10dp"
             android:paddingBottom="@dimen/d_5dp"
             android:paddingTop="@dimen/d_5dp">

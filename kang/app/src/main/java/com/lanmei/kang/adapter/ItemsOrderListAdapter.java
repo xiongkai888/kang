@@ -37,12 +37,12 @@ import butterknife.InjectView;
 /**
  * 我的项目订单列表
  */
-public class OrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
+public class ItemsOrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 
 
     private FormatTime time;
 
-    public OrderListAdapter(Context context) {
+    public ItemsOrderListAdapter(Context context) {
         super(context);
         time = new FormatTime(context);
     }

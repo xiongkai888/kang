@@ -19,7 +19,7 @@ import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.bean.ZhiFuBaoBean;
 import com.lanmei.kang.event.PaySucceedEvent;
 import com.lanmei.kang.helper.WXPayHelper;
-import com.lanmei.kang.ui.mine.activity.MyOrderActivity;
+import com.lanmei.kang.ui.mine.activity.MyItemsOrderActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.EditTextWatcher;
 import com.xson.common.api.AbstractApi;
@@ -196,7 +196,7 @@ public class ReserveInfoActivity extends BaseActivity {
                     if (isFinishing()) {
                         return;
                     }
-                    IntentUtil.startActivity(ReserveInfoActivity.this, MyOrderActivity.class);
+                    IntentUtil.startActivity(ReserveInfoActivity.this, MyItemsOrderActivity.class);
                     finish();
                 }
             }, new Response.ErrorListener() {
@@ -262,7 +262,7 @@ public class ReserveInfoActivity extends BaseActivity {
     //支付成功调用
     @Subscribe
     public void paySucceedEvent(PaySucceedEvent event) {
-        IntentUtil.startActivity(ReserveInfoActivity.this, MyOrderActivity.class);
+        IntentUtil.startActivity(ReserveInfoActivity.this, MyItemsOrderActivity.class);
         finish();
     }
 

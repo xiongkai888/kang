@@ -103,7 +103,7 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
                 @Override
                 public void onClick(View v) {
                     if (listener != null){
-                        listener.delete(bean.getId(),position);
+                        listener.delete(bean.getId(),position,bean.getUid());
                     }
                 }
             });
@@ -129,7 +129,7 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
     }
 
     public interface DeleteSellGoodsListener{
-        void delete(String id,int position);
+        void delete(String id,int position,String uid);
     }
 
 }

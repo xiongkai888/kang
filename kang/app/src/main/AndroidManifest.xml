@@ -137,7 +137,7 @@
             android:name=".ui.mine.activity.MembershipCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.MyOrderActivity"
+            android:name=".ui.mine.activity.MyItemsOrderActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.MyGoodsOrderActivity"

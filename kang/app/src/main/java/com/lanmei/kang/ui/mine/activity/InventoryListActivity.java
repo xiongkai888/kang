@@ -31,6 +31,7 @@ import com.xson.common.utils.SysUtils;
 import com.xson.common.widget.DrawClickableEditText;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -75,7 +76,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (StringUtils.isEmpty(String.valueOf(s))){
                     api.add("string", "");
-                    controller.loadFirstPage();
+                    controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
                 }
             }
         });
@@ -94,6 +95,14 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
                     return;
                 }
                 merchantTabClassifyBeans = response.data;
+                if (StringUtils.isEmpty(merchantTabClassifyBeans)){
+                    merchantTabClassifyBeans = new ArrayList<>();
+                }
+                MerchantTabClassifyBean bean = new MerchantTabClassifyBean();
+                bean.setClassname(getString(R.string.all));
+                bean.setId("");
+                bean.setSelect(true);
+                merchantTabClassifyBeans.add(0,bean);
             }
         });
     }
@@ -114,24 +123,25 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
 
     private void loadSearchGoods(String keyword) {
         api.add("string", keyword);
-        api.add("order","");
-        api.add("type","");
-        byTv.setText(R.string.all);
-        CommonUtils.setCompoundDrawables(getContext(), byTv, R.mipmap.common_filter_arrow_down, 0, 2);
-        CommonUtils.setCompoundDrawables(getContext(), timeTv, R.mipmap.o_bothway, 0, 2);
-        controller.loadFirstPage();
+//        api.add("order","");
+//        api.add("type","");
+//        byTv.setText(R.string.all);
+//        CommonUtils.setCompoundDrawables(getContext(), byTv, R.mipmap.common_filter_arrow_down, 0, 2);
+//        CommonUtils.setCompoundDrawables(getContext(), timeTv, R.mipmap.o_bothway, 0, 2);
+        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
     }
 
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
         api = new KangQiMeiApi("app/shoper_sale");
+//        api.add("uid", "888");
         api.add("uid", api.getUserId(this));
 
         adapter = new InventoryListAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<InventoryListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        controller.loadFirstPage();
+        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
     }
 
     private PopupWindow window;
@@ -159,7 +169,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
                 byTv.setText(bean.getClassname());
                 window.dismiss();
                 api.add("type",bean.getId());
-                controller.loadFirstPage();
+                controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
             }
         });
 //        int width = UIBaseUtils.dp2pxInt(this, 80);
@@ -195,7 +205,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
             case R.id.time_rl:
                 CommonUtils.setCompoundDrawables(this, timeTv, isUp?R.mipmap.o_bothway_up:R.mipmap.o_bothway_down, 0, 2);
                 api.add("order",isUp?"1":"2");
-                controller.loadFirstPage();
+                controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
                 isUp = !isUp;
                 break;
         }

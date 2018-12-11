@@ -13,7 +13,6 @@ import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.ui.merchant_tab.activity.OrderDetailsGoodsActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
-import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
@@ -21,7 +20,6 @@ import com.xson.common.widget.FormatTextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 
 /**
@@ -32,7 +30,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
 
     public GoodsOrderListAdapter(Context context) {
         super(context);
-        FormatTime time = new FormatTime(context);
+//        FormatTime time = new FormatTime(context);
     }
 
     @Override
@@ -48,12 +46,12 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
         }
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.setParameter(bean);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentUtil.startActivity(context,OrderDetailsGoodsActivity.class,bean.getId());
-            }
-        });
+//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                IntentUtil.startActivity(context,OrderDetailsGoodsActivity.class,bean.getId());
+//            }
+//        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,85 +74,16 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
         @InjectView(R.id.order_3)
         TextView order3;
 
-        private String oid;
-        private String status;
-        private String paysStatus;
-
-        @OnClick({R.id.order_1, R.id.order_2,R.id.order_3})
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
-                case R.id.order_1://
-                    switch (paysStatus) {
-                        case "1"://联系商家
-                            if (StringUtils.isSame(status,"4")){
-                                CommonUtils.developing(context);
-                                getAlertDialog("确认要删除该订单？","4", oid);
-                                break;
-                            }
-                        case "0"://联系商家
-                        case "2"://联系商家
-                            CommonUtils.developing(context);
-//                            CommonUtils.startChatActivity(context, SharedAccount.getInstance(context).getServiceId(), false);
-                            break;
-                    }
-                    break;
-                case R.id.order_2://
-                    switch (paysStatus) {
-                        case "0"://
-                            CommonUtils.developing(context);
-//                            getAlertDialog("确认要取消订单？","3", oid);
-                            break;
-                        case "1"://
-                            switch (status) {//状态值 1|2|3|4|5|6 =>生成订单|确认订单|取消订单|作废订单|完成订单|申请退款
-                                case "1":
-                                case "2":
-//                                    getAlertDialog("确认要退款？","6", oid);
-                                    CommonUtils.developing(context);
-                                    break;
-                                case "5":
-                                    CommonUtils.developing(context);
-//                                    getAlertDialog("确认要删除该订单？","4", oid);
-                                    break;
-                            }
-                            break;
-                    }
-                    break;
-                case R.id.order_3://
-                    switch (paysStatus) {
-                        case "0"://
-                            IntentUtil.startActivity(context, OrderDetailsGoodsActivity.class, oid);//去付款
-                            break;
-                        case "1"://
-                            switch (status) {
-                                case "1":
-                                case "2":
-//                                    getAlertDialog("确认要收货？","5", oid);
-                                    CommonUtils.developing(context);
-                                    break;
-                                case "3":
-                                    break;
-                                case "4":
-                                    break;
-                                case "5"://去评论
-                                    CommonUtils.developing(context);
-//                                    Bundle bundle1 = new Bundle();
-//                                    bundle1.putSerializable("bean", bean);
-//                                    IntentUtil.startActivity(context, PublishCommentActivity.class,bundle1);
-                                    break;
-                            }
-                            break;
-                    }
-                    break;
-            }
-        }
-
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
         public void setParameter(final GoodsOrderListBean bean) {
-            oid = bean.getId();
+            order1.setVisibility(View.VISIBLE);
+            order2.setVisibility(View.VISIBLE);
+            order3.setVisibility(View.VISIBLE);
+
 
             GoodsOrderListSubAdapter adapter = new GoodsOrderListSubAdapter(context);
             adapter.setData(bean.getGoods());
@@ -168,99 +97,129 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
             payNoTv.setText(String.format(context.getString(R.string.order_no), bean.getPay_no()));
-            switch (bean.getState()) {
-                case "0":
-                    payStatusTv.setText(R.string.wait_pay);
-                    break;
-                case "1":
-                    payStatusTv.setText(R.string.payed);
-                    break;
-                case "2":
-                    payStatusTv.setText(R.string.wait_receiving);
-                    break;
-                case "3":
-                    payStatusTv.setText(R.string.doned);
-                    break;
-                case "4":
-                    payStatusTv.setText(R.string.refund_apply);
-                    break;
-                case "5":
-                    payStatusTv.setText(R.string.order_cancel);
-                    break;
-            }
-            numTv.setText(String.format(context.getString(R.string.goods_num), String.valueOf(bean.getNum())));
             totalPriceTv.setTextValue(bean.getTotal_price());
 
-            status = bean.getState();// 1|2|3|4|5|6 => 1生成订单|2确认订单|3取消订单|4作废订单|5完成订单|6申请退款
-            paysStatus = bean.getPay_status();//支付状态 0：未支付，1：已支付，2：退款',
-//            L.d("MineOrderSubAdapter", "position" + position + ": status = " + status + ",paysStatus = " + paysStatus);
-
-            switch (paysStatus) {
-                case "0"://未支付
-                    order2.setText(context.getString(R.string.cancel_order));
-                    order3.setText(context.getString(R.string.go_pay));
-
-                    payStatusTv.setText(R.string.wait_pay);
+            final String state = bean.getState();
+            String payStatus = "";
+            switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
+                case "0":
+                    payStatus = context.getString(R.string.wait_pay);//待付款
+                    order1.setText(context.getString(R.string.cancel_order));//取消订单
+                    order2.setText(context.getString(R.string.contact_merchant));
+                    order3.setText(context.getString(R.string.go_pay));//去付款
                     break;
-                case "1"://已支付
-                    payStatusTv.setText(R.string.wait_receiving);
-                    switch (status) {
-                        case "1":
-                        case "2":
-                            payStatusTv.setText(R.string.wait_receiving);
-                            order2.setText(R.string.refund);
-                            order3.setText(R.string.confirm_receipt);
-                            break;
-                        case "3":
-                            payStatusTv.setText(R.string.deal_close);
-                            order2.setVisibility(View.GONE);
-                            order3.setVisibility(View.GONE);
-                            break;
-                        case "4":
-                            payStatusTv.setText(R.string.deal_close);
-                            order2.setVisibility(View.GONE);
-                            order3.setVisibility(View.GONE);
-                            order1.setText(R.string.delete_order);
-                            break;
-                        case "5":
-                            payStatusTv.setText(R.string.complete_transaction);
-                            order2.setText(R.string.delete_order);
-//                            if (StringUtils.isSame(CommonUtils.isZero,bean.getReviews())){
-//                                order3.setText("晒单评价");
-//                            }else {
-//                                order3.setVisibility(View.GONE);
-//                            }
-                            break;
-                        case "6":// 1|2|3|4|5|6 => 1生成订单|2确认订单|3取消订单|4作废订单|5完成订单|6申请退款
-                            payStatusTv.setText(R.string.refund_apply);
-                            order2.setVisibility(View.GONE);
-                            order3.setText(R.string.refund_apply);
-                            break;
+                case "1":
+                    payStatus = context.getString(R.string.payed);//已支付
+                    order3.setVisibility(View.GONE);
+                    order1.setText(context.getString(R.string.cancel_order));//删除订单
+                    order2.setText(context.getString(R.string.contact_merchant));//联系商家
+                    order3.setVisibility(View.GONE);
+                    break;
+                case "2":
+                    payStatus = context.getString(R.string.wait_receiving);//待收货
+                    order1.setText(context.getString(R.string.refund));//退款
+                    order2.setText(context.getString(R.string.contact_merchant));//联系商家
+                    order3.setVisibility(View.GONE);
+                    break;
+                case "3":
+                    payStatus = context.getString(R.string.doned);//已完成
+                    order1.setText(context.getString(R.string.delete_order));//删除订单
+                    order2.setText(context.getString(R.string.contact_merchant));
+                    if (StringUtils.isSame(CommonUtils.isZero, bean.getPay_status())) {//为评价
+                        order3.setVisibility(View.VISIBLE);
+                        order3.setText(context.getString(R.string.bask_in_a_single_comment));//晒单评价
+                    } else {
+                        order3.setVisibility(View.GONE);
                     }
-
                     break;
-                case "2"://退款
-                    order2.setVisibility(View.GONE);
-                    order3.setText(R.string.refund_apply);
-                    payStatusTv.setText(R.string.refund_apply);
+                case "4":
+                    payStatus = context.getString(R.string.refund_apply);//退款中
+                    order1.setText(context.getString(R.string.refund_apply));
+                    order2.setText(context.getString(R.string.contact_merchant));
+                    order3.setVisibility(View.GONE);
+                    break;
+                case "5":
+                    payStatus = context.getString(R.string.order_cancel);//order_cancel
+                    order1.setText(context.getString(R.string.delete_order));//删除订单
+                    order2.setText(context.getString(R.string.contact_merchant));
+                    order3.setVisibility(View.GONE);
                     break;
             }
+            payStatusTv.setText(payStatus);
+
+            order1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
+                        case "0"://取消订单
+                            getAlertDialog("确定取消订单？","5",bean.getId());
+                            break;
+                        case "1"://取消订单
+                            CommonUtils.developing(context);
+                            break;
+                        case "2":
+                            CommonUtils.developing(context);
+                            break;
+                        case "3"://退款
+                            CommonUtils.developing(context);
+                            break;
+                        case "4"://删除订单
+                            CommonUtils.developing(context);
+                            break;
+                        case "5":
+                            CommonUtils.developing(context);
+                            break;
+                    }
+                }
+            });
+            order2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    if (StringUtils.isSame(KangApp.HX_USER_Head+bean.getUid(),EMClient.getInstance().getCurrentUser())){
+//                        Toast.makeText(context, R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+//                    }
+//                    L.d(L.TAG,EMClient.getInstance().getCurrentUser());
+//                    CommonUtils.startChatActivity(context, bean.getUid(), false);
+                    CommonUtils.developing(context);
+                }
+            });
+            order3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (state) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
+                        case "0"://
+                            break;
+                        case "1"://
+                            break;
+                        case "2":
+                            break;
+                        case "3"://
+                            break;
+                        case "4"://
+                            break;
+                        case "5"://
+                            break;
+                    }
+                    CommonUtils.developing(context);
+                }
+            });
 
         }
     }
 
-    private void getAlertDialog(String content,String status,final String oid){
+
+    private void getAlertDialog(String content,final String status,final String oid){
         AKDialog.getAlertDialog(context, content, new AKDialog.AlertDialogListener() {
             @Override
             public void yes() {
                 if (l != null) {
-                    l.affirm("4", oid);
+                    l.affirm(status, oid);
                 }
             }
         });
     }
 
-    OrderAlterListener l;
+    private OrderAlterListener l;
 
     public interface OrderAlterListener {
         void affirm(String status, String oid);

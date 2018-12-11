@@ -27,7 +27,9 @@ import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.FormatTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,12 +46,14 @@ public class AddGoodsSellHelper {
     private FormatTextView totalPriceTv;
     private List<GoodsSellBean> list;
     private int scan_goods_position;//
+    private Map<Integer,ViewHolder> map;
 
     public List<GoodsSellBean> getList() {
         return list;
     }
 
     public AddGoodsSellHelper(Context context, LinearLayout root, FormatTextView totalPriceTv) {
+        map = new HashMap<>();
         this.context = context;
         this.root = root;
         this.totalPriceTv = totalPriceTv;
@@ -73,7 +77,7 @@ public class AddGoodsSellHelper {
     private void addView(int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell, null);
         root.addView(view, position);
-        new ViewHolder(view, position);
+        map.put(position,new ViewHolder(view, position));
     }
 
     //二维码获取商品编号更新
@@ -191,6 +195,12 @@ public class AddGoodsSellHelper {
             });
         }
 
+        public void setData(MerchantTabGoodsBean merchantTabGoodsBean){
+            numTv.setText(CommonUtils.isOne);
+            priceEt.setText(merchantTabGoodsBean.getPrice());
+            unitEt.setText(R.string.yuan_sub);
+        }
+
     }
 
     private void searchGoods(String barcode) {
@@ -207,8 +217,11 @@ public class AddGoodsSellHelper {
                     UIHelper.ToastMessage(context, "不存在该商品");
                     return;
                 }
-                list.get(scan_goods_position).setGid(beanList.get(0).getId());
-                UIHelper.ToastMessage(context, "存在该商品");
+                MerchantTabGoodsBean merchantTabGoodsBean = beanList.get(0);
+                list.get(scan_goods_position).setGid(merchantTabGoodsBean.getId());
+                ViewHolder viewHolder = map.get(scan_goods_position);
+                viewHolder.setData(merchantTabGoodsBean);
+//                UIHelper.ToastMessage(context, "存在该商品");
             }
         });
     }
@@ -229,6 +242,7 @@ public class AddGoodsSellHelper {
 
 
     public void refresh() {
+        map.clear();
         root.removeAllViews();
         if (isEmpty()) {
             GoodsSellBean bean = new GoodsSellBean();

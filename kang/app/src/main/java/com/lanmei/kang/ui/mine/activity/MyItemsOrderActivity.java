@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.adapter.MyOrderAdapter;
+import com.lanmei.kang.adapter.MyItemsOrderAdapter;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.widget.CenterTitleToolbar;
 
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * 我的项目订单
  */
-public class MyOrderActivity extends BaseActivity{
+public class MyItemsOrderActivity extends BaseActivity{
 
     @InjectView(R.id.toolbar)
     CenterTitleToolbar mToolbar;
@@ -39,7 +39,7 @@ public class MyOrderActivity extends BaseActivity{
         actionbar.setTitle(R.string.my_item_order);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mViewPager.setAdapter(new MyOrderAdapter(getSupportFragmentManager(),this));
+        mViewPager.setAdapter(new MyItemsOrderAdapter(getSupportFragmentManager(),this));
         mViewPager.setOffscreenPageLimit(3);
         mTabLayout.setupWithViewPager(mViewPager);
 

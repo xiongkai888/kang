@@ -3,7 +3,7 @@ package com.lanmei.kang.ui.mine.fragment;
 import android.os.Bundle;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.adapter.OrderListAdapter;
+import com.lanmei.kang.adapter.ItemsOrderListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.OrderListBean;
 import com.lanmei.kang.event.OrderOperationEvent;
@@ -23,7 +23,7 @@ import butterknife.InjectView;
  * 我的项目订单列表
  */
 
-public class OrderListFragment extends BaseFragment {
+public class ItemsOrderListFragment extends BaseFragment {
 
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
@@ -50,7 +50,7 @@ public class OrderListFragment extends BaseFragment {
         api.add("uid",api.getUserId(context));
         api.add("token",api.getToken(context));
         api.add("status",status);//0全部1待付款2已付款3未消费4已完成
-        OrderListAdapter adapter = new OrderListAdapter(context);
+        ItemsOrderListAdapter adapter = new ItemsOrderListAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<OrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };

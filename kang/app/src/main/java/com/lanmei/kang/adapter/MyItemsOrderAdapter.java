@@ -7,23 +7,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.ui.mine.fragment.OrderListFragment;
+import com.lanmei.kang.ui.mine.fragment.ItemsOrderListFragment;
 
 /**
  * 我的项目订单
  */
-public class MyOrderAdapter extends FragmentPagerAdapter {
+public class MyItemsOrderAdapter extends FragmentPagerAdapter {
 
     private Context context;
 
-    public MyOrderAdapter(FragmentManager fm,Context context) {
+    public MyItemsOrderAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        OrderListFragment fragment = new OrderListFragment();
+        ItemsOrderListFragment fragment = new ItemsOrderListFragment();
         Bundle bundle = new Bundle();
         switch (position) {
             case 0:

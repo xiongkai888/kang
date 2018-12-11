@@ -204,7 +204,7 @@ public class MineMerchantFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.head_iv,R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10, R.id.m07, R.id.m08, R.id.m09, R.id.m010, R.id.m17, R.id.m18, R.id.m19})
+    @OnClick({R.id.head_iv,R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10, R.id.m07, R.id.m08, R.id.m09, R.id.m010, R.id.m17, R.id.m18, R.id.m19, R.id.m20})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;

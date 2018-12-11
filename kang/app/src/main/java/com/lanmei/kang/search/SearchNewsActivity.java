@@ -14,10 +14,8 @@ import com.lanmei.kang.event.NewsCommEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
-import com.xson.common.helper.SimpleTextWatcher;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.DrawClickableEditText;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
@@ -43,8 +41,8 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
     private KangQiMeiApi api;
     @InjectView(R.id.keywordEditText)
     DrawClickableEditText mKeywordEditText;
-    private boolean isFirst = true;
-    private List<NewsCategoryListBean> goodsBeanList;//第一次加载的数据
+//    private boolean isFirst = true;
+//    private List<NewsCategoryListBean> goodsBeanList;//第一次加载的数据
 
     @Override
     public int getContentViewId() {
@@ -57,16 +55,16 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
 
         mKeywordEditText.setFocusableInTouchMode(true);
         mKeywordEditText.setOnEditorActionListener(this);
-        mKeywordEditText.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (StringUtils.isEmpty(String.valueOf(s))){
-                    api.add("keyword", "");
-                    mAdapter.setData(goodsBeanList);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+//        mKeywordEditText.addTextChangedListener(new SimpleTextWatcher() {
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if (StringUtils.isEmpty(String.valueOf(s))){
+//                    api.add("keyword", "");
+//                    mAdapter.setData(goodsBeanList);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            }
+//        });
 
         setSupportActionBar(mToolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -82,14 +80,14 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         controller = new SwipeRefreshController<NoPageListBean<NewsCategoryListBean>>(this, smartSwipeRefreshLayout, api, mAdapter) {
-            @Override
-            public boolean onSuccessResponse(NoPageListBean<NewsCategoryListBean> response) {
-                if (isFirst){
-                    isFirst = false;
-                    goodsBeanList = response.data;
-                }
-                return super.onSuccessResponse(response);
-            }
+//            @Override
+//            public boolean onSuccessResponse(NoPageListBean<NewsCategoryListBean> response) {
+//                if (isFirst){
+//                    isFirst = false;
+//                    goodsBeanList = response.data;
+//                }
+//                return super.onSuccessResponse(response);
+//            }
         };
         controller.loadFirstPage();
     }
@@ -100,10 +98,10 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             String key = CommonUtils.getStringByTextView(v);
-            if (StringUtils.isEmpty(key)) {
-                UIHelper.ToastMessage(this, R.string.input_keyword);
-                return false;
-            }
+//            if (StringUtils.isEmpty(key)) {
+//                UIHelper.ToastMessage(this, R.string.input_keyword);
+//                return false;
+//            }
             loadSearchNews(key);
             return true;
         }
@@ -112,6 +110,7 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
 
     private void loadSearchNews(String keyword) {
         api.add("keyword", keyword);
+        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.BOTH);
         controller.loadFirstPage();
     }
 
@@ -143,6 +142,5 @@ public class SearchNewsActivity extends BaseActivity implements TextView.OnEdito
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
 
 }

@@ -14,6 +14,9 @@ import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvide
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
+import com.alibaba.sdk.android.oss.model.ListObjectsRequest;
+import com.alibaba.sdk.android.oss.model.ListObjectsResult;
+import com.xson.common.utils.L;
 
 
 /**
@@ -41,11 +44,11 @@ public class ManageOssUpload {
 
     }
 
-    public void uploadFile_img(String uploadFilePath,OssUploadListener ossUploadListener){
+    public void uploadFile_img(String uploadFilePath, OssUploadListener ossUploadListener) {
         if (TextUtils.isEmpty(uploadFilePath))
-            return ;
-        String fileName=uploadFilePath.substring(uploadFilePath.lastIndexOf("/")+1);
-        fileName= OssUserInfo.uploadPath+fileName;
+            return;
+        String fileName = uploadFilePath.substring(uploadFilePath.lastIndexOf("/") + 1);
+        fileName = OssUserInfo.uploadPath + fileName;
         new PutObjectSamples(oss, OssUserInfo.testBucket, fileName, uploadFilePath)
                 .asyncPutObjectFromLocalFile(ossUploadListener);
 
@@ -53,49 +56,50 @@ public class ManageOssUpload {
 
     /**
      * 同步阻塞上传
+     *
      * @param uploadFilePath
-     * @param type  防止上传几组图片时出错（地址一样）
+     * @param type           防止上传几组图片时出错（地址一样）
      * @return
      */
-    public String uploadFile_img(String uploadFilePath,String type){
+    public String uploadFile_img(String uploadFilePath, String type) {
         if (TextUtils.isEmpty(uploadFilePath))
             return null;
-        String fileName = uploadFilePath.substring(uploadFilePath.lastIndexOf("/")+1);
-        fileName= OssUserInfo.uploadPath+type+"/"+fileName;
+        String fileName = uploadFilePath.substring(uploadFilePath.lastIndexOf("/") + 1);
+        fileName = OssUserInfo.uploadPath + type + "/" + fileName;
         return new PutObjectSamples(oss, OssUserInfo.testBucket, fileName, uploadFilePath)
                 .putObjectFromLocalFile();
 
     }
 
-    public boolean uploadFile_del(String imgUrl){
-        boolean result=false;
+    public boolean uploadFile_del(String imgUrl) {
+        boolean result = false;
 
-        String name=getUrlKey(imgUrl);
+        String name = getUrlKey(imgUrl);
 //        L.d("uploadFile_del",""+name);
         if (name.isEmpty())
             return result;
 //        name="wlyg/img/"+name;
-        ManageObjectSamples manageObjectSamples =   new ManageObjectSamples(oss, OssUserInfo.testBucket,name);
-        if (manageObjectSamples.checkIsObjectExist()){
+        ManageObjectSamples manageObjectSamples = new ManageObjectSamples(oss, OssUserInfo.testBucket, name);
+        if (manageObjectSamples.checkIsObjectExist()) {
             try {
-                result =  manageObjectSamples.syncDeleteObject(name);
+                result = manageObjectSamples.syncDeleteObject(name);
             } catch (ClientException e) {
                 e.printStackTrace();
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
         }
-         return result;
+        return result;
     }
 
-    public void delOssPic(String imgUrl,OSSCompletedCallback<DeleteObjectRequest, DeleteObjectResult> ossDelCallback){
-        String name=getUrlKey(imgUrl);
+    public void delOssPic(String imgUrl, OSSCompletedCallback<DeleteObjectRequest, DeleteObjectResult> ossDelCallback) {
+        String name = getUrlKey(imgUrl);
 //        L.d("uploadFile_del",""+name);
         if (name.isEmpty())
-            return ;
+            return;
 
         // 创建删除请求
-        DeleteObjectRequest delete = new DeleteObjectRequest(OssUserInfo.testBucket,name);
+        DeleteObjectRequest delete = new DeleteObjectRequest(OssUserInfo.testBucket, name);
         // 异步删除
 
         OSSAsyncTask deleteTask = oss.asyncDeleteObject(delete, ossDelCallback);
@@ -103,14 +107,65 @@ public class ManageOssUpload {
 
     }
 
-    public String getUrlKey(String picOssUrl){
-        boolean result=false;
+    //删除oss文件
+    public void deleteObject(DeleteObjectRequest request) {
+        try {
+            DeleteObjectResult result = oss.deleteObject(request);
+            L.d("AyncListObjects", result.toString());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUrlKey(String picOssUrl) {
+        boolean result = false;
         if (TextUtils.isEmpty(picOssUrl))
             return "";
         if (!picOssUrl.contains(".com"))
             return "";
-        String name=picOssUrl.substring(picOssUrl.lastIndexOf(".com")+5);
+        String name = picOssUrl.substring(picOssUrl.lastIndexOf(".com") + 5);
 //        L.d("uploadFile_del",""+name);
         return name;
     }
+
+    public void logAyncListObjects() {
+
+        ListObjectsRequest listObjects = new ListObjectsRequest(OssUserInfo.testBucket);
+// 设定前缀
+        listObjects.setPrefix("kang");
+
+// 设置成功、失败回调，发送异步罗列请求
+        OSSAsyncTask task = oss.asyncListObjects(listObjects, new OSSCompletedCallback<ListObjectsRequest, ListObjectsResult>() {
+            @Override
+            public void onSuccess(ListObjectsRequest request, ListObjectsResult result) {
+                L.d("AyncListObjects", "Success!");
+                for (int i = 0; i < result.getObjectSummaries().size(); i++) {
+                    L.d("AyncListObjects", "object: " + result.getObjectSummaries().get(i).getKey() + " "
+                            + result.getObjectSummaries().get(i).getETag() + " "
+                            + result.getObjectSummaries().get(i).getLastModified());
+                }
+            }
+
+            @Override
+            public void onFailure(ListObjectsRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    L.e("ErrorCode", serviceException.getErrorCode());
+                    L.e("RequestId", serviceException.getRequestId());
+                    L.e("HostId", serviceException.getHostId());
+                    L.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+        task.waitUntilFinished();
+
+    }
+
 }

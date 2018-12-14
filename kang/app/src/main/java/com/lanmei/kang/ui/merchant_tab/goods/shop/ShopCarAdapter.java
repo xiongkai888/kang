@@ -10,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+
+import java.text.DecimalFormat;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,10 +25,12 @@ import butterknife.InjectView;
 public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
 
     ShopCartContract.Presenter mPresenter;
+    private DecimalFormat decimalFormat;
 
     public ShopCarAdapter(Context context, ShopCartContract.Presenter presenter) {
         super(context);
         mPresenter = presenter;
+        decimalFormat = new DecimalFormat(CommonUtils.ratioStr);
     }
 
     @Override
@@ -74,6 +79,8 @@ public class ShopCarAdapter extends SwipeRefreshAdapter<ShopCarBean> {
             goodsCount = bean.getGoodsCount();
             ImageHelper.load(context,bean.getGoodsImg(),headIv,null,true,R.mipmap.default_pic,R.mipmap.default_pic);
             priceTv.setText(String.format(context.getString(R.string.price),String.valueOf(bean.getSell_price())));
+            priceTv.setText(String.format(context.getString(R.string.price), CommonUtils.getRatioPrice(context,bean.getSell_price()+"",decimalFormat)));
+
             nameTv.setText(bean.getGoodsName());
             payNumEt.setText(String.valueOf(goodsCount));
             payNumEt.setFocusable(false);

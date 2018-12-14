@@ -76,7 +76,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (StringUtils.isEmpty(String.valueOf(s))){
                     api.add("string", "");
-                    controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+                    controller.loadFirstPage();
                 }
             }
         });
@@ -128,7 +128,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
 //        byTv.setText(R.string.all);
 //        CommonUtils.setCompoundDrawables(getContext(), byTv, R.mipmap.common_filter_arrow_down, 0, 2);
 //        CommonUtils.setCompoundDrawables(getContext(), timeTv, R.mipmap.o_bothway, 0, 2);
-        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+        controller.loadFirstPage();
     }
 
     private void initSwipeRefreshLayout() {
@@ -141,7 +141,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<InventoryListBean>>(this, smartSwipeRefreshLayout, api, adapter) {
         };
-        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+        controller.loadFirstPage();
     }
 
     private PopupWindow window;
@@ -169,7 +169,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
                 byTv.setText(bean.getClassname());
                 window.dismiss();
                 api.add("type",bean.getId());
-                controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+                controller.loadFirstPage();
             }
         });
 //        int width = UIBaseUtils.dp2pxInt(this, 80);
@@ -205,7 +205,7 @@ public class InventoryListActivity extends BaseActivity implements TextView.OnEd
             case R.id.time_rl:
                 CommonUtils.setCompoundDrawables(this, timeTv, isUp?R.mipmap.o_bothway_up:R.mipmap.o_bothway_down, 0, 2);
                 api.add("order",isUp?"1":"2");
-                controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+                controller.loadFirstPage();
                 isUp = !isUp;
                 break;
         }

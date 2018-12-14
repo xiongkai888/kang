@@ -63,6 +63,23 @@
             </LinearLayout>
 
             <LinearLayout
+                style="@style/ll_bottom"
+                android:padding="10dp">
+
+                <TextView
+                    style="@style/text_weight"
+                    android:text="等\u3000\u3000级：" />
+
+                <TextView
+                    android:id="@+id/rid_tv"
+                    style="@style/text"
+                    android:layout_marginRight="@dimen/d_15dp"
+                    android:drawablePadding="5dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_QQ"
                 style="@style/ll_bottom"
                 android:padding="10dp">

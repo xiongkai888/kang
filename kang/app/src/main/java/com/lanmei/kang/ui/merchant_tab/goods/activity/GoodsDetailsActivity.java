@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -144,25 +142,25 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_share, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (!CommonUtils.isLogin(this)) {
-            return super.onOptionsItemSelected(item);
-        }
-        switch (item.getItemId()) {
-            case R.id.action_share:
-                CommonUtils.developing(this);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_share, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (!CommonUtils.isLogin(this)) {
+//            return super.onOptionsItemSelected(item);
+//        }
+//        switch (item.getItemId()) {
+//            case R.id.action_share:
+//                CommonUtils.developing(this);
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @OnClick({R.id.ll_collect, R.id.ll_shop, R.id.add_shop_car_tv, R.id.pay_now_tv})

@@ -25,6 +25,7 @@ import com.xson.common.widget.FormatTextView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,9 +118,9 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
 
     private void setParameter() {
         nameTv.setText(bean.getGoodsname());
-        priceTv.setText(String.format(context.getString(R.string.price), bean.getSale_price()));
+        priceTv.setText(String.format(context.getString(R.string.price), CommonUtils.getRatioPrice(context,bean.getBusiness_price(),new DecimalFormat(CommonUtils.ratioStr))));
         payNumTv.setText(String.format(context.getString(R.string.pay_num), bean.getSales()));
-        salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getBusiness_price()));
+        salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getSale_price()));
     }
 
     private void initTabView() {

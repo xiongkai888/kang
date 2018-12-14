@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import com.lanmei.kang.R;
 import com.lanmei.kang.core.IPresenter;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.merchant_tab.activity.ConfirmOrderActivity;
 import com.lanmei.kang.util.AKDialog;
-import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
@@ -86,7 +86,7 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         goBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                MainActivity.showDiscover(ShopCarActivity.this);
+                MainActivity.showHome(ShopCarActivity.this);
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -123,7 +123,7 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         toolbar.setOnMenuItemClickListener(this);
         L.d("ShopCarActivity", "initShopCart");
         style = 1;
-        balanceBt.setText(String.format(getString(R.string.balance),CommonUtils.getUserBean(this).getMoney()));
+        balanceBt.setText(R.string.submit);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
 
     @Override
     public void summation(double sum, boolean selectedAll) {
-        mTotalMoneyTV.setTextValue(String.format("%.2f", sum));
+        mTotalMoneyTV.setTextValue(String.format("%.1f", sum));
 
         mAllSelectCheckbox.setOnCheckedChangeListener(null);
         mAllSelectCheckbox.setChecked(selectedAll);
@@ -166,7 +166,7 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         } else if (id == R.id.action_done) {
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_edit);
-            balanceBt.setText(R.string.balance);
+            balanceBt.setText(R.string.submit);
             style = 1;
         }
         return true;

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.data.volley.Response;
@@ -27,12 +28,15 @@ import com.lanmei.kang.bean.UserInfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.webviewpage.PhotoBrowserActivity;
+import com.oss.ManageOssUpload;
+import com.oss.OssUserInfo;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
+import com.xson.common.utils.DoubleUtil;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -49,6 +53,7 @@ public class CommonUtils {
 
     public final static String isOne = "1";
     public final static String isZero = "0";
+    public final static String ratioStr = "#.0";//保留小数位数
 
 
     /**
@@ -72,7 +77,7 @@ public class CommonUtils {
 
     //获取用户ID
     public static String getUserId(Context context) {
-        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        UserBean bean = getUserBean(context);
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
@@ -81,7 +86,7 @@ public class CommonUtils {
 
     //获取用户类型
     public static String getUserType(Context context) {
-        UserBean bean = UserHelper.getInstance(context).getUserBean();
+        UserBean bean = getUserBean(context);
         if (StringUtils.isEmpty(bean)) {
             return "";
         }
@@ -205,6 +210,9 @@ public class CommonUtils {
                 UserInfoBean userInfoBean = response.data;
                 if (userInfoBean != null) {
                     UserBean bean = CommonUtils.getUserBean(context);
+                    if (bean == null){
+                        return;
+                    }
                     bean.setNickname(userInfoBean.getNickname());
                     bean.setPic(userInfoBean.getPic());
                     bean.setRealname(userInfoBean.getRealname());
@@ -214,6 +222,8 @@ public class CommonUtils {
                     bean.setSignature(userInfoBean.getSignature());
                     bean.setMoney(userInfoBean.getMoney());
                     bean.setFiles_img(userInfoBean.getFiles_img());
+                    bean.setRidname(userInfoBean.getRidname());
+                    bean.setRatio(userInfoBean.getRatio());
                     if (l != null) {
                         l.userInfo(bean);
                     }
@@ -258,13 +268,27 @@ public class CommonUtils {
         return true;
     }
 
-    public static String getUid(Context context) {
-        String uid = "";
-        UserBean userBean = UserHelper.getInstance(context).getUserBean();
+    public static double getRatio(Context context) {
+        double ratio = 100.0;
+        UserBean userBean = getUserBean(context);
         if (userBean != null) {
-            uid = userBean.getId();
+            ratio = userBean.getRatio();
+            if (ratio == 0){
+                ratio = 100.0;
+            }
         }
-        return uid;
+        return ratio;
+    }
+
+    public static String getRatioPrice(Context context,String price,java.text.DecimalFormat df){
+//        double ratio = 100;
+        double ratio = getRatio(context);
+        L.d(L.TAG,"ratio:"+ratio);
+        if (StringUtils.isEmpty(price)){
+            price = isZero;
+        }
+        ratio = Double.valueOf(price)*(ratio/100);
+        return DoubleUtil.formatFloatNumber(ratio,df);
     }
 
 
@@ -560,4 +584,54 @@ public class CommonUtils {
             textView.setCompoundDrawables(null, null, null, null);
         }
     }
+
+    public static String getObjectKey(String url) {
+        if (StringUtils.isEmpty(url) || !url.contains(OssUserInfo.endpoint)) {
+            return "";
+        }
+        return url.substring(url.indexOf("/", 35) + 1, url.length());
+    }
+
+
+    /**
+     * 删除OSS文件
+     *
+     * @param url
+     */
+    public static void deleteOssObject(String url) {
+        String objectKey = getObjectKey(url);
+        if (StringUtils.isEmpty(objectKey)) {
+            return;
+        }
+        ManageOssUpload manageOssUpload = new ManageOssUpload(KangApp.applicationContext);
+        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+        manageOssUpload.logAyncListObjects();
+    }
+
+    /**
+     * 删除OSS文件(批量)
+     *
+     * @param paths
+     */
+    public static void deleteOssObjectList(final List<String> paths) {
+        if (StringUtils.isEmpty(paths)) {
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ManageOssUpload manageOssUpload = new ManageOssUpload(KangApp.applicationContext);
+                manageOssUpload.logAyncListObjects();
+                int size = paths.size();
+                for (int i = 0; i < size; i++) {
+                    String objectKey = getObjectKey(paths.get(i));
+                    if (!StringUtils.isEmpty(objectKey)) {
+                        manageOssUpload.deleteObject(new DeleteObjectRequest(OssUserInfo.testBucket, objectKey));
+                    }
+                }
+                manageOssUpload.logAyncListObjects();
+            }
+        }).start();
+    }
+
 }

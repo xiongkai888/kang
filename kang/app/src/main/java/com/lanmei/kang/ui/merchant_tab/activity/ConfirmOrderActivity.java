@@ -32,7 +32,6 @@ import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.utils.DoubleUtil;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -43,6 +42,7 @@ import com.xson.common.widget.FormatTextView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,8 +110,9 @@ public class ConfirmOrderActivity extends BaseActivity {
             finish();
             return;
         }
+        L.d(L.TAG,getPrice());
+        priceTv.setTextValue(String.format("%.1f", Double.valueOf(getPrice())));
 
-        priceTv.setTextValue(getPrice());
         ConfirmOrderAdapter adapter = new ConfirmOrderAdapter(this);
         adapter.setData(list);
         recyclerViewShop.setLayoutManager(new LinearLayoutManager(this));
@@ -127,9 +128,9 @@ public class ConfirmOrderActivity extends BaseActivity {
     private String getPrice() {
         double price = 0;
         for (ShopCarBean bean : list) {
-            price += DoubleUtil.mul(bean.getSell_price(), (double) bean.getGoodsCount());
+            price += Double.valueOf(CommonUtils.getRatioPrice(this,String.valueOf(bean.getSell_price()),new DecimalFormat(CommonUtils.ratioStr)))*bean.getGoodsCount();
         }
-        return DoubleUtil.formatFloatNumber(price);
+        return String.valueOf(price);
     }
 
     private void initPicker() {
@@ -300,6 +301,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     }
                     UIHelper.ToastMessage(getContext(), response.getInfo());
                     IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
+                    EventBus.getDefault().post(new PaySucceedEvent());
                     finish();
                 }
             }, new Response.ErrorListener() {

@@ -11,30 +11,32 @@ import java.util.List;
 public class GoodsOrderListBean implements Serializable{
 
     /**
-     * id : 774
-     * addtime : 1540368965
-     * uptime : 1540368965
-     * pay_no : 20181024B0100T8224
-     * state : 0
-     * order_no : 20181024B0100T7721
+     * id : 819
+     * addtime : 1544515685
+     * uptime : 1544515685
+     * pay_no : 20181211B0100T9075
+     * state : 3
+     * order_no : 20181211B0100T6728
      * gname : 
-     * num : 1
-     * total_price : 888.00
+     * num : 10
+     * total_price : 10000.00
      * addressid : 0
-     * address : 广东省云浮市云城区美图秀哈哈
+     * address : 
      * uid : 202
-     * phone : 15914369252
-     * username : 大熊
-     * pay_type : 7
+     * phone : 
+     * username : 
+     * pay_type : 0
      * is_del : 0
-     * endtime : 1540368965
+     * endtime : 1544515685
      * pay_status : 0
      * courier : 
-     * dis_type : 2
-     * sellerid : 0
+     * dis_type : null
+     * sellerid : 214
      * attribute : null
      * pay_time : null
-     * goods : [{"goodsid":"25","price":"888.00","goodsname":"玩一玩","num":"1","danwei":"","cover":"http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379401148507.jpg","gid":"0","specifications":"","specificationsname":""}]
+     * yj_status : 1
+     * c_type : 0
+     * goods : [{"goodsid":"46","price":"1000","goodsname":"天美纪雪肌赋活水","num":"10","danwei":"个","cover":"http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20181116/1542348908176.jpg","gid":"0","specifications":"","specificationsname":""}]
      */
 
     private String id;
@@ -60,6 +62,8 @@ public class GoodsOrderListBean implements Serializable{
     private String sellerid;
     private String attribute;
     private String pay_time;
+    private String yj_status;
+    private String c_type;
     private List<GoodsBean> goods;
 
     public String getId() {
@@ -246,6 +250,22 @@ public class GoodsOrderListBean implements Serializable{
         this.pay_time = pay_time;
     }
 
+    public String getYj_status() {
+        return yj_status;
+    }
+
+    public void setYj_status(String yj_status) {
+        this.yj_status = yj_status;
+    }
+
+    public String getC_type() {
+        return c_type;
+    }
+
+    public void setC_type(String c_type) {
+        this.c_type = c_type;
+    }
+
     public List<GoodsBean> getGoods() {
         return goods;
     }
@@ -255,13 +275,14 @@ public class GoodsOrderListBean implements Serializable{
     }
 
     public static class GoodsBean implements Serializable{
+
         /**
-         * goodsid : 25
-         * price : 888.00
-         * goodsname : 玩一玩
-         * num : 1
-         * danwei : 
-         * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379401148507.jpg
+         * goodsid : 46
+         * price : 1000
+         * goodsname : 天美纪雪肌赋活水
+         * num : 10
+         * danwei : 个
+         * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20181116/1542348908176.jpg
          * gid : 0
          * specifications : 
          * specificationsname : 

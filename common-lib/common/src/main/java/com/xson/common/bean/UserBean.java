@@ -125,6 +125,25 @@ public class UserBean implements Serializable{
     private String menber_num;
     private String money;
     private String files_img;
+    private String ridname;
+
+    public void setRidname(String ridname) {
+        this.ridname = ridname;
+    }
+
+    public String getRidname() {
+        return ridname;
+    }
+
+    private double ratio;//折扣
+
+    public void setRatio(double ratio) {
+        this.ratio = ratio;
+    }
+
+    public double getRatio() {
+        return ratio;
+    }
 
     public void setFiles_img(String files_img) {
         this.files_img = files_img;

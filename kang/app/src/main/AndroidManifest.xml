@@ -638,6 +638,9 @@
             android:name=".ui.mine.activity.NewFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.OrderCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.AddressBookFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -733,7 +736,9 @@
         <activity
             android:name=".ui.merchant_tab.activity.ConfirmOrderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.mine.activity.HealthReportActivity"></activity>
+        <activity
+            android:name=".ui.mine.activity.HealthReportActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

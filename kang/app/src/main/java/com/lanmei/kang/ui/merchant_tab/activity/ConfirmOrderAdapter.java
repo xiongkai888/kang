@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarBean;
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
+
+import java.text.DecimalFormat;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -61,7 +64,8 @@ public class ConfirmOrderAdapter extends SwipeRefreshAdapter<ShopCarBean> {
         public void setParameter(ShopCarBean bean) {
             ImageHelper.load(context, bean.getGoodsImg(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             titleTv.setText(bean.getGoodsName());
-            priceNumTv.setText(String.format(context.getString(R.string.goods_price_and_num), String.valueOf(bean.getSell_price()), String.valueOf(bean.getGoodsCount())));
+//            priceNumTv.setText(String.format(context.getString(R.string.goods_price_and_num), String.valueOf(bean.getSell_price()), String.valueOf(bean.getGoodsCount())));
+            priceNumTv.setText(String.format(context.getString(R.string.goods_price_and_num), CommonUtils.getRatioPrice(context,String.valueOf(bean.getSell_price()),new DecimalFormat(CommonUtils.ratioStr)), String.valueOf(bean.getGoodsCount())));
             specificationsNameTv.setText(com.xson.common.utils.StringUtils.isEmpty(bean.getSpecifications())?"":bean.getSpecifications());
         }
 

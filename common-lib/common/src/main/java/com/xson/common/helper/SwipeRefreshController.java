@@ -77,12 +77,6 @@ public abstract class SwipeRefreshController<T2 extends AbsListBean> implements 
         loadPage(1);
     }
 
-
-    public void loadFirstPage(SmartSwipeRefreshLayout.Mode mode) {
-        pullToRefresh.get().setMode(mode);
-        loadFirstPage();
-    }
-
     public void loadNextPage() {
         if (!mHasMore) {
             if (pullToRefresh.get() == null)

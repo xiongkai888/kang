@@ -10,18 +10,22 @@ import java.io.Serializable;
 public class UserInfoBean implements Serializable{
 
     /**
-     * id : 204
-     * nickname : 大冒险
-     * pic : http://stdrimages.oss-cn-shenzhen.aliyuncs.com/lanmei/kang/img/head849892561.jpg.tmp
+     * id : 202
+     * rid :
+     * nickname : 大熊
+     * pic : http://stdrimages.oss-cn-shenzhen.aliyuncs.com/lanmei/kang/img1/head-915467964.jpg
      * realname :
-     * email : jcjcjcj@qq.com
-     * phone : 15914369666
+     * email : dfghh@qq.com
+     * phone : 15914369252
      * custom :
-     * signature : 我们不一样
-     * money : 0.00
+     * signature : 我们不一样！
+     * money : 9995672.99
+     * files_img :
+     * ratio : 100
      */
 
     private String id;
+    private String rid;
     private String nickname;
     private String pic;
     private String realname;
@@ -31,14 +35,17 @@ public class UserInfoBean implements Serializable{
     private String signature;
     private String money;
     private String files_img;
+    private String ridname;//等级
 
-    public void setFiles_img(String files_img) {
-        this.files_img = files_img;
+    public void setRidname(String ridname) {
+        this.ridname = ridname;
     }
 
-    public String getFiles_img() {
-        return files_img;
+    public String getRidname() {
+        return ridname;
     }
+
+    private double ratio;
 
     public String getId() {
         return id;
@@ -46,6 +53,14 @@ public class UserInfoBean implements Serializable{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRid() {
+        return rid;
+    }
+
+    public void setRid(String rid) {
+        this.rid = rid;
     }
 
     public String getNickname() {
@@ -110,5 +125,21 @@ public class UserInfoBean implements Serializable{
 
     public void setMoney(String money) {
         this.money = money;
+    }
+
+    public String getFiles_img() {
+        return files_img;
+    }
+
+    public void setFiles_img(String files_img) {
+        this.files_img = files_img;
+    }
+
+    public double getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(double ratio) {
+        this.ratio = ratio;
     }
 }

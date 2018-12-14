@@ -190,6 +190,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                 UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
+                CommonUtils.loadUserInfo(KangApp.applicationContext,null);
                 EventBus.getDefault().post(new SetUserInfoEvent());
                 if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
                     SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);

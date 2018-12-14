@@ -50,6 +50,8 @@ public class PersonalDataActivity extends BaseActivity {
     LinearLayout mllHeadOnClick;//点击上传头像
     @InjectView(R.id.nick_tv)
     TextView mNickTv;//昵称
+    @InjectView(R.id.rid_tv)
+    TextView ridTv;//等级
     @InjectView(R.id.qq_tv)
     TextView mQqTv;//qq
     @InjectView(R.id.mail_tv)
@@ -116,6 +118,7 @@ public class PersonalDataActivity extends BaseActivity {
             mPhoneTv.setText(phone);
             mAddressTv.setText(address);
             mSignatureEt.setText(signature);
+            ridTv.setText(bean.getRidname());
             ImageHelper.load(this, pic, mPersonalIconsIV, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
         }
         mSaveButton.setEnabled(false);
@@ -193,6 +196,7 @@ public class PersonalDataActivity extends BaseActivity {
                     bean.setSignature(signature);
                     if (!StringUtils.isEmpty(headUrl)){
                         bean.setPic(headUrl);
+                        CommonUtils.deleteOssObject(pic);//更新头像后删除从oss删除旧的头像
                     }
                     UserHelper.getInstance(PersonalDataActivity.this).saveBean(bean);
                     EventBus.getDefault().post(new SetUserInfoEvent());

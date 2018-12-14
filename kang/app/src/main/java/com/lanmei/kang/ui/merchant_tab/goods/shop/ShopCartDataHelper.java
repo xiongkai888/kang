@@ -2,9 +2,11 @@ package com.lanmei.kang.ui.merchant_tab.goods.shop;
 
 import android.content.Context;
 
+import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,13 @@ import java.util.List;
 public class ShopCartDataHelper {
 
     private List<ShopCarBean> mShopCarList;
-    DBShopCartHelper dbShopCartHelper;
+    private DBShopCartHelper dbShopCartHelper;
+    private Context context;
+    private DecimalFormat decimalFormat;
 
     public ShopCartDataHelper(Context context) {
+        this.context = context;
+        decimalFormat = new DecimalFormat(CommonUtils.ratioStr);
         dbShopCartHelper = DBShopCartHelper.getInstance(context);
     }
 
@@ -80,7 +86,8 @@ public class ShopCartDataHelper {
         for (int i = 0; i < size; i++) {
             ShopCarBean bean = getShopCarBean(i);
             if (bean.isSelect()) {
-                price += (bean.getSell_price() * bean.getGoodsCount());
+//                price += (bean.getSell_price() * bean.getGoodsCount());
+                price += Double.valueOf(CommonUtils.getRatioPrice(context, String.valueOf(bean.getSell_price()), decimalFormat)) * bean.getGoodsCount();
             }
         }
         return price;
@@ -121,8 +128,8 @@ public class ShopCartDataHelper {
         dbShopCartHelper.delete(list);
     }
 
-    public void update(ShopCarBean bean,int count){
-        dbShopCartHelper.update(bean,count);
+    public void update(ShopCarBean bean, int count) {
+        dbShopCartHelper.update(bean, count);
     }
 
 }

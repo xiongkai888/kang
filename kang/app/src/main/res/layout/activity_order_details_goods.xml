@@ -43,6 +43,10 @@
                     android:layout_marginTop="@dimen/d_10dp"
                     android:text="@string/order_no" />
 
+                <TextView
+                    android:id="@+id/state_tv"
+                    style="@style/text14colorFF7676"
+                    android:layout_marginRight="@dimen/d_10dp" />
 
             </LinearLayout>
 
@@ -76,9 +80,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 style="@style/ll_bottom"
-                android:layout_marginLeft="@dimen/d_10dp">
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/mine_text"
@@ -110,9 +114,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 style="@style/ll_bottom"
-                android:layout_marginLeft="@dimen/d_10dp">
+                android:layout_marginLeft="@dimen/d_10dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/mine_text"

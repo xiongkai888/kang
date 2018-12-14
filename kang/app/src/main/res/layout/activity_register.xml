@@ -157,6 +157,7 @@
 
                     <ImageView
                         style="@style/text_lg_v"
+                        android:visibility="gone"
                         android:layout_marginRight="15dp"
                         android:src="@mipmap/pwd_off" />
 

@@ -10,8 +10,8 @@ android {
         applicationId "com.lanmei.kang"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 36
-        versionName "2.1.36"
+        versionCode 38
+        versionName "2.1.56"
         buildConfigField "String", "API_URL", "\"http://120.79.56.96/api/\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -84,15 +84,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //    implementation files('libs/umeng_social_api.jar')
-    //    implementation files('libs/umeng_social_net.jar')
-    //    implementation files('libs/SocialSDK_WeiXin_Full.jar')
-    //    implementation files('libs/SocialSDK_QQ_Full.jar')
-    //    implementation files('libs/umeng_social_shareboard.jar')
-    //    implementation files('libs/SocialSDK_Sina_Full.jar')
-    //    implementation files('libs/open_sdk_r5781.jar')
-    //    implementation files('libs/weiboSDKCore_3.1.4.jar')
-    //    implementation files('libs/xUtils-2.6.14.jar')
     implementation project(path: ':common')
     implementation project(':wheel-date-picker')
     implementation project(':oss-android-sdk')

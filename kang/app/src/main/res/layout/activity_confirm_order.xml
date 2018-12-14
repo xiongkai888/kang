@@ -82,6 +82,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_billing_details"
+                android:visibility="gone"
                 style="@style/ll_no_border">
 
                 <TextView

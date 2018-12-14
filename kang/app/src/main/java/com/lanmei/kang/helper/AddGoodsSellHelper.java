@@ -82,9 +82,7 @@ public class AddGoodsSellHelper {
 
     //二维码获取商品编号更新
     public void updateData(String result){
-        list.get(scan_goods_position).setNumber(result);
         searchGoods(result);
-        refresh();
     }
 
     public class ViewHolder implements TextView.OnEditorActionListener{
@@ -203,7 +201,7 @@ public class AddGoodsSellHelper {
 
     }
 
-    private void searchGoods(String barcode) {
+    private void searchGoods(final String barcode) {
         KangQiMeiApi api = new KangQiMeiApi("app/good_list");
         api.add("barcode", barcode);
         HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<MerchantTabGoodsBean>>() {
@@ -217,6 +215,9 @@ public class AddGoodsSellHelper {
                     UIHelper.ToastMessage(context, "不存在该商品");
                     return;
                 }
+                list.get(scan_goods_position).setNumber(barcode);
+                refresh();
+
                 MerchantTabGoodsBean merchantTabGoodsBean = beanList.get(0);
                 list.get(scan_goods_position).setGid(merchantTabGoodsBean.getId());
                 ViewHolder viewHolder = map.get(scan_goods_position);

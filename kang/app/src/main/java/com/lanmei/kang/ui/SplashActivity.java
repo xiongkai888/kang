@@ -10,9 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GuideViewPagerAdapter;
+import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.SharedAccount;
+import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 
 import java.util.ArrayList;
@@ -47,7 +50,9 @@ public class SplashActivity extends AppCompatActivity{
                 }
             }, 1000);
         }
-
+        if (UserHelper.getInstance(this).hasLogin()){
+            CommonUtils.loadUserInfo(KangApp.applicationContext,null);
+        }
     }
 
     private void enterHomeActivity() {

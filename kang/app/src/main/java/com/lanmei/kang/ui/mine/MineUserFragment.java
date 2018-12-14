@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hyphenate.chatuidemo.ui.MainActivity;
+import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NumBean;
@@ -29,6 +30,7 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,6 +52,8 @@ public class MineUserFragment extends BaseFragment {
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
     TextView userNameTv;
+    @InjectView(R.id.rid_name_tv)
+    TextView ridNameTv;
 
     @InjectView(R.id.m1_num_tv)
     TextView m1NumTv;
@@ -124,6 +128,7 @@ public class MineUserFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
             case R.id.guan_zhu:
+                CommonUtils.loadUserInfo(KangApp.applicationContext,null);
 //                CommonUtils.developing(context);
                 break;
             case R.id.zixun_shou_cang://资讯收藏
@@ -162,7 +167,15 @@ public class MineUserFragment extends BaseFragment {
         if (userBean == null) {
             userNameTv.setText("游客");
             headIv.setImageResource(R.mipmap.default_pic);
+            ridNameTv.setVisibility(View.GONE);
             return;
+        }
+        String rid = userBean.getRidname();
+        if (StringUtils.isEmpty(rid)){
+            ridNameTv.setVisibility(View.GONE);
+        }else {
+            ridNameTv.setVisibility(View.VISIBLE);
+            ridNameTv.setText(rid);
         }
         userNameTv.setText(userBean.getNickname());
         ImageHelper.load(context, userBean.getPic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);

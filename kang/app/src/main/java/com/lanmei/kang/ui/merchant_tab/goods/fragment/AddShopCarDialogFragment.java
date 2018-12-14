@@ -32,6 +32,7 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,10 +97,12 @@ public class AddShopCarDialogFragment extends DialogFragment {
         nameTv.setText(detailsBean.getGoodsname());
         ImageHelper.load(getContext(), detailsBean.getCover(), itemsIconIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
 
-        String sale_price = StringUtils.isEmpty(detailsBean.getSale_price())?CommonUtils.isZero:detailsBean.getSale_price();
+//        String sale_price = StringUtils.isEmpty(detailsBean.getSale_price())?CommonUtils.isZero:detailsBean.getSale_price();
         String business_price = StringUtils.isEmpty(detailsBean.getBusiness_price())?CommonUtils.isZero:detailsBean.getBusiness_price();
 
-        priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.isUser(getContext())?sale_price:business_price));
+//        priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.isUser(getContext())?sale_price:business_price));
+        priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.getRatioPrice(getContext(),business_price,new DecimalFormat(CommonUtils.ratioStr))));
+
         numTv.setText(String.format(getString(R.string.inventory), detailsBean.getInventory()));
         payNumEt.setFocusable(false);
 
@@ -126,12 +129,13 @@ public class AddShopCarDialogFragment extends DialogFragment {
                 if (orderNum > inventory) {
                     payNumEt.setText(String.valueOf(inventory));
                 }
-                String  sale_price = StringUtils.isEmpty(bean.getSale_price())?CommonUtils.isZero:bean.getSale_price();
+//                String  sale_price = StringUtils.isEmpty(bean.getSale_price())?CommonUtils.isZero:bean.getSale_price();
                 String business_price = StringUtils.isEmpty(bean.getBusiness_price())?CommonUtils.isZero:bean.getBusiness_price();
 
-                priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.isUser(getContext())?sale_price:business_price));
+                priceTvTv.setText(String.format(getString(R.string.price), CommonUtils.getRatioPrice(getContext(),business_price,new DecimalFormat(CommonUtils.ratioStr))));
+
                 numTv.setText(String.format(getString(R.string.inventory), bean.getInventory()));
-                detailsBean.setPrice(CommonUtils.isUser(getContext())?sale_price:business_price);
+                detailsBean.setPrice(business_price);
                 detailsBean.setSpecifications(bean.getSpecifications());
                 detailsBean.setGid(bean.getId());
             }

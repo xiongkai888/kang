@@ -1,12 +1,12 @@
 package com.lanmei.kang.api;
 
-import com.xson.common.api.ApiV2;
+import com.xson.common.api.AbstractApi;
 
 /**
  * Created by xkai on 2018/1/8.
  */
 
-public class KangQiMeiApi extends ApiV2 {
+public class KangQiMeiApi extends AbstractApi {
 
     private String path;
 

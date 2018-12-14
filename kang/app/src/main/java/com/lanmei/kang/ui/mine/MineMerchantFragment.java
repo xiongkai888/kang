@@ -5,13 +5,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hyphenate.chatuidemo.ui.MainActivity;
-import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NumBean;
-import com.lanmei.kang.event.ActivityResultEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
-import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
 import com.lanmei.kang.ui.merchant.activity.ChuKuListActivity;
@@ -26,11 +23,12 @@ import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
 import com.lanmei.kang.ui.mine.activity.MyDynamicActivity;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
+import com.lanmei.kang.ui.mine.activity.OrderCommentActivity;
+import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
-import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.UserBean;
 import com.xson.common.helper.BeanRequest;
@@ -40,7 +38,6 @@ import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +59,9 @@ public class MineMerchantFragment extends BaseFragment {
     CircleImageView headIv;
     @InjectView(R.id.user_name_tv)
     TextView userNameTv;
+    @InjectView(R.id.rid_name_tv)
+    TextView ridNameTv;
+
     @InjectView(R.id.m1_num_tv)
     TextView m1NumTv;
     @InjectView(R.id.m2_num_tv)
@@ -103,7 +103,6 @@ public class MineMerchantFragment extends BaseFragment {
 
     boolean isHeadquarters;//是不是总部账号
 
-    private CameraHelper cameraHelper;
 
     public static MineMerchantFragment newInstance() {
         Bundle args = new Bundle();
@@ -122,16 +121,6 @@ public class MineMerchantFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        cameraHelper = new CameraHelper(context);
-        cameraHelper.setHeadUrlListener(new CameraHelper.HeadUrlListener() {
-            @Override
-            public void getUrl(String url) {
-                if (userNameTv == null) {
-                    return;
-                }
-                ajaxUploadingHead(url);
-            }
-        });
         m10.setText(R.string.merchant_data);
         CommonUtils.setCompoundDrawables(context,m10,R.mipmap.m11,0,1);
 
@@ -154,6 +143,13 @@ public class MineMerchantFragment extends BaseFragment {
 //        isHeadquarters = true;
         setHeadquarters();
         userNameTv.setText(userBean.getNickname());
+        String rid = userBean.getRidname();
+        if (StringUtils.isEmpty(rid)){
+            ridNameTv.setVisibility(View.GONE);
+        }else {
+            ridNameTv.setVisibility(View.VISIBLE);
+            ridNameTv.setText(rid);
+        }
         ImageHelper.load(context, userBean.getPic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
     }
 
@@ -183,28 +179,7 @@ public class MineMerchantFragment extends BaseFragment {
     }
 
 
-    //在我的上家界面修改头像时
-    @Subscribe
-    public void ActivityResultEvent(ActivityResultEvent event) {
-        switch (event.getType()) {
-            case CameraHelper.CHOOSE_FROM_GALLAY:
-                cameraHelper.startActionCrop(event.getData());
-                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 0");
-                break;
-            case CameraHelper.CHOOSE_FROM_CAMERA:
-                //注意小米拍照后data 为null
-                cameraHelper.startActionCrop(cameraHelper.getTempImage().getPath());
-                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 1");
-                break;
-            case CameraHelper.RESULT_FROM_CROP:
-                cameraHelper.uploadNewPhoto(headIv);//
-                cameraHelper.execute();
-                L.d(L.TAG, "MineMerchantFragment.ActivityResultEvent 2");
-                break;
-        }
-    }
-
-    @OnClick({R.id.head_iv,R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10, R.id.m07, R.id.m08, R.id.m09, R.id.m010, R.id.m17, R.id.m18, R.id.m19, R.id.m20})
+    @OnClick({R.id.ll_data,R.id.m1, R.id.m2, R.id.m3, R.id.m4, R.id.yu_e, R.id.you_hui_juan, R.id.m5, R.id.m6, R.id.guan_zhu, R.id.zixun_shou_cang, R.id.wode_dongtai, R.id.wode_haoyou, R.id.m7, R.id.m8, R.id.m9, R.id.m10, R.id.m07, R.id.m08, R.id.m09, R.id.m010, R.id.m17, R.id.m18, R.id.m19, R.id.m20})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(context)) {
             return;
@@ -235,6 +210,9 @@ public class MineMerchantFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
             case R.id.guan_zhu:
+                if (L.debug){
+                    IntentUtil.startActivity(context, OrderCommentActivity.class);
+                }
 //                CommonUtils.developing(context);
                 break;
             case R.id.zixun_shou_cang://资讯收藏
@@ -307,30 +285,13 @@ public class MineMerchantFragment extends BaseFragment {
             case R.id.m20://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
-            case R.id.head_iv://
-                cameraHelper.showDialog();
+//            case R.id.head_iv://
+//                cameraHelper.showDialog();
+//                break;
+            case R.id.ll_data:
+                IntentUtil.startActivity(context, PersonalDataActivity.class);
                 break;
         }
-    }
-
-    private void ajaxUploadingHead(final String headUrl) {
-        if (StringUtils.isEmpty(headUrl)) {
-            return;
-        }
-        KangQiMeiApi api = new KangQiMeiApi("member/update");
-        api.add("token", api.getToken(context));
-        api.add("uid", api.getUserId(context));
-        api.add("pic", headUrl);
-        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-            @Override
-            public void onResponse(BaseBean response) {
-                if (userNameTv == null) {
-                    return;
-                }
-                CommonUtils.loadUserInfo(KangApp.applicationContext, null);
-                UIHelper.ToastMessage(getContext(), response.getInfo());
-            }
-        });
     }
 
     @Override

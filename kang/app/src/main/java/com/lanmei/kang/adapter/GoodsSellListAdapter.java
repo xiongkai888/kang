@@ -99,14 +99,20 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             for (int i = 0; i < size; i++) {
                 addView(i, goodsBeanList.get(i), size);
             }
-            deleteTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        listener.delete(bean.getId(),position,bean.getUid());
+            if (time.isToday(Long.valueOf(bean.getAddtime()))){
+                deleteTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null){
+                            listener.delete(bean.getId(),position,bean.getUid());
+                        }
                     }
-                }
-            });
+                });
+                deleteTv.setVisibility(View.VISIBLE);
+            }else {
+                deleteTv.setVisibility(View.GONE);
+            }
+
         }
 
         private void addView(int position, GoodsSellListBean.GoodsBean bean, int size) {

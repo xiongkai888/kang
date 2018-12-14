@@ -35,7 +35,7 @@ public class GoodsOrderListFragment extends BaseFragment {
 
     @Override
     public int getContentViewId() {
-        return R.layout.fragment_single_listview;
+        return R.layout.fragment_single_listview_no;
     }
 
 
@@ -58,11 +58,33 @@ public class GoodsOrderListFragment extends BaseFragment {
             public void affirm(String status, String oid) {
                 statusAffirm(status, oid);
             }
+
+            @Override
+            public void deleteOrder(String oid) {
+                loadDeleteOrder(oid);
+            }
         });
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<GoodsOrderListBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };
         controller.loadFirstPage();
+    }
+
+    //删除订单
+    private void loadDeleteOrder(String oid) {
+        KangQiMeiApi api = new KangQiMeiApi("app/delorder");
+        api.add("id",oid);
+        api.add("uid",api.getUserId(context));
+        api.add("is_del",1);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (controller != null){
+                    UIHelper.ToastMessage(context,response.getInfo());
+                    EventBus.getDefault().post(new OrderOperationEvent());
+                }
+            }
+        });
     }
 
     //修改订单状态
@@ -85,7 +107,7 @@ public class GoodsOrderListFragment extends BaseFragment {
 
     @Subscribe
     public void orderOperationEvent(OrderOperationEvent event) {
-        controller.loadFirstPage(SmartSwipeRefreshLayout.Mode.BOTH);
+        controller.loadFirstPage();
     }
 
     @Override

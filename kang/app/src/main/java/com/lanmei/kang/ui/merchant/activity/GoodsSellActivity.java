@@ -101,14 +101,13 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
     //扫描用户条形码成功后调用
     @Subscribe
     public void scanUserEvent(ScanUserEvent event) {
-        numberEt.setText(event.getResult());
         searchUsers(event.getResult());
     }
 
     UserBean userBean;
 
     //搜索会员
-    private void searchUsers(String result) {
+    private void searchUsers(final String result) {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
         api.add("menber_num", result).add("user_type", 0);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
@@ -124,6 +123,7 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
                     UIHelper.ToastMessage(getContext(), "不存在该会员");
                     return;
                 }
+                numberEt.setText(result);
                 userBean = beanList.get(0);
                 UIHelper.ToastMessage(getContext(), "会员身份核实成功");
             }
@@ -218,7 +218,7 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
                 return 1;
             }
             if (StringUtils.isEmpty(bean.getGid())) {
-                UIHelper.ToastMessage(this, "请先搜索编号为 " + bean.getNumber() + "的商品，确认是否存在！");
+                UIHelper.ToastMessage(this, "请先搜索编号为 " + bean.getNumber() + " 的商品，确认是否存在！");
                 return 2;
             }
         }

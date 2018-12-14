@@ -95,6 +95,7 @@ public class FormatTime {
         date.setTime(time);
         return format.format(date);
     }
+
     /**
      * 默认时间格式：时间戳格式为“yyyy-MM-dd HH:mm:ss”
      */
@@ -181,4 +182,16 @@ public class FormatTime {
         }
     }
 
+    /**
+     * 判断是否是今天
+     * @param time 与当前的时间对比的时间
+     * @return
+     */
+    public boolean isToday(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat(getTimeYearMonthDay());
+        date.setTime(System.currentTimeMillis());
+        String now = sdf.format(date);
+        date.setTime(time*1000);
+        return StringUtils.isSame(now, sdf.format(date));
+    }
 }

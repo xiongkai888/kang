@@ -16,6 +16,8 @@ import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
 
+import java.text.DecimalFormat;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -25,9 +27,11 @@ import butterknife.InjectView;
  */
 public class GoodsListAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> {
 
+    private DecimalFormat decimalFormat;
 
     public GoodsListAdapter(Context context) {
         super(context);
+        decimalFormat = new DecimalFormat(CommonUtils.ratioStr);
     }
 
     @Override
@@ -71,7 +75,8 @@ public class GoodsListAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean> 
         public void setParameter(MerchantTabGoodsBean bean) {
             ImageHelper.load(context, bean.getCover(), image, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             contentTv.setText(bean.getGoodsname());
-            moneyTv.setText(String.format(context.getString(R.string.price), CommonUtils.isUser(context)?bean.getSale_price():bean.getBusiness_price()));
+//            moneyTv.setText(String.format(context.getString(R.string.price), CommonUtils.isUser(context)?bean.getSale_price():bean.getBusiness_price()));
+            moneyTv.setText(String.format(context.getString(R.string.price), CommonUtils.getRatioPrice(context, bean.getBusiness_price(), decimalFormat)));
             sellNumTv.setText(String.format(context.getString(R.string.have_sales), bean.getSales()));
         }
     }

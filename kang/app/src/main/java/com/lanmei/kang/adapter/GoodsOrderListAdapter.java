@@ -1,6 +1,7 @@
 package com.lanmei.kang.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.ui.merchant_tab.activity.OrderDetailsGoodsActivity;
+import com.lanmei.kang.ui.mine.activity.OrderCommentActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
@@ -81,7 +83,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
 
         public void setParameter(final GoodsOrderListBean bean) {
             order1.setVisibility(View.VISIBLE);
-            order2.setVisibility(View.VISIBLE);
+            order2.setVisibility(View.GONE);
             order3.setVisibility(View.VISIBLE);
 
 
@@ -90,7 +92,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
             adapter.setOnItemClickListener(new GoodsOrderListSubAdapter.OnItemClickListener() {
                 @Override
                 public void onClick() {
-                    IntentUtil.startActivity(context,OrderDetailsGoodsActivity.class,bean.getId());
+                    IntentUtil.startActivity(context, OrderDetailsGoodsActivity.class, bean.getId());
                 }
             });
             recyclerView.setNestedScrollingEnabled(false);
@@ -104,103 +106,112 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
             switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
                 case "0":
                     payStatus = context.getString(R.string.wait_pay);//待付款
+                    order1.setVisibility(View.VISIBLE);
                     order1.setText(context.getString(R.string.cancel_order));//取消订单
-                    order2.setText(context.getString(R.string.contact_merchant));
+                    order3.setVisibility(View.VISIBLE);
                     order3.setText(context.getString(R.string.go_pay));//去付款
                     break;
                 case "1":
                     payStatus = context.getString(R.string.payed);//已支付
-                    order3.setVisibility(View.GONE);
-                    order1.setText(context.getString(R.string.cancel_order));//删除订单
-                    order2.setText(context.getString(R.string.contact_merchant));//联系商家
+                    order1.setVisibility(View.VISIBLE);
+                    order1.setText(context.getString(R.string.refund));//退款
                     order3.setVisibility(View.GONE);
                     break;
                 case "2":
                     payStatus = context.getString(R.string.wait_receiving);//待收货
-                    order1.setText(context.getString(R.string.refund));//退款
-                    order2.setText(context.getString(R.string.contact_merchant));//联系商家
+                    order1.setVisibility(View.VISIBLE);
+                    order1.setText(context.getString(R.string.confirm_receipt));//确认收货
                     order3.setVisibility(View.GONE);
                     break;
                 case "3":
                     payStatus = context.getString(R.string.doned);//已完成
-                    order1.setText(context.getString(R.string.delete_order));//删除订单
-                    order2.setText(context.getString(R.string.contact_merchant));
-                    if (StringUtils.isSame(CommonUtils.isZero, bean.getPay_status())) {//为评价
-                        order3.setVisibility(View.VISIBLE);
+                    order1.setVisibility(View.GONE);
+                    if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
                         order3.setText(context.getString(R.string.bask_in_a_single_comment));//晒单评价
                     } else {
-                        order3.setVisibility(View.GONE);
+                        order3.setText(context.getString(R.string.delete_order));//删除订单
                     }
+                    order3.setVisibility(View.VISIBLE);
                     break;
                 case "4":
                     payStatus = context.getString(R.string.refund_apply);//退款中
-                    order1.setText(context.getString(R.string.refund_apply));
-                    order2.setText(context.getString(R.string.contact_merchant));
+                    order1.setVisibility(View.GONE);
                     order3.setVisibility(View.GONE);
                     break;
                 case "5":
                     payStatus = context.getString(R.string.order_cancel);//order_cancel
-                    order1.setText(context.getString(R.string.delete_order));//删除订单
-                    order2.setText(context.getString(R.string.contact_merchant));
-                    order3.setVisibility(View.GONE);
+                    order1.setVisibility(View.GONE);
+                    order3.setText(context.getString(R.string.delete_order));//删除订单
+                    order3.setVisibility(View.VISIBLE);
                     break;
             }
+
             payStatusTv.setText(payStatus);
 
             order1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
-                        case "0"://取消订单
-                            getAlertDialog("确定取消订单？","5",bean.getId());
+                        case "0"://(待付款)取消订单
+                            getAlertDialog("确定取消订单？", "5", bean.getId());
                             break;
-                        case "1"://取消订单
-                            CommonUtils.developing(context);
+                        case "1"://(已支付)退款
+                            getAlertDialog("确定退款？", "4", bean.getId());
                             break;
-                        case "2":
-                            CommonUtils.developing(context);
+                        case "2"://(待收货)确定收货
+                            getAlertDialog("确定收货？", "3", bean.getId());
                             break;
-                        case "3"://退款
-                            CommonUtils.developing(context);
+                        case "3":
                             break;
-                        case "4"://删除订单
-                            CommonUtils.developing(context);
+                        case "4":
                             break;
                         case "5":
-                            CommonUtils.developing(context);
                             break;
                     }
-                }
-            });
-            order2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    if (StringUtils.isSame(KangApp.HX_USER_Head+bean.getUid(),EMClient.getInstance().getCurrentUser())){
-//                        Toast.makeText(context, R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
-//                    }
-//                    L.d(L.TAG,EMClient.getInstance().getCurrentUser());
-//                    CommonUtils.startChatActivity(context, bean.getUid(), false);
-                    CommonUtils.developing(context);
                 }
             });
             order3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     switch (state) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
-                        case "0"://
+                        case "0"://去付款
+                            IntentUtil.startActivity(context, OrderDetailsGoodsActivity.class, bean.getId());
                             break;
                         case "1"://
                             break;
                         case "2":
                             break;
                         case "3"://
+                            if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {
+                                //去评价
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("bean",bean);
+                                IntentUtil.startActivity(context, OrderCommentActivity.class,bundle);
+                            } else {
+                                //删除订单
+                                AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
+                                    @Override
+                                    public void yes() {
+                                        if (l != null) {
+                                            l.deleteOrder(bean.getId());
+                                        }
+                                    }
+                                });
+                            }
                             break;
                         case "4"://
                             break;
                         case "5"://
+                            AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
+                                @Override
+                                public void yes() {
+                                    if (l != null) {
+                                        l.deleteOrder(bean.getId());
+                                    }
+                                }
+                            });
                             break;
                     }
-                    CommonUtils.developing(context);
                 }
             });
 
@@ -208,7 +219,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
     }
 
 
-    private void getAlertDialog(String content,final String status,final String oid){
+    private void getAlertDialog(String content, final String status, final String oid) {
         AKDialog.getAlertDialog(context, content, new AKDialog.AlertDialogListener() {
             @Override
             public void yes() {
@@ -223,7 +234,10 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
 
     public interface OrderAlterListener {
         void affirm(String status, String oid);
+
+        void deleteOrder(String oid);
     }
+
     public void setOrderAlterListener(OrderAlterListener l) {
         this.l = l;
     }

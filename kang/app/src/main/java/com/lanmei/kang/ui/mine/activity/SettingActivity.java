@@ -27,6 +27,7 @@ import com.xson.common.helper.DataCleanManager;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
+import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
@@ -178,11 +179,13 @@ public class SettingActivity extends BaseActivity {
                     return;
                 }
                 List<HelpInfoBean> list = response.data;
-                if (list != null && list.size() > 0) {
-                    HelpInfoBean bean = list.get(0);
-                    if (bean != null){
-                        IntentUtil.startActivity(SettingActivity.this,HelpActivity.class,bean.getContent());
-                    }
+                if (StringUtils.isEmpty(list)) {
+                    UIHelper.ToastMessage(getContext(),"找不到帮助信息");
+                   return;
+                }
+                HelpInfoBean bean = list.get(0);
+                if (bean != null){
+                    IntentUtil.startActivity(SettingActivity.this,HelpActivity.class,bean.getContent());
                 }
             }
         });

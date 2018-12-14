@@ -16,6 +16,7 @@ public class DoubleUtil implements Serializable {
     private static final long serialVersionUID = -3345205828566485102L;
     // 默认除法运算精度
     private static final Integer DEF_DIV_SCALE = 2;
+    public static java.text.DecimalFormat df = new java.text.DecimalFormat("#.0");
 
     /**
      * 提供精确的加法运算。
@@ -128,17 +129,31 @@ public class DoubleUtil implements Serializable {
      */
     public static String formatFloatNumber(double value) {
         if(value != 0.00){
-            java.text.DecimalFormat df = new java.text.DecimalFormat("##########.00");
+            java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
             return df.format(value);
         }else{
             return "0.00";
         }
-
     }
+
+    /**
+     * 当浮点型数据位数超过10位之后，数据变成科学计数法显示。用此方法可以使其正常显示。
+     * @param value
+     * @return Sting
+     */
+    public static String formatFloatNumber(double value,java.text.DecimalFormat df) {
+        if(value != 0.00){
+            return df.format(value);
+        }else{
+            return "0.0";
+        }
+    }
+
+
     public static String formatFloatNumber(Double value) {
         if(value != null){
             if(value.doubleValue() != 0.00){
-                java.text.DecimalFormat df = new java.text.DecimalFormat("##########.00");
+                java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
                 return df.format(value.doubleValue());
             }else{
                 return "0.00";
@@ -146,6 +161,9 @@ public class DoubleUtil implements Serializable {
         }
         return "";
     }
+
+
+
     public static double formatFloatNumber(String valueStr) {
         double value = 0.00;
         if (!StringUtils.isEmpty(valueStr)){

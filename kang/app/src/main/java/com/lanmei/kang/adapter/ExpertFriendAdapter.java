@@ -52,7 +52,7 @@ public class ExpertFriendAdapter extends SwipeRefreshAdapter<InterestedBean> {
             return;
         }
         final ViewHolder viewHolder = (ViewHolder) holder;
-        String uid = CommonUtils.getUid(context);
+        String uid = CommonUtils.getUserId(context);
         if (bean.getId().equals(uid)) {
             viewHolder.mAttentionTv.setVisibility(View.GONE);
         } else {

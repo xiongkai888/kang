@@ -4,16 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.lanmei.kang.R;
+import com.lanmei.kang.adapter.GoodsCommentAdapter;
 import com.lanmei.kang.bean.GoodsDetailsBean;
+import com.lanmei.kang.event.OnlyCommentEvent;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.widget.SlideDetailsLayout;
@@ -54,7 +57,7 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
     @InjectView(R.id.fab_up)
     FloatingActionButton fabUp;
     @InjectView(R.id.scrollView)
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     @InjectView(R.id.name_tv)
     TextView nameTv;
     @InjectView(R.id.price_tv)
@@ -121,6 +124,7 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
         priceTv.setText(String.format(context.getString(R.string.price), CommonUtils.getRatioPrice(context,bean.getBusiness_price(),new DecimalFormat(CommonUtils.ratioStr))));
         payNumTv.setText(String.format(context.getString(R.string.pay_num), bean.getSales()));
         salePriceTv.setText(String.format(context.getString(R.string.sale_price), bean.getSale_price()));
+        commentNumTv.setTextValue(bean.getComments());
     }
 
     private void initTabView() {
@@ -234,12 +238,16 @@ public class GoodsInfoFragment extends BaseFragment implements SlideDetailsLayou
 
     //只设置显示一个评论item
     @Subscribe(sticky = true)
-    public void showOnlyComment(Object event) {
-//        GoodsCommentAdapter adapter = new GoodsCommentAdapter(context);
-//        adapter.setOnlyItem(true);
-//        adapter.setData(event.getList());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//        recyclerView.setAdapter(adapter);
+    public void showOnlyComment(OnlyCommentEvent event) {
+        if (StringUtils.isEmpty(event.getList())){
+            return;
+        }
+        GoodsCommentAdapter adapter = new GoodsCommentAdapter(context);
+        adapter.setOnlyItem(true);
+        adapter.setData(event.getList());
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

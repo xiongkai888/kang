@@ -7,12 +7,15 @@ import com.lanmei.kang.adapter.GoodsCommentAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsCommentBean;
 import com.lanmei.kang.bean.GoodsDetailsBean;
+import com.lanmei.kang.event.OnlyCommentEvent;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.InjectView;
 
@@ -26,10 +29,11 @@ public class GoodsCommentFragment extends BaseFragment {
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
     private SwipeRefreshController<NoPageListBean<GoodsCommentBean>> controller;
+    private boolean aBoolean;
 
     @Override
     public int getContentViewId() {
-        return R.layout.fragment_single_listview;
+        return R.layout.fragment_single_listview_no;
     }
 
     @Override
@@ -38,20 +42,30 @@ public class GoodsCommentFragment extends BaseFragment {
         if (!StringUtils.isEmpty(bundle)) {
             bean = (GoodsDetailsBean) bundle.getSerializable("bean");
         }
-//        if (bean == null){
-//            return;
-//        }
+        if (bean == null){
+            return;
+        }
         smartSwipeRefreshLayout.initWithLinearLayout();
         smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
 
-        KangQiMeiApi api = new KangQiMeiApi("");
+        KangQiMeiApi api = new KangQiMeiApi("app/comment");
+//        api.add("userid",api.getUserId(context));
+        api.add("goodsid",bean.getId());
         GoodsCommentAdapter adapter = new GoodsCommentAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
         controller = new SwipeRefreshController<NoPageListBean<GoodsCommentBean>>(context, smartSwipeRefreshLayout, api, adapter) {
+            @Override
+            public boolean onSuccessResponse(NoPageListBean<GoodsCommentBean> response) {
+                if (!aBoolean){
+                    aBoolean = !aBoolean;
+                    EventBus.getDefault().post(new OnlyCommentEvent(response.data));
+                }
+                return super.onSuccessResponse(response);
+            }
         };
-        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
-//        controller.loadFirstPage();
-        adapter.notifyDataSetChanged();
+//        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
+        controller.loadFirstPage();
+//        adapter.notifyDataSetChanged();
     }
 
 }

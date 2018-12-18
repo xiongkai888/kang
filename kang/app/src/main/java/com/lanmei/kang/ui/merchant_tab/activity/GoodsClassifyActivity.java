@@ -10,12 +10,13 @@ import com.lanmei.kang.adapter.GoodsClassifyVerticalTabAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
-import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.search.SearchGoodsActivity;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
@@ -103,7 +104,7 @@ public class GoodsClassifyActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.search_tv:
-                CommonUtils.developing(this);
+                IntentUtil.startActivity(this, SearchGoodsActivity.class);
                 break;
         }
     }

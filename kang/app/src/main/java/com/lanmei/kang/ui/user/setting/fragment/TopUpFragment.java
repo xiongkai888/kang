@@ -8,17 +8,14 @@ import com.lanmei.kang.adapter.TopUpAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.RechargeResultBean;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.user.setting.RechargeActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
-import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.bean.UserBean;
-import com.xson.common.helper.BeanRequest;
-import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.SwipeRefreshController;
-import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
@@ -79,7 +76,6 @@ public class TopUpFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        ajaxUserInfo();
     }
 
     @OnClick(R.id.recharge_tv)
@@ -87,29 +83,20 @@ public class TopUpFragment extends BaseFragment {
         IntentUtil.startActivity(context, RechargeActivity.class);
     }
 
-    private void ajaxUserInfo() {
-        HttpClient httpClient = HttpClient.newInstance(context);
-        KangQiMeiApi api = new KangQiMeiApi("member/member");
-        api.add("token",api.getToken(context));
-        api.setMethod(AbstractApi.Method.GET);
-        httpClient.request(api, new BeanRequest.SuccessListener<DataBean<UserBean>>() {
-            @Override
-            public void onResponse(DataBean<UserBean> response) {
-               if (mMoneyTv == null){
-                   return;
-               }
-                UserBean data = response.data;
-                if (data != null) {
-                    UserHelper.getInstance(context).saveBean(data);
-                    mMoneyTv.setText("当前余额："+data.getMoney());
-                }
-            }
-        });
-    }
 
     @Subscribe
     public void paySucceedEvent(PaySucceedEvent event){
-        ajaxUserInfo();
+       CommonUtils.loadUserInfo(context,null);
+    }
+
+    @Subscribe
+    public void onEventMainThread(SetUserInfoEvent event) {
+        UserBean bean = event.getBean();
+        if (bean != null){
+            if (bean != null) {
+                mMoneyTv.setText("当前余额："+bean.getMoney());
+            }
+        }
     }
 
     @Override

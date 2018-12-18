@@ -297,6 +297,25 @@ public class GoodsOrderListBean implements Serializable{
         private String gid;
         private String specifications;
         private String specificationsname;
+        private String c_type;
+        private String order_no;
+
+        public void setOrder_no(String order_no) {
+            this.order_no = order_no;
+        }
+
+        public String getOrder_no() {
+            return order_no;
+        }
+
+        public void setC_type(String c_type) {
+            this.c_type = c_type;
+        }
+
+        public String getC_type() {
+            return c_type;
+
+        }
 
         public String getGoodsid() {
             return goodsid;

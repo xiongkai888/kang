@@ -5,13 +5,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.InjectView;
 
@@ -25,6 +20,7 @@ public class MineFragment extends BaseFragment {
     @InjectView(R.id.fl_content)
     FrameLayout fl_content;
 
+
     @Override
     public int getContentViewId() {
         return R.layout.fragment_mine;
@@ -32,9 +28,9 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
         setUserType();
     }
 
@@ -45,15 +41,15 @@ public class MineFragment extends BaseFragment {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setUserEvent(SetUserInfoEvent event) {
-        setUserType();
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void setUserEvent(SetUserInfoEvent event) {
+//        setUserType();
+//    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+//    }
 
 }

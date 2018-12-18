@@ -23,7 +23,6 @@ import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
 import com.lanmei.kang.ui.mine.activity.MyDynamicActivity;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
-import com.lanmei.kang.ui.mine.activity.OrderCommentActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
@@ -36,7 +35,6 @@ import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
 
@@ -44,7 +42,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -123,14 +120,13 @@ public class MineMerchantFragment extends BaseFragment {
         }
         m10.setText(R.string.merchant_data);
         CommonUtils.setCompoundDrawables(context,m10,R.mipmap.m11,0,1);
-
         setUser(UserHelper.getInstance(context).getUserBean());//初始化用户信息
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SetUserInfoEvent event) {
-        setUser(UserHelper.getInstance(context).getUserBean());
+        setUser(event.getBean());
     }
 
     private void setUser(UserBean userBean) {
@@ -198,7 +194,6 @@ public class MineMerchantFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyGoodsOrderActivity.class);
                 break;
             case R.id.yu_e:
-//                CommonUtils.developing(context);
                 break;
             case R.id.you_hui_juan://优惠券
                 IntentUtil.startActivity(context, CouponActivity.class);
@@ -210,10 +205,6 @@ public class MineMerchantFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
             case R.id.guan_zhu:
-                if (L.debug){
-                    IntentUtil.startActivity(context, OrderCommentActivity.class);
-                }
-//                CommonUtils.developing(context);
                 break;
             case R.id.zixun_shou_cang://资讯收藏
                 IntentUtil.startActivity(context, MyCollectActivity.class);
@@ -235,7 +226,6 @@ public class MineMerchantFragment extends BaseFragment {
                 break;
             case R.id.m10://商家资料
                 IntentUtil.startActivity(context, MerchantDataActivity.class);
-//                IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.m07://出库(商品销售)
                 if (isHeadquarters){
@@ -285,9 +275,6 @@ public class MineMerchantFragment extends BaseFragment {
             case R.id.m20://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
-//            case R.id.head_iv://
-//                cameraHelper.showDialog();
-//                break;
             case R.id.ll_data:
                 IntentUtil.startActivity(context, PersonalDataActivity.class);
                 break;
@@ -298,12 +285,6 @@ public class MineMerchantFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
     }
 
     @Override

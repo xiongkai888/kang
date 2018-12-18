@@ -71,9 +71,9 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setChooseCardListener(new WithdrawCardListAdapter.ChooseCardListener() {
             @Override
-            public void chooseCard(String cardName) {
+            public void chooseCard(WithdrawCardListBean bean) {
                 CardEvent event = new CardEvent(1);
-                event.setName(cardName);
+                event.setBean(bean);
                 EventBus.getDefault().post(event);
                 finish();
             }
@@ -119,7 +119,7 @@ public class ChooseKaActivity extends BaseActivity implements Toolbar.OnMenuItem
     private void ajaxWithdrawCardList() {
         HttpClient httpClient = HttpClient.newInstance(this);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.add("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
         api.setMethod(AbstractApi.Method.GET);
         httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<WithdrawCardListBean>>() {
             @Override

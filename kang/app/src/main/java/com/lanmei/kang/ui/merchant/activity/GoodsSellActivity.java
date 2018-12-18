@@ -109,7 +109,8 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
     //搜索会员
     private void searchUsers(final String result) {
         KangQiMeiApi api = new KangQiMeiApi("app/member_list");
-        api.add("menber_num", result).add("user_type", 0);
+//        api.add("menber_num", result).add("user_type", 0);
+        api.add("menber_num", result);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<UserBean>>() {
             @Override
             public void onResponse(NoPageListBean<UserBean> response) {
@@ -120,12 +121,11 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
                 if (StringUtils.isEmpty(beanList)) {
                     userBean = null;
                     numberEt.setText("");
-                    UIHelper.ToastMessage(getContext(), "不存在该会员");
-                    return;
+                }else {
+                    numberEt.setText(result);
+                    userBean = beanList.get(0);
                 }
-                numberEt.setText(result);
-                userBean = beanList.get(0);
-                UIHelper.ToastMessage(getContext(), "会员身份核实成功");
+                UIHelper.ToastMessage(getContext(), response.getInfo());
             }
         });
     }

@@ -109,23 +109,28 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/subtract_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:src="@mipmap/withdraw_subtract" />
 
                 <EditText
-                    android:layout_width="60dp"
+                    android:id="@+id/money_et"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/attention"
                     android:gravity="center"
                     android:inputType="numberDecimal"
+                    android:maxLength="13"
                     android:maxLines="1"
+                    android:minWidth="@dimen/d_100dp"
                     android:padding="3dp"
                     android:text="100" />
 
 
                 <ImageView
+                    android:id="@+id/add_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
@@ -159,7 +164,7 @@
                 style="@style/text16color4D4D"
                 android:drawablePadding="5dp"
                 android:drawableRight="@mipmap/icon_in"
-                android:text="请选择银行卡" />
+                android:text="@string/choose_bank_card" />
 
 
         </LinearLayout>
@@ -171,7 +176,7 @@
         style="@style/button_style"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="30dp"
-        android:text="提现"
-        android:visibility="gone" />
+        android:text="申请提现"
+        android:visibility="visible" />
 
 </LinearLayout>

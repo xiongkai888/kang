@@ -1,7 +1,6 @@
 package com.lanmei.kang.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +11,9 @@ import android.widget.TextView;
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.ui.merchant_tab.activity.OrderDetailsGoodsActivity;
-import com.lanmei.kang.ui.mine.activity.OrderCommentActivity;
 import com.lanmei.kang.util.AKDialog;
-import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.FormatTextView;
 
 import butterknife.ButterKnife;
@@ -89,6 +85,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
 
             GoodsOrderListSubAdapter adapter = new GoodsOrderListSubAdapter(context);
             adapter.setData(bean.getGoods());
+            adapter.setOrder_no(bean.getOrder_no());
             adapter.setOnItemClickListener(new GoodsOrderListSubAdapter.OnItemClickListener() {
                 @Override
                 public void onClick() {
@@ -98,7 +95,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(adapter);
-            payNoTv.setText(String.format(context.getString(R.string.order_no), bean.getPay_no()));
+            payNoTv.setText(String.format(context.getString(R.string.order_no), bean.getOrder_no()));
             totalPriceTv.setTextValue(bean.getTotal_price());
 
             final String state = bean.getState();
@@ -126,11 +123,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                 case "3":
                     payStatus = context.getString(R.string.doned);//已完成
                     order1.setVisibility(View.GONE);
-                    if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
-                        order3.setText(context.getString(R.string.bask_in_a_single_comment));//晒单评价
-                    } else {
-                        order3.setText(context.getString(R.string.delete_order));//删除订单
-                    }
+                    order3.setText(context.getString(R.string.delete_order));//删除订单
                     order3.setVisibility(View.VISIBLE);
                     break;
                 case "4":
@@ -182,22 +175,15 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                         case "2":
                             break;
                         case "3"://
-                            if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {
-                                //去评价
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("bean",bean);
-                                IntentUtil.startActivity(context, OrderCommentActivity.class,bundle);
-                            } else {
-                                //删除订单
-                                AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
-                                    @Override
-                                    public void yes() {
-                                        if (l != null) {
-                                            l.deleteOrder(bean.getId());
-                                        }
+                            //删除订单
+                            AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
+                                @Override
+                                public void yes() {
+                                    if (l != null) {
+                                        l.deleteOrder(bean.getId());
                                     }
-                                });
-                            }
+                                }
+                            });
                             break;
                         case "4"://
                             break;

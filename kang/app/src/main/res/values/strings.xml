@@ -229,5 +229,6 @@
     <string name="mine_post_favour">%1$s\n\n资讯收藏</string>
     <string name="mine_posts_favour">%1$s\n\n我的动态</string>
     <string name="mine_friend">%1$s\n\n我的好友</string>
+    <string name="choose_bank_card">请选择银行卡</string>
 
 </resources>

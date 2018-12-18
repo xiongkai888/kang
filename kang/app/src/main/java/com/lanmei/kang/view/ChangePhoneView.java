@@ -103,7 +103,7 @@ public class ChangePhoneView extends LinearLayout implements CodeCountDownTimer.
     private void loadUnBoundCar() {
         HttpClient httpClient = HttpClient.newInstance(context);
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.add("token",api.getToken(getContext()));
+        api.add("uid",api.getUserId(getContext()));
         api.add("del",1);//表示删除
         api.add("id",type);
         api.setMethod(AbstractApi.Method.GET);

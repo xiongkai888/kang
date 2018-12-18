@@ -7,12 +7,19 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsOrderListBean;
+import com.lanmei.kang.event.OrderOperationEvent;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.BaseBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -28,7 +35,7 @@ public class OrderCommentActivity extends BaseActivity {
     EditText contentEt;
     @InjectView(R.id.ratingbar)
     RatingBar ratingBar;
-    GoodsOrderListBean bean;//我的订单item信息
+    GoodsOrderListBean.GoodsBean bean;//我的订单item信息
     int point = 1;
 
     @Override
@@ -41,7 +48,7 @@ public class OrderCommentActivity extends BaseActivity {
         super.initIntent(intent);
         Bundle bundle = intent.getBundleExtra("bundle");
         if (!StringUtils.isEmpty(bundle)) {
-            bean = (GoodsOrderListBean) bundle.getSerializable("bean");
+            bean = (GoodsOrderListBean.GoodsBean) bundle.getSerializable("bean");
         }
     }
 
@@ -71,43 +78,22 @@ public class OrderCommentActivity extends BaseActivity {
             UIHelper.ToastMessage(this, R.string.input_comment);
             return;
         }
-        CommonUtils.developing(this);
-//        KangQiMeiApi api = new KangQiMeiApi("");
-//        api.content = content;
-//        api.orderid = bean.getId();
-//        api.uid = api.getUserId(this);
-//        api.proid = getProid();
-//        api.point = point;
-//        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-//            @Override
-//            public void onResponse(BaseBean response) {
-//                if (isFinishing()) {
-//                    return;
-//                }
-//
-//            }
-//        });
-    }
-
-    private String getProid() {
-        String id = "";
-        if (bean == null) {
-            return id;
-        }
-//        List<MineOrderBean.ProductBean> list = bean.getProduct();
-//        if (StringUtils.isEmpty(list)) {
-//            return id;
-//        }
-//        int size = list.size();
-//        for (int i = 0; i < size; i++) {
-//            MineOrderBean.ProductBean bean = list.get(i);
-//            if (!StringUtils.isEmpty(bean) && !StringUtils.isEmpty(bean.getId())){
-//                id += bean.getId()+",";
-//            }
-//        }
-        if (!StringUtils.isEmpty(id)){
-            id = id.substring(0,id.length()-1);
-        }
-        return id;
+        KangQiMeiApi api = new KangQiMeiApi("app/comment_save");
+        api.add("userid", api.getUserId(this));
+        api.add("order_no", bean.getOrder_no());
+        api.add("goodsid", bean.getGid());
+        api.add("content", content);
+        api.add("point", point);
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+            @Override
+            public void onResponse(BaseBean response) {
+                if (isFinishing()) {
+                    return;
+                }
+                UIHelper.ToastMessage(getContext(),response.getInfo());
+                EventBus.getDefault().post(new OrderOperationEvent());
+                finish();
+            }
+        });
     }
 }

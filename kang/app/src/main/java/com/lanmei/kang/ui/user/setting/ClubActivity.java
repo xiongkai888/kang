@@ -16,7 +16,7 @@ import butterknife.OnClick;
  */
 public class ClubActivity extends BaseActivity {
 
-    public static boolean no_bound_card = true;//只弹框一次（是否绑定银行卡）
+//    public static boolean no_bound_card = true;//只弹框一次（是否绑定银行卡）
 
     @InjectView(R.id.tabLayout)
     TabLayout mTabLayout;
@@ -32,15 +32,15 @@ public class ClubActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         mViewPager.setAdapter(new ClubAdapter(getSupportFragmentManager()));
-        mViewPager.setOffscreenPageLimit(0);
+        mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ClubActivity.no_bound_card = true;
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        ClubActivity.no_bound_card = true;
+//    }
 
     @OnClick(R.id.back_iv)
     public void onViewClicked() {

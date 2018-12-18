@@ -5,14 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsCommentBean;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
+import com.xson.common.helper.ImageHelper;
+import com.xson.common.utils.StringUtils;
+import com.xson.common.widget.CircleImageView;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /**
@@ -26,6 +31,7 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
     public GoodsCommentAdapter(Context context) {
         super(context);
         time = new FormatTime(context);
+        time.setApplyToTimeYearMonthDay();
     }
 
     //设置只有一个item
@@ -41,28 +47,26 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, final int position) {
-//        GoodsCommentBean bean = getItem(position);
-//        if (StringUtils.isEmpty(bean)) {
-//            return;
-//        }
-//        ViewHolder viewHolder = (ViewHolder) holder;
-//        viewHolder.setParameter(bean);
+        GoodsCommentBean bean = getItem(position);
+        if (StringUtils.isEmpty(bean)) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.setParameter(bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-//        @InjectView(R.id.head_iv)
-//        CircleImageView headIv;
-//        @InjectView(R.id.name_tv)
-//        TextView nameTv;
-////        @InjectView(R.id.ll_star)
-////        LinearLayout llStar;
-//        @InjectView(R.id.time_tv)
-//        TextView timeTv;
-//        @InjectView(R.id.ratingbar)
-//        RatingBar ratingBar;
-//        @InjectView(R.id.content_tv)
-//        TextView contentTv;
+        @InjectView(R.id.head_iv)
+        CircleImageView headIv;
+        @InjectView(R.id.name_tv)
+        TextView nameTv;
+        @InjectView(R.id.time_tv)
+        TextView timeTv;
+        @InjectView(R.id.ratingbar)
+        RatingBar ratingBar;
+        @InjectView(R.id.content_tv)
+        TextView contentTv;
 
         ViewHolder(View view) {
             super(view);
@@ -70,32 +74,16 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
         }
 
         public void setParameter(GoodsCommentBean bean) {
-//            ImageHelper.load(context, bean.getPic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-//            nameTv.setText(bean.getNickname());
-//            time.setTime(bean.getAddtime());
-//            timeTv.setText(time.getFormatTime());
-//            contentTv.setText(bean.getContent());
+            ImageHelper.load(context, bean.getUser_pic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            nameTv.setText(bean.getUsername());
+            time.setTime(bean.getComment_time());
+            timeTv.setText(time.formatterTime());
+            contentTv.setText(bean.getContents());
 //            float point = Float.valueOf(StringUtils.isEmpty(bean.getPoint())?0:Float.valueOf(bean.getPoint()));
-//            ratingBar.setRating(point);
-//            llStar.removeAllViews();
-//            showStar(context, llStar, bean.getPoint());
+            float point = 3;
+            ratingBar.setRating(point);
         }
 
-        public void showStar(Context context, LinearLayout root, String point) {
-//            int pointNum = 0;
-//            if (!com.xson.common.utils.StringUtils.isEmpty(point)) {
-//                pointNum = Integer.valueOf(point);
-//            }
-//            for (int i = 0; i < 5; i++) {
-//                ImageView view = new ImageView(context);
-//                if (pointNum < i) {
-//                    view.setImageResource(R.mipmap.icon_collect_on);
-//                } else {
-//                    view.setImageResource(R.mipmap.icon_collect_off);
-//                }
-//                root.addView(view);
-//            }
-        }
     }
 
     @Override

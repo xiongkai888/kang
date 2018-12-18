@@ -491,7 +491,7 @@ public class MainActivity extends BaseActivity {
 				exceptionBuilder.create().show();
 				isConflict = true;
 				UserHelper.getInstance(this).cleanLogin();
-				EventBus.getDefault().post(new SetUserInfoEvent());
+				EventBus.getDefault().post(new SetUserInfoEvent(null));
 			} catch (Exception e) {
 				EMLog.e(TAG, "---------color conflictBuilder error" + e.getMessage());
 			}

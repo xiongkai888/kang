@@ -19,7 +19,6 @@ import com.lanmei.kang.event.OrderOperationEvent;
 import com.lanmei.kang.event.PaySucceedEvent;
 import com.lanmei.kang.helper.WXPayHelper;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
-import com.lanmei.kang.ui.mine.activity.OrderCommentActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
@@ -149,6 +148,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
 
         GoodsOrderListSubAdapter adapter = new GoodsOrderListSubAdapter(this);
         adapter.setData(bean.getGoods());
+        adapter.setOrder_no(bean.getOrder_no());
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -202,11 +202,12 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             case "3":
                 stateStr = getString(R.string.doned);//已完成
                 order1.setVisibility(View.GONE);
-                if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
-                    order3.setText(getString(R.string.bask_in_a_single_comment));//晒单评价
-                } else {
-                    order3.setText(getString(R.string.delete_order));//删除订单
-                }
+//                if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
+//                    order3.setText(getString(R.string.bask_in_a_single_comment));//晒单评价
+//                } else {
+//                    order3.setText(getString(R.string.delete_order));//删除订单
+//                }
+                order3.setText(getString(R.string.delete_order));//删除订单
                 order3.setVisibility(View.VISIBLE);
                 break;
             case "4":
@@ -259,13 +260,15 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
                     case "2":
                         break;
                     case "3"://
-                        if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {
-                            //去评价
-                            IntentUtil.startActivity(this, OrderCommentActivity.class);
-                        } else {
-                            //删除订单
-                            deleteOrderDialog();
-                        }
+//                        if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {
+//                            //去评价
+//                            IntentUtil.startActivity(this, OrderCommentActivity.class);
+//                        } else {
+//                            //删除订单
+//                            deleteOrderDialog();
+//                        }
+                        //删除订单
+                        deleteOrderDialog();
                         break;
                     case "4"://
                         break;

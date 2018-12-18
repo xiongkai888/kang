@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseActivity;
@@ -31,8 +30,6 @@ import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -199,7 +196,6 @@ public class PersonalDataActivity extends BaseActivity {
                         CommonUtils.deleteOssObject(pic);//更新头像后删除从oss删除旧的头像
                     }
                     UserHelper.getInstance(PersonalDataActivity.this).saveBean(bean);
-                    EventBus.getDefault().post(new SetUserInfoEvent());
                     CommonUtils.loadUserInfo(KangApp.applicationContext,null);
                 }
                 finish();

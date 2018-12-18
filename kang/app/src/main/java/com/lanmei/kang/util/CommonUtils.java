@@ -228,7 +228,7 @@ public class CommonUtils {
                         l.userInfo(bean);
                     }
                     UserHelper.getInstance(context).saveBean(bean);
-                    EventBus.getDefault().post(new SetUserInfoEvent());
+                    EventBus.getDefault().post(new SetUserInfoEvent(bean));
                 }
             }
         }, new Response.ErrorListener() {

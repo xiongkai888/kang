@@ -75,7 +75,7 @@ public class WithdrawCardListAdapter extends SwipeRefreshAdapter<WithdrawCardLis
             public void onClick(View v) {
                 if (editType == 0){
                     if (mChooseCardListener != null){
-                        mChooseCardListener.chooseCard(carName);
+                        mChooseCardListener.chooseCard(bean);
                     }
                 }else {//
                     if (mChooseCardListener != null){
@@ -95,7 +95,7 @@ public class WithdrawCardListAdapter extends SwipeRefreshAdapter<WithdrawCardLis
     }
 
     public interface ChooseCardListener{
-        void chooseCard(String cardName);//选择卡
+        void chooseCard(WithdrawCardListBean bean);//选择卡
         void unBound(String cardId);//解除绑定
     }
 

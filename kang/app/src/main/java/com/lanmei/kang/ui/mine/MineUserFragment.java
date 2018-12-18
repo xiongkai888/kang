@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hyphenate.chatuidemo.ui.MainActivity;
-import com.lanmei.kang.KangApp;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NumBean;
@@ -37,7 +36,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -116,7 +114,6 @@ public class MineUserFragment extends BaseFragment {
                 IntentUtil.startActivity(context, 0,MyGoodsOrderActivity.class);
                 break;
             case R.id.yu_e:
-//                CommonUtils.developing(context);
                 break;
             case R.id.you_hui_juan://优惠券
                 IntentUtil.startActivity(context, CouponActivity.class);
@@ -128,8 +125,6 @@ public class MineUserFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
             case R.id.guan_zhu:
-                CommonUtils.loadUserInfo(KangApp.applicationContext,null);
-//                CommonUtils.developing(context);
                 break;
             case R.id.zixun_shou_cang://资讯收藏
                 IntentUtil.startActivity(context, MyCollectActivity.class);
@@ -160,7 +155,7 @@ public class MineUserFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SetUserInfoEvent event) {
-        setUser(UserHelper.getInstance(context).getUserBean());
+        setUser(event.getBean());
     }
 
     private void setUser(UserBean userBean) {
@@ -227,12 +222,6 @@ public class MineUserFragment extends BaseFragment {
             textView.setVisibility(View.VISIBLE);
             textView.setText(num+"");
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
     }
 
 }

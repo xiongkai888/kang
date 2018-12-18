@@ -191,7 +191,6 @@ public class LoginActivity extends BaseActivity {
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                 UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
                 CommonUtils.loadUserInfo(KangApp.applicationContext,null);
-                EventBus.getDefault().post(new SetUserInfoEvent());
                 if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
                     SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
                 }
@@ -210,7 +209,7 @@ public class LoginActivity extends BaseActivity {
                     public void run() {
                         mProgressHUD.dismiss();
                         UserHelper.getInstance(LoginActivity.this).cleanLogin();
-                        EventBus.getDefault().post(new SetUserInfoEvent());
+                        EventBus.getDefault().post(new SetUserInfoEvent(null));
                         Toast.makeText(getApplicationContext(), "登录超时，请重新登录！", Toast.LENGTH_SHORT).show();
                     }
                 });

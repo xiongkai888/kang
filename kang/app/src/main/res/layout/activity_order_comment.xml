@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/d_10dp"
                         android:numStars="5"
-                        android:progressTint="@android:color/holo_red_dark"
+                        android:progressTint="@color/red"
                         android:rating="1"
                         android:stepSize="1" />
                     <!--style="@style/mRatingBar"-->

@@ -103,7 +103,7 @@ public class SettingActivity extends BaseActivity {
                         UserHelper.getInstance(SettingActivity.this).cleanLogin();
                         HttpClient.newInstance(SettingActivity.this).clearCache();
                         // show login screen
-                        EventBus.getDefault().post(new SetUserInfoEvent());
+                        EventBus.getDefault().post(new SetUserInfoEvent(null));
                         EventBus.getDefault().post(new LoginQuitEvent());//
 //                        Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_LONG).show();
                         IntentUtil.startActivity(getContext(), LoginActivity.class);

@@ -78,7 +78,7 @@ public class BoundKaActivity extends BaseActivity {
             return;
         }
         KangQiMeiApi api = new KangQiMeiApi("member/bank_card");
-        api.add("token",api.getToken(this));
+        api.add("uid",api.getUserId(this));
         api.add("banks_name",mKa);
         api.add("banks_no",kaHao);
         api.add("realname",name);

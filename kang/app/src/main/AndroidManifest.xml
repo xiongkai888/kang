@@ -635,6 +635,9 @@
             android:name=".ui.mine.activity.GoodFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.GoodsCollectActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.NewFriendsActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -10,32 +10,34 @@ import java.util.List;
 public class GoodsSellListBean {
 
     /**
-     * id : 698
-     * addtime : 1539853670
-     * uptime : 1539853670
-     * pay_no : 20181018B0100T1624
-     * state : 1
-     * order_no : 20181018B0100T1423
-     * gname :
-     * num : 20
-     * total_price : 12000.00
+     * id : 969
+     * addtime : 1545207352
+     * uptime : 1545207352
+     * pay_no : 20181219B0100T1895
+     * state : 5
+     * order_no : 20181219B0100T1425
+     * gname : 
+     * num : 3
+     * total_price : 1197.00
      * addressid : 0
-     * address : 554
-     * uid : 201
-     * phone : 18814379628
-     * username : 小明
-     * pay_type : 6
+     * address : 
+     * uid : 204
+     * phone : 
+     * username : 
+     * pay_type : 4
      * is_del : 0
-     * endtime : 1539853670
-     * pay_status : 0
-     * courier :
-     * dis_type : 1
-     * sellerid : 500
+     * endtime : 1545207352
+     * pay_status : 1
+     * courier : 
+     * dis_type : null
+     * sellerid : 202
      * attribute : null
      * pay_time : null
-     * nickname : A好
-     * pic : http://qkmimages.img-cn-shenzhen.aliyuncs.com/180119/5a61c001001ce.jpg
-     * goods : [{"goodsid":"26","price":"200.00","goodsname":"玩一玩","num":"10","danwei":"","cover":"http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379532752527.jpg","gid":"96","specifications":"红色,M","specificationsname":"颜色,尺寸"},{"goodsid":"7","price":"1000.00","goodsname":"苹果手机","num":"10","danwei":null,"cover":"/Public/images/banner1.jpg","gid":"81","specifications":"紫色,XXL","specificationsname":"颜色,尺寸"}]
+     * yj_status : 0
+     * c_type : 0
+     * nickname : 大冒险
+     * pic : http://stdrimages.oss-cn-shenzhen.aliyuncs.com/lanmei/kang/img1/head-1532470495.jpg
+     * goods : [{"goodsid":"46","price":"399.0","goodsname":"天美纪雪肌赋活水","num":"1.0","danwei":"元","cover":"http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20181116/1542348908176.jpg","gid":"0","specifications":"","specificationsname":""},{"goodsid":"46","price":"399.0","goodsname":"天美纪雪肌赋活水","num":"2.0","danwei":"元","cover":null,"gid":null,"specifications":null,"specificationsname":null}]
      */
 
     private String id;
@@ -59,8 +61,10 @@ public class GoodsSellListBean {
     private String courier;
     private String dis_type;
     private String sellerid;
-    private Object attribute;
-    private Object pay_time;
+    private String attribute;
+    private String pay_time;
+    private String yj_status;
+    private String c_type;
     private String nickname;
     private String pic;
     private List<GoodsBean> goods;
@@ -233,20 +237,36 @@ public class GoodsSellListBean {
         this.sellerid = sellerid;
     }
 
-    public Object getAttribute() {
+    public String getAttribute() {
         return attribute;
     }
 
-    public void setAttribute(Object attribute) {
+    public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
 
-    public Object getPay_time() {
+    public String getPay_time() {
         return pay_time;
     }
 
-    public void setPay_time(Object pay_time) {
+    public void setPay_time(String pay_time) {
         this.pay_time = pay_time;
+    }
+
+    public String getYj_status() {
+        return yj_status;
+    }
+
+    public void setYj_status(String yj_status) {
+        this.yj_status = yj_status;
+    }
+
+    public String getC_type() {
+        return c_type;
+    }
+
+    public void setC_type(String c_type) {
+        this.c_type = c_type;
     }
 
     public String getNickname() {
@@ -275,15 +295,15 @@ public class GoodsSellListBean {
 
     public static class GoodsBean {
         /**
-         * goodsid : 26
-         * price : 200.00
-         * goodsname : 玩一玩
-         * num : 10
-         * danwei :
-         * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20180926/15379532752527.jpg
-         * gid : 96
-         * specifications : 红色,M
-         * specificationsname : 颜色,尺寸
+         * goodsid : 46
+         * price : 399.0
+         * goodsname : 天美纪雪肌赋活水
+         * num : 1.0
+         * danwei : 元
+         * cover : http://qkmimages.img-cn-shenzhen.aliyuncs.com/Uploads/imgs/20181116/1542348908176.jpg
+         * gid : 0
+         * specifications : 
+         * specificationsname : 
          */
 
         private String goodsid;

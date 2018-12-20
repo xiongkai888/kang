@@ -231,7 +231,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             return;
         }
         if (StringUtils.isEmpty(type)) {
-            UIHelper.ToastMessage(this, "请选择支付方式");
+            UIHelper.ToastMessage(this, getString(R.string.pay_type));
             return;
         }
         StringBuilder goodsidBuilder = new StringBuilder();

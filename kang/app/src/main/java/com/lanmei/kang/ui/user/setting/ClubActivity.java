@@ -32,7 +32,7 @@ public class ClubActivity extends BaseActivity {
     @Override
     protected void initAllMembersView(Bundle savedInstanceState) {
         mViewPager.setAdapter(new ClubAdapter(getSupportFragmentManager()));
-        mViewPager.setOffscreenPageLimit(2);
+//        mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

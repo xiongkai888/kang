@@ -94,7 +94,7 @@ public class GoodsOrderListSubAdapter extends SwipeRefreshAdapter<GoodsOrderList
             titleTv.setText(bean.getGoodsname());
             priceNumTv.setText(String.format(context.getString(R.string.goods_price_and_num), bean.getPrice(), bean.getNum()));
             specificationsNameTv.setText(com.xson.common.utils.StringUtils.isEmpty(bean.getSpecifications())?"":bean.getSpecifications());
-            if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
+            if (StringUtils.isSame(CommonUtils.isZero, bean.getStatus())) {//去评价(0未评价1已评价)
                 commentTv.setVisibility(View.VISIBLE);
                 commentTv.setOnClickListener(new View.OnClickListener() {
                     @Override

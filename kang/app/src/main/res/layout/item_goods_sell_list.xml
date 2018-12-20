@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:layout_marginBottom="@dimen/d_10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -40,14 +41,13 @@
 
         <TextView
             android:id="@+id/num_tv"
-            style="@style/text12color666"
-            android:text="共计1件商品" />
+            style="@style/text12color666" />
 
         <com.xson.common.widget.FormatTextView
             android:id="@+id/total_price_tv"
             style="@style/text12color666"
             android:layout_marginLeft="@dimen/d_10dp"
-            app:defaultValue="253.00"
+            app:defaultValue="0.00"
             app:formatText="@string/total_cash" />
 
     </LinearLayout>
@@ -79,19 +79,28 @@
             android:textSize="@dimen/txt_12sp" />
 
         <TextView
+            android:id="@+id/cancel_tv"
+            style="@style/text12colorWhite"
+            android:layout_marginRight="@dimen/d_5dp"
+            android:background="@drawable/button_bg_red"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d_2dp"
+            android:paddingTop="@dimen/d_2dp"
+            android:layout_width="@dimen/d_60dp"
+            android:text="@string/cancel" />
+
+        <TextView
             android:id="@+id/delete_tv"
             style="@style/text12colorWhite"
             android:layout_marginRight="@dimen/d_5dp"
             android:background="@drawable/button_bg_red"
             android:gravity="center"
             android:paddingBottom="@dimen/d_2dp"
-            android:paddingLeft="@dimen/d_20dp"
-            android:paddingRight="@dimen/d_20dp"
+            android:layout_width="@dimen/d_60dp"
             android:paddingTop="@dimen/d_2dp"
             android:text="@string/delete" />
 
     </LinearLayout>
 
-    <TextView style="@style/line_H10dp_on" />
 
 </LinearLayout>

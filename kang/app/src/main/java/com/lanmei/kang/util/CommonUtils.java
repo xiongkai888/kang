@@ -53,6 +53,7 @@ public class CommonUtils {
 
     public final static String isOne = "1";
     public final static String isZero = "0";
+    public final static String isFive = "5";
     public final static String ratioStr = "#.0";//保留小数位数
 
 

@@ -12,6 +12,7 @@ import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.ui.mine.activity.GoodFriendsActivity;
+import com.lanmei.kang.ui.mine.activity.GoodsCollectActivity;
 import com.lanmei.kang.ui.mine.activity.HealthReportActivity;
 import com.lanmei.kang.ui.mine.activity.MembershipCardActivity;
 import com.lanmei.kang.ui.mine.activity.MyCollectActivity;
@@ -125,6 +126,7 @@ public class MineUserFragment extends BaseFragment {
                 IntentUtil.startActivity(context, ClubActivity.class);
                 break;
             case R.id.guan_zhu:
+                IntentUtil.startActivity(context, GoodsCollectActivity.class);
                 break;
             case R.id.zixun_shou_cang://资讯收藏
                 IntentUtil.startActivity(context, MyCollectActivity.class);

@@ -56,13 +56,8 @@ public class KangApp extends BaseApp {
 
     public void initUM() {
 
-        PlatformConfig.setWeixin(Constant.WEIXIN_APP_ID,
-                Constant.WEIXIN_APP_SECRET);
-//
-//        PlatformConfig.setSinaWeibo(Constant.SINA_APP_ID,
-//                Constant.SINA_APP_SECRET,Constant.SINA_NOTIFY_URL);
-//
-//        PlatformConfig.setQQZone(Constant.QQ_APP_ID, Constant.QQ_APP_SECRET);
+        PlatformConfig.setWeixin(Constant.WEIXIN_APP_ID, Constant.WEIXIN_APP_SECRET);
+
         UMConfigure.setLogEnabled(L.debug);//如果查看初始化过程中的LOG，一定要在调用初始化方法前将LOG开关打开。
 
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");

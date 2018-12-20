@@ -297,7 +297,16 @@ public class GoodsOrderListBean implements Serializable{
         private String gid;
         private String specifications;
         private String specificationsname;
-        private String c_type;
+        private String status;//0未评价1已评价
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
         private String order_no;
 
         public void setOrder_no(String order_no) {
@@ -306,15 +315,6 @@ public class GoodsOrderListBean implements Serializable{
 
         public String getOrder_no() {
             return order_no;
-        }
-
-        public void setC_type(String c_type) {
-            this.c_type = c_type;
-        }
-
-        public String getC_type() {
-            return c_type;
-
         }
 
         public String getGoodsid() {

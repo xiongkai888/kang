@@ -91,7 +91,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         EventBus.getDefault().register(this);
 
-        if (UserHelper.getInstance(this).hasLogin()){
+        if (UserHelper.getInstance(this).hasLogin()) {
             loadCollect(false);
         }
         loadSpecifications();
@@ -100,7 +100,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private void loadGoodsDetails() {
         KangQiMeiApi api = new KangQiMeiApi("app/goodsdetail");
-        api.add("id",id);
+        api.add("id", id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<GoodsDetailsBean>>() {
             @Override
             public void onResponse(DataBean<GoodsDetailsBean> response) {
@@ -110,6 +110,17 @@ public class GoodsDetailsActivity extends BaseActivity {
                 bean = response.data;
                 if (!StringUtils.isEmpty(bean)) {
                     init(bean);
+                } else {
+                    shopNumTv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!isFinishing()) {
+                                finish();
+                            }
+                        }
+                    }, 1000);
+                    UIHelper.ToastMessage(getContext(), response.getInfo());
+                    return;
                 }
             }
         });
@@ -124,7 +135,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         viewPager.setAdapter(new GoodsDetailsPagerAdapter(getSupportFragmentManager(), bean));
         tabLayout.setupWithViewPager(viewPager);
 
-        if (UserHelper.getInstance(this).hasLogin()){
+        if (UserHelper.getInstance(this).hasLogin()) {
             showShopCount();
         }
 
@@ -132,7 +143,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     public void operaTitleBar(boolean scroAble, boolean titleVisiable) {
         viewPager.setNoScroll(scroAble);
-        toolbar.setTitle(titleVisiable?getString(R.string.graphic_details):"");
+        toolbar.setTitle(titleVisiable ? getString(R.string.graphic_details) : "");
         tabLayout.setVisibility(titleVisiable ? View.GONE : View.VISIBLE);
     }
 
@@ -186,20 +197,20 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
     private void addShopCar() {
-        if (!isSpecifications){
+        if (!isSpecifications) {
             return;
         }
         if (mDialog == null) {
             mDialog = new AddShopCarDialogFragment();
-            mDialog.setData(bean,specificationsBeans);
+            mDialog.setData(bean, specificationsBeans);
         }
         mDialog.show(getSupportFragmentManager(), DIALOG);
     }
 
     //修改收藏
     private void loadCollect(final boolean isClick) {
-        KangQiMeiApi api = new KangQiMeiApi(isClick?"app/collection":"app/collection_type");
-        api.add("userid",api.getUserId(this)).add("goodsid",id);
+        KangQiMeiApi api = new KangQiMeiApi(isClick ? "app/collection" : "app/collection_type");
+        api.add("userid", api.getUserId(this)).add("goodsid", id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<GoodsCollectBean>>() {
             @Override
             public void onResponse(NoPageListBean<GoodsCollectBean> response) {
@@ -227,9 +238,9 @@ public class GoodsDetailsActivity extends BaseActivity {
     private boolean isSpecifications = false;
     private List<GoodsSpecificationsBean> specificationsBeans;
 
-    private void loadSpecifications(){
+    private void loadSpecifications() {
         KangQiMeiApi api = new KangQiMeiApi("app/good_specifications");
-        api.add("gid",id);
+        api.add("gid", id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<GoodsSpecificationsBean>>() {
             @Override
             public void onResponse(NoPageListBean<GoodsSpecificationsBean> response) {
@@ -258,7 +269,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     private void showShopCount() {
         int count = DBShopCartHelper.getInstance(getApplicationContext()).getShopCarListCount();
         shopNumTv.setText(String.valueOf(count));
-        shopNumTv.setVisibility(count == 0?View.GONE:View.VISIBLE);
+        shopNumTv.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override

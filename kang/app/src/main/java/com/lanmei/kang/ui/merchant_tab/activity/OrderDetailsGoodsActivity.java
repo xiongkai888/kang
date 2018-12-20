@@ -11,23 +11,24 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.GoodsOrderListSubAdapter;
+import com.lanmei.kang.adapter.PayWayAdapter;
 import com.lanmei.kang.alipay.AlipayHelper;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsOrderListBean;
+import com.lanmei.kang.bean.PayWayBean;
 import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.event.OrderOperationEvent;
 import com.lanmei.kang.event.PaySucceedEvent;
 import com.lanmei.kang.helper.WXPayHelper;
-import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.lanmei.kang.util.CommonUtils;
+import com.lanmei.kang.util.FormatTime;
 import com.xson.common.app.BaseActivity;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.DataBean;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.HttpClient;
-import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
@@ -57,6 +58,8 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     TextView feeTv;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @InjectView(R.id.recyclerView_pay)
+    RecyclerView recyclerViewPay;//支付方式列表
     @InjectView(R.id.goods_price_tv)
     TextView goodsPriceTv;
     @InjectView(R.id.total_price_tv)
@@ -78,6 +81,8 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     TextView stateTv;//订单状态
     @InjectView(R.id.courier_tv)
     TextView courierTv;//物流单号
+    @InjectView(R.id.order_time_tv)
+    TextView orderTimeTv;//下单时间
     private String id;
 
     @Override
@@ -110,6 +115,34 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             return;
         }
         loadOrderDetails();
+
+        recyclerViewPay.setNestedScrollingEnabled(false);
+        recyclerViewPay.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private int type;
+
+    //支付方式
+    private void loadPayment() {
+        KangQiMeiApi api = new KangQiMeiApi("app/payment");
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<PayWayBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<PayWayBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                type = 0;
+                PayWayAdapter adapter = new PayWayAdapter(getContext());
+                adapter.setData(response.data);
+                recyclerViewPay.setAdapter(adapter);
+                adapter.setPayWayListener(new PayWayAdapter.PayWayListener() {
+                    @Override
+                    public void payId(String id) {
+                        type = Integer.valueOf(id);
+                    }
+                });
+            }
+        });
     }
 
     private void loadOrderDetails() {
@@ -132,7 +165,6 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     }
 
     private String state;
-    private String payStatus;
     private String oid;
 
     private void setData() {
@@ -145,6 +177,9 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
         addressTv.setText(bean.getAddress());
         orderNoTv.setText(String.format(getString(R.string.order_no), bean.getOrder_no()));
         courierTv.setText(String.format(getString(R.string.courier_no), bean.getCourier()));
+        FormatTime time = new FormatTime(this);
+        time.setTime(bean.getAddtime());
+        orderTimeTv.setText(String.format(getString(R.string.order_time), time.formatterTime()));
 
         GoodsOrderListSubAdapter adapter = new GoodsOrderListSubAdapter(this);
         adapter.setData(bean.getGoods());
@@ -153,12 +188,15 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         numTv.setText(bean.getNum() + "");
-        //        feeTv.setText(String.format(getString(R.string.price_sub), bean.getFee()));
         String sellPrice = bean.getTotal_price();
-//        goodsPriceTv.setText(sellPrice);
         totalPriceTv.setText(sellPrice);
         String payType = "";
         String pay_status = StringUtils.isSame(bean.getPay_status(), CommonUtils.isOne) ? "已支付" : "未支付";
+        if (!StringUtils.isSame(bean.getPay_status(), CommonUtils.isOne)) {
+            loadPayment();
+        } else {
+            recyclerViewPay.setVisibility(View.GONE);
+        }
         switch (bean.getPay_type()) {
             case "1":
                 payType = "支付宝支付" + "(" + pay_status + ")";
@@ -175,9 +213,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
         order1.setVisibility(View.VISIBLE);
         order2.setVisibility(View.GONE);
         order3.setVisibility(View.VISIBLE);
-//        final String oid = bean.getId();//订单编号
         state = bean.getState();// 1|2|3|4|5|6 => 1生成订单|2确认订单|3取消订单|4作废订单|5完成订单|6申请退款
-        payStatus = bean.getPay_status();//支付状态 0：未支付，1：已支付，2：退款',
         String stateStr = "";
         switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
             case "0":
@@ -202,11 +238,6 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             case "3":
                 stateStr = getString(R.string.doned);//已完成
                 order1.setVisibility(View.GONE);
-//                if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {//去评价
-//                    order3.setText(getString(R.string.bask_in_a_single_comment));//晒单评价
-//                } else {
-//                    order3.setText(getString(R.string.delete_order));//删除订单
-//                }
                 order3.setText(getString(R.string.delete_order));//删除订单
                 order3.setVisibility(View.VISIBLE);
                 break;
@@ -260,13 +291,6 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
                     case "2":
                         break;
                     case "3"://
-//                        if (StringUtils.isSame(CommonUtils.isZero, bean.getC_type())) {
-//                            //去评价
-//                            IntentUtil.startActivity(this, OrderCommentActivity.class);
-//                        } else {
-//                            //删除订单
-//                            deleteOrderDialog();
-//                        }
                         //删除订单
                         deleteOrderDialog();
                         break;
@@ -282,7 +306,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     }
 
 
-    private void deleteOrderDialog(){
+    private void deleteOrderDialog() {
         AKDialog.getAlertDialog(this, "确定删除该订单？", new AKDialog.AlertDialogListener() {
             @Override
             public void yes() {
@@ -308,10 +332,13 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     }
 
     private void goPay() {
+        if (type == 0) {
+            UIHelper.ToastMessage(this, getString(R.string.pay_type));
+            return;
+        }
         KangQiMeiApi api = new KangQiMeiApi("app/pay");
-        api.add("order_id", oid).add("uid", api.getUserId(this)).add("id", oid);
+        api.add("order_id", oid).add("uid", api.getUserId(this)).add("id", oid).add("pay_type", type);
         HttpClient httpClient = HttpClient.newInstance(this);
-        int type = Integer.valueOf(bean.getPay_type());
         if (type == 1) {//支付宝支付
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {
                 @Override
@@ -345,8 +372,8 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
                         return;
                     }
                     UIHelper.ToastMessage(getContext(), response.getInfo());
-                    EventBus.getDefault().post(new OrderOperationEvent());//
-                    IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
+                    EventBus.getDefault().post(new PaySucceedEvent());
+//                    IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
                     finish();
                 }
             });
@@ -373,7 +400,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     //修改订单状态
     private void alterState(String state) {
         KangQiMeiApi api = new KangQiMeiApi("app/status_save");
-        api.add("uid", api.getUserId(this)).add("id", oid).add("status",state);
+        api.add("uid", api.getUserId(this)).add("id", oid).add("status", state);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
             @Override
             public void onResponse(BaseBean response) {
@@ -386,13 +413,6 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             }
         });
     }
-
-    //订单详情的所有操作完成后调用(评论成功)
-//    @Subscribe
-//    public void commentEvent(CommentEvent event){
-//        bean.setReviews("1");
-//        setData();
-//    }
 
     @Override
     protected void onDestroy() {

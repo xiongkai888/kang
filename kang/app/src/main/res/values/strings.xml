@@ -18,7 +18,6 @@
     <string name="code_error">验证码不正确</string>
     <string name="input_password_count">请输入6-18位密码</string>
     <string name="login_tips">您尚未登录，是否要先登录？</string>
-    <string name="cancle">取消</string>
     <string name="logout_tips">确认要退出?</string>
     <string name="no_bound_card">您还没绑定银行卡，是否先绑定银行卡？</string>
     <string name="sure">确定</string>
@@ -105,6 +104,7 @@
     <string name="go_pay">去付款</string>
     <string name="yuan">%1$s元</string>
     <string name="yuan_sub">元</string>
+    <string name="jian">件</string>
     <string name="balance">余额：%1$s</string>
     <string name="inventory">库存：%1$s</string>
     <string name="inventory_sub">库存</string>
@@ -216,6 +216,7 @@
     <string name="bask_in_a_single_comment">晒单评价</string>
     <string name="order">订单</string>
     <string name="courier_no">物流单号：%1$s</string>
+    <string name="order_time">下单时间：%1$s</string>
     <string name="page_pdf">%1$s / %2$s</string>
     <!--已支付 = 待发货-->
     <string name="payed">待发货</string>
@@ -230,5 +231,7 @@
     <string name="mine_posts_favour">%1$s\n\n我的动态</string>
     <string name="mine_friend">%1$s\n\n我的好友</string>
     <string name="choose_bank_card">请选择银行卡</string>
+    <string name="no_cancel">只有当天添加的商品才能取消</string>
+    <string name="pay_type">请选择支付方式</string>
 
 </resources>

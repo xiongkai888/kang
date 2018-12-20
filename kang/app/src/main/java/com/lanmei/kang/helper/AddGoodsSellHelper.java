@@ -46,7 +46,7 @@ public class AddGoodsSellHelper {
     private FormatTextView totalPriceTv;
     private List<GoodsSellBean> list;
     private int scan_goods_position;//
-    private Map<Integer,ViewHolder> map;
+    private Map<Integer, ViewHolder> map;
 
     public List<GoodsSellBean> getList() {
         return list;
@@ -77,15 +77,15 @@ public class AddGoodsSellHelper {
     private void addView(int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_goods_sell, null);
         root.addView(view, position);
-        map.put(position,new ViewHolder(view, position));
+        map.put(position, new ViewHolder(view, position));
     }
 
     //二维码获取商品编号更新
-    public void updateData(String result){
+    public void updateData(String result) {
         searchGoods(result);
     }
 
-    public class ViewHolder implements TextView.OnEditorActionListener{
+    public class ViewHolder implements TextView.OnEditorActionListener {
 
         @InjectView(R.id.subtract_iv)
         ImageView subtractIv;//删除
@@ -93,8 +93,8 @@ public class AddGoodsSellHelper {
         EditText numberEt;//编号
         @InjectView(R.id.qr_code_iv)
         ImageView qrCodeIv;
-        @InjectView(R.id.num_tv)
-        EditText numTv;//数量
+        @InjectView(R.id.num_et)
+        EditText numEt;//数量
         @InjectView(R.id.price_et)
         EditText priceEt;//价格
         @InjectView(R.id.unit_et)
@@ -137,6 +137,7 @@ public class AddGoodsSellHelper {
                     } else {
                         list.remove(position);
                         refresh();
+                        totalPriceTv.setTextValue(String.format("%.2f", getTotalPrice()));
                     }
 
                 }
@@ -147,15 +148,15 @@ public class AddGoodsSellHelper {
                     scan_goods_position = position;
                     Bundle bundle = new Bundle();
                     bundle.putInt("type", ScanActivity.SELL_GOODS_POSITION_SCAN);//(添加销售商品)扫描商品获取编号
-                    bundle.putBoolean("isQR",true);//条形码
-                    IntentUtil.startActivity(context, ScanActivity.class,bundle);
+                    bundle.putBoolean("isQR", true);//条形码
+                    IntentUtil.startActivity(context, ScanActivity.class, bundle);
                 }
             });
             numberEt.setText(bean.getNumber());
-            if (bean.getNum() != 0){
-                numTv.setText(String.valueOf(bean.getNum()));
+            if (bean.getNum() != 0) {
+                numEt.setText(String.valueOf(bean.getNum()));
             }
-            if (bean.getPrice() != 0){
+            if (bean.getPrice() != 0) {
                 priceEt.setText(String.valueOf(bean.getPrice()));
             }
             unitEt.setText(bean.getUnit());
@@ -166,10 +167,30 @@ public class AddGoodsSellHelper {
                     bean.setNumber(String.valueOf(s));
                 }
             });
-            numTv.addTextChangedListener(new SimpleTextWatcher() {
+            numberEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) { // 此处为得到焦点时的处理内容
+                    } else {// 此处为失去焦点时的处理内容
+                        String number = CommonUtils.getStringByEditText(numberEt);
+                        if (!StringUtils.isEmpty(number)) {
+                            scan_goods_position = position;
+                            MerchantTabGoodsBean tabGoodsBean = bean.getBean();
+                            if (StringUtils.isEmpty(tabGoodsBean)) {
+                                searchGoods(number);
+                            } else {
+                                if (!StringUtils.isSame(tabGoodsBean.getBarcode(), number)) {
+                                    searchGoods(number);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            numEt.addTextChangedListener(new SimpleTextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    bean.setNum(SimpleTextWatcher.StringToDouble(s));
+                    bean.setNum(SimpleTextWatcher.StringToInt(s));
                     if (bean.getPrice() != 0) {
                         totalPriceTv.setTextValue(String.format("%.2f", getTotalPrice()));
                     }
@@ -193,10 +214,13 @@ public class AddGoodsSellHelper {
             });
         }
 
-        public void setData(MerchantTabGoodsBean merchantTabGoodsBean){
-            numTv.setText(CommonUtils.isOne);
-            priceEt.setText(merchantTabGoodsBean.getPrice());
-            unitEt.setText(R.string.yuan_sub);
+        public void setData(MerchantTabGoodsBean merchantTabGoodsBean) {
+            boolean isNull = StringUtils.isEmpty(merchantTabGoodsBean);
+            numEt.setText(isNull ? "" : CommonUtils.isOne);
+            priceEt.setText(isNull ? "" : merchantTabGoodsBean.getPrice());
+            unitEt.setText(isNull ? "" : context.getString(R.string.jian));
+            list.get(scan_goods_position).setGid(isNull ? "" : merchantTabGoodsBean.getId());
+            list.get(scan_goods_position).setBean(merchantTabGoodsBean);
         }
 
     }
@@ -211,16 +235,13 @@ public class AddGoodsSellHelper {
                     return;
                 }
                 List<MerchantTabGoodsBean> beanList = response.data;
+                ViewHolder viewHolder = map.get(scan_goods_position);
                 if (StringUtils.isEmpty(beanList)) {
                     UIHelper.ToastMessage(context, "不存在该商品");
+                    viewHolder.setData(null);
                     return;
                 }
-                list.get(scan_goods_position).setNumber(barcode);
-                refresh();
-
                 MerchantTabGoodsBean merchantTabGoodsBean = beanList.get(0);
-                list.get(scan_goods_position).setGid(merchantTabGoodsBean.getId());
-                ViewHolder viewHolder = map.get(scan_goods_position);
                 viewHolder.setData(merchantTabGoodsBean);
 //                UIHelper.ToastMessage(context, "存在该商品");
             }
@@ -231,7 +252,7 @@ public class AddGoodsSellHelper {
     private double getTotalPrice() {
         double totalPrice = 0;
         if (isEmpty()) {
-            return 0;
+            return totalPrice;
         }
         for (GoodsSellBean bean : list) {
             if (bean.getPrice() != 0 && bean.getPrice() != 0) {

@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.lanmei.kang.ui.user.setting.fragment.ConsumeDetailsFragment;
-import com.lanmei.kang.ui.user.setting.fragment.TopUpFragment;
 import com.lanmei.kang.ui.user.setting.fragment.WithdrawFragment;
 
 /**
@@ -22,9 +21,9 @@ public class ClubAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return ConsumeDetailsFragment.newInstance();
+//            case 1:
+//                return TopUpFragment.newInstance();
             case 1:
-                return TopUpFragment.newInstance();
-            case 2:
                 return WithdrawFragment.newInstance();
 
         }
@@ -33,7 +32,7 @@ public class ClubAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -43,10 +42,10 @@ public class ClubAdapter extends FragmentPagerAdapter {
             case 0:
                 title = "消费明细";
                 break;
+//            case 1:
+//                title = "充值记录";
+//                break;
             case 1:
-                title = "充值记录";
-                break;
-            case 2:
                 title = "提现";
                 break;
         }

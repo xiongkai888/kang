@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-
                 style="@style/ll_bottom">
 
                 <TextView
@@ -51,17 +50,24 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                style="@style/ll_bottom"
-                android:layout_marginLeft="@dimen/d_10dp">
 
-                <TextView
-                    android:id="@+id/courier_tv"
-                    style="@style/mine_text"
-                    android:text="物流单号：" />
+            <TextView
+                android:id="@+id/order_time_tv"
+                style="@style/match_parent"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingTop="@dimen/txt_12sp"
+                android:paddingBottom="@dimen/txt_12sp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:text="下单时间：" />
 
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/courier_tv"
+                style="@style/match_parent"
+                android:background="@drawable/border_bottom_divider"
+                android:paddingTop="@dimen/txt_12sp"
+                android:paddingBottom="@dimen/txt_12sp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:text="物流单号：" />
 
             <LinearLayout
                 style="@style/ll_bottom"
@@ -151,7 +157,7 @@
             <TextView style="@style/line_H10dp_on" />
 
             <LinearLayout
-                style="@style/ll_no_border"
+                style="@style/ll_bottom"
                 android:paddingLeft="@dimen/d_10dp"
                 android:paddingRight="@dimen/d_10dp">
 
@@ -166,6 +172,11 @@
 
             </LinearLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
 
             <TextView style="@style/line_H10dp_on" />
 

@@ -39,7 +39,7 @@ public class MerchantTabGoodsBean {
      * attribute : 
      * business_price : 0.00
      * sale_price : 0.00
-     * barcode : 
+     * barcode : "6971666130018"
      * status : null
      * shoucang : 0
      * classid : 7

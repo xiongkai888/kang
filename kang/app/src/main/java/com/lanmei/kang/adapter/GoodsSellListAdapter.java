@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsSellListBean;
+import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CircleImageView;
 import com.xson.common.widget.FormatTextView;
 
@@ -63,6 +65,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
         LinearLayout layout;
         @InjectView(R.id.delete_tv)
         TextView deleteTv;
+        @InjectView(R.id.cancel_tv)
+        TextView cancelTv;
 
         @InjectView(R.id.order_no_tv)
         TextView orderNoTv;
@@ -92,7 +96,7 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             totalPriceTv.setTextValue(bean.getTotal_price());
 
             ImageHelper.load(context, bean.getPic(), picIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-            nameTv.setText(bean.getUsername());
+            nameTv.setText(bean.getNickname());
 
             List<GoodsSellListBean.GoodsBean> goodsBeanList = bean.getGoods();
             int size = StringUtils.isEmpty(goodsBeanList) ? 0 : goodsBeanList.size();
@@ -104,7 +108,7 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
                     @Override
                     public void onClick(View v) {
                         if (listener != null){
-                            listener.delete(bean.getId(),position,bean.getUid());
+                            listener.delete(bean.getId(),position);
                         }
                     }
                 });
@@ -112,7 +116,23 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
             }else {
                 deleteTv.setVisibility(View.GONE);
             }
-
+            final String state = bean.getState();
+            cancelTv.setText(StringUtils.isSame(CommonUtils.isFive,state)?context.getString(R.string.Has_been_cancelled):context.getString(R.string.cancel));
+            cancelTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (StringUtils.isSame(CommonUtils.isFive,state)){
+                        return;
+                    }
+                    if (time.isToday(Long.valueOf(bean.getAddtime()))){
+                        if (listener != null){
+                            listener.cancel(bean.getId(),position,bean.getUid());
+                        }
+                    }else {
+                        UIHelper.ToastMessage(context,context.getString(R.string.no_cancel));
+                    }
+                }
+            });
         }
 
         private void addView(int position, GoodsSellListBean.GoodsBean bean, int size) {
@@ -135,7 +155,8 @@ public class GoodsSellListAdapter extends SwipeRefreshAdapter<GoodsSellListBean>
     }
 
     public interface DeleteSellGoodsListener{
-        void delete(String id,int position,String uid);
+        void delete(String id,int position);
+        void cancel(String id,int position,String uid);
     }
 
 }

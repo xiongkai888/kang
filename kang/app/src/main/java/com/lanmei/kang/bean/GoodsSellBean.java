@@ -7,7 +7,7 @@ package com.lanmei.kang.bean;
 public class GoodsSellBean {
 
     private String number;//商品编号
-    private double num;//数量
+    private int num;//数量
     private double price;//单价
     private String unit;//单位
     private String gid;//商品id
@@ -33,7 +33,7 @@ public class GoodsSellBean {
         return number;
     }
 
-    public double getNum() {
+    public int getNum() {
         return num;
     }
 
@@ -49,7 +49,7 @@ public class GoodsSellBean {
         this.number = number;
     }
 
-    public void setNum(double num) {
+    public void setNum(int num) {
         this.num = num;
     }
 

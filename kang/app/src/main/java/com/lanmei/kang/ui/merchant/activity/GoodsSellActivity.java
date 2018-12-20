@@ -72,6 +72,26 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         helper = new AddGoodsSellHelper(this, root, totalPriceTv);
         numberEt.setOnEditorActionListener(this);
+        numberEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) { // 此处为得到焦点时的处理内容
+                } else {// 此处为失去焦点时的处理内容
+                    String number = CommonUtils.getStringByEditText(numberEt);
+                    if (StringUtils.isEmpty(number)) {
+                        userBean = null;
+                    } else {
+                        if (StringUtils.isEmpty(userBean)) {
+                            searchUsers(number);
+                        } else {
+                            if (!StringUtils.isSame(userBean.getMenber_num(), number)) {
+                                searchUsers(number);
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
 
@@ -120,8 +140,8 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
                 List<UserBean> beanList = response.data;
                 if (StringUtils.isEmpty(beanList)) {
                     userBean = null;
-                    numberEt.setText("");
-                }else {
+//                    numberEt.setText("");
+                } else {
                     numberEt.setText(result);
                     userBean = beanList.get(0);
                 }
@@ -172,7 +192,6 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
         List<GoodsSellBean> list = helper.getList();
         int perfect = isPerfect(helper.getList());
         if (perfect == 1) {
-            UIHelper.ToastMessage(this, "请先完善商品信息");
             return;
         } else if (perfect == 2) {
             return;
@@ -215,6 +234,7 @@ public class GoodsSellActivity extends BaseActivity implements TextView.OnEditor
     private int isPerfect(List<GoodsSellBean> list) {
         for (GoodsSellBean bean : list) {
             if (StringUtils.isEmpty(bean.getNumber()) || bean.getNum() == 0 || bean.getPrice() == 0 || StringUtils.isEmpty(bean.getUnit())) {
+                UIHelper.ToastMessage(this, "请先完善商品信息");
                 return 1;
             }
             if (StringUtils.isEmpty(bean.getGid())) {

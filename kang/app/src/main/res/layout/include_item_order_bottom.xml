@@ -6,32 +6,33 @@
 
     <TextView
         android:id="@+id/order_1"
+        style="@style/text"
         android:layout_width="wrap_content"
-        android:minWidth="@dimen/order_minWidth"
-        android:layout_height="@dimen/d_30dp"
         android:layout_margin="@dimen/d_10dp"
         android:background="@drawable/mine_order_w"
         android:gravity="center"
-        android:text="@string/cancel_order" />
+        android:minWidth="@dimen/order_minWidth"
+        android:text="@string/cancel_order"
+        android:textSize="@dimen/txt_12sp" />
 
     <TextView
         android:id="@+id/order_2"
-        android:layout_width="wrap_content"
-        android:minWidth="@dimen/order_minWidth"
-        android:layout_height="@dimen/d_30dp"
+        style="@style/text"
         android:layout_margin="@dimen/d_10dp"
         android:background="@drawable/mine_order_w"
         android:gravity="center"
+        android:textSize="@dimen/txt_12sp"
+        android:minWidth="@dimen/order_minWidth"
         android:text="@string/contact_merchant" />
 
     <TextView
         android:id="@+id/order_3"
-        android:layout_width="wrap_content"
-        android:minWidth="@dimen/order_minWidth"
-        android:layout_height="@dimen/d_30dp"
+        style="@style/text"
+        android:textSize="@dimen/txt_12sp"
         android:layout_margin="@dimen/d_10dp"
         android:background="@drawable/mine_order"
         android:gravity="center"
+        android:minWidth="@dimen/order_minWidth"
         android:text="@string/go_consumption"
         android:textColor="@color/white" />
 

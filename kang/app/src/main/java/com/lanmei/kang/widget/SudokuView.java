@@ -30,12 +30,15 @@ public class SudokuView extends RelativeLayout {
     DoubleScaleImageView oneImageView;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
-    ItemImageAdapter adapter;
-    Context context;
+    private ItemImageAdapter adapter;
+    public boolean isComment;//是不是评论
+
+    public void setComment(boolean comment) {
+        isComment = comment;
+    }
 
     public SudokuView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
         adapter = new ItemImageAdapter(context);
     }
 
@@ -52,26 +55,7 @@ public class SudokuView extends RelativeLayout {
         if (StringUtils.isEmpty(list)) {
             recyclerView.setVisibility(View.GONE);
             oneImageView.setVisibility(View.GONE);
-        } else if (list.size() == 1) {
-            recyclerView.setVisibility(View.GONE);
-            oneImageView.setVisibility(View.VISIBLE);
-            ImageHelper.load(getContext(), list.get(0), oneImageView, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
-            oneImageView.setDoubleClickListener(new DoubleScaleImageView.DoubleClickListener() {
-                @Override
-                public void onSingleTapConfirmed() {
-                    if (l != null) {
-                        l.onClick(0);
-                    }
-                }
-
-                @Override
-                public void onDoubleTap() {
-                    if (l != null) {
-                        l.onDoubleTap(0);
-                    }
-                }
-            });
-        } else {
+        } else if (list.size() > 1 || (isComment && list.size() == 1)) {
             recyclerView.setVisibility(View.VISIBLE);
             oneImageView.setVisibility(View.GONE);
             adapter.setData(list);
@@ -90,6 +74,25 @@ public class SudokuView extends RelativeLayout {
                 public void onDoubleTap(int position) {
                     if (l != null) {
                         l.onDoubleTap(position);
+                    }
+                }
+            });
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            oneImageView.setVisibility(View.VISIBLE);
+            ImageHelper.load(getContext(), list.get(0), oneImageView, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
+            oneImageView.setDoubleClickListener(new DoubleScaleImageView.DoubleClickListener() {
+                @Override
+                public void onSingleTapConfirmed() {
+                    if (l != null) {
+                        l.onClick(0);
+                    }
+                }
+
+                @Override
+                public void onDoubleTap() {
+                    if (l != null) {
+                        l.onDoubleTap(0);
                     }
                 }
             });

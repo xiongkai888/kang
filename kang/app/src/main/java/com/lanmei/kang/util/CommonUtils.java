@@ -282,9 +282,7 @@ public class CommonUtils {
     }
 
     public static String getRatioPrice(Context context,String price,java.text.DecimalFormat df){
-//        double ratio = 100;
         double ratio = getRatio(context);
-        L.d(L.TAG,"ratio:"+ratio);
         if (StringUtils.isEmpty(price)){
             price = isZero;
         }

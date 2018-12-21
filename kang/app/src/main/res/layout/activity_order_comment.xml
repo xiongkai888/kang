@@ -39,6 +39,28 @@
                     android:maxLength="400"
                     android:padding="10dp" />
 
+
+
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_moment_add_photos"
+                    style="@style/WrapWrap"
+                    android:layout_margin="10dp"
+                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="0dp"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="4dp"
+                    app:bga_snpl_itemWidth="0dp"
+                    app:bga_snpl_maxItemCount="9"
+                    app:bga_snpl_otherWhiteSpacing="100dp"
+                    app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                    app:bga_snpl_plusEnable="true"
+                    app:bga_snpl_sortable="true" />
+
+
+
                 <LinearLayout
                     android:gravity="center_vertical"
                     style="@style/h_match_parent_no">

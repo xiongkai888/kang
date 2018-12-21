@@ -10,7 +10,6 @@ import com.xson.common.api.AbstractApi;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import butterknife.InjectView;
@@ -26,8 +25,6 @@ public class ConsumeDetailsFragment extends BaseFragment {
 
     @InjectView(R.id.pull_refresh_rv)
     SmartSwipeRefreshLayout smartSwipeRefreshLayout;
-
-    TopUpAdapter mAdapter;
 
     @Override
     public int getContentViewId() {
@@ -47,13 +44,12 @@ public class ConsumeDetailsFragment extends BaseFragment {
     }
     private void initSwipeRefreshLayout() {
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(context));
 
         KangQiMeiApi api = new KangQiMeiApi("member/money_log");
         api.add("token",api.getToken(context));
         api.add("uid",api.getUserId(context));
         api.setMethod(AbstractApi.Method.GET);
-        mAdapter = new TopUpAdapter(context);
+        TopUpAdapter  mAdapter = new TopUpAdapter(context);
         smartSwipeRefreshLayout.setAdapter(mAdapter);
         SwipeRefreshController<NoPageListBean<RechargeResultBean>> controller = new SwipeRefreshController<NoPageListBean<RechargeResultBean>>(context, smartSwipeRefreshLayout, api, mAdapter) {
         };

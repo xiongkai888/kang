@@ -1,5 +1,7 @@
 package com.lanmei.kang.bean;
 
+import java.util.List;
+
 /**
  * Created by xkai on 2018/1/18.
  * 商品详情评论
@@ -27,7 +29,7 @@ public class GoodsCommentBean {
     private String time;
     private String comment_time;
     private String contents;
-    private String comment_pic;
+    private List<String> comment_pic;
     private String point;
     private String status;
     /**
@@ -94,11 +96,11 @@ public class GoodsCommentBean {
         this.contents = contents;
     }
 
-    public String getComment_pic() {
+    public List<String> getComment_pic() {
         return comment_pic;
     }
 
-    public void setComment_pic(String comment_pic) {
+    public void setComment_pic(List<String> comment_pic) {
         this.comment_pic = comment_pic;
     }
 

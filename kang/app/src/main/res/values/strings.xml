@@ -167,7 +167,7 @@
     <string name="my_item_order">我的项目订单</string>
     <string name="my_goods_order">我的订单</string>
     <string name="goods_price_num">￥1221\nx1</string>
-    <string name="goods_price_and_num">￥%1$s\nx%2$s</string>
+    <string name="goods_price_and_num">￥%1$s\u3000x%2$s</string>
     <string name="my_coupon">我的优惠卷</string>
     <string name="confirm_order">确认订单</string>
     <string name="is_default">默认</string>

@@ -42,7 +42,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * 动态  动态详情
+ * 动态详情
  */
 public class DynamicDetailsActivity extends BaseActivity {
 
@@ -185,6 +185,7 @@ public class DynamicDetailsActivity extends BaseActivity {
                 if (isFinishing()) {
                     return;
                 }
+                CommonUtils.deleteOssObjectList(mbean.getFile());//
                 UIHelper.ToastMessage(DynamicDetailsActivity.this, response.getInfo());
                 EventBus.getDefault().post(new PublishDynamicEvent());
                 finish();

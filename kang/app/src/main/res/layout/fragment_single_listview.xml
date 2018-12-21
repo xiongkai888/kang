@@ -3,8 +3,9 @@
     android:id="@+id/pull_refresh_rv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@color/divider"
     android:background="@color/colorF4F4"
+    android:descendantFocusability="blocksDescendants"
+    android:divider="@color/divider"
     android:dividerHeight="0.5dp"
     android:listSelector="@null">
 

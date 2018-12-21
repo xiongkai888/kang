@@ -44,5 +44,5 @@
 
     <!--关注、加好友按钮的最小宽度-->
     <dimen name="attention_minWidth">65dp</dimen>
-    <dimen name="order_minWidth">85dp</dimen>
+    <dimen name="order_minWidth">70dp</dimen>
 </resources>

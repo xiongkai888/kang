@@ -2,12 +2,16 @@ package com.lanmei.kang.util;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSONArray;
+import com.xson.common.utils.StringUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * json 和 实体类之间的相互转换
@@ -90,6 +94,23 @@ public class JsonUtil {
 		is.close();
 		mJsonObj = new JSONObject(sb.toString());
 		return mJsonObj;
+	}
+
+	/**
+	 * 根据List获取到对应的JSONArray
+	 * @param list
+	 * @return
+	 */
+	public static JSONArray getJSONArrayByList(List<?> list){
+		JSONArray jsonArray = new JSONArray();
+		if (StringUtils.isEmpty(list)) {
+			return jsonArray;//nerver return null
+		}
+
+		for (Object object : list) {
+			jsonArray.add(object);
+		}
+		return jsonArray;
 	}
 	
 }

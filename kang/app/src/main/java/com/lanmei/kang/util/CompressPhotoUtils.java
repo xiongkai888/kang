@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * Created by xkai on 2017/6/1.
- * 批量压缩图片
+ * 批量压缩图片并上传
  */
 
 public class CompressPhotoUtils {
@@ -141,7 +141,7 @@ public class CompressPhotoUtils {
      * 保存bitmap到内存卡
      */
     public String saveBitmap(Bitmap bmp, int num) {
-        File file = new File("mnt/sdcard/yixiuge" + type + "/");
+        File file = new File("mnt/sdcard/kang" + type + "/");
         String path = null;
         if (!file.exists())
             file.mkdirs();

@@ -50,7 +50,7 @@ public class MyCollectActivity extends BaseActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(true);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.my_collect);
+        actionbar.setTitle("资讯收藏");
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         if (!EventBus.getDefault().isRegistered(this)) {

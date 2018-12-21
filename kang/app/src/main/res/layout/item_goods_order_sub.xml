@@ -7,6 +7,7 @@
 
     <ImageView
         android:id="@+id/items_icon_iv"
+        style="@style/text14color999"
         android:layout_width="@dimen/d_100dp"
         android:layout_height="@dimen/d_100dp"
         android:layout_marginRight="@dimen/d_10dp"
@@ -15,40 +16,43 @@
 
     <TextView
         android:id="@+id/title_tv"
-        style="@style/text"
+        style="@style/text14color666"
         android:layout_toRightOf="@id/items_icon_iv"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:text="@string/mine" />
 
     <TextView
         android:id="@+id/specifications_name_tv"
-        style="@style/text"
+        style="@style/text14color666"
         android:layout_below="@id/title_tv"
         android:layout_toRightOf="@id/items_icon_iv"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/mine" />
 
     <LinearLayout
-        style="@style/v_match_parent_no"
+        style="@style/h_match_parent_no"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:gravity="right">
+        android:layout_toRightOf="@id/items_icon_iv"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/price_num_tv"
-            style="@style/text"
-            android:gravity="right"
-            android:text="000"
-            android:visibility="visible" />
+            style="@style/text_weight"
+            android:textColor="@color/color666" />
 
         <TextView
             android:id="@+id/comment_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/d_30dp"
+            style="@style/text"
             android:layout_alignParentRight="true"
             android:background="@drawable/mine_order"
             android:gravity="center"
             android:minWidth="@dimen/order_minWidth"
             android:text="@string/bask_in_a_single_comment"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_12sp" />
 
     </LinearLayout>
 

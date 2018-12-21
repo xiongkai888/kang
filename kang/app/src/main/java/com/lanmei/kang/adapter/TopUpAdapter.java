@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.RechargeResultBean;
+import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 
 import butterknife.ButterKnife;
@@ -20,8 +21,11 @@ import butterknife.InjectView;
  */
 public class TopUpAdapter extends SwipeRefreshAdapter<RechargeResultBean> {
 
+    private FormatTime time;
+
     public TopUpAdapter(Context context) {
         super(context);
+        time = new FormatTime(context);
     }
 
     @Override
@@ -40,7 +44,8 @@ public class TopUpAdapter extends SwipeRefreshAdapter<RechargeResultBean> {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.rechargeTypeTv.setText(bean.getRecode_info());
         viewHolder.rechargePriceTv.setText(String.format(context.getString(R.string.yuan), bean.getMoney()));
-        viewHolder.rechargeTimeTv.setText(bean.getAddtime());
+        time.setTime(bean.getAddtime());
+        viewHolder.rechargeTimeTv.setText(time.formatterTime());
         viewHolder.balanceTv.setText(String.format(context.getString(R.string.balance), bean.getBalance()));
     }
 

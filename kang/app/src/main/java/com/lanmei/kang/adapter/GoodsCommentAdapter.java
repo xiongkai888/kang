@@ -10,11 +10,15 @@ import android.widget.TextView;
 
 import com.lanmei.kang.R;
 import com.lanmei.kang.bean.GoodsCommentBean;
+import com.lanmei.kang.util.CommonUtils;
 import com.lanmei.kang.util.FormatTime;
+import com.lanmei.kang.widget.SudokuView;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.widget.CircleImageView;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -31,7 +35,7 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
     public GoodsCommentAdapter(Context context) {
         super(context);
         time = new FormatTime(context);
-        time.setApplyToTimeYearMonthDay();
+        time.setApplyToTimeNoSecond();
     }
 
     //设置只有一个item
@@ -41,7 +45,6 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
-
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_comment_goods, parent, false));
     }
 
@@ -67,23 +70,41 @@ public class GoodsCommentAdapter extends SwipeRefreshAdapter<GoodsCommentBean> {
         RatingBar ratingBar;
         @InjectView(R.id.content_tv)
         TextView contentTv;
+        @InjectView(R.id.sudokuView)
+        SudokuView sudokuView;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
 
-        public void setParameter(GoodsCommentBean bean) {
+        public void setParameter(final GoodsCommentBean bean) {
             ImageHelper.load(context, bean.getUser_pic(), headIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             nameTv.setText(bean.getUsername());
             time.setTime(bean.getComment_time());
             timeTv.setText(time.formatterTime());
             contentTv.setText(bean.getContents());
-//            float point = Float.valueOf(StringUtils.isEmpty(bean.getPoint())?0:Float.valueOf(bean.getPoint()));
-            float point = 3;
+            float point = Float.valueOf(StringUtils.isEmpty(bean.getPoint()) ? 0 : Float.valueOf(bean.getPoint()));
+//            float point = 3;
             ratingBar.setRating(point);
-        }
 
+            final List<String> list = bean.getComment_pic();
+//            L.d(L.TAG,StringUtils.isEmpty(list)+"");
+            sudokuView.setVisibility(View.VISIBLE);
+            sudokuView.setComment(true);
+            sudokuView.setListData(list);
+            sudokuView.setOnSingleClickListener(new SudokuView.SudokuViewClickListener() {
+                @Override
+                public void onClick(int positionSub) {
+                    CommonUtils.startPhotoBrowserActivity(context, CommonUtils.toArray(bean.getComment_pic()), positionSub);
+                }
+
+                @Override
+                public void onDoubleTap(int position) {
+
+                }
+            });
+        }
     }
 
     @Override

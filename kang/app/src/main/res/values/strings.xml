@@ -64,6 +64,7 @@
     <string name="time">2018-10-1 12:33:55</string>
     <string name="input_consume_code">请输入消费验证码</string>
     <string name="price">￥%1$s</string>
+    <string name="full_available">满%1$s可用</string>
     <string name="comment_num">%1$s条评论</string>
     <string name="share">分享</string>
     <string name="comment">评论</string>
@@ -176,6 +177,7 @@
     <string name="input_details_address">请输入详细地址</string>
     <string name="choose_address">请选择收货地址</string>
     <string name="year_month">%1$s-%2$s</string>
+    <string name="period_validity">有效期：%1$s至%2$s</string>
     <string name="barcode">编号：%1$s</string>
     <string name="goodsname">商品名称：%1$s</string>
     <string name="number">数量：%1$s</string>
@@ -233,5 +235,8 @@
     <string name="choose_bank_card">请选择银行卡</string>
     <string name="no_cancel">只有当天添加的商品才能取消</string>
     <string name="pay_type">请选择支付方式</string>
+    <string name="unused">未使用</string>
+    <string name="have_been_used">已使用</string>
+    <string name="have_expired">已过期</string>
 
 </resources>

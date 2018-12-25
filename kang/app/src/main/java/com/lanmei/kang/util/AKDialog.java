@@ -15,10 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.view.ChangePhoneView;
+import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 
@@ -113,13 +116,14 @@ public class AKDialog {
 
     /**
      * 编辑分类
+     *
      * @param context
      * @param msg
      * @param confirmListener
      * @return
      */
 
-    public static AlertDialog getCompileCategoryDialog(Context context, String msg, String name,final ConfirmListener confirmListener) {
+    public static AlertDialog getCompileCategoryDialog(Context context, String msg, String name, final ConfirmListener confirmListener) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = View.inflate(context, R.layout.dialog_compile_category, null);
@@ -356,6 +360,43 @@ public class AKDialog {
 
     public interface ConfirmListener {
         void yes(String code);
+    }
+
+
+    //签到弹框
+    public static void showCouponDialog(final Context context) {
+
+        final Dialog dialog = new Dialog(context, R.style.ActionSheetDialogStyle);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_coupon, null);
+
+        TextView priceTv = view.findViewById(R.id.price_tv);
+        TextView contentTv = view.findViewById(R.id.content_tv);
+        ImageView intoCouponListIv = view.findViewById(R.id.into_coupon_list_iv);
+        ImageView crossIv = view.findViewById(R.id.crossIv);
+
+        intoCouponListIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtil.startActivity(context, CouponActivity.class);
+                dialog.dismiss();
+            }
+        });
+        crossIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.setContentView(view);
+        Window dialogWindow = dialog.getWindow();
+//        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        WindowManager m = dialogWindow.getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        lp.width = d.getWidth();
+        dialogWindow.setAttributes(lp);
+        dialog.show();
     }
 
 }

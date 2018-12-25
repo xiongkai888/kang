@@ -1,33 +1,19 @@
 package com.lanmei.kang.ui;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.MainPagerAdapter;
-import com.lanmei.kang.event.ActivityResultEvent;
-import com.lanmei.kang.event.LocationEvent;
 import com.lanmei.kang.event.LoginQuitEvent;
-import com.lanmei.kang.helper.CameraHelper;
 import com.lanmei.kang.helper.TabHelper;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.update.UpdateAppConfig;
-import com.lanmei.kang.util.BaiduLocation;
-import com.lanmei.kang.util.SharedAccount;
-import com.xson.common.utils.ImageUtils;
+import com.lanmei.kang.util.AKDialog;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.L;
-import com.xson.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,7 +27,6 @@ import butterknife.InjectView;
 public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelectedListener {
 
     public static String MSG_COUNT = "MSG_COUNT";//收到的好友消息数通知
-    private static final int PERMISSION_LOCATION = 100;
 
     @InjectView(R.id.viewPager)
     ViewPager mViewPager;
@@ -67,72 +52,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         tabHelper.setupTabIcons();
         initViewPager();
-        initPermission();//百度定位
-    }
-
-    private void initBaiDu() {
-        new BaiduLocation(this, new BaiduLocation.WHbdLocationListener() {
-            @Override
-            public void bdLocationListener(LocationClient locationClient, BDLocation location) {
-                if (null != location && location.getLocType() != BDLocation.TypeServerError) {
-                    double longitude = location.getLongitude();//经度
-                    double latitude = location.getLatitude();//纬度
-                    L.d("BaiduLocation", "经度: " + longitude + "  纬度 : " + latitude + "  定位所在城市：" + location.getCity());
-                    if (!StringUtils.isEmpty(location.getCity())) {
-                        EventBus.getDefault().post(new LocationEvent(location.getCity(), longitude + "", latitude + ""));
-                        SharedAccount.getInstance(MainActivity.this).saveCity(location.getCity());
-                        SharedAccount.getInstance(MainActivity.this).saveLat(latitude + "");
-                        SharedAccount.getInstance(MainActivity.this).saveLon(longitude + "");
-                    }
-                    locationClient.stop();
-                }
-            }
-        });
-    }
-
-    public void initPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_LOCATION);
-            } else {
-                initBaiDu();
-            }
-        } else {
-            initBaiDu();
-        }
-    }
-
-    //在我的上家界面修改头像时
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-            case CameraHelper.CHOOSE_FROM_GALLAY:
-                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ImageUtils.getImageFileFromPickerResult(this, data)));
-                L.d(L.TAG, "MainActivity.onActivityResult 0");
-                break;
-            case CameraHelper.CHOOSE_FROM_CAMERA:
-                //注意小米拍照后data 为null
-                L.d(L.TAG, "MainActivity.onActivityResult 1");
-                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
-                break;
-            case CameraHelper.RESULT_FROM_CROP:
-                L.d(L.TAG, "MainActivity.onActivityResult 2");
-                EventBus.getDefault().post(new ActivityResultEvent(requestCode, ""));
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_LOCATION:
-                initBaiDu();
-                break;
-        }
+        AKDialog.showCouponDialog(this);
     }
 
     public void initViewPager() {

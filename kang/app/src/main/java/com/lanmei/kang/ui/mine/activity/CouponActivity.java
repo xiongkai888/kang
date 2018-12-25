@@ -40,7 +40,7 @@ public class CouponActivity extends BaseActivity{
         actionbar.setTitle(R.string.my_coupon);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
-        mViewPager.setAdapter(new CouponAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new CouponAdapter(getSupportFragmentManager(),this));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

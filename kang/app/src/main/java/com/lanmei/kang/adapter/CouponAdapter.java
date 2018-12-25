@@ -1,27 +1,31 @@
 package com.lanmei.kang.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.lanmei.kang.R;
 import com.lanmei.kang.ui.mine.fragment.CouponFragment;
 
 /**
- * 课程：团体课程、私人课程、在线课程
+ *
  */
 public class CouponAdapter extends FragmentPagerAdapter {
 
-
-    public CouponAdapter(FragmentManager fm) {
+    private Context context;
+    
+    public CouponAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         CouponFragment fragment = new CouponFragment();
-        bundle.putString("cid","cid");
+        bundle.putInt("status",position+1);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -35,11 +39,11 @@ public class CouponAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "未使用";
+                return context.getString(R.string.unused);
             case 1:
-                return "已使用";
+                return context.getString(R.string.have_been_used);
             case 2:
-                return "已过期";
+                return context.getString(R.string.have_expired);
         }
 
         return null;

@@ -88,9 +88,10 @@ public class NewsDetailsActivity extends BaseActivity {
         };
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.ONLY_PULL_UP);
         controller.loadFirstPage();
-        loadBiDetails();//加载资讯详情
+        mAdapter.notifyDataSetChanged();
         //分享初始化
         mShareHelper = new ShareHelper(this);
+        loadBiDetails();//加载资讯详情
     }
 
 
@@ -110,11 +111,10 @@ public class NewsDetailsActivity extends BaseActivity {
                 NewsDetailsBean bean = response.data;
                 if (bean == null){
                     UIHelper.ToastMessage(getContext(),"无法获取资讯详情");
-                    finish();
                     return;
                 }
                 EventBus.getDefault().post(new NewsCommEvent(bean.getId(),bean.getReviews()));//设置资讯列表的评论数
-                mAdapter.setNewsDetailsBean(bean);
+                mAdapter.setNewsDetails(bean);
             }
         });
     }

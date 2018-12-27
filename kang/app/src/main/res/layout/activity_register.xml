@@ -148,6 +148,7 @@
 
 
                     <EditText
+                        android:id="@+id/pwd_again_et"
                         style="@style/login_et_bottom"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -192,6 +193,17 @@
                 style="@style/button_style"
                 android:layout_marginTop="50dp"
                 android:text="@string/register" />
+
+            <com.xson.common.widget.FormatTextView
+                android:id="@+id/agree_protocol_tv"
+                style="@style/text12color666"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/d_30dp"
+                android:layout_marginLeft="@dimen/d_15dp"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:visibility="gone"
+                app:defaultValue="《用户协议》"
+                app:formatText="@string/agree_protocol" />
 
         </LinearLayout>
 

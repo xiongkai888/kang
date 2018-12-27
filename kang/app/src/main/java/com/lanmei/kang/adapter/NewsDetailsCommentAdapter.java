@@ -37,26 +37,21 @@ import butterknife.InjectView;
 public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBean> {
 
     final public static int TYPE_BANNER = 100;
-    BannerViewHolder bannerHolder;
-    NewsDetailsBean detailsBean;
-    FormatTime time;
+    private BannerViewHolder bannerHolder;
+    private FormatTime time;
 
     public NewsDetailsCommentAdapter(Context context) {
         super(context);
         time = new FormatTime(context);
     }
 
-
-    public void setNewsDetailsBean(NewsDetailsBean detailsBean) {
-        this.detailsBean = detailsBean;
-        notifyDataSetChanged();
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder2(ViewGroup parent, int viewType) {
 
         if (viewType == TYPE_BANNER) { // banner
-            bannerHolder = new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.head_news_details, parent, false));
+            if (bannerHolder == null) {
+                bannerHolder = new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.head_news_details, parent, false));
+            }
             return bannerHolder;
         }
         // 列表  item_home_list
@@ -67,7 +62,7 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_BANNER) {
-            onBindBannerViewHolder(holder, position); // banner
+//            onBindBannerViewHolder(holder, position); // banner
             return;
         }
         NewsCommentBean bean = getItem(position - 1);
@@ -110,7 +105,7 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
         }
 
         public void setParameter(NewsCommentBean bean) {
-            ImageHelper.load(context,bean.getPic(),userHeadIv,null,true,R.mipmap.default_pic,R.mipmap.default_pic);
+            ImageHelper.load(context, bean.getPic(), userHeadIv, null, true, R.mipmap.default_pic, R.mipmap.default_pic);
             nameTv.setText(bean.getNickname());
             time.setTime(bean.getAddtime());
             timeTv.setText(time.getFormatTime());
@@ -119,48 +114,6 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
 
     }
 
-    public void onBindBannerViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final BannerViewHolder viewHolder = (BannerViewHolder) holder;
-        if (detailsBean == null) {
-            return;
-        }
-        viewHolder.mTitleTv.setText(detailsBean.getTitle());
-        time.setTime(detailsBean.getAddtime());
-        viewHolder.mCommentTv.setText(String.format(context.getString(R.string.reviews_num), detailsBean.getReviews()));
-        viewHolder.mTimeTv.setText(time.getFormatTime());
-        viewHolder.mTime1Tv.setText(time.getFormatTime());
-        viewHolder.mCnameTv.setText(detailsBean.getCname());
-        CommonUtils.setTextViewType(context,detailsBean.getFavoured(),viewHolder.mCollectTv,R.string.collect,R.string.collected);
-        viewHolder.mCollectTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!CommonUtils.isLogin(context)){
-                    return;
-                }
-                KangQiMeiApi api = new KangQiMeiApi("post/do_favour");
-                api.add("uid",api.getUserId(context));
-                api.add("token",api.getToken(context));
-                api.add("id",detailsBean.getId());
-                if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isOne)) {
-                    api.add("del",detailsBean.getFavoured());
-                }
-                HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
-                    @Override
-                    public void onResponse(BaseBean response) {
-                        if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isZero)) {//0为未收藏，1为收藏
-                            detailsBean.setFavoured(CommonUtils.isOne);
-                        } else {
-                            detailsBean.setFavoured(CommonUtils.isZero);
-                        }
-                        CommonUtils.setTextViewType(context,detailsBean.getFavoured(),viewHolder.mCollectTv,R.string.collect,R.string.collected);
-                        UIHelper.ToastMessage(context, response.getInfo());
-                        EventBus.getDefault().post(new CollectNewsEvent());
-                    }
-                });
-            }
-        });
-        WebViewPhotoBrowserUtil.photoBrowser(context, viewHolder.mWebView, detailsBean.getContent());
-    }
 
     public class BannerViewHolder extends RecyclerView.ViewHolder {
         @InjectView(R.id.web_view)
@@ -182,7 +135,56 @@ public class NewsDetailsCommentAdapter extends SwipeRefreshAdapter<NewsCommentBe
             super(view);
             ButterKnife.inject(this, view);
         }
+
+        public void setNewsDetails(final NewsDetailsBean detailsBean) {
+            if (detailsBean == null) {
+                return;
+            }
+            mTitleTv.setText(detailsBean.getTitle());
+            time.setTime(detailsBean.getAddtime());
+            mCommentTv.setText(String.format(context.getString(R.string.reviews_num), detailsBean.getReviews()));
+            mTimeTv.setText(time.getFormatTime());
+            mTime1Tv.setText(time.getFormatTime());
+            mCnameTv.setText(detailsBean.getCname());
+            CommonUtils.setTextViewType(context, detailsBean.getFavoured(), mCollectTv, R.string.collect, R.string.collected);
+            mCollectTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!CommonUtils.isLogin(context)) {
+                        return;
+                    }
+                    KangQiMeiApi api = new KangQiMeiApi("post/do_favour");
+                    api.add("uid", api.getUserId(context));
+                    api.add("token", api.getToken(context));
+                    api.add("id", detailsBean.getId());
+                    if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isOne)) {
+                        api.add("del", detailsBean.getFavoured());
+                    }
+                    HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {
+                        @Override
+                        public void onResponse(BaseBean response) {
+                            if (mTime1Tv == null) {
+                                return;
+                            }
+                            if (StringUtils.isSame(detailsBean.getFavoured(), CommonUtils.isZero)) {//0为未收藏，1为收藏
+                                detailsBean.setFavoured(CommonUtils.isOne);
+                            } else {
+                                detailsBean.setFavoured(CommonUtils.isZero);
+                            }
+                            CommonUtils.setTextViewType(context, detailsBean.getFavoured(), mCollectTv, R.string.collect, R.string.collected);
+                            UIHelper.ToastMessage(context, response.getInfo());
+                            EventBus.getDefault().post(new CollectNewsEvent());
+                        }
+                    });
+                }
+            });
+            WebViewPhotoBrowserUtil.photoBrowser(context, mWebView, detailsBean.getContent());
+        }
+
     }
 
+    public void setNewsDetails(NewsDetailsBean detailsBean) {
+        bannerHolder.setNewsDetails(detailsBean);
+    }
 
 }

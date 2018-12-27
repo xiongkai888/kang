@@ -6,6 +6,7 @@
     <string name="input_pwd">请输入密码</string>
     <string name="input_pwd_again">请再次输入密码</string>
     <string name="about_us">关于我们</string>
+    <string name="password_inconformity">两次密码输入不一致</string>
     <string name="my_integral">我的积分</string>
     <string name="my_collect">我的收藏</string>
     <string name="my_activity">我的活动</string>
@@ -238,5 +239,7 @@
     <string name="unused">未使用</string>
     <string name="have_been_used">已使用</string>
     <string name="have_expired">已过期</string>
+    <string name="register_protocol">注册协议</string>
+    <string name="agree_protocol"><![CDATA[点击注册即表示同意 <font color="#ff2456">%s</font>]]></string>
 
 </resources>

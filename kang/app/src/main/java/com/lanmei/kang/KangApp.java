@@ -43,7 +43,7 @@ public class KangApp extends BaseApp {
     protected void installMonitor() {
         applicationContext = this;
         instance = this;
-        L.debug = OSSLog.enableLog = false;
+        L.debug = OSSLog.enableLog = true;
         if (L.debug) {
 //            LeakCanary.install(this);//LeakCanary内存泄漏监控
         }

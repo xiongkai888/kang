@@ -12,7 +12,6 @@ import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.helper.TabHelper;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.update.UpdateAppConfig;
-import com.lanmei.kang.util.AKDialog;
 import com.xson.common.utils.IntentUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,7 +51,7 @@ public class MainActivity extends BaseHxActivity implements TabLayout.OnTabSelec
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         tabHelper.setupTabIcons();
         initViewPager();
-        AKDialog.showCouponDialog(this);
+//        AKDialog.showCouponDialog(this);
     }
 
     public void initViewPager() {

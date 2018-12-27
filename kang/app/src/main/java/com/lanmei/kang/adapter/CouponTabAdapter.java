@@ -27,7 +27,6 @@ public class CouponTabAdapter extends SwipeRefreshAdapter<CouponBean> {
     public CouponTabAdapter(Context context) {
         super(context);
         time = new FormatTime(context);
-        time.setApplyToTimeYearMonthDay();
     }
 
     @Override

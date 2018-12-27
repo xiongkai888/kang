@@ -56,7 +56,6 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_BANNER) {
-
             return;
         }
         final MerchantTabGoodsBean bean = getItem(position - 1);
@@ -124,7 +123,7 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
         RecyclerView recyclerViewHotImg;
 
 
-        BannerViewHolder(View view) {
+        public BannerViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }

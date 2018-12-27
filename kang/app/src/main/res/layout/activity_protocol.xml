@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    style="@style/v_match_parent_no">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <ScrollView
+        style="@style/match_parent_no">
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/text"
+            android:padding="@dimen/d_10dp"
+            android:layout_marginBottom="@dimen/d_10dp" />
+
+    </ScrollView>
+
+
+</LinearLayout>

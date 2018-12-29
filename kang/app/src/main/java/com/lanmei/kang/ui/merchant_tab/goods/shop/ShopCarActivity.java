@@ -11,14 +11,21 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.core.IPresenter;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.helper.coupon.BeanCoupon;
+import com.lanmei.kang.helper.coupon.GoodsCoupons;
 import com.lanmei.kang.ui.MainActivity;
 import com.lanmei.kang.ui.merchant_tab.activity.ConfirmOrderActivity;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.NoPageListBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.L;
 import com.xson.common.utils.StringUtils;
@@ -54,11 +61,17 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
     FormatTextView mTotalMoneyTV;
     @InjectView(R.id.balance_bt)
     Button balanceBt;
+    @InjectView(R.id.coupon_tv)
+    TextView couponTv;
     @InjectView(R.id.ll_bottom)
     LinearLayout llBottom;
     ShopCarAdapter adapter;
     Button goBt;//去逛逛
-    ShopCartContract.Presenter mPresenter;
+    private ShopCartContract.Presenter mPresenter;
+    private GoodsCoupons goodsCoupons;//优惠券工具类
+    private BeanCoupon coupon;//最高金额的优惠券
+    private List<BeanCoupon> couponList;//获取可用的优惠券列表
+    private double sum;//选择商品的总价
 
     @Override
     public int getContentViewId() {
@@ -76,13 +89,26 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
                 onBackPressed();
             }
         });
-
+        goodsCoupons = new GoodsCoupons(this, new GoodsCoupons.OnCouponsListener() {
+            @Override
+            public void onChangeCoupon(List<BeanCoupon> result) {
+                if (!StringUtils.isEmpty(result)) {
+                    coupon = result.get(0);
+                    couponTv.setVisibility(View.VISIBLE);
+                    double v = coupon.getMoney();
+                    couponTv.setText("已优惠"+coupon.getMoney()+"元");
+                    mTotalMoneyTV.setTextValue(String.format("%.1f", sum-v));
+                } else {
+                    couponTv.setVisibility(View.GONE);
+                }
+            }
+        });
         mPresenter = new ShopCarPresenter(this, this);
 
         mEmptyView.removeAllViews();
         View view = LayoutInflater.from(this).inflate(R.layout.empty_shop_car, mEmptyView, false);
         mEmptyView.addView(view);
-        goBt = (Button)view.findViewById(R.id.go_bt);
+        goBt = (Button) view.findViewById(R.id.go_bt);
         goBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,19 +116,46 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         adapter = new ShopCarAdapter(this, mPresenter);
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(adapter);
-
         mAllSelectCheckbox.setOnCheckedChangeListener(mAllSelectedChangeListener);
-
         mPresenter.start();
+        loadCoupon();
     }
 
     @Override
     public void setPresenter(IPresenter presenter) {
 
+    }
+
+    //优惠券
+    private void loadCoupon() {
+        if (StringUtils.isEmpty(mPresenter.getShopCartList())) {
+            return;
+        }
+        KangQiMeiApi api = new KangQiMeiApi("app/coupon");
+        api.add("order", 1);
+        api.add("uid", api.getUserId(this));
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<BeanCoupon>>() {
+            @Override
+            public void onResponse(NoPageListBean<BeanCoupon> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                couponList = response.data;
+                goodsCoupons.setCouponsList(couponList);
+                setCoupon();
+            }
+        });
+    }
+
+    private void setCoupon(){
+        if (sum == 0 || StringUtils.isEmpty(couponList) || StringUtils.isEmpty(mPresenter.getSeletctedCarList())) {
+            couponTv.setVisibility(View.GONE);
+        } else {
+            goodsCoupons.setGoodsTypes(mPresenter.getSeletctedCarList());
+        }
     }
 
     //支付成功事件
@@ -143,14 +196,15 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
 
     @Override
     public void summation(double sum, boolean selectedAll) {
+        this.sum = sum;
         mTotalMoneyTV.setTextValue(String.format("%.1f", sum));
 
         mAllSelectCheckbox.setOnCheckedChangeListener(null);
         mAllSelectCheckbox.setChecked(selectedAll);
         mAllSelectCheckbox.setOnCheckedChangeListener(mAllSelectedChangeListener);
 
-        L.d("ShopCarActivity", "summation");//
         refreshShopCart();
+        setCoupon();
     }
 
     int style = 1;//1去付款，2删除
@@ -171,13 +225,15 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         }
         return true;
     }
+
     List<ShopCarBean> delecteList;//支付成功后要删除的数据
+
     @OnClick(R.id.balance_bt)
     public void onClick() {
         delecteList = mPresenter.getSeletctedCarList();
         if (style == 1) {//1去付款，2删除
             Bundle bundle = new Bundle();
-            bundle.putSerializable("list", (Serializable)delecteList);
+            bundle.putSerializable("list", (Serializable) delecteList);
             IntentUtil.startActivity(getContext(), ConfirmOrderActivity.class, bundle);
         } else {
             if (StringUtils.isEmpty(delecteList)) {

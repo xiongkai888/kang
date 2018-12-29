@@ -64,27 +64,32 @@
 
             <TextView style="@style/line_H10dp_on" />
 
-
             <LinearLayout
                 android:id="@+id/ll_coupon"
-                style="@style/h_match_parent_no"
-                android:visibility="visible">
+                style="@style/v_match_parent_no"
+                android:visibility="gone">
 
-                <TextView
-                    style="@style/mine_text"
-                    android:layout_marginLeft="@dimen/d_10dp"
-                    android:text="优惠券" />
+                <LinearLayout
+                    style="@style/h_match_parent_no"
+                    android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/coupon_name_tv"
-                    style="@style/text14color666"
-                    android:layout_marginLeft="@dimen/d_10dp"
-                    android:layout_marginRight="@dimen/d_10dp"
-                    android:hint="@string/no_coupon" />
+                    <TextView
+                        style="@style/mine_text"
+                        android:layout_marginLeft="@dimen/d_10dp"
+                        android:text="优惠券" />
 
+                    <TextView
+                        android:id="@+id/coupon_name_tv"
+                        style="@style/text12color666"
+                        android:layout_marginLeft="@dimen/d_10dp"
+                        android:layout_marginRight="@dimen/d_10dp"
+                        android:gravity="right"
+                        android:hint="@string/no_coupon" />
+
+                </LinearLayout>
+
+                <TextView style="@style/line_H10dp_on" />
             </LinearLayout>
-
-            <TextView style="@style/line_H10dp_on" />
 
             <TextView
                 style="@style/match_parent"
@@ -114,8 +119,8 @@
             </LinearLayout>
 
             <TextView
-                android:layout_marginLeft="@dimen/d_15dp"
-                style="@style/line_H1dp_CD" />
+                style="@style/line_H1dp_CD"
+                android:layout_marginLeft="@dimen/d_15dp" />
 
             <LinearLayout
                 style="@style/h_match_parent_no"

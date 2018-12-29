@@ -15,14 +15,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- *
  * 优惠券工具类
  */
 public class GoodsCoupons {
     String TAG = "GoodsCoupons";
     private int errRequestCount = 0;
     private boolean isDoneData = false;
-    private OnGouponsListener onGouponsListener;
+    private OnCouponsListener onGouponsListener;
     //优惠券数据源
     private LinkedHashMap<String, ArrayList<BeanCoupon>> mapCouponsSource = new LinkedHashMap<>();
     //商品数据源
@@ -35,7 +34,7 @@ public class GoodsCoupons {
     private boolean isRefresh;
     DBCouponsManager dbCouponsManager;
 
-    public GoodsCoupons(Context context, OnGouponsListener onGouponsListener) {
+    public GoodsCoupons(Context context, OnCouponsListener onGouponsListener) {
         this.onGouponsListener = onGouponsListener;
         dbCouponsManager = DBCouponsManager.newInstance(context);
     }
@@ -60,7 +59,10 @@ public class GoodsCoupons {
         }
     }
 
-
+    /**
+     * 每调用一次可以计算出计算出可用的优惠券列表（在OnGouponsListener.onChangeCoupon中返回结果）
+     * @param cartGoodsList 选择的商品
+     */
     public void setGoodsTypes(List<ShopCarBean> cartGoodsList) {
         this.cartGoodsList = cartGoodsList;
         initUnionSet();
@@ -85,7 +87,7 @@ public class GoodsCoupons {
     private double getGoodsTotalMoney(String typeItem) {
         double money = 0;
         for (ShopCarBean item : cartGoodsList) {
-            if (isContains(typeItem, item.getTypeArr())) {
+            if (StringUtils.isSame(typeItem, CommonUtils.isZero) || isContains(typeItem, item.getTypeArr())) {
                 money += Double.valueOf(CommonUtils.getRatioPrice(KangApp.applicationContext, String.valueOf(item.getSell_price()), new DecimalFormat(CommonUtils.ratioStr))) * item.getGoodsCount();//折扣后
             }
         }
@@ -119,7 +121,7 @@ public class GoodsCoupons {
     }
 
 
-    public interface OnGouponsListener {
+    public interface OnCouponsListener {
         void onChangeCoupon(List<BeanCoupon> result);
     }
 }

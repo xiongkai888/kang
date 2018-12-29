@@ -11,6 +11,7 @@ import com.xson.common.utils.L;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by Administrator on 2016/9/2.
  */
@@ -82,14 +83,14 @@ public class DBCouponsManager {
         if (beanCoupons == null)
             return;
         for (BeanCoupon item : beanCoupons) {
-            addCoupon(false, item);
+            addCoupon(0, item);
         }
     }
 
     /**
-     * @param temp ture 临时数据
+     * @param temp >0 临时数据
      */
-    private void addCoupon(boolean temp, BeanCoupon beanCoupon) {
+    private void addCoupon(int temp, BeanCoupon beanCoupon) {
         ContentValues values = new ContentValues();
         values.put(KEY_id, beanCoupon.getId());
         values.put(KEY_lname, beanCoupon.getLname());
@@ -110,7 +111,7 @@ public class DBCouponsManager {
         values.put(KEY_logid, beanCoupon.getLogid());
         values.put(KEY_name, beanCoupon.getName());
 
-        values.put(KEY_temp, temp ? 1 : 0);
+        values.put(KEY_temp, temp);
 
         long insN = db.insert(TABLE_NAME, KEY_id, values);
         L.d(TABLE_NAME, "add:insert:" + insN);
@@ -129,29 +130,46 @@ public class DBCouponsManager {
                         + " and " + KEY_consume + " <= ?"
                         + " and " + KEY_starttime + " <= ?"
                         + " and " + KEY_endtime + " > ?";
-        Cursor c = db.query(TABLE_NAME, null, selection, new String[]{typeItem, totalMoney + "", currentTime + "", currentTime + ""}, null, null, KEY_endtime + " asc");
+        String[] selectionValue = new String[]{typeItem, totalMoney + "", currentTime + "", currentTime + ""};
+        L.d(TABLE_NAME, selection + "");
+        Cursor c = db.query(TABLE_NAME, null, selection, selectionValue, null, null, KEY_endtime + " asc");
         BeanCoupon item;
         L.d(TABLE_NAME, "typeItem:" + typeItem + ":totalMoney:" + totalMoney + ":count:" + c.getCount());
         while (c.moveToNext()) {
             item = getBeanCoupon(c);
-            addCoupon(true, item);
+            addCoupon(1, item);
         }
+
         c.close();
     }
 
 
     public List<BeanCoupon> queryCoupon() {
-        String selection =
-                KEY_temp + " = 1 ";
-        String orderBy = KEY_money + " desc , " + KEY_endtime + " asc";
 
+        /*
+        * 排序
+        * */
+        String selection = KEY_temp + " = 1 ";
+        String orderBy = KEY_money + " asc , " + KEY_endtime + " desc";
         Cursor c = db.query(TABLE_NAME, null, selection, null, null, null, orderBy);
-        L.d(TABLE_NAME,"可用优惠券:count:"+c.getCount());
+        L.d(TABLE_NAME, "可用优惠券:count:" + c.getCount());
+
+        while (c.moveToNext()) {
+            addCoupon(2, getBeanCoupon(c));
+        }
+        /**分组*/
+        selection = KEY_temp + " = 2 ";
+        L.d(TABLE_NAME, selection + "");
+        orderBy = KEY_money + " desc ," + KEY_endtime + " asc";
+        c = db.query(TABLE_NAME, null, selection, null, KEY_type, null, orderBy);
+        L.d(TABLE_NAME, "可用优惠券分组:count:" + c.getCount());
         List<BeanCoupon> result = new ArrayList<>();
         while (c.moveToNext()) {
             result.add(getBeanCoupon(c));
         }
+
         c.close();
+
         return result;
     }
 
@@ -185,7 +203,7 @@ public class DBCouponsManager {
     }
 
     public int delAllTemp() {
-        return db.delete(TABLE_NAME, KEY_temp + " = 1", null);
+        return db.delete(TABLE_NAME, KEY_temp + " != 0", null);
     }
 
 }

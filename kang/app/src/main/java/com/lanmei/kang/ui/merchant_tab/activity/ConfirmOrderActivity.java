@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.data.volley.Response;
@@ -72,6 +73,8 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView couponNameTv;//选择的优惠券
     @InjectView(R.id.goods_num_tv)
     TextView goodsNumTv;//商品个数
+    @InjectView(R.id.ll_coupon)
+    LinearLayout llCoupon;//是否隐藏优惠券
     @InjectView(R.id.goods_price_tv)
     TextView goodsPriceTv;//总的商品价格（扣除优惠券前）
     @InjectView(R.id.price_tv)
@@ -126,7 +129,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             finish();
             return;
         }
-        goodsCoupons = new GoodsCoupons(this, new GoodsCoupons.OnGouponsListener() {
+        goodsCoupons = new GoodsCoupons(this, new GoodsCoupons.OnCouponsListener() {
             @Override
             public void onChangeCoupon(List<BeanCoupon> result) {
                 if (!StringUtils.isEmpty(result)) {
@@ -145,6 +148,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                     for (int i = 0; i < result.size(); i++) {
                         L.d("ConfirmOrderActivity", "result = " + i + " = " + result.get(i).toString());
                     }
+                    llCoupon.setVisibility(View.VISIBLE);
+                }else {
+                    llCoupon.setVisibility(View.GONE);
                 }
             }
         });

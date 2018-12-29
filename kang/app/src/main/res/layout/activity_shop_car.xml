@@ -43,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -55,12 +55,11 @@
                 app:formatText="@string/total_cash" />
 
             <TextView
-                android:id="@+id/tvcharges"
-                style="@style/text"
+                android:id="@+id/coupon_tv"
+                style="@style/text12color666"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
                 android:text="不含运费"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
 

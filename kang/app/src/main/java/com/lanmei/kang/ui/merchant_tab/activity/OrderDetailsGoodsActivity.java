@@ -14,6 +14,7 @@ import com.lanmei.kang.adapter.GoodsOrderListSubAdapter;
 import com.lanmei.kang.adapter.PayWayAdapter;
 import com.lanmei.kang.alipay.AlipayHelper;
 import com.lanmei.kang.api.KangQiMeiApi;
+import com.lanmei.kang.bean.DistributionBean;
 import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.bean.PayWayBean;
 import com.lanmei.kang.bean.WeiXinBean;
@@ -54,16 +55,16 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     TextView addressTv;
     @InjectView(R.id.num_tv)
     TextView numTv;
-    @InjectView(R.id.fee_tv)
-    TextView feeTv;
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.recyclerView_pay)
     RecyclerView recyclerViewPay;//支付方式列表
-    @InjectView(R.id.goods_price_tv)
-    TextView goodsPriceTv;
     @InjectView(R.id.total_price_tv)
     TextView totalPriceTv;
+    @InjectView(R.id.coupon_tv)
+    TextView couponTv;//是否使用优惠券
+    @InjectView(R.id.mode_distribution_tv)
+    TextView modeDistributionTv;//配送方式
     @InjectView(R.id.pay_way_tv)
     TextView payWayTv;//支付方式
     GoodsOrderListBean bean;//我的订单item信息
@@ -125,7 +126,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     //支付方式
     private void loadPayment() {
         KangQiMeiApi api = new KangQiMeiApi("app/payment");
-        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<PayWayBean>>() {
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<PayWayBean>>() {
             @Override
             public void onResponse(NoPageListBean<PayWayBean> response) {
                 if (isFinishing()) {
@@ -167,16 +168,42 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
     private String state;
     private String oid;
 
+    //配送列表
+    private void loadDistribution() {
+        KangQiMeiApi api = new KangQiMeiApi("app/distribution_list");
+        api.add("tablename", "distribution");
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<DistributionBean>>() {
+            @Override
+            public void onResponse(NoPageListBean<DistributionBean> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                List<DistributionBean> list = response.data;
+                if (StringUtils.isEmpty(list)) {
+                    return;
+                }
+                for (DistributionBean distributionBean:list){
+                    if (StringUtils.isSame(distributionBean.getId(),bean.getDis_type())){
+                        modeDistributionTv.setText(distributionBean.getClassname());
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
     private void setData() {
         if (StringUtils.isEmpty(bean)) {
             return;
         }
+        loadDistribution();//配送方式
         scrollView.setVisibility(View.VISIBLE);
         oid = bean.getId();
         nameTv.setText(bean.getUsername() + "\u3000" + bean.getPhone());
         addressTv.setText(bean.getAddress());
         orderNoTv.setText(String.format(getString(R.string.order_no), bean.getOrder_no()));
         courierTv.setText(String.format(getString(R.string.courier_no), bean.getCourier()));
+        couponTv.setText(StringUtils.isSame(bean.getLid(),CommonUtils.isZero)?getString(R.string.not_using_coupons):bean.getLname());
         FormatTime time = new FormatTime(this);
         time.setTime(bean.getAddtime());
         orderTimeTv.setText(String.format(getString(R.string.order_time), time.formatterTime()));
@@ -189,7 +216,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         numTv.setText(bean.getNum() + "");
         String sellPrice = bean.getTotal_price();
-        totalPriceTv.setText(sellPrice);
+        totalPriceTv.setText(String.format(getString(R.string.price),sellPrice));
         String payType = "";
         String pay_status = StringUtils.isSame(bean.getPay_status(), CommonUtils.isOne) ? "已支付" : "未支付";
         if (!StringUtils.isSame(bean.getPay_status(), CommonUtils.isOne)) {

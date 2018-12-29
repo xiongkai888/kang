@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.lanmei.kang.helper.coupon.DBCouponsManager;
 import com.xson.common.utils.L;
 
 
@@ -16,7 +17,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static String TAG = "DBhelper";
 
     private static String dbName = "kang.db";
-    private static int dbVersion = 4;
+    private static int dbVersion = 5;
     public static DBhelper dBhelper;
 
     public static DBhelper newInstance(Context context) {
@@ -32,38 +33,24 @@ public class DBhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         L.d(TAG, "创建数据库成功:" + dbVersion);
-        db.execSQL(DBShopCartHelper.createTable);
 //        update(0,db);
+        db.execSQL(DBCouponsManager.createTable);//优惠券表
+        db.execSQL(DBShopCartHelper.createTable);//购物车表
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         L.d(TAG, "更新数据库成功:" + oldVersion + "  newVersion:" + newVersion);
-//        update(oldVersion,db);
+        update(oldVersion,db);
 
     }
 
     private void update(int oldVersion, SQLiteDatabase db) {
         switch (oldVersion) {
-            case 0:
+            case 4:
+                db.execSQL(DBCouponsManager.createTable);
                 db.execSQL(DBShopCartHelper.createTable);
-            case 1:
-                db.execSQL(DBShopCartHelper.createTable);
-            case 2:
-                db.execSQL("alter table " + DBShopCartHelper.Cart +
-                        " ADD " + DBShopCartHelper.Cart_goods_record_id + " INTEGER ");
-                db.execSQL(DBShopCartHelper.createTable);
-//                db.execSQL(DBDeviceListManager.createTable);
-//            case 3:
-//                db.execSQL("alter table " +DBShopCartHelper.Cart+
-//                        " ADD " +DBShopCartHelper.Cart_goodsIsCheck+" INTEGER Default 1");
-//            case 4:
-//                db.execSQL(DBDeviceErrManager.createTable_notexists);
-//            case 5:
-//                db.execSQL(DBSearchManager.createTable);
-//
-//                break;
-
+                break;
         }
     }
 

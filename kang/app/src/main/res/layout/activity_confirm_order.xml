@@ -18,22 +18,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_address"
+                style="@style/h_match_parent"
                 android:gravity="center_vertical"
-                android:padding="@dimen/d_10dp"
-                style="@style/h_match_parent">
+                android:padding="@dimen/d_10dp">
 
                 <ImageView
                     style="@style/text"
                     android:src="@mipmap/location_on" />
 
                 <RelativeLayout
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/name_tv"
@@ -41,16 +42,16 @@
 
 
                     <TextView
-                        android:layout_marginTop="@dimen/d_5dp"
-                        android:layout_below="@id/name_tv"
                         android:id="@+id/address_tv"
-                        style="@style/text12color666" />
+                        style="@style/text12color666"
+                        android:layout_below="@id/name_tv"
+                        android:layout_marginTop="@dimen/d_5dp" />
 
                 </RelativeLayout>
 
                 <ImageView
-                    android:src="@mipmap/in_right"
-                   style="@style/text" />
+                    style="@style/text"
+                    android:src="@mipmap/in_right" />
 
             </LinearLayout>
 
@@ -59,7 +60,80 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewShop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
+            <TextView style="@style/line_H10dp_on" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_coupon"
+                style="@style/h_match_parent_no"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/mine_text"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:text="优惠券" />
+
+                <TextView
+                    android:id="@+id/coupon_name_tv"
+                    style="@style/text14color666"
+                    android:layout_marginLeft="@dimen/d_10dp"
+                    android:layout_marginRight="@dimen/d_10dp"
+                    android:hint="@string/no_coupon" />
+
+            </LinearLayout>
+
+            <TextView style="@style/line_H10dp_on" />
+
+            <TextView
+                style="@style/match_parent"
+                android:paddingBottom="@dimen/d_12dp"
+                android:paddingLeft="@dimen/d_10dp"
+                android:paddingTop="@dimen/d_12dp"
+                android:text="结算详情" />
+
+            <TextView style="@style/line_H1dp_CD" />
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text14color999"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:layout_weight="1"
+                    android:text="商品总数" />
+
+                <TextView
+                    android:id="@+id/goods_num_tv"
+                    style="@style/text14color999"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:text="0" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginLeft="@dimen/d_15dp"
+                style="@style/line_H1dp_CD" />
+
+            <LinearLayout
+                style="@style/h_match_parent_no"
+                android:padding="@dimen/d_10dp">
+
+                <TextView
+                    style="@style/text14color999"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:layout_weight="1"
+                    android:text="商品金额" />
+
+                <TextView
+                    android:id="@+id/goods_price_tv"
+                    style="@style/text14colorF5484A"
+                    android:layout_marginLeft="@dimen/d_5dp"
+                    android:text="￥0" />
+
+            </LinearLayout>
 
             <TextView style="@style/line_H10dp_on" />
 
@@ -74,23 +148,11 @@
 
                 <TextView
                     android:id="@+id/distribution_tv"
+                    style="@style/text"
                     android:layout_marginRight="@dimen/d_12dp"
                     android:drawableRight="@mipmap/in_right"
-                    style="@style/text" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_billing_details"
-                android:visibility="gone"
-                style="@style/ll_no_border">
-
-                <TextView
-                    style="@style/mine_text"
-                    android:layout_marginLeft="@dimen/d_10dp"
-                    android:text="结算详情" />
-
-                <ImageView style="@style/in_right_icon" />
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择配送方式" />
 
             </LinearLayout>
 

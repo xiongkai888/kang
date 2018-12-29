@@ -1,12 +1,14 @@
 package com.lanmei.kang.ui.merchant_tab.goods.shop;
 
+import com.xson.common.utils.StringUtils;
+
 import java.io.Serializable;
 
 /**
  * Created by xkai on 2018/1/20.
  */
 
-public class ShopCarBean implements Serializable{
+public class ShopCarBean implements Serializable {
 
     private static final long serialVersionUID = 3479351215101942907L;
 
@@ -17,7 +19,27 @@ public class ShopCarBean implements Serializable{
     private int goodsCount;
     private String goods_id;
     private String gid;//规格id
+    private String type;
+    private String[] typeArr;
+    private boolean isSelect = false;
     private double sell_price;//价格
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+        typeArr = StringUtils.isEmpty(type) ? new String[]{} : type.split(",");
+    }
+
+    public void setTypeArr(String[] typeArr) {
+        this.typeArr = typeArr;
+    }
+
+    public String[] getTypeArr() {
+        return typeArr;
+    }
 
     public void setGid(String gid) {
         this.gid = gid;
@@ -26,8 +48,6 @@ public class ShopCarBean implements Serializable{
     public String getGid() {
         return gid;
     }
-
-    private boolean isSelect = false;
 
     public void setSpecifications(String specifications) {
         this.specifications = specifications;

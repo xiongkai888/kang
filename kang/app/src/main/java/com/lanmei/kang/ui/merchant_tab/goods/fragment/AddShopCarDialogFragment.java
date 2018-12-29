@@ -215,6 +215,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
         bean.setGoodsName(detailsBean.getGoodsname());
         bean.setGoodsCount(orderNum);
         bean.setGoodsImg(detailsBean.getCover());
+        bean.setType(detailsBean.getType());
         bean.setSpecifications(detailsBean.getSpecifications());
         bean.setSell_price(Double.parseDouble(detailsBean.getPrice()));
         list.add(bean);
@@ -239,6 +240,7 @@ public class AddShopCarDialogFragment extends DialogFragment {
         shopCarBean.setGoodsCount(orderNum);
         shopCarBean.setSpecifications(detailsBean.getSpecifications());
         shopCarBean.setGid(detailsBean.getGid());
+        shopCarBean.setType(detailsBean.getType());
         DBShopCartHelper.getInstance(getContext().getApplicationContext()).insertGoods(shopCarBean);
         dismiss();
     }

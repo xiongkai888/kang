@@ -240,6 +240,8 @@
     <string name="have_been_used">已使用</string>
     <string name="have_expired">已过期</string>
     <string name="register_protocol">注册协议</string>
-    <string name="agree_protocol"><![CDATA[点击注册即表示同意 <font color="#ff2456">%s</font>]]></string>
+    <string name="agree_protocol"><![CDATA[点击注册即表示同意 <font color="#ff2456">《%s》</font>]]></string>
+    <string name="not_using_coupons">没有使用优惠券</string>
+    <string name="no_coupon">暂无优惠券可用</string>
 
 </resources>

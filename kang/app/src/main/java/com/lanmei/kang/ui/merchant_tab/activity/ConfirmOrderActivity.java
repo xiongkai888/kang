@@ -21,7 +21,10 @@ import com.lanmei.kang.bean.WeiXinBean;
 import com.lanmei.kang.event.AddressListEvent;
 import com.lanmei.kang.event.ChooseAddressEvent;
 import com.lanmei.kang.event.PaySucceedEvent;
+import com.lanmei.kang.helper.CouponListDialogFragment;
 import com.lanmei.kang.helper.WXPayHelper;
+import com.lanmei.kang.helper.coupon.BeanCoupon;
+import com.lanmei.kang.helper.coupon.GoodsCoupons;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.AddressListActivity;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.ShopCarBean;
 import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
@@ -65,8 +68,14 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView addressTv;
     @InjectView(R.id.distribution_tv)
     TextView distributionTv;
+    @InjectView(R.id.coupon_name_tv)
+    TextView couponNameTv;//选择的优惠券
+    @InjectView(R.id.goods_num_tv)
+    TextView goodsNumTv;//商品个数
+    @InjectView(R.id.goods_price_tv)
+    TextView goodsPriceTv;//总的商品价格（扣除优惠券前）
     @InjectView(R.id.price_tv)
-    FormatTextView priceTv;
+    FormatTextView priceTv;//总的商品价格（扣除优惠券后）
     @InjectView(R.id.recyclerViewShop)
     RecyclerView recyclerViewShop;//商品列表
     private List<ShopCarBean> list;//提交的商品列表
@@ -76,6 +85,13 @@ public class ConfirmOrderActivity extends BaseActivity {
     private List<AddressListBean> addressListBeans;
     private int type;
     private String distributionID;//配送id
+    private int goodsNum;
+    private GoodsCoupons goodsCoupons;//优惠券工具类
+    private BeanCoupon coupon;//用户选择的优惠券
+    private List<BeanCoupon> couponList;//获取的符合条件的优惠券列表
+    private double price;//
+    private CouponListDialogFragment couponListDialogFragment;
+
 
     @Override
     public int getContentViewId() {
@@ -110,9 +126,36 @@ public class ConfirmOrderActivity extends BaseActivity {
             finish();
             return;
         }
-        L.d(L.TAG,getPrice());
-        priceTv.setTextValue(String.format("%.1f", Double.valueOf(getPrice())));
+        goodsCoupons = new GoodsCoupons(this, new GoodsCoupons.OnGouponsListener() {
+            @Override
+            public void onChangeCoupon(List<BeanCoupon> result) {
+                if (!StringUtils.isEmpty(result)) {
+                    L.d("ConfirmOrderActivity", "result = "+result.size());
+                    couponList = result;
+                    BeanCoupon couponNew = new BeanCoupon();
+                    couponNew.setLname("不使用优惠券");
+                    couponNew.setId("");
+                    couponNew.setMoney(Double.valueOf(0));
+                    couponList.add(couponNew);
+                    coupon = result.get(0);//最大面值优惠券
+                    coupon.setChoose(true);//第一个默认选中
+                    couponNameTv.setText(coupon.getLname());
+                    String s = String.format("%.1f", price - coupon.getMoney());
+                    priceTv.setTextValue(s);//
+                    for (int i = 0; i < result.size(); i++) {
+                        L.d("ConfirmOrderActivity", "result = " + i + " = " + result.get(i).toString());
+                    }
+                }
+            }
+        });
 
+        price = getPrice();
+
+        String s = String.format("%.1f", price);
+
+        priceTv.setTextValue(s);
+        goodsPriceTv.setText(String.format(getString(R.string.price), s));
+        goodsNumTv.setText(goodsNum + "");
         ConfirmOrderAdapter adapter = new ConfirmOrderAdapter(this);
         adapter.setData(list);
         recyclerViewShop.setLayoutManager(new LinearLayoutManager(this));
@@ -122,15 +165,41 @@ public class ConfirmOrderActivity extends BaseActivity {
         loadDistribution();//配送方式
         loadPayment();//支付方式
         loadAddressList();
-
+        loadCoupon();//优惠券
     }
 
-    private String getPrice() {
+    public void setCoupon(BeanCoupon coupon) {
+        this.coupon = coupon;
+        couponNameTv.setText(coupon.getLname());
+        String s = String.format("%.1f", price - coupon.getMoney());
+        priceTv.setTextValue(s);//
+    }
+
+    //优惠券
+    private void loadCoupon() {
+        KangQiMeiApi api = new KangQiMeiApi("app/coupon");
+        api.add("order", 1);
+        api.add("uid", api.getUserId(this));
+        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<BeanCoupon>>() {
+            @Override
+            public void onResponse(NoPageListBean<BeanCoupon> response) {
+                if (isFinishing()) {
+                    return;
+                }
+                goodsCoupons.setCouponsList(response.data);
+                goodsCoupons.setGoodsTypes(list);
+            }
+        });
+    }
+
+    private double getPrice() {
+        goodsNum = 0;
         double price = 0;
         for (ShopCarBean bean : list) {
-            price += Double.valueOf(CommonUtils.getRatioPrice(this,String.valueOf(bean.getSell_price()),new DecimalFormat(CommonUtils.ratioStr)))*bean.getGoodsCount();
+            price += Double.valueOf(CommonUtils.getRatioPrice(this, String.valueOf(bean.getSell_price()), new DecimalFormat(CommonUtils.ratioStr))) * bean.getGoodsCount();
+            goodsNum += bean.getGoodsCount();
         }
-        return String.valueOf(price);
+        return price;
     }
 
     private void initPicker() {
@@ -198,7 +267,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_address, R.id.submit_order_tv, R.id.ll_distribution, R.id.ll_billing_details})
+    @OnClick({R.id.ll_address, R.id.submit_order_tv, R.id.ll_distribution, R.id.ll_coupon})
     public void onViewClicked(View view) {
         if (StringUtils.isEmpty(list)) {
             return;
@@ -215,8 +284,17 @@ public class ConfirmOrderActivity extends BaseActivity {
                     picker.show();
                 }
                 break;
-            case R.id.ll_billing_details://结算详情
-                CommonUtils.developing(this);
+            case R.id.ll_coupon://优惠券
+                if (StringUtils.isEmpty(couponList)) {
+                    UIHelper.ToastMessage(this, "没有可用优惠券");
+                    return;
+                }
+//                couponListDialogFragment
+                if (couponListDialogFragment == null) {
+                    couponListDialogFragment = new CouponListDialogFragment();
+                    couponListDialogFragment.setCouponBeanList(couponList);
+                }
+                couponListDialogFragment.show(getSupportFragmentManager(), "111");
                 break;
         }
     }
@@ -241,19 +319,20 @@ public class ConfirmOrderActivity extends BaseActivity {
         int size = list.size();
         for (int i = 0; i < size; i++) {
             ShopCarBean bean = list.get(i);
-            goodsidBuilder.append(bean.getGoods_id()).append(((size-1)!=i)? L.cornet:"");
-            goodsnameBuilder.append(bean.getGoodsName()).append(((size-1)!=i)? L.cornet:"");
-            numBuilder.append(String.valueOf(bean.getGoodsCount())).append(((size-1)!=i)? L.cornet:"");
-            gidBuilder.append(!StringUtils.isEmpty(bean.getGid())?bean.getGid():CommonUtils.isZero).append(((size-1)!=i)? L.cornet:"");
+            goodsidBuilder.append(bean.getGoods_id()).append(((size - 1) != i) ? L.cornet : "");
+            goodsnameBuilder.append(bean.getGoodsName()).append(((size - 1) != i) ? L.cornet : "");
+            numBuilder.append(String.valueOf(bean.getGoodsCount())).append(((size - 1) != i) ? L.cornet : "");
+            gidBuilder.append(!StringUtils.isEmpty(bean.getGid()) ? bean.getGid() : CommonUtils.isZero).append(((size - 1) != i) ? L.cornet : "");
         }
         KangQiMeiApi api = new KangQiMeiApi("app/createorder");
         api.add("pay_type", type).add("uid", api.getUserId(this)).add("goodsid", goodsidBuilder.toString())
                 .add("goodsname", goodsnameBuilder.toString()).add("num", numBuilder.toString()).add("username", addressBean.getAccept_name())
-                .add("phone", addressBean.getMobile()).add("address", addressBean.getAddress()).add("dis_type", distributionID).add("gid", gidBuilder.toString());
+                .add("phone", addressBean.getMobile()).add("address", addressBean.getAddress()).add("lid", StringUtils.isEmpty(coupon) ? "" : coupon.getId())//优惠券id
+                .add("dis_type", distributionID).add("gid", gidBuilder.toString());
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<Integer>>() {
             @Override
             public void onResponse(DataBean<Integer> response) {
-                if (isFinishing()){
+                if (isFinishing()) {
                     return;
                 }
                 loadPayMent(response.data);
@@ -265,7 +344,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private void loadPayMent(int order_id) {
         KangQiMeiApi api = new KangQiMeiApi("app/pay");
-        api.add("order_id",order_id).add("uid",api.getUserId(this)).add("id",order_id);
+        api.add("order_id", order_id).add("uid", api.getUserId(this)).add("id", order_id);
         HttpClient httpClient = HttpClient.newInstance(this);
         if (type == 1) {//支付宝支付
             httpClient.loadingRequest(api, new BeanRequest.SuccessListener<DataBean<String>>() {
@@ -353,6 +432,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     public void chooseAddressEvent(ChooseAddressEvent event) {
         chooseAddress(event.getBean());
     }
+
     //选择地址的时候调用
     @Subscribe
     public void paySucceedEvent(PaySucceedEvent event) {

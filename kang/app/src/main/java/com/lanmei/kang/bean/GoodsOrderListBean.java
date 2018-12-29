@@ -62,9 +62,28 @@ public class GoodsOrderListBean implements Serializable{
     private String sellerid;
     private String attribute;
     private String pay_time;
+    private String lname;
+    private String lid;//0为没有使用优惠券
+
+    public void setLid(String lid) {
+        this.lid = lid;
+    }
+
+    public String getLid() {
+        return lid;
+    }
+
     private String yj_status;
     private String c_type;
     private List<GoodsBean> goods;
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
 
     public String getId() {
         return id;

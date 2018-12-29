@@ -138,7 +138,7 @@ public class MerchantTabAdapter extends SwipeRefreshAdapter<MerchantTabGoodsBean
             banner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
             banner.setPageIndicator(new int[]{R.drawable.shape_item_index_white, R.drawable.shape_item_index_red});
             banner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
-
+            banner.startTurning(3000);
         }
         public void setClassifyParameter(List<MerchantTabClassifyBean> adBeanList) {
             MerchantTabClassifyAdapter adapter = new MerchantTabClassifyAdapter(context);

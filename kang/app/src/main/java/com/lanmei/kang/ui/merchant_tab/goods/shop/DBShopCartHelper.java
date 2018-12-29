@@ -34,6 +34,7 @@ public class DBShopCartHelper {
     public static final String Cart_gid = "gid";
     public static final String Cart_goodsStore = "goodsStore";
     public static final String Cart_goodsName = "goodsName";
+    public static final String Cart_goodsType = "goodsType";
     public static final String Cart_goodsImg = "goodsImg";
     public static final String Cart_goodsPrice = "goodsPrice";
     public static final String Cart_goodsParams = "goodsParams";
@@ -49,6 +50,7 @@ public class DBShopCartHelper {
             Cart_goodsid + " TEXT, " +
             Cart_goodsStore + " TEXT, " +
             Cart_goodsName + " TEXT, " +
+            Cart_goodsType + " TEXT, " +
             Cart_goodsImg + " TEXT, " +
             Cart_gid + " TEXT, " +
             Cart_goodsPrice + " REAL, " +
@@ -92,6 +94,7 @@ public class DBShopCartHelper {
                 cartGoods.setGoodsName(c.getString(c.getColumnIndex(Cart_goodsName)));
                 cartGoods.setGoodsImg(c.getString(c.getColumnIndex(Cart_goodsImg)));
                 cartGoods.setGoods_id(c.getString(c.getColumnIndex(Cart_goodsid)));
+                cartGoods.setType(c.getString(c.getColumnIndex(Cart_goodsType)));
                 cartGoods.setSell_price(c.getDouble(c.getColumnIndex(Cart_goodsPrice)));
                 cartGoods.setSpecifications(c.getString(c.getColumnIndex(Cart_goodsSpecifications)));
                 cartGoods.setGid(c.getString(c.getColumnIndex(Cart_gid)));
@@ -130,6 +133,7 @@ public class DBShopCartHelper {
         values.put(Cart_goodsid, bean.getGoods_id());
         values.put(Cart_goodsName, bean.getGoodsName());
         values.put(Cart_goodsImg, bean.getGoodsImg());
+        values.put(Cart_goodsType, bean.getType());
         values.put(Cart_goodsPrice, bean.getSell_price());
         values.put(Cart_goodsCount, bean.getGoodsCount());
         values.put(Cart_goodsSpecifications, bean.getSpecifications());

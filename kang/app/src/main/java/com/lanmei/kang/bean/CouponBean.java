@@ -5,7 +5,7 @@ package com.lanmei.kang.bean;
  * 优惠卷
  */
 
-public class CouponBean {
+public class    CouponBean {
 
     /**
      * id : 4

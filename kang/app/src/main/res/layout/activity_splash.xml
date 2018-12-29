@@ -4,41 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lanmei.kang.ui.SplashActivity">
+    tools:context=".ui.SplashActivity">
 
-
-    <FrameLayout
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:canLoop="true">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </com.bigkoo.convenientbanner.ConvenientBanner>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_guide"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
-        <ImageView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/skip_tv"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="70dp"
-            android:src="@mipmap/experience_now"/>
-
-    </FrameLayout>
 
     <ImageView
-        android:visibility="gone"
+        android:id="@+id/skip_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/d_50dp"
+        android:src="@mipmap/experience_now"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/launch_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@mipmap/launch"
-        />
+        android:visibility="gone" />
 
 </FrameLayout>

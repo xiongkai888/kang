@@ -153,27 +153,6 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_share, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (!CommonUtils.isLogin(this)) {
-//            return super.onOptionsItemSelected(item);
-//        }
-//        switch (item.getItemId()) {
-//            case R.id.action_share:
-//                CommonUtils.developing(this);
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
     @OnClick({R.id.ll_collect, R.id.ll_shop, R.id.add_shop_car_tv, R.id.pay_now_tv})
     public void onViewClicked(View view) {
         if (!CommonUtils.isLogin(this)) {

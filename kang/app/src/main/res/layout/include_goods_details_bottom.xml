@@ -43,7 +43,7 @@
             style="@style/text"
             android:layout_below="@+id/shop_iv"
             android:layout_centerHorizontal="true"
-            android:text="购物车" />
+            android:text="@string/shop" />
 
 
         <TextView

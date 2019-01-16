@@ -66,7 +66,6 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
     @InjectView(R.id.ll_bottom)
     LinearLayout llBottom;
     ShopCarAdapter adapter;
-    Button goBt;//去逛逛
     private ShopCartContract.Presenter mPresenter;
     private GoodsCoupons goodsCoupons;//优惠券工具类
     private BeanCoupon coupon;//最高金额的优惠券
@@ -108,11 +107,10 @@ public class ShopCarActivity extends BaseActivity implements ShopCartContract.Vi
         mEmptyView.removeAllViews();
         View view = LayoutInflater.from(this).inflate(R.layout.empty_shop_car, mEmptyView, false);
         mEmptyView.addView(view);
-        goBt = (Button) view.findViewById(R.id.go_bt);
-        goBt.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.go_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.showHome(ShopCarActivity.this);
+                MainActivity.showHome(getContext());
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

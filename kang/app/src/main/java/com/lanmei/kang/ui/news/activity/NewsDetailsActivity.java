@@ -13,7 +13,6 @@ import com.lanmei.kang.adapter.NewsDetailsCommentAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NewsCommentBean;
 import com.lanmei.kang.bean.NewsDetailsBean;
-import com.lanmei.kang.event.NewsCommEvent;
 import com.lanmei.kang.helper.ShareHelper;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.api.AbstractApi;
@@ -28,8 +27,6 @@ import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -113,7 +110,6 @@ public class NewsDetailsActivity extends BaseActivity {
                     UIHelper.ToastMessage(getContext(),"无法获取资讯详情");
                     return;
                 }
-                EventBus.getDefault().post(new NewsCommEvent(bean.getId(),bean.getReviews()));//设置资讯列表的评论数
                 mAdapter.setNewsDetails(bean);
             }
         });

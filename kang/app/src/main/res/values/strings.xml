@@ -30,6 +30,9 @@
     <string name="impower_failed">授权失败</string>
     <string name="impower_succeed">授权成功</string>
     <string name="impower_cancel">授权取消</string>
+    <string name="private_letter">私信</string>
+    <string name="message_center">消息中心</string>
+    <string name="announcement_message">公告信息</string>
 
 
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>

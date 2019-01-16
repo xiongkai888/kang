@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
-import com.lanmei.kang.bean.CouponBean;
+import com.lanmei.kang.helper.coupon.BeanCoupon;
 import com.lanmei.kang.util.FormatTime;
 import com.xson.common.adapter.SwipeRefreshAdapter;
 import com.xson.common.utils.StringUtils;
@@ -20,7 +20,7 @@ import butterknife.InjectView;
 /**
  * 优惠券
  */
-public class CouponTabAdapter extends SwipeRefreshAdapter<CouponBean> {
+public class CouponTabAdapter extends SwipeRefreshAdapter<BeanCoupon> {
 
     private FormatTime time;
 
@@ -36,7 +36,7 @@ public class CouponTabAdapter extends SwipeRefreshAdapter<CouponBean> {
 
     @Override
     public void onBindViewHolder2(RecyclerView.ViewHolder holder, int position) {
-        CouponBean bean = getItem(position);
+        BeanCoupon bean = getItem(position);
         if (StringUtils.isEmpty(bean)){
             return;
         }
@@ -60,11 +60,11 @@ public class CouponTabAdapter extends SwipeRefreshAdapter<CouponBean> {
             ButterKnife.inject(this, view);
 
         }
-        public void setParameter(CouponBean bean) {
+        public void setParameter(BeanCoupon bean) {
             nameTv.setText(bean.getName());
-            valueTv.setText(String.format(context.getString(R.string.price),bean.getValue()));
-            usePriceTv.setText(String.format(context.getString(R.string.full_available),bean.getUse_price()));
-            timeTv.setText(String.format(context.getString(R.string.period_validity),time.formatterTime(bean.getStart_time()),time.formatterTime(bean.getEnd_time())));
+            valueTv.setText(String.format(context.getString(R.string.price),String.valueOf(bean.getMoney())));
+            usePriceTv.setText(String.format(context.getString(R.string.full_available),String.valueOf(bean.getConsume())));
+            timeTv.setText(String.format(context.getString(R.string.period_validity),time.formatterTime(bean.getStarttime()+""),time.formatterTime(bean.getEndtime()+"")));
         }
     }
 }

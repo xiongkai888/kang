@@ -14,8 +14,7 @@
         android:id="@+id/nickname_tv"
         style="@style/text14color666"
         android:layout_marginLeft="@dimen/d_10dp"
-        android:layout_weight="1"
-        android:text="会员名：" />
+        android:layout_weight="1" />
 
     <ImageView
         android:layout_width="wrap_content"

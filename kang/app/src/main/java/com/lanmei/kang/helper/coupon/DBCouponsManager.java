@@ -18,7 +18,6 @@ import java.util.List;
 
 public class DBCouponsManager {
 
-    private Context mContext;
     private DBhelper dBhelper;
     private SQLiteDatabase db;
 
@@ -72,7 +71,6 @@ public class DBCouponsManager {
     }
 
     public DBCouponsManager(Context mContext) {
-        this.mContext = mContext;
 
         dBhelper = DBhelper.newInstance(mContext);
         db = dBhelper.getWritableDatabase();

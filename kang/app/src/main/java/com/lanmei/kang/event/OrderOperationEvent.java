@@ -7,25 +7,4 @@ package com.lanmei.kang.event;
 
 public class OrderOperationEvent {
 
-//    private String status;
-//    private String operation;
-//    private int position;//这三个没有实际意义
-//
-//    public String getOperation() {
-//        return operation;
-//    }
-//
-//    public String getStatus() {
-//        return status;
-//    }
-//
-//    public int getPosition() {
-//        return position;
-//    }
-//
-//    public OrderOperationEvent(String status, int position,String operation){
-//        this.status = status;
-//        this.position = position;
-//        this.operation = operation;
-//    }
 }

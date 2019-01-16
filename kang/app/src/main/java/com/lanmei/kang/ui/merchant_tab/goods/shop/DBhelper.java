@@ -14,7 +14,7 @@ import com.xson.common.utils.L;
 
 public class DBhelper extends SQLiteOpenHelper {
 
-    public static String TAG = "DBhelper";
+//    public static String TAG = "DBhelper";
 
     private static String dbName = "kang.db";
     private static int dbVersion = 5;
@@ -32,7 +32,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        L.d(TAG, "创建数据库成功:" + dbVersion);
+        L.d(L.TAG, "创建数据库成功:" + dbVersion);
 //        update(0,db);
         db.execSQL(DBCouponsManager.createTable);//优惠券表
         db.execSQL(DBShopCartHelper.createTable);//购物车表
@@ -40,7 +40,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        L.d(TAG, "更新数据库成功:" + oldVersion + "  newVersion:" + newVersion);
+        L.d(L.TAG, "更新数据库成功:" + oldVersion + "  newVersion:" + newVersion);
         update(oldVersion,db);
 
     }

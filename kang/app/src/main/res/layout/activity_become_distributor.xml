@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/v_match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.activity.BecomeDistributorActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+    <WebView
+        android:id="@+id/webView_tv"
+        android:layout_height="match_parent"
+        style="@style/match_parent_no" />
+
+</LinearLayout>

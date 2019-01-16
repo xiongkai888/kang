@@ -7,6 +7,7 @@ import com.lanmei.kang.adapter.GoodsOrderListAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.GoodsOrderListBean;
 import com.lanmei.kang.event.OrderOperationEvent;
+import com.lanmei.kang.event.PaySucceedEvent;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.BaseBean;
 import com.xson.common.bean.NoPageListBean;
@@ -105,10 +106,18 @@ public class GoodsOrderListFragment extends BaseFragment {
         });
     }
 
+    //订单操作后调用
     @Subscribe
     public void orderOperationEvent(OrderOperationEvent event) {
         controller.loadFirstPage();
     }
+
+    //订单详情支付完成时调用
+    @Subscribe
+    public void paySucceedEvent(PaySucceedEvent event) {
+        controller.loadFirstPage();
+    }
+
 
     @Override
     public void onDestroy() {

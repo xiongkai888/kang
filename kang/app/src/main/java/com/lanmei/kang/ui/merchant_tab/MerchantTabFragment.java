@@ -10,6 +10,7 @@ import com.lanmei.kang.bean.AdBean;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
 import com.lanmei.kang.bean.MerchantTabGoodsBean;
 import com.lanmei.kang.search.SearchGoodsActivity;
+import com.lanmei.kang.ui.home.activity.MessageCenterActivity;
 import com.lanmei.kang.ui.merchant_tab.activity.GoodsClassifyActivity;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
@@ -113,7 +114,8 @@ public class MerchantTabFragment extends BaseFragment {
                 if (!CommonUtils.isLogin(context)){
                     return;
                 }
-                IntentUtil.startActivity(context, com.hyphenate.chatuidemo.ui.MainActivity.class);
+//                IntentUtil.startActivity(context, com.hyphenate.chatuidemo.ui.MainActivity.class);
+                IntentUtil.startActivity(context, MessageCenterActivity.class);
                 break;
         }
     }

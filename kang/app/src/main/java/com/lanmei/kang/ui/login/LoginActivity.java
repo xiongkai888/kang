@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
     ProgressHUD mProgressHUD;
 
     private void initProgressDialog() {
-        mProgressHUD = ProgressHUD.show(this, "正在登陆...", true, false, null);
+        mProgressHUD = ProgressHUD.show(this, "正在登录...", true, false, null);
         mProgressHUD.cancel();
         mProgressHUD.setCancelable(true);
     }
@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
         mShareAPI = UMShareAPI.get(this);
-        String mobile = SharedAccount.getInstance(LoginActivity.this).getMobile();
+        String mobile = SharedAccount.getInstance(this).getMobile();
         mMobileET.setText(mobile);
 //        mPwdET.setText("123456");
         EventBus.getDefault().register(this);

@@ -139,7 +139,7 @@ public class DBShopCartHelper {
         values.put(Cart_goodsSpecifications, bean.getSpecifications());
         values.put(Cart_gid, bean.getGid());
         long insC = db.insert(Cart, Cart_goodsid, values);
-        L.d(DBhelper.TAG, ":加入购物车:id" + bean.getGoods_id() + "---insC:" + insC);
+        L.d(L.TAG, ":加入购物车:id" + bean.getGoods_id() + "---insC:" + insC);
         if (insC > 0) {
             UIHelper.ToastMessage(context, "加入购物车成功!!");
             EventBus.getDefault().post(new ShowShopCountEvent());

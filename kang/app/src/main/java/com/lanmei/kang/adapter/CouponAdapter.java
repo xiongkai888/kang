@@ -25,7 +25,7 @@ public class CouponAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         CouponFragment fragment = new CouponFragment();
-        bundle.putInt("status",position+1);
+        bundle.putInt("order",position+1);
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -668,10 +668,19 @@
             android:name=".ui.home.activity.OrderEvaluationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.dynamic.activity.DynamicFriendsActivity"
+            android:name=".ui.home.activity.MessageCenterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.merchant.MerchantAccountActivity"
+            android:name=".ui.home.activity.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.BecomeDistributorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.AnnouncementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dynamic.activity.DynamicFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant.MerchantAlbumActivity"

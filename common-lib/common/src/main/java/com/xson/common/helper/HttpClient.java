@@ -348,7 +348,6 @@ public class HttpClient implements IHttpClient {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-//            error = humanError(context, error);
             Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

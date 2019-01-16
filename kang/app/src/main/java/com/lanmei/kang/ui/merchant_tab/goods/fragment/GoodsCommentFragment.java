@@ -12,7 +12,6 @@ import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
 import com.xson.common.utils.StringUtils;
-import com.xson.common.widget.DividerItemDecoration;
 import com.xson.common.widget.SmartSwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,8 +45,6 @@ public class GoodsCommentFragment extends BaseFragment {
             return;
         }
         smartSwipeRefreshLayout.initWithLinearLayout();
-        smartSwipeRefreshLayout.getRecyclerView().addItemDecoration(new DividerItemDecoration(getContext()));
-
         KangQiMeiApi api = new KangQiMeiApi("app/comment");
 //        api.add("userid",api.getUserId(context));
         api.add("goodsid",bean.getId());
@@ -65,6 +62,7 @@ public class GoodsCommentFragment extends BaseFragment {
         };
 //        smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         controller.loadFirstPage();
+
 //        adapter.notifyDataSetChanged();
     }
 

@@ -46,6 +46,7 @@ import com.xson.common.widget.FormatTextView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     private OptionPicker picker;//
     private AddressListBean addressBean;//地址信息
     private List<AddressListBean> addressListBeans;
-    private int type;
+    private int type = -10;
     private String distributionID;//配送id
     private int goodsNum;
     private GoodsCoupons goodsCoupons;//优惠券工具类
@@ -145,9 +146,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                     couponNameTv.setText(coupon.getLname());
                     String s = String.format("%.1f", price - coupon.getMoney());
                     priceTv.setTextValue(s);//
-                    for (int i = 0; i < result.size(); i++) {
-                        L.d("ConfirmOrderActivity", "result = " + i + " = " + result.get(i).toString());
-                    }
+//                    for (int i = 0; i < result.size(); i++) {
+//                        L.d("ConfirmOrderActivity", "result = " + i + " = " + result.get(i).toString());
+//                    }
                     llCoupon.setVisibility(View.VISIBLE);
                 }else {
                     llCoupon.setVisibility(View.GONE);
@@ -280,7 +281,9 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
         switch (view.getId()) {
             case R.id.ll_address:
-                IntentUtil.startActivity(this, AddressListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list",(Serializable) addressListBeans);
+                IntentUtil.startActivity(this, AddressListActivity.class,bundle);
                 break;
             case R.id.submit_order_tv://提交订单
                 submitOrder();
@@ -314,7 +317,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             UIHelper.ToastMessage(this, "请选择配送方式");
             return;
         }
-        if (StringUtils.isEmpty(type)) {
+        if (type == -10) {
             UIHelper.ToastMessage(this, getString(R.string.pay_type));
             return;
         }
@@ -385,7 +388,6 @@ public class ConfirmOrderActivity extends BaseActivity {
                         return;
                     }
                     UIHelper.ToastMessage(getContext(), response.getInfo());
-                    IntentUtil.startActivity(getContext(), MyGoodsOrderActivity.class);
                     EventBus.getDefault().post(new PaySucceedEvent());
                     finish();
                 }

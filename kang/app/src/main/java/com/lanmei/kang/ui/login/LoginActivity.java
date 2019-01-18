@@ -199,7 +199,8 @@ public class LoginActivity extends BaseActivity {
                     if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
                         SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
                     }
-                    IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
+                    MainActivity.showHome(getContext());
+                    finish();
                 }
             }
 
@@ -301,7 +302,6 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
-                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         });
@@ -393,7 +393,6 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
-                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         }, new Response.ErrorListener() {

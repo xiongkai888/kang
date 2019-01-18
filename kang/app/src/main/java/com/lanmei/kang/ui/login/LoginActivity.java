@@ -194,7 +194,6 @@ public class LoginActivity extends BaseActivity {
                     bundle.putSerializable("bean",mBean);
                     IntentUtil.startActivity(getContext(),BindingPhoneActivity.class,bundle);
                 }else {
-                    EventBus.getDefault().post(new LoginQuitEvent());//
                     UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
                     CommonUtils.loadUserInfo(KangApp.applicationContext,null);
                     if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
@@ -302,6 +301,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
+                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         });
@@ -393,6 +393,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
+                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         }, new Response.ErrorListener() {

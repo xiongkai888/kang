@@ -3,6 +3,7 @@ package com.lanmei.kang.util;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSONArray;
+import com.google.gson.Gson;
 import com.xson.common.utils.StringUtils;
 
 import org.json.JSONException;
@@ -24,24 +25,23 @@ public class JsonUtil {
 	 * @param t 实体类
 	 * @return
 	 */
-//	public static <T> String beanToJson(T t){
-//		Gson gson = new Gson();
-//		String json = gson.toJson(t);
-//		return json;
-//	}
+	public static <T> String beanToJson(T t){
+		Gson gson = new Gson();
+		String json = gson.toJson(t);
+		return json;
+	}
 	
 	/**
 	 * 将一个json字符串 转换成一个实体类对象 可包含list
 	 * @param json
-	 * @param t
 	 * @return
 	 */
-//	public static <T> T jsonToBean(String json,Class<T> class1) throws InstantiationException, IllegalAccessException{
-//		Gson gson = new Gson();
-//		T t = class1.newInstance();
-//		t=gson.fromJson(json, class1);
-//		return t;
-//	}
+	public static <T> T jsonToBean(String json,Class<T> class1) throws InstantiationException, IllegalAccessException{
+		Gson gson = new Gson();
+		T t = class1.newInstance();
+		t=gson.fromJson(json, class1);
+		return t;
+	}
 	
 	/**
 	 * 将json字符串转换成一个json对象

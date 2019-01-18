@@ -48,9 +48,9 @@ public class BecomeDistributorActivity extends BaseActivity {
         actionbar.setTitle(title);
 
 
-        KangQiMeiApi api = new KangQiMeiApi("station/news");
+        KangQiMeiApi api = new KangQiMeiApi("app/news");
         api.add("title",title);//文章标题
-        HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<BecomeDistributorBean>>() {
+        HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<BecomeDistributorBean>>() {
             @Override
             public void onResponse(NoPageListBean<BecomeDistributorBean> response) {
                 if (isFinishing()) {

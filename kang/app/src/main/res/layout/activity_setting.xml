@@ -92,7 +92,7 @@
 
                     <TextView
                         style="@style/setting_text"
-                        android:text="帮助信息" />
+                        android:text="@string/help_info" />
 
                     <ImageView
                         android:src="@mipmap/in_right"

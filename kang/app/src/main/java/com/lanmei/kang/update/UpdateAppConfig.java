@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 
+import com.lanmei.kang.bean.SiteinfoBean;
+import com.lanmei.kang.util.JsonUtil;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xson.common.utils.L;
 
@@ -34,6 +36,8 @@ import rx.functions.Action1;
 public class UpdateAppConfig {
 
 
+    public static SiteinfoBean bean;
+
     public static void initUpdateApp(final Context context) {
         String url = "http://120.79.56.96/api/index/siteinfo";
         Map<String, String> params = new HashMap<>();
@@ -54,6 +58,13 @@ public class UpdateAppConfig {
                         JSONObject object = new JSONObject(response);
                         if (object.getInt("status") == 1) {
                             object = object.getJSONObject("data");
+                            try {
+                                bean = JsonUtil.jsonToBean(object.toString(),SiteinfoBean.class);
+                            } catch (InstantiationException e) {
+                                e.printStackTrace();
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
                             object = object.getJSONObject("android_update");
                         } else {
                             return null;

@@ -704,9 +704,6 @@
             android:name=".ui.shake.ShakeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.HelpActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".qrcode.NCodeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -753,6 +750,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.HealthReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.BindingPhoneActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -10,10 +10,9 @@ import android.widget.Toast;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.lanmei.kang.R;
-import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.bean.HelpInfoBean;
 import com.lanmei.kang.event.LoginQuitEvent;
 import com.lanmei.kang.event.SetUserInfoEvent;
+import com.lanmei.kang.ui.home.activity.BecomeDistributorActivity;
 import com.lanmei.kang.ui.login.LoginActivity;
 import com.lanmei.kang.ui.login.RegisterActivity;
 import com.lanmei.kang.ui.merchant_tab.goods.shop.DBShopCartHelper;
@@ -21,20 +20,15 @@ import com.lanmei.kang.update.UpdateAppConfig;
 import com.lanmei.kang.update.UpdateEvent;
 import com.lanmei.kang.util.AKDialog;
 import com.xson.common.app.BaseActivity;
-import com.xson.common.bean.NoPageListBean;
-import com.xson.common.helper.BeanRequest;
 import com.xson.common.helper.DataCleanManager;
 import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
-import com.xson.common.utils.StringUtils;
 import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CenterTitleToolbar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -153,7 +147,7 @@ public class SettingActivity extends BaseActivity {
                 UIHelper.ToastMessage(this, R.string.developing);
                 break;
             case R.id.ll_help_info://帮助信息
-                loadHelpInfo();
+                IntentUtil.startActivity(this, BecomeDistributorActivity.class,getString(R.string.help_info));
                 break;
             case R.id.ll_clean_cache://清除缓存
                 showClearCache();
@@ -166,29 +160,6 @@ public class SettingActivity extends BaseActivity {
                 break;
         }
 
-    }
-
-    private void loadHelpInfo() {
-        HttpClient httpClient = HttpClient.newInstance(this);
-        KangQiMeiApi api = new KangQiMeiApi("Index/news");
-        api.add("title","帮助信息");
-        httpClient.loadingRequest(api, new BeanRequest.SuccessListener<NoPageListBean<HelpInfoBean>>() {
-            @Override
-            public void onResponse(NoPageListBean<HelpInfoBean> response) {
-                if (SettingActivity.this.isFinishing()) {
-                    return;
-                }
-                List<HelpInfoBean> list = response.data;
-                if (StringUtils.isEmpty(list)) {
-                    UIHelper.ToastMessage(getContext(),"找不到帮助信息");
-                   return;
-                }
-                HelpInfoBean bean = list.get(0);
-                if (bean != null){
-                    IntentUtil.startActivity(SettingActivity.this,HelpActivity.class,bean.getContent());
-                }
-            }
-        });
     }
 
     public void showClearCache() {

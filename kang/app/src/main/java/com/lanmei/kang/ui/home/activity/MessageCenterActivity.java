@@ -64,7 +64,7 @@ public class MessageCenterActivity extends BaseActivity {
     }
 
     private void loadGongGao(){
-        KangQiMeiApi api = new KangQiMeiApi("station/news");
+        KangQiMeiApi api = new KangQiMeiApi("app/news");
         api.add("type",1);
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<AnnouncementListBean>>() {
             @Override
@@ -81,7 +81,7 @@ public class MessageCenterActivity extends BaseActivity {
         });
     }
     private void loadSiXin(){
-        KangQiMeiApi api = new KangQiMeiApi("station/sixin");
+        KangQiMeiApi api = new KangQiMeiApi("app/sixin");
         api.add("uid",api.getUserId(this));
         HttpClient.newInstance(this).request(api, new BeanRequest.SuccessListener<NoPageListBean<NotificationBean>>() {
             @Override

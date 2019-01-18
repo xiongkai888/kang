@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.lanmei.kang.R;
 import com.lanmei.kang.adapter.CouponTabAdapter;
 import com.lanmei.kang.api.KangQiMeiApi;
-import com.lanmei.kang.helper.coupon.BeanCoupon;
+import com.lanmei.kang.bean.CouponSubBean;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.NoPageListBean;
 import com.xson.common.helper.SwipeRefreshController;
@@ -44,7 +44,7 @@ public class CouponFragment extends BaseFragment {
 //        api.setMethod(AbstractApi.Method.GET);
         CouponTabAdapter adapter = new CouponTabAdapter(context);
         smartSwipeRefreshLayout.setAdapter(adapter);
-        SwipeRefreshController<NoPageListBean<BeanCoupon>> controller = new SwipeRefreshController<NoPageListBean<BeanCoupon>>(context, smartSwipeRefreshLayout, api, adapter) {
+        SwipeRefreshController<NoPageListBean<CouponSubBean>> controller = new SwipeRefreshController<NoPageListBean<CouponSubBean>>(context, smartSwipeRefreshLayout, api, adapter) {
         };
         smartSwipeRefreshLayout.setMode(SmartSwipeRefreshLayout.Mode.NO_PAGE);
         controller.loadFirstPage();

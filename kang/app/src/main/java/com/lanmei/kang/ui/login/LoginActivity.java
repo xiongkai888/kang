@@ -189,13 +189,19 @@ public class LoginActivity extends BaseActivity {
                     mProgressHUD.dismiss();
                 }
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-                UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
-                CommonUtils.loadUserInfo(KangApp.applicationContext,null);
-                if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
-                    SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
+                if (StringUtils.isEmpty(mBean.getPhone())){//要是手机号为空就绑定手机
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean",mBean);
+                    IntentUtil.startActivity(getContext(),BindingPhoneActivity.class,bundle);
+                }else {
+                    EventBus.getDefault().post(new LoginQuitEvent());//
+                    UserHelper.getInstance(LoginActivity.this).saveBean(mBean);
+                    CommonUtils.loadUserInfo(KangApp.applicationContext,null);
+                    if (StringUtils.isEmpty(loginType)) {//手机号登录时保存
+                        SharedAccount.getInstance(LoginActivity.this).saveMobile(phone);
+                    }
+                    IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
                 }
-                IntentUtil.startActivity(LoginActivity.this, MainActivity.class);
-                finish();
             }
 
             @Override
@@ -220,8 +226,14 @@ public class LoginActivity extends BaseActivity {
     @Subscribe
     public void onEventMainThread(RegisterEvent event) {
         mMobileET.setText(event.getPhone());
-
     }
+
+    //登录时候调用
+    @Subscribe()
+    public void loginQuitEvent(LoginQuitEvent event) {
+        finish();
+    }
+
 
     private String loginType;//登录的类型     1、微信  2、QQ  3、新浪微博
     private UMShareAPI mShareAPI;//友盟第三方登录api
@@ -290,7 +302,6 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
-                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         });
@@ -382,7 +393,6 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 mBean = response.data;
-                EventBus.getDefault().post(new LoginQuitEvent());//
                 loginHx();
             }
         }, new Response.ErrorListener() {

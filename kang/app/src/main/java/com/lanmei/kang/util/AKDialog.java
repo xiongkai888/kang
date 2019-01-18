@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lanmei.kang.R;
+import com.lanmei.kang.bean.DJCouponBean;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
 import com.lanmei.kang.view.ChangePhoneView;
 import com.xson.common.utils.IntentUtil;
@@ -363,14 +364,16 @@ public class AKDialog {
     }
 
 
-    //签到弹框
-    public static void showCouponDialog(final Context context) {
+    //优惠卷弹框
+    public static void showCouponDialog(final Context context, DJCouponBean bean) {
 
         final Dialog dialog = new Dialog(context, R.style.ActionSheetDialogStyle);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_coupon, null);
 
         TextView priceTv = view.findViewById(R.id.price_tv);
         TextView contentTv = view.findViewById(R.id.content_tv);
+        priceTv.setText(String.format(context.getString(R.string.price),bean.getMoney()));
+        contentTv.setText(bean.getLname());
         ImageView intoCouponListIv = view.findViewById(R.id.into_coupon_list_iv);
         ImageView crossIv = view.findViewById(R.id.crossIv);
 

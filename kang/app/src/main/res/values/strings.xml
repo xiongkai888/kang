@@ -103,7 +103,7 @@
     <string name="reserve_time">预定时间：%1$s</string>
     <string name="people_num">人数：%1$s</string>
     <string name="refund_ok">退款完成</string>
-    <string name="refund">退款</string>
+    <string name="refund">申请退款</string>
     <string name="refund_apply">退款中</string>
     <string name="order_cancel">订单已取消</string>
     <string name="go_pay">去付款</string>
@@ -246,5 +246,6 @@
     <string name="agree_protocol"><![CDATA[点击注册即表示同意 <font color="#ff2456">《%s》</font>]]></string>
     <string name="not_using_coupons">没有使用优惠券</string>
     <string name="no_coupon">暂无优惠券可用</string>
+    <string name="help_info">帮助信息</string>
 
 </resources>

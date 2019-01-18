@@ -35,7 +35,7 @@ import butterknife.InjectView;
 
 
 /**
- * 我的项目订单列表
+ * (已经屏蔽了项目订单列表)我的项目订单列表 （不要和商品订单列表搞错了）
  */
 public class ItemsOrderListAdapter extends SwipeRefreshAdapter<OrderListBean> {
 

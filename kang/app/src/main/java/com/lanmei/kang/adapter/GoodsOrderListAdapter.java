@@ -73,7 +73,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
 
         public void setParameter(final GoodsOrderListBean bean) {
             order1.setVisibility(View.VISIBLE);
-            order2.setVisibility(View.GONE);
+            order2.setVisibility(View.GONE);//屏蔽用不到
             order3.setVisibility(View.VISIBLE);
 
 
@@ -105,7 +105,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                 case "1":
                     payStatus = context.getString(R.string.payed);//已支付
                     order1.setVisibility(View.VISIBLE);
-                    order1.setText(context.getString(R.string.refund));//退款
+                    order1.setText(context.getString(R.string.cancel_order));//取消订单
                     order3.setVisibility(View.GONE);
                     break;
                 case "2":
@@ -115,8 +115,9 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                     order3.setVisibility(View.GONE);
                     break;
                 case "3":
-                    payStatus = context.getString(R.string.doned);//已完成
-                    order1.setVisibility(View.GONE);
+                    payStatus = context.getString(R.string.doned);//已完成（才能申请退款）
+                    order1.setVisibility(View.VISIBLE);
+                    order1.setText(context.getString(R.string.refund));//申请退款
                     order3.setText(context.getString(R.string.delete_order));//删除订单
                     order3.setVisibility(View.VISIBLE);
                     break;
@@ -140,15 +141,14 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                 public void onClick(View v) {
                     switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
                         case "0"://(待付款)取消订单
+                        case "1"://(已支付)取消订单
                             getAlertDialog("确定取消订单？", "5", bean.getId());
-                            break;
-                        case "1"://(已支付)退款
-                            getAlertDialog("确定退款？", "4", bean.getId());
                             break;
                         case "2"://(待收货)确定收货
                             getAlertDialog("确定收货？", "3", bean.getId());
                             break;
                         case "3":
+                            getAlertDialog("确定申请退款？", "4", bean.getId());
                             break;
                         case "4":
                             break;
@@ -160,7 +160,7 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
             order3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (state) {//1下单(待付款)2、3未消费4已完成5取消订单6申请退款7退款完成
+                    switch (state) {//
                         case "0"://去付款
                             IntentUtil.startActivity(context, OrderDetailsGoodsActivity.class, bean.getId());
                             break;
@@ -168,20 +168,10 @@ public class GoodsOrderListAdapter extends SwipeRefreshAdapter<GoodsOrderListBea
                             break;
                         case "2":
                             break;
-                        case "3"://
-                            //删除订单
-                            AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
-                                @Override
-                                public void yes() {
-                                    if (l != null) {
-                                        l.deleteOrder(bean.getId());
-                                    }
-                                }
-                            });
-                            break;
                         case "4"://
                             break;
-                        case "5"://
+                        case "3"://
+                        case "5"://删除订单
                             AKDialog.getAlertDialog(context, "确定删除该订单？", new AKDialog.AlertDialogListener() {
                                 @Override
                                 public void yes() {

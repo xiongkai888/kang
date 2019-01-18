@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NumBean;
+import com.lanmei.kang.bean.SiteinfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
+import com.lanmei.kang.ui.home.activity.BecomeDistributorActivity;
 import com.lanmei.kang.ui.merchant.ClientValuateActivity;
 import com.lanmei.kang.ui.merchant.MerchantDataActivity;
 import com.lanmei.kang.ui.merchant.activity.ChuKuListActivity;
@@ -27,6 +28,7 @@ import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
+import com.lanmei.kang.update.UpdateAppConfig;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.DataBean;
@@ -37,6 +39,7 @@ import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -99,7 +102,7 @@ public class MineMerchantFragment extends BaseFragment {
     @InjectView(R.id.m20)
     TextView m20;
 
-    boolean isHeadquarters;//是不是总部账号
+    boolean isHeadquarters;//是不是商家总部账号
 
 
     public static MineMerchantFragment newInstance() {
@@ -224,7 +227,15 @@ public class MineMerchantFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyTeamActivity.class);
                 break;
             case R.id.m9://在线客服
-                IntentUtil.startActivity(context, MainActivity.class);
+                SiteinfoBean bean = UpdateAppConfig.bean;
+                if (StringUtils.isEmpty(bean)){
+                    return;
+                }
+                SiteinfoBean.BaseBean baseBean = bean.getBase();
+                if (StringUtils.isEmpty(baseBean)){
+                    return;
+                }
+                UIHelper.callPhone(context,baseBean.getPhone());
                 break;
             case R.id.m10://商家资料
                 IntentUtil.startActivity(context, MerchantDataActivity.class);
@@ -254,7 +265,7 @@ public class MineMerchantFragment extends BaseFragment {
                 if (isHeadquarters){
                     IntentUtil.startActivity(context, ClientValuateActivity.class);
                 }else {
-                    CommonUtils.developing(context);
+                    IntentUtil.startActivity(context, BecomeDistributorActivity.class,"帮助");
                 }
                 break;
             case R.id.m17://相册(库存)
@@ -266,7 +277,7 @@ public class MineMerchantFragment extends BaseFragment {
                 break;
             case R.id.m18://帮助（设置）
                 if (isHeadquarters){
-                    CommonUtils.developing(context);
+                    IntentUtil.startActivity(context, BecomeDistributorActivity.class,"帮助");
                 }else {
                     IntentUtil.startActivity(context, SettingActivity.class);
                 }
@@ -311,7 +322,7 @@ public class MineMerchantFragment extends BaseFragment {
                 setNum(m2NumTv,bean.getReceiver());
                 setNum(m3NumTv,bean.getAssess());
 
-                yuE.setText(String.format(getString(R.string.mine_money),bean.getMoney()));
+                yuE.setText(String.format(getString(R.string.mine_money),StringUtils.isEmpty(bean.getMoney())?"0":bean.getMoney()));
                 youHuiJuan.setText(String.format(getString(R.string.mine_voucher),bean.getVoucher()+""));
                 guanZhu.setText(String.format(getString(R.string.mine_goods_favour),bean.getGoods_favour()+""));
 

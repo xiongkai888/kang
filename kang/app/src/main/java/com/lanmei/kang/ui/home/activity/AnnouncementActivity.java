@@ -42,7 +42,7 @@ public class AnnouncementActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         smartSwipeRefreshLayout.initWithLinearLayout();
-        KangQiMeiApi api = new KangQiMeiApi("station/news");
+        KangQiMeiApi api = new KangQiMeiApi("app/news");
         api.add("type",1);
         AnnouncementListAdapter adapter = new AnnouncementListAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);

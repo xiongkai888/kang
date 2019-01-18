@@ -7,6 +7,7 @@
     android:padding="@dimen/d_10dp">
 
     <LinearLayout
+        android:id="@+id/ll_bg"
         style="@style/h_match_parent_no"
         android:background="@drawable/border_coupon"
         android:gravity="center_vertical">
@@ -31,10 +32,12 @@
         </LinearLayout>
 
         <com.lanmei.kang.view.DashedLineView
+            android:id="@+id/dashed_line"
             android:layout_width="1dp"
             android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/ll_money_bg"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/d_10dp"

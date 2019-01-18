@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hyphenate.chatuidemo.ui.MainActivity;
 import com.lanmei.kang.R;
 import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.NumBean;
+import com.lanmei.kang.bean.SiteinfoBean;
 import com.lanmei.kang.event.SetUserInfoEvent;
 import com.lanmei.kang.ui.merchant.activity.MyTeamActivity;
 import com.lanmei.kang.ui.mine.activity.CouponActivity;
@@ -21,6 +21,7 @@ import com.lanmei.kang.ui.mine.activity.MyGoodsOrderActivity;
 import com.lanmei.kang.ui.mine.activity.PersonalDataActivity;
 import com.lanmei.kang.ui.mine.activity.SettingActivity;
 import com.lanmei.kang.ui.user.setting.ClubActivity;
+import com.lanmei.kang.update.UpdateAppConfig;
 import com.lanmei.kang.util.CommonUtils;
 import com.xson.common.app.BaseFragment;
 import com.xson.common.bean.DataBean;
@@ -31,6 +32,7 @@ import com.xson.common.helper.ImageHelper;
 import com.xson.common.helper.UserHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
+import com.xson.common.utils.UIHelper;
 import com.xson.common.widget.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -144,12 +146,28 @@ public class MineUserFragment extends BaseFragment {
                 IntentUtil.startActivity(context, MyTeamActivity.class);
                 break;
             case R.id.m9://在线客服
-                IntentUtil.startActivity(context, MainActivity.class);
+                SiteinfoBean bean = UpdateAppConfig.bean;
+                if (StringUtils.isEmpty(bean)){
+                    return;
+                }
+                SiteinfoBean.BaseBean baseBean = bean.getBase();
+                if (StringUtils.isEmpty(baseBean)){
+                    return;
+                }
+                UIHelper.callPhone(context,baseBean.getPhone());
+//                IntentUtil.startActivity(context, MainActivity.class);
                 break;
             case R.id.m10://设置
                 IntentUtil.startActivity(context, SettingActivity.class);
                 break;
             case R.id.ll_data:
+//                KangQiMeiApi api = new KangQiMeiApi("index/siteinfo");
+//                HttpClient.newInstance(context).request(api, new BeanRequest.SuccessListener<BaseBean>() {
+//                    @Override
+//                    public void onResponse(BaseBean response) {
+//
+//                    }
+//                });
                 IntentUtil.startActivity(context, PersonalDataActivity.class);
                 break;
         }
@@ -206,7 +224,7 @@ public class MineUserFragment extends BaseFragment {
                 setNum(m2NumTv,bean.getReceiver());
                 setNum(m3NumTv,bean.getAssess());
 
-                yuE.setText(String.format(getString(R.string.mine_money),bean.getMoney()));
+                yuE.setText(String.format(getString(R.string.mine_money),StringUtils.isEmpty(bean.getMoney())?"0":bean.getMoney()));
                 youHuiJuan.setText(String.format(getString(R.string.mine_voucher),bean.getVoucher()+""));
                 guanZhu.setText(String.format(getString(R.string.mine_goods_favour),bean.getGoods_favour()+""));
 

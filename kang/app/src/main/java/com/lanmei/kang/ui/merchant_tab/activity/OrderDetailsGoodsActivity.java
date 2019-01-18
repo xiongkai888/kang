@@ -253,7 +253,7 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             case "1":
                 stateStr = getString(R.string.payed);//已支付
                 order1.setVisibility(View.VISIBLE);
-                order1.setText(getString(R.string.refund));//退款
+                order1.setText(getString(R.string.cancel_order));//取消订单
                 order3.setVisibility(View.GONE);
                 break;
             case "2":
@@ -264,7 +264,8 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
                 break;
             case "3":
                 stateStr = getString(R.string.doned);//已完成
-                order1.setVisibility(View.GONE);
+                order1.setVisibility(View.VISIBLE);
+                order1.setText(getString(R.string.refund));//申请退款
                 order3.setText(getString(R.string.delete_order));//删除订单
                 order3.setVisibility(View.VISIBLE);
                 break;
@@ -290,15 +291,14 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
             case R.id.order_1://
                 switch (state) {//0|1|2|3|9|4|5=>待支付|已支付|待收货|已完成|全部|退款|取消订单
                     case "0"://(待付款)取消订单
+                    case "1"://(已支付)取消订单
                         getAlertDialog("确定取消订单？", "5");
-                        break;
-                    case "1"://(已支付)退款
-                        getAlertDialog("确定退款？", "4");
                         break;
                     case "2"://(待收货)确定收货
                         getAlertDialog("确定收货？", "3");
                         break;
                     case "3":
+                        getAlertDialog("确定申请退款？", "4");
                         break;
                     case "4":
                         break;
@@ -317,12 +317,9 @@ public class OrderDetailsGoodsActivity extends BaseActivity {
                         break;
                     case "2":
                         break;
-                    case "3"://
-                        //删除订单
-                        deleteOrderDialog();
-                        break;
                     case "4"://
                         break;
+                    case "3"://
                     case "5"://
                         //删除订单
                         deleteOrderDialog();

@@ -216,6 +216,7 @@ public class AddGoodsSellHelper {
 
         public void setData(MerchantTabGoodsBean merchantTabGoodsBean) {
             boolean isNull = StringUtils.isEmpty(merchantTabGoodsBean);
+            numberEt.setText(isNull ? "" : merchantTabGoodsBean.getBarcode());
             numEt.setText(isNull ? "" : CommonUtils.isOne);
             priceEt.setText(isNull ? "" : merchantTabGoodsBean.getPrice());
             unitEt.setText(isNull ? "" : context.getString(R.string.jian));
@@ -243,7 +244,6 @@ public class AddGoodsSellHelper {
                 }
                 MerchantTabGoodsBean merchantTabGoodsBean = beanList.get(0);
                 viewHolder.setData(merchantTabGoodsBean);
-//                UIHelper.ToastMessage(context, "存在该商品");
             }
         });
     }

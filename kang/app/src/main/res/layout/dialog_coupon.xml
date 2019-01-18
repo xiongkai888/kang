@@ -32,8 +32,8 @@
         <LinearLayout
             style="@style/h_match_parent"
             android:layout_marginTop="@dimen/d_20dp"
-            android:layout_marginRight="@dimen/d_80dp"
-            android:layout_marginLeft="@dimen/d_80dp"
+            android:layout_marginRight="@dimen/d_60dp"
+            android:layout_marginLeft="@dimen/d_60dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -50,6 +50,7 @@
             <TextView
                 android:id="@+id/content_tv"
                 android:text="广州全场5元优惠券"
+                android:padding="@dimen/d_5dp"
                 android:layout_marginLeft="@dimen/d_10dp"
                 android:layout_marginRight="@dimen/d_5dp"
                 style="@style/text12color666" />

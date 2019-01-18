@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.lanmei.kang.ui.login.BindingPhoneActivity">
+
+    <include layout="@layout/include_centertitletoolbar" />
+
+
+    <LinearLayout
+        style="@style/text_match"
+        android:layout_marginTop="@dimen/d_50dp"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/text_lg_v"
+            android:src="@mipmap/icon_phone" />
+
+
+        <EditText
+            android:id="@+id/et_mobile"
+            style="@style/login_et_bottom"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginRight="@dimen/d_15dp"
+            android:hint="@string/input_phone_number"
+            android:inputType="phone"
+            android:maxLength="11" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/text_match"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/text_lg_v"
+            android:src="@mipmap/icon_code" />
+
+
+        <LinearLayout style="@style/ll_bottom_login">
+
+
+            <EditText
+                android:id="@+id/et_code"
+                style="@style/login_et_bottom"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:maxLength="6" />
+
+            <Button
+                android:id="@+id/obtainCode_bt"
+                android:layout_width="93dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/code_shape"
+                android:text="@string/obtain_code"
+                android:textColor="@color/color9292"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tgid"
+        style="@style/text_match"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/text_lg_v"
+            android:src="@mipmap/icon_phone" />
+
+
+        <EditText
+            android:id="@+id/tgid_et"
+            style="@style/login_et_bottom"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:layout_marginRight="@dimen/d_15dp"
+            android:hint="请输入推荐者的推广ID或手机号码 (选填)" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/sure_bt"
+        style="@style/button_style"
+        android:layout_marginTop="50dp"
+        android:text="@string/sure" />
+
+
+</LinearLayout>

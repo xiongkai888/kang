@@ -50,7 +50,7 @@ public class NotificationActivity extends BaseActivity {
         actionbar.setHomeAsUpIndicator(R.mipmap.back_g);
 
         smartSwipeRefreshLayout.initWithLinearLayout();
-        KangQiMeiApi api = new KangQiMeiApi("station/sixin");
+        KangQiMeiApi api = new KangQiMeiApi("app/sixin");
         api.add("uid",api.getUserId(this));
         adapter = new NotificationAdapter(this);
         smartSwipeRefreshLayout.setAdapter(adapter);
@@ -72,7 +72,7 @@ public class NotificationActivity extends BaseActivity {
         controller.loadFirstPage();
     }
     private void deleteSiXin(String id,final int position){
-        KangQiMeiApi api = new KangQiMeiApi("station/del_sixin");
+        KangQiMeiApi api = new KangQiMeiApi("app/del_sixin");
         api.add("uid",api.getUserId(this));
         api.add("sid",id);
         HttpClient.newInstance(this).loadingRequest(api, new BeanRequest.SuccessListener<BaseBean>() {

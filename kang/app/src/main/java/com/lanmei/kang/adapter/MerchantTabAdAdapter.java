@@ -10,11 +10,19 @@ import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.lanmei.kang.R;
+import com.lanmei.kang.api.KangQiMeiApi;
 import com.lanmei.kang.bean.AdBean;
+import com.lanmei.kang.bean.DJCouponBean;
 import com.lanmei.kang.bean.MerchantTabClassifyBean;
 import com.lanmei.kang.ui.merchant_tab.activity.GoodsListActivity;
 import com.lanmei.kang.ui.merchant_tab.goods.activity.GoodsDetailsActivity;
 import com.lanmei.kang.ui.news.activity.NewsDetailsActivity;
+import com.lanmei.kang.util.AKDialog;
+import com.lanmei.kang.util.CommonUtils;
+import com.xson.common.app.BaseActivity;
+import com.xson.common.bean.DataBean;
+import com.xson.common.helper.BeanRequest;
+import com.xson.common.helper.HttpClient;
 import com.xson.common.helper.ImageHelper;
 import com.xson.common.utils.IntentUtil;
 import com.xson.common.utils.StringUtils;
@@ -65,15 +73,43 @@ public class MerchantTabAdAdapter implements Holder<AdBean> {
                 } else if (link.startsWith("g")) {
                     String[] strings = link.split("_");
                     if (!StringUtils.isEmpty(strings) && strings.length == 2) {
-                        IntentUtil.startActivity(context, GoodsDetailsActivity.class,strings[1]);
+                        IntentUtil.startActivity(context, GoodsDetailsActivity.class, strings[1]);
                     }
                 } else if (link.startsWith("p")) {
                     String[] strings = link.split("_");
                     if (!StringUtils.isEmpty(strings) && strings.length == 2) {
-                        IntentUtil.startActivity(context, NewsDetailsActivity.class,strings[1]);
+                        IntentUtil.startActivity(context, NewsDetailsActivity.class, strings[1]);
+                    }
+                } else if (link.startsWith("l")) {
+                    if (!CommonUtils.isLogin(context)) {
+                        return;
+                    }
+                    String[] strings = link.split("_");
+                    if (!StringUtils.isEmpty(strings) && strings.length == 2) {
+                        loadDjCoupon(context, strings[1]);
                     }
                 }
             }
         });
     }
+
+    private void loadDjCoupon(final Context context, final String couponId) {
+        KangQiMeiApi api = new KangQiMeiApi("app/dj_coupon");//点击领取
+        api.add("uid", api.getUserId(context));
+        api.add("coupon_id", couponId);
+        HttpClient.newInstance(context).loadingRequest(api, new BeanRequest.SuccessListener<DataBean<DJCouponBean>>() {
+            @Override
+            public void onResponse(DataBean<DJCouponBean> response) {
+                if (((BaseActivity) context).isFinishing()) {
+                    return;
+                }
+                DJCouponBean bean = response.data;
+                if (StringUtils.isEmpty(bean)) {
+                    return;
+                }
+                AKDialog.showCouponDialog(context, bean);
+            }
+        });
+    }
+
 }
